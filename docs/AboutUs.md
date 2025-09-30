@@ -11,12 +11,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Jingling
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/b33pbop.png" width="200px">
 
 [[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/b33pbop)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Project Advisor
