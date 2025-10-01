@@ -40,11 +40,11 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Kane Ng
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/weemee03.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/WeeMee03)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
