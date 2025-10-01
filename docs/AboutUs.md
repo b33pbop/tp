@@ -21,12 +21,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Adriel Toh
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/adrieltch.png" width="200px" height="180" style="transform: rotate(90deg);">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/adrieltch)]
+[[portfolio](team/adrieltch.md)]
 
 * Role: Team Lead
 * Responsibilities: UI
