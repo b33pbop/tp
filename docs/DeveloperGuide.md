@@ -332,6 +332,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4.  Adding or deleting contacts should complete within 1 second.
+5.  All contacts must be saved to persistent storage and retrievable after application restarts.
+6.  Commands should follow a predictable format (`add`, `delete`, `find`, `list`) with consistent feedback.
+7.  System should alert users of invalid inputs without crashing.
+8.  Clear and actionable error messages should be displayed for invalid inputs or commands.
+9.  Commands and searchable fields (name) should be case-insensitive.
+10. Validation rules should be in place to prevent duplicate entries.
+11. Leading and trailing whitespaces should be trimmed and treated as a single spacing for storage and data operations.
+12. Contact management features (add, delete, search, list) should be modular to allow scalability.
+13. The project should not use any licensed image without attribution.
+14. The system should ensure persistent data storage is updated immediately whenever data is added, edited or deleted.
+15. The system should prevent accidental exposure or loss of contact data due to improper file handling.
+16. All modules (add, delete, search, list) should be independently testable. 
+17. The system should maintain detailed logs of all add, delete, and edit operations for auditing and debugging. 
+18. Code should be documented to allow future developers to understand and maintain it.
+19. Error messages should be understandable by non-technical users.
 
 *{More to be added}*
 
