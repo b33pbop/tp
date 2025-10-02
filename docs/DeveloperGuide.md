@@ -337,9 +337,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-
+* **Manager**: Ghost kitchen manager that is using the application
+* **Fuzzy Search**: A search technique to find results approximately matching a query instead of an exact match
+* **GUI-Driven Systems**: Software systems that depend on visual elements like buttons and menus for user interaction
+* **Archiving**: The process of storing data in an organized manner for long-term retention
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
