@@ -274,27 +274,36 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
+Tech-savvy ghost kitchen managers who:
+* oversee multiple delivery-only brands and suppliers
+* handle frequent staff turnover and changing supplier contacts
+* need to quickly retrieve and update contacts
+* prefer typing over mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: Our app helps ghost kitchen managers efficiently manage their diverse contact ecosystem — suppliers, delivery riders, staff, and partner brands. By offering categorisation, relationship links, fuzzy search, tagging, and archiving, it streamlines contact management. Managers can locate, update, and organise contacts faster than with traditional GUI-driven systems, ensuring smoother operations and fewer mix-ups.
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​                                       | I want to …​                                         | So that I can…​                                                        |
+|----------|-----------------------------------------------|------------------------------------------------------|------------------------------------------------------------------------|
+| `* * *`  | new user                                      | see usage instructions                               | refer to instructions when I forget how to use the App                 |
+| `* * *`  | manager                                       | add a new contact                                    |                                                                        |
+| `* * *`  | manager                                       | delete a contact                                     | remove entries that I no longer need                                   |
+| `* * *`  | manager                                       | find a contact by name                               | locate details of persons without having to go through the entire list |
+| `* * *`  | manager                                       | edit a contact                                       | update changed phone numbers, emails or addresses                      |
+| `* * *`  | manager                                       | categorise a contact (Supplier, Staff, Customer)     | filter contacts by groups                                              |
+| `* *`    | manager                                       | archive contacts                                     | keep my contact clean and remove inactive contacts                     |
+| `* *`    | manager                                       | unarchive contacts                                   | restore contacts so they will not be lost                              |
+| `* *`    | manager                                       | mark a staff contact as inactive (e.g., on leave)    | I don’t accidentally assign tasks to them.                             |
+| `*`      | manager                                       | record staff shifts with their contacts              | reach out to the right staff on duty                                   |
+| `* `     | manager                                       | attach notes to a contact                            | remember context like “delivers only on weekends”                      |
+| `*`      | manager                                       | search for staff by their shift timings              | See all at once the staff that should be on duty                       |
+| `*`      | manager with many persons in the address book | sort persons by name                                 | locate a person easily                                                 |
+| `*`      | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
 
 *{More to be added}*
 
