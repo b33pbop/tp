@@ -311,30 +311,122 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**U1. Add a new contact**
+
+**Actor: Manager**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. Manager selects **Add Contact**
+2. System prompts for contact details
+3. Manager provides details and confirms.
+4. System records the contact
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 2a. Required fields missing.
+    * 2a1. System indicates missing field
+    * 2a2. Use case resumes at step 2
 
-  Use case ends.
+* 3a. Potential duplicate detected.
 
-* 3a. The given index is invalid.
+    * 3a1. System informs manager and offers to merge.
+    * 3a2. Use case resumes and step 2 or ends(if cancelled)
 
-    * 3a1. AddressBook shows an error message.
+**U2. Search for a contact**
 
-      Use case resumes at step 2.
+**Actor: Manager**
 
-*{More to be added}*
+**MSS**
+
+1. Manager initiates **Search Contact**
+2. System prompts for search keyword
+3. System displays list of matching contacts
+4. Manager selects a contact to view details
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. No keyword provided
+    * 2a1. System prompts for input.
+    * Use case resumes at step 2.
+* 3a. No matches found
+    * 3a1. System informs Manager and offers to **Add new contact (U1)**
+    * Use case ends.
+
+**U3. Link related contacts**
+
+**Actor: Manager**
+
+**MSS**
+
+1. Manager selects contact
+2. Manager initiates **Link Contact**
+3. System prompts for another contact to link and relationship type.
+4. Manager provides information
+5. System records the relationship
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. Target contact not found
+    * 3a1. System informs manager and offers to **Add new contact (U2)**
+    * Use case resumes at step 3
+* 5a. Relationship already exists
+    * 5a1. System notifies Manager, no duplicate link created
+    * Use case ends.
+
+**U4. Archive a contact**
+
+**Actor: Manager**
+
+**MSS**
+
+1. Manager selects contact
+2. Manager initiates **Archive Contact**
+3. System prompts Manager to confirm the action
+4. Manager confirms
+5. System marks contact as archived and removes it from active lists.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. Contact has active relationships
+    * 3a1. System informs manager and lists linked contacts.
+    * 3a2. Manager may cancel or proceed.
+    * Use case resumes at step 3 or ends.
+* 5a. Manager chooses to restore contact.
+    * 5a1. System un-archives and returns contact to active list.
+    * Use case ends.
+
+**U5. View contacts by category**
+
+**Actor: Manager**
+
+**MSS**
+
+1. Manager selects **View by category**
+2. System displays available categories
+3. Manager chooses a category (e.g Suppliers, Riders, Staff)
+4. System lists all contacts under category
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. No contacts in selected category
+    * 3a1. System shows "No contact found" message.
+    * Use case resumes at step 3 or ends.
+* 4a. Too many contacts to display.
+    * 5a1. System requests further filter input.
+    * Use case ends.
+
+
 
 ### Non-Functional Requirements
 
