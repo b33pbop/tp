@@ -45,7 +45,8 @@ public class DeleteCommandTest {
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
-        String indexOverflowMessage = "Please select valid index from 1 to " + model.getFilteredPersonList().size() + "!";
+        String indexOverflowMessage = "Please select valid index from 1 to "
+                + model.getFilteredPersonList().size() + "!";
 
         assertCommandFailure(deleteCommand, model, indexOverflowMessage);
     }
@@ -76,7 +77,8 @@ public class DeleteCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
-        String indexOverflowMessage = "Please select valid index from 1 to " + model.getFilteredPersonList().size() + "!";
+        String indexOverflowMessage = "Please select valid index from 1 to "
+                + model.getFilteredPersonList().size() + "!";
         assertCommandFailure(deleteCommand, model, indexOverflowMessage);
     }
 
