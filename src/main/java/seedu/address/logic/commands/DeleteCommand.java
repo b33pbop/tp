@@ -24,6 +24,7 @@ public class DeleteCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Contact: %1$s";
+    public static final String MESSAGE_DELETE_EMPTY_LIST = "Empty Contact List: No contacts available to delete!";
 
     private final Index targetIndex;
 
@@ -37,7 +38,7 @@ public class DeleteCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (lastShownList.isEmpty()) {
-            throw new CommandException("Empty Contact List: No contacts available to delete!");
+            throw new CommandException(MESSAGE_DELETE_EMPTY_LIST);
         }
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
