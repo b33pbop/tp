@@ -19,16 +19,16 @@ public class NameOrTagContainsKeywordsPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
         List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
-        NameOrTagContainsKeywordsPredicate firstPredicate = 
+        NameOrTagContainsKeywordsPredicate firstPredicate =
                 new NameOrTagContainsKeywordsPredicate(firstPredicateKeywordList);
-        NameOrTagContainsKeywordsPredicate secondPredicate = 
+        NameOrTagContainsKeywordsPredicate secondPredicate =
                 new NameOrTagContainsKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        NameOrTagContainsKeywordsPredicate firstPredicateCopy = 
+        NameOrTagContainsKeywordsPredicate firstPredicateCopy =
                 new NameOrTagContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
@@ -45,7 +45,7 @@ public class NameOrTagContainsKeywordsPredicateTest {
     @Test
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword matching name
-        NameOrTagContainsKeywordsPredicate predicate = 
+        NameOrTagContainsKeywordsPredicate predicate =
                 new NameOrTagContainsKeywordsPredicate(Collections.singletonList("Alice"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
@@ -61,7 +61,7 @@ public class NameOrTagContainsKeywordsPredicateTest {
     @Test
     public void test_tagContainsKeywords_returnsTrue() {
         // One keyword matching tag
-        NameOrTagContainsKeywordsPredicate predicate = 
+        NameOrTagContainsKeywordsPredicate predicate =
                 new NameOrTagContainsKeywordsPredicate(Collections.singletonList("friends"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
 
@@ -82,7 +82,7 @@ public class NameOrTagContainsKeywordsPredicateTest {
     @Test
     public void test_nameAndTagContainsKeywords_returnsTrue() {
         // Different keywords matching name and tag respectively
-        NameOrTagContainsKeywordsPredicate predicate = 
+        NameOrTagContainsKeywordsPredicate predicate =
                 new NameOrTagContainsKeywordsPredicate(Arrays.asList("Alice", "friends"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
     }
@@ -90,7 +90,7 @@ public class NameOrTagContainsKeywordsPredicateTest {
     @Test
     public void test_nameAndTagDoNotContainKeywords_returnsFalse() {
         // Zero keywords
-        NameOrTagContainsKeywordsPredicate predicate = 
+        NameOrTagContainsKeywordsPredicate predicate =
                 new NameOrTagContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withTags("friends").build()));
 
