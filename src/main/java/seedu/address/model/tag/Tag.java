@@ -33,10 +33,14 @@ public class Tag {
      * Case-insensitive check.
      */
     public static boolean isValidTagName(String test) {
-        if (test == null || test.trim().isEmpty()) return false;
+        if (test == null || test.trim().isEmpty()) {
+            return false;
+        }
         String lower = test.trim().toLowerCase();
         for (String valid : VALID_VALUES) {
-            if (valid.toLowerCase().equals(lower)) return true;
+            if (valid.toLowerCase().equals(lower)) {
+                return true;
+            }
         }
         return false;
     }
