@@ -77,7 +77,7 @@ public class FindCommandTest {
     @Test
     public void execute_tagKeywords_personsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        NameOrTagContainsKeywordsPredicate predicate = preparePredicate("friends");
+        NameOrTagContainsKeywordsPredicate predicate = preparePredicate("Customer");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);

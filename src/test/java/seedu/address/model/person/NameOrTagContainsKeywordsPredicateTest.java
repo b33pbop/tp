@@ -62,29 +62,29 @@ public class NameOrTagContainsKeywordsPredicateTest {
     public void test_tagContainsKeywords_returnsTrue() {
         // One keyword matching tag
         NameOrTagContainsKeywordsPredicate predicate =
-                new NameOrTagContainsKeywordsPredicate(Collections.singletonList("friends"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
+                new NameOrTagContainsKeywordsPredicate(Collections.singletonList("Customer"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Customer").build()));
 
         // Multiple keywords, one matching tag
-        predicate = new NameOrTagContainsKeywordsPredicate(Arrays.asList("friends", "enemies"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
+        predicate = new NameOrTagContainsKeywordsPredicate(Arrays.asList("Customer", "Staff"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Customer").build()));
 
         // Mixed-case keywords matching tag
-        predicate = new NameOrTagContainsKeywordsPredicate(Arrays.asList("FrIeNdS"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
+        predicate = new NameOrTagContainsKeywordsPredicate(Arrays.asList("CustOmER"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Customer").build()));
 
         // Multiple tags, keyword matches one of them
-        predicate = new NameOrTagContainsKeywordsPredicate(Collections.singletonList("colleagues"));
+        predicate = new NameOrTagContainsKeywordsPredicate(Collections.singletonList("Supplier"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob")
-                .withTags("friends", "colleagues").build()));
+                .withTags("Customer", "Supplier").build()));
     }
 
     @Test
     public void test_nameAndTagContainsKeywords_returnsTrue() {
         // Different keywords matching name and tag respectively
         NameOrTagContainsKeywordsPredicate predicate =
-                new NameOrTagContainsKeywordsPredicate(Arrays.asList("Alice", "friends"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
+                new NameOrTagContainsKeywordsPredicate(Arrays.asList("Alice", "Customer"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Customer").build()));
     }
 
     @Test
@@ -92,16 +92,17 @@ public class NameOrTagContainsKeywordsPredicateTest {
         // Zero keywords
         NameOrTagContainsKeywordsPredicate predicate =
                 new NameOrTagContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withTags("friends").build()));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withTags("Customer").build()));
 
         // Non-matching keyword
         predicate = new NameOrTagContainsKeywordsPredicate(Arrays.asList("Carol"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("Customer").build()));
 
         // Keywords match phone, email and address, but do not match name or tags
-        predicate = new NameOrTagContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").withTags("friends").build()));
+        predicate = new NameOrTagContainsKeywordsPredicate(Arrays.asList("91234567", "alice@email.com",
+                "Main", "Street"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("91234567")
+                .withEmail("alice@email.com").withAddress("Main Street").withTags("Customer").build()));
     }
 
     @Test
