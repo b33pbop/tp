@@ -92,6 +92,31 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
+    public void toModelType_invalidAddressCharacters_throwsIllegalValueException() {
+        String invalidAddressWithCharacters = "123 Main Street @0505";
+        JsonAdaptedPerson person =
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, invalidAddressWithCharacters, VALID_TAGS);
+
+        String expectedMessage = Address.INVALID_CHARACTER_MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_validAddressWithAllowedCharacters_success() throws Exception {
+        String validAddressWithCharacters = "123-B Baker Street #05/06";
+        JsonAdaptedPerson person =
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, validAddressWithCharacters, VALID_TAGS);
+
+        assertEquals(new seedu.address.model.person.Person(
+                new Name(VALID_NAME),
+                new Phone(VALID_PHONE),
+                new Email(VALID_EMAIL),
+                new Address(validAddressWithCharacters),
+                BENSON.getTags()
+        ), person.toModelType());
+    }
+
+    @Test
     public void toModelType_nullAddress_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, null, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
