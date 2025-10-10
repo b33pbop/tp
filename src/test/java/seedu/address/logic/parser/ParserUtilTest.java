@@ -126,6 +126,35 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseAddress_invalidCharacters_throwsParseException() {
+        String invalidCharAddress1 = "@Home";
+        String invalidCharAddress2 = "Blk$12 Road";
+        String invalidCharAddress3 = "123%Street";
+
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(invalidCharAddress1));
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(invalidCharAddress2));
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(invalidCharAddress3));
+    }
+
+    @Test
+    public void parseAddress_invalidLengthTooShort_throwsParseException() {
+        String tooShort = "A";
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(tooShort));
+    }
+
+    @Test
+    public void parseAddress_invalidLengthTooLong_throwsParseException() {
+        String tooLong = "A".repeat(101);
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(tooLong));
+    }
+
+    @Test
+    public void parseAddress_leadingWhitespace_throwsParseException() {
+        String leadingSpace = " 12 Road";
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(leadingSpace));
+    }
+
+    @Test
     public void parseEmail_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((String) null));
     }
