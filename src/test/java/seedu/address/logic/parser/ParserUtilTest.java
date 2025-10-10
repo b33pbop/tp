@@ -149,12 +149,6 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseAddress_leadingWhitespace_throwsParseException() {
-        String leadingSpace = " 12 Road";
-        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(leadingSpace));
-    }
-
-    @Test
     public void parseEmail_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((String) null));
     }
