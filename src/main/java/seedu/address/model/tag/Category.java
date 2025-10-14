@@ -4,10 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 
 /**
- * Represents a Tag in the address book.
+ * Represents a Category in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
  */
-public class Tag {
+public class Category {
 
     public static final String MESSAGE_CONSTRAINTS = "Unknown Category (Customer | Supplier | Staff)";
     private static final String[] VALID_VALUES = {"Customer", "Supplier", "Staff"};
@@ -16,11 +16,11 @@ public class Tag {
     public final String tagName;
 
     /**
-     * Constructs a {@code Tag}.
+     * Constructs a {@code Category}.
      *
      * @param tagName A valid tag name. (Customer, Supplier, or Staff)
      */
-    public Tag(String tagName) {
+    public Category(String tagName) {
         requireNonNull(tagName);
         if (!isValidTagName(tagName)) {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
@@ -58,12 +58,12 @@ public class Tag {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Tag)) {
+        if (!(other instanceof Category)) {
             return false;
         }
 
-        Tag otherTag = (Tag) other;
-        return tagName.equals(otherTag.tagName);
+        Category otherCategory = (Category) other;
+        return tagName.equals(otherCategory.tagName);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class SampleDataUtilTest {
         assertTrue(people.length > 0);
 
         for (Person p : people) {
-            // assuming Person#getTags() returns a Set<Tag> and Tag#tagName is accessible or via toString()
+            // assuming Person#getTags() returns a Set<Category> and Category#tagName is accessible or via toString()
             p.getTags().forEach(t -> {
                 String v = t.toString().replace("[", "").replace("]", "");
                 assertTrue(
