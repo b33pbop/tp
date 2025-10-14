@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.address.model.category;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.testutil.Assert.assertThrows;
