@@ -10,6 +10,11 @@ import seedu.address.model.tag.Tag;
 Possible methods to implement would be spend(double amount)
 should create a tier class to take care of tier abstraction and discounts
  */
+
+/**
+ * Represents a customer in the address book where customer is a customer who has signed up for membership
+ * Inherits from person and can be used to track spending, membership tier and possibly discounts.
+ */
 public class Customer extends Person {
     //private static final double STARTING_AMOUNT = 0;
     // Identity fields
