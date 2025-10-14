@@ -1,10 +1,11 @@
 package seedu.address.model.person;
 
-import seedu.address.model.tag.Tag;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Set;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import seedu.address.model.tag.Tag;
+
 /*
 Possible methods to implement would be spend(double amount)
 should create a tier class to take care of tier abstraction and discounts
