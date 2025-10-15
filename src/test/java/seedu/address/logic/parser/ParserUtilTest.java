@@ -25,14 +25,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_CATEGORY = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "98765432";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TAG_1 = "Customer";
-    private static final String VALID_TAG_2 = "Staff";
+    private static final String VALID_CATEGORY_1 = "Customer";
+    private static final String VALID_CATEGORY_2 = "Staff";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -172,26 +172,26 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseTag_null_throwsNullPointerException() {
+    public void parseCategory_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> ParserUtil.parseCategory(null));
     }
 
     @Test
-    public void parseTag_invalidValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseCategory(INVALID_TAG));
+    public void parseCategory_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseCategory(INVALID_CATEGORY));
     }
 
     @Test
-    public void parseTag_validValueWithoutWhitespace_returnsTag() throws Exception {
-        Category expectedCategory = new Category(VALID_TAG_1);
-        assertEquals(expectedCategory, ParserUtil.parseCategory(VALID_TAG_1));
+    public void parseCategory_validValueWithoutWhitespace_returnsCategory() throws Exception {
+        Category expectedCategory = new Category(VALID_CATEGORY_1);
+        assertEquals(expectedCategory, ParserUtil.parseCategory(VALID_CATEGORY_1));
     }
 
     @Test
-    public void parseTag_validValueWithWhitespace_returnsTrimmedTag() throws Exception {
-        String tagWithWhitespace = WHITESPACE + VALID_TAG_1 + WHITESPACE;
-        Category expectedCategory = new Category(VALID_TAG_1);
-        assertEquals(expectedCategory, ParserUtil.parseCategory(tagWithWhitespace));
+    public void parseCategory_validValueWithWhitespace_returnsTrimmedCategory() throws Exception {
+        String categoryWithWhitespace = WHITESPACE + VALID_CATEGORY_1 + WHITESPACE;
+        Category expectedCategory = new Category(VALID_CATEGORY_1);
+        assertEquals(expectedCategory, ParserUtil.parseCategory(categoryWithWhitespace));
     }
 
     @Test
@@ -200,8 +200,9 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseTags_collectionWithInvalidTags_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseCategories(Arrays.asList(VALID_TAG_1, INVALID_TAG)));
+    public void parseCategories_collectionWithInvalidCategories_throwsParseException() {
+        assertThrows(ParseException.class, ()
+                -> ParserUtil.parseCategories(Arrays.asList(VALID_CATEGORY_1, INVALID_CATEGORY)));
     }
 
     @Test
@@ -210,10 +211,10 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseTags_collectionWithValidCategories_returnsTagSet() throws Exception {
-        Set<Category> actualCategorySet = ParserUtil.parseCategories(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Category> expectedCategorySet = new HashSet<Category>(Arrays.asList(new Category(VALID_TAG_1),
-                new Category(VALID_TAG_2)));
+    public void parseCategories_collectionWithValidCategories_returnsCategorySet() throws Exception {
+        Set<Category> actualCategorySet = ParserUtil.parseCategories(Arrays.asList(VALID_CATEGORY_1, VALID_CATEGORY_2));
+        Set<Category> expectedCategorySet = new HashSet<Category>(Arrays.asList(new Category(VALID_CATEGORY_1),
+                new Category(VALID_CATEGORY_2)));
 
         assertEquals(expectedCategorySet, actualCategorySet);
     }

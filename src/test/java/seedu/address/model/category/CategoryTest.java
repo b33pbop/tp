@@ -13,15 +13,15 @@ public class CategoryTest {
     }
 
     @Test
-    public void constructor_invalidTagName_throwsIllegalArgumentException() {
+    public void constructor_invalidCategoryName_throwsIllegalArgumentException() {
         String invalidTagName = "";
         assertThrows(IllegalArgumentException.class, () -> new Category(invalidTagName));
     }
 
     @Test
-    public void isValidTagName() {
+    public void isValidCategoryName() {
         // null tag name
-        assertFalse(Category.isValidTagName(null));
+        assertFalse(Category.isValidCategoryName(null));
     }
 
 }

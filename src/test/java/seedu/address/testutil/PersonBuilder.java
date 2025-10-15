@@ -62,8 +62,8 @@ public class PersonBuilder {
     /**
      * Parses the {@code categories} into a {@code Set<Category>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
-        this.categories = SampleDataUtil.getTagSet(tags);
+    public PersonBuilder withCategories(String ... categories) {
+        this.categories = SampleDataUtil.getCategorySet(categories);
         return this;
     }
 

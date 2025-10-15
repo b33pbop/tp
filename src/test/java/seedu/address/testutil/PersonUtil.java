@@ -35,7 +35,7 @@ public class PersonUtil {
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         person.getCategories().stream().forEach(
-            s -> sb.append(PREFIX_CATEGORY + s.tagName + " ")
+            s -> sb.append(PREFIX_CATEGORY + s.categoryName + " ")
         );
         return sb.toString();
     }
@@ -49,12 +49,12 @@ public class PersonUtil {
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
         descriptor.getAddress().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
-        if (descriptor.getTags().isPresent()) {
-            Set<Category> categories = descriptor.getTags().get();
+        if (descriptor.getCategories().isPresent()) {
+            Set<Category> categories = descriptor.getCategories().get();
             if (categories.isEmpty()) {
                 sb.append(PREFIX_CATEGORY);
             } else {
-                categories.forEach(s -> sb.append(PREFIX_CATEGORY).append(s.tagName).append(" "));
+                categories.forEach(s -> sb.append(PREFIX_CATEGORY).append(s.categoryName).append(" "));
             }
         }
         return sb.toString();

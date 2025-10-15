@@ -43,7 +43,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_CATEGORY + "TAG]...\n"
+            + "[" + PREFIX_CATEGORY + "CATEGORY]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -99,7 +99,7 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Category> updatedCategories = editPersonDescriptor.getTags().orElse(personToEdit.getCategories());
+        Set<Category> updatedCategories = editPersonDescriptor.getCategories().orElse(personToEdit.getCategories());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCategories);
     }
@@ -150,7 +150,7 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setTags(toCopy.categories);
+            setCategories(toCopy.categories);
         }
 
         /**
@@ -196,16 +196,16 @@ public class EditCommand extends Command {
          * Sets {@code categories} to this object's {@code categories}.
          * A defensive copy of {@code categories} is used internally.
          */
-        public void setTags(Set<Category> categories) {
+        public void setCategories(Set<Category> categories) {
             this.categories = (categories != null) ? new HashSet<>(categories) : null;
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * Returns an unmodifiable category set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
          * Returns {@code Optional#empty()} if {@code categories} is null.
          */
-        public Optional<Set<Category>> getTags() {
+        public Optional<Set<Category>> getCategories() {
             return (categories != null) ? Optional.of(Collections.unmodifiableSet(categories)) : Optional.empty();
         }
 

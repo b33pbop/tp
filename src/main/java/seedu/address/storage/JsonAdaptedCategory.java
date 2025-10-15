@@ -9,28 +9,28 @@ import seedu.address.model.category.Category;
 /**
  * Jackson-friendly version of {@link Category}.
  */
-class JsonAdaptedTag {
+class JsonAdaptedCategory {
 
-    private final String tagName;
+    private final String categoryName;
 
     /**
-     * Constructs a {@code JsonAdaptedTag} with the given {@code tagName}.
+     * Constructs a {@code JsonAdaptedCategory} with the given {@code categoryName}.
      */
     @JsonCreator
-    public JsonAdaptedTag(String tagName) {
-        this.tagName = tagName;
+    public JsonAdaptedCategory(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     /**
      * Converts a given {@code Category} into this class for Jackson use.
      */
-    public JsonAdaptedTag(Category source) {
-        tagName = source.tagName;
+    public JsonAdaptedCategory(Category source) {
+        categoryName = source.categoryName;
     }
 
     @JsonValue
-    public String getTagName() {
-        return tagName;
+    public String getCategoryName() {
+        return categoryName;
     }
 
     /**
@@ -39,10 +39,10 @@ class JsonAdaptedTag {
      * @throws IllegalValueException if there were any data constraints violated in the adapted tag.
      */
     public Category toModelType() throws IllegalValueException {
-        if (!Category.isValidTagName(tagName)) {
+        if (!Category.isValidCategoryName(categoryName)) {
             throw new IllegalValueException(Category.MESSAGE_CONSTRAINTS);
         }
-        return new Category(tagName);
+        return new Category(categoryName);
     }
 
 }

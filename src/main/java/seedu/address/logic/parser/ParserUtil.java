@@ -109,19 +109,19 @@ public class ParserUtil {
     public static Category parseCategory(String tag) throws ParseException {
         requireNonNull(tag);
         String trimmedTag = tag.trim();
-        if (!Category.isValidTagName(trimmedTag)) {
+        if (!Category.isValidCategoryName(trimmedTag)) {
             throw new ParseException(Category.MESSAGE_CONSTRAINTS);
         }
         return new Category(trimmedTag);
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Category>}.
+     * Parses {@code Collection<String> categories} into a {@code Set<Category>}.
      */
-    public static Set<Category> parseCategories(Collection<String> tags) throws ParseException {
-        requireNonNull(tags);
+    public static Set<Category> parseCategories(Collection<String> categories) throws ParseException {
+        requireNonNull(categories);
         final Set<Category> categorySet = new HashSet<>();
-        for (String tagName : tags) {
+        for (String tagName : categories) {
             categorySet.add(parseCategory(tagName));
         }
         return categorySet;
