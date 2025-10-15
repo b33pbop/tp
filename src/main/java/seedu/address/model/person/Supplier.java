@@ -8,7 +8,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Set;
 
 //import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.category.Category;
 
 /**
  * Represents a Person in the address book.
@@ -21,9 +21,9 @@ public class Supplier extends Person {
     /**
      * Every field must be present and not null.
      */
-    public Supplier(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String item) {
-        super(name, phone, email, address, tags);
-        requireAllNonNull(name, phone, email, address, tags);
+    public Supplier(Name name, Phone phone, Email email, Address address, Set<Category> categories, String item) {
+        super(name, phone, email, address, categories);
+        requireAllNonNull(name, phone, email, address, categories);
         this.item = item;
     }
 

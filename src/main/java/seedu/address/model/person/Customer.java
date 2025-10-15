@@ -4,7 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Set;
 
-import seedu.address.model.tag.Tag;
+import seedu.address.model.category.Category;
 
 /*
 Possible methods to implement would be spend(double amount)
@@ -25,9 +25,9 @@ public class Customer extends Person {
     /**
      * Every field must be present and not null.
      */
-    public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        super(name, phone, email, address, tags);
-        requireAllNonNull(name, phone, email, address, tags);
+    public Customer(Name name, Phone phone, Email email, Address address, Set<Category> categories) {
+        super(name, phone, email, address, categories);
+        requireAllNonNull(name, phone, email, address, categories);
         //this.totalSpent = STARTING_AMOUNT;
         //this.tier = new Tier();
 
