@@ -7,12 +7,12 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Person}'s {@code Name} or {@code Tags} matches any of the keywords given.
+ * Tests that a {@code Person}'s {@code Name} or {@code Categories} matches any of the keywords given.
  */
-public class NameOrTagContainsKeywordsPredicate implements Predicate<Person> {
+public class NameOrCategoryContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
-    public NameOrTagContainsKeywordsPredicate(List<String> keywords) {
+    public NameOrCategoryContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -21,8 +21,8 @@ public class NameOrTagContainsKeywordsPredicate implements Predicate<Person> {
         return keywords.stream()
                 .anyMatch(keyword ->
                     StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword)
-                    || person.getTags().stream()
-                        .anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword))
+                    || person.getCategories().stream()
+                        .anyMatch(category -> StringUtil.containsWordIgnoreCase(category.categoryName, keyword))
                 );
     }
 
@@ -33,11 +33,11 @@ public class NameOrTagContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof NameOrTagContainsKeywordsPredicate)) {
+        if (!(other instanceof NameOrCategoryContainsKeywordsPredicate)) {
             return false;
         }
 
-        NameOrTagContainsKeywordsPredicate otherPredicate = (NameOrTagContainsKeywordsPredicate) other;
+        NameOrCategoryContainsKeywordsPredicate otherPredicate = (NameOrCategoryContainsKeywordsPredicate) other;
         return keywords.equals(otherPredicate.keywords);
     }
 
