@@ -12,6 +12,13 @@ public class Order {
     private double unitPrice;
     private LocalDate deliveryDate;
 
+    /**
+     * Constructor for order
+     * @param item name of item to be ordered
+     * @param quantity quantity of item
+     * @param unitPrice price of each item
+     * @param deliveryDate date to be delivered
+     */
     public Order(String item, int quantity, double unitPrice, LocalDate deliveryDate) {
         this.item = item;
         this.quantity = quantity;
