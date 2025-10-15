@@ -106,7 +106,7 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code tag} is invalid.
      */
-    public static Category parseTag(String tag) throws ParseException {
+    public static Category parseCategory(String tag) throws ParseException {
         requireNonNull(tag);
         String trimmedTag = tag.trim();
         if (!Category.isValidTagName(trimmedTag)) {
@@ -118,11 +118,11 @@ public class ParserUtil {
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Category>}.
      */
-    public static Set<Category> parseTags(Collection<String> tags) throws ParseException {
+    public static Set<Category> parseCategories(Collection<String> tags) throws ParseException {
         requireNonNull(tags);
         final Set<Category> categorySet = new HashSet<>();
         for (String tagName : tags) {
-            categorySet.add(parseTag(tagName));
+            categorySet.add(parseCategory(tagName));
         }
         return categorySet;
     }

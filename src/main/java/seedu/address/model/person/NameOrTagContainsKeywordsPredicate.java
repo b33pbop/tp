@@ -21,7 +21,7 @@ public class NameOrTagContainsKeywordsPredicate implements Predicate<Person> {
         return keywords.stream()
                 .anyMatch(keyword ->
                     StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword)
-                    || person.getTags().stream()
+                    || person.getCategories().stream()
                         .anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword))
                 );
     }

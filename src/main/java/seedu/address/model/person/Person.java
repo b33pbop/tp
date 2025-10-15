@@ -57,7 +57,7 @@ public class Person {
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Category> getTags() {
+    public Set<Category> getCategories() {
         return Collections.unmodifiableSet(categories);
     }
 
