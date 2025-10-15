@@ -44,15 +44,23 @@ public class Staff extends Person {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Staff otherPerson)) {
+        if (!(other instanceof Staff otherStaff)) {
             return false;
         }
 
-        return otherPerson.isSameStaff(this);
+        return otherStaff.getName().equals(getName())
+                && otherStaff.getPhone().equals(getPhone())
+                && otherStaff.getEmail().equals(getEmail())
+                && otherStaff.getAddress().equals(getAddress())
+                && otherStaff.getCategories().equals(getCategories());
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return Person.class.getCanonicalName() + "{name=" + getName()
+                + ", phone=" + getPhone()
+                + ", email=" + getEmail()
+                + ", address=" + getAddress()
+                + ", categories=" + getCategories() + "}";
     }
 }
