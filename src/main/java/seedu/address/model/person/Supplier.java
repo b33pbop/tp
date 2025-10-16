@@ -5,7 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 //import java.util.Collections;
 //import java.util.HashSet;
 //import java.util.Objects;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 //import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.category.Category;
@@ -18,6 +20,7 @@ public class Supplier extends Person {
 
     // Identity fields
     private final String item;
+    private final ArrayList<Order> orders;
     /**
      * Every field must be present and not null.
      */
@@ -25,6 +28,7 @@ public class Supplier extends Person {
         super(name, phone, email, address, categories);
         requireAllNonNull(name, phone, email, address, categories);
         this.item = item;
+        this.orders = new ArrayList<>();
     }
 
     /**
@@ -64,5 +68,24 @@ public class Supplier extends Person {
     public String toString() {
         return super.toString();
     }
+
+    /**
+     * Takes in a new order to be placed and adds it to the list
+     * @param newOrder Order to be placed
+     */
+    public void addOrder(Order newOrder) {
+        orders.add(newOrder);
+    }
+
+    /**
+     * Returns a string content the orders placed under supplier
+     * @return String of orders in list
+     */
+    public String listOrders() {
+        return orders.stream()
+                .map(Order::toString)
+                .collect(Collectors.joining("\n"));
+    }
+
 
 }
