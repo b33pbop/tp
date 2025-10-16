@@ -6,38 +6,25 @@ import java.util.Set;
 
 import seedu.address.model.category.Category;
 
-/*
-Possible methods to implement would be spend(double amount)
-should create a tier class to take care of tier abstraction and discounts
- */
-
 /**
- * Represents a customer in the address book where customer is a customer who has signed up for membership
- * Inherits from person and can be used to track spending, membership tier and possibly discounts.
+ * Represents a staff member in the address book.
+ * Inherits from person. Additional staff-specific behavior/fields can be added later.
  */
-public class Customer extends Person {
-    //private static final double STARTING_AMOUNT = 0;
-    // Identity fields
-    //private final double totalSpent;
-    //create Tier class?
-    //private Tier tier
+public class Staff extends Person {
 
     /**
      * Every field must be present and not null.
      */
-    public Customer(Name name, Phone phone, Email email, Address address, Set<Category> categories) {
+    public Staff(Name name, Phone phone, Email email, Address address, Set<Category> categories) {
         super(name, phone, email, address, categories);
         requireAllNonNull(name, phone, email, address, categories);
-        //this.totalSpent = STARTING_AMOUNT;
-        //this.tier = new Tier();
-
     }
 
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */
-    public boolean isSameCustomer(Customer otherPerson) {
+    public boolean isSameStaff(Staff otherPerson) {
         if (otherPerson == this) {
             return true;
         }
@@ -57,17 +44,23 @@ public class Customer extends Person {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Customer otherPerson)) {
+        if (!(other instanceof Staff otherStaff)) {
             return false;
         }
 
-        return otherPerson.isSameCustomer(this);
+        return otherStaff.getName().equals(getName())
+                && otherStaff.getPhone().equals(getPhone())
+                && otherStaff.getEmail().equals(getEmail())
+                && otherStaff.getAddress().equals(getAddress())
+                && otherStaff.getCategories().equals(getCategories());
     }
-
 
     @Override
     public String toString() {
-        return super.toString();
+        return Person.class.getCanonicalName() + "{name=" + getName()
+                + ", phone=" + getPhone()
+                + ", email=" + getEmail()
+                + ", address=" + getAddress()
+                + ", categories=" + getCategories() + "}";
     }
-
 }

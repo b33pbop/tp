@@ -1,38 +1,38 @@
-package seedu.address.model.tag;
+package seedu.address.model.category;
 
 import static java.util.Objects.requireNonNull;
 
 
 /**
- * Represents a Tag in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
+ * Represents a Category in the address book.
+ * Guarantees: immutable; name is valid as declared in {@link #isValidCategoryName(String)}
  */
-public class Tag {
+public class Category {
 
     public static final String MESSAGE_CONSTRAINTS = "Unknown Category (Customer | Supplier | Staff)";
     private static final String[] VALID_VALUES = {"Customer", "Supplier", "Staff"};
 
 
-    public final String tagName;
+    public final String categoryName;
 
     /**
-     * Constructs a {@code Tag}.
+     * Constructs a {@code Category}.
      *
-     * @param tagName A valid tag name. (Customer, Supplier, or Staff)
+     * @param categoryName A valid tag name. (Customer, Supplier, or Staff)
      */
-    public Tag(String tagName) {
-        requireNonNull(tagName);
-        if (!isValidTagName(tagName)) {
+    public Category(String categoryName) {
+        requireNonNull(categoryName);
+        if (!isValidCategoryName(categoryName)) {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
-        this.tagName = normalize(tagName);
+        this.categoryName = normalize(categoryName);
     }
 
     /**
      * Returns true if a given string is a valid category tag name.
      * Case-insensitive check.
      */
-    public static boolean isValidTagName(String test) {
+    public static boolean isValidCategoryName(String test) {
         if (test == null || test.trim().isEmpty()) {
             return false;
         }
@@ -58,24 +58,24 @@ public class Tag {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Tag)) {
+        if (!(other instanceof Category)) {
             return false;
         }
 
-        Tag otherTag = (Tag) other;
-        return tagName.equals(otherTag.tagName);
+        Category otherCategory = (Category) other;
+        return categoryName.equals(otherCategory.categoryName);
     }
 
     @Override
     public int hashCode() {
-        return tagName.hashCode();
+        return categoryName.hashCode();
     }
 
     /**
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + tagName + ']';
+        return '[' + categoryName + ']';
     }
 
 }
