@@ -19,7 +19,7 @@ public class StaffBuilder extends PersonBuilder {
 
     @Override
     public Staff build() {
-        return new Staff(name, phone, email, address, categories);
+        return new Staff(name, phone, email, address, category);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class StaffBuilder extends PersonBuilder {
     }
 
     @Override
-    public StaffBuilder withCategories(String... categories) {
-        super.withCategories(categories);
+    public StaffBuilder withCategories(String category) {
+        super.withCategories(category);
         return this;
     }
 }

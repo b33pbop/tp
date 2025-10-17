@@ -8,12 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -99,9 +96,9 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Category> updatedCategories = editPersonDescriptor.getCategories().orElse(personToEdit.getCategories());
+        Category updatedCategory = editPersonDescriptor.getCategory().orElse(personToEdit.getCategory());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCategories);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCategory);
     }
 
     @Override
@@ -137,7 +134,7 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
-        private Set<Category> categories;
+        private Category category;
 
         public EditPersonDescriptor() {}
 
@@ -150,14 +147,14 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setCategories(toCopy.categories);
+            setCategory(toCopy.category);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, categories);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, category);
         }
 
         public void setName(Name name) {
@@ -192,21 +189,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        /**
-         * Sets {@code categories} to this object's {@code categories}.
-         * A defensive copy of {@code categories} is used internally.
-         */
-        public void setCategories(Set<Category> categories) {
-            this.categories = (categories != null) ? new HashSet<>(categories) : null;
+        public void setCategory(Category category) {
+            this.category = category;
         }
 
-        /**
-         * Returns an unmodifiable category set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code categories} is null.
-         */
-        public Optional<Set<Category>> getCategories() {
-            return (categories != null) ? Optional.of(Collections.unmodifiableSet(categories)) : Optional.empty();
+        public Optional<Category> getCategory() {
+            return Optional.ofNullable(category);
         }
 
         @Override
@@ -225,7 +213,7 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(categories, otherEditPersonDescriptor.categories);
+                    && Objects.equals(category, otherEditPersonDescriptor.category);
         }
 
         @Override
@@ -235,7 +223,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("categories", categories)
+                    .add("categories", category)
                     .toString();
         }
     }

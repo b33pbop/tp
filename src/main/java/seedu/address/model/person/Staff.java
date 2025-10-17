@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Set;
-
 import seedu.address.model.category.Category;
 
 /**
@@ -15,9 +13,9 @@ public class Staff extends Person {
     /**
      * Every field must be present and not null.
      */
-    public Staff(Name name, Phone phone, Email email, Address address, Set<Category> categories) {
-        super(name, phone, email, address, categories);
-        requireAllNonNull(name, phone, email, address, categories);
+    public Staff(Name name, Phone phone, Email email, Address address, Category category) {
+        super(name, phone, email, address, category);
+        requireAllNonNull(name, phone, email, address, category);
     }
 
     /**
@@ -52,7 +50,7 @@ public class Staff extends Person {
                 && otherStaff.getPhone().equals(getPhone())
                 && otherStaff.getEmail().equals(getEmail())
                 && otherStaff.getAddress().equals(getAddress())
-                && otherStaff.getCategories().equals(getCategories());
+                && otherStaff.getCategory().equals(getCategory());
     }
 
     @Override
@@ -61,6 +59,6 @@ public class Staff extends Person {
                 + ", phone=" + getPhone()
                 + ", email=" + getEmail()
                 + ", address=" + getAddress()
-                + ", categories=" + getCategories() + "}";
+                + ", categories=" + getCategory() + "}";
     }
 }

@@ -1,15 +1,11 @@
 package seedu.address.testutil;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Person objects.
@@ -20,13 +16,13 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final Category DEFAULT_CATEGORY = new Category("Customer");
+    public static final String DEFAULT_CATEGORY = "Customer";
 
     protected Name name;
     protected Phone phone;
     protected Email email;
     protected Address address;
-    protected Set<Category> categories;
+    protected Category category;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -36,8 +32,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
-        categories = new HashSet<>();
-        categories.add(DEFAULT_CATEGORY);
+        category = new Category(DEFAULT_CATEGORY);
     }
 
     /**
@@ -48,7 +43,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
-        categories = new HashSet<>(personToCopy.getCategories());
+        category = personToCopy.getCategory();
     }
 
     /**
@@ -62,8 +57,8 @@ public class PersonBuilder {
     /**
      * Parses the {@code categories} into a {@code Set<Category>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withCategories(String ... categories) {
-        this.categories = SampleDataUtil.getCategorySet(categories);
+    public PersonBuilder withCategories(String category) {
+        this.category = new Category(category);
         return this;
     }
 
@@ -92,7 +87,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, categories);
+        return new Person(name, phone, email, address, category);
     }
 
 }

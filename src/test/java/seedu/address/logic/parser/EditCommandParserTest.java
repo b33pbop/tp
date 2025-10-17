@@ -46,9 +46,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 public class EditCommandParserTest {
-
-    private static final String CATEGORIES_EMPTY = " " + PREFIX_CATEGORY;
-
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 
@@ -92,19 +89,10 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC,
                 Address.INVALID_CHARACTER_MESSAGE_CONSTRAINTS); // invalid address
         assertParseFailure(parser, "1" + INVALID_CATEGORY_DESC,
-                Category.MESSAGE_CONSTRAINTS); // invalid tag
+                Category.MESSAGE_CONSTRAINTS); // invalid category
 
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_CONSTRAINTS);
-
-        // while parsing {@code PREFIX_CATEGORY} alone will reset the categories of the {@code Person} being edited,
-        // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + CATEGORY_DESC_CUSTOMER + CATEGORY_DESC_STAFF + CATEGORIES_EMPTY,
-                Category.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + CATEGORY_DESC_CUSTOMER + CATEGORIES_EMPTY + CATEGORY_DESC_STAFF,
-                Category.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + CATEGORIES_EMPTY + CATEGORY_DESC_CUSTOMER + CATEGORY_DESC_STAFF,
-                Category.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser,
@@ -115,12 +103,12 @@ public class EditCommandParserTest {
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + CATEGORY_DESC_STAFF
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + CATEGORY_DESC_CUSTOMER;
+        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + NAME_DESC_AMY + CATEGORY_DESC_CUSTOMER;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withCategories(VALID_CATEGORY_STAFF, VALID_CATEGORY_CUSTOMER).build();
+                .withCategories(VALID_CATEGORY_CUSTOMER).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -194,24 +182,18 @@ public class EditCommandParserTest {
                 + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + CATEGORY_DESC_CUSTOMER;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE,
+                        PREFIX_EMAIL,
+                        PREFIX_ADDRESS,
+                        PREFIX_CATEGORY));
 
         // multiple invalid values
         userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC
                 + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
-    }
-
-    @Test
-    public void parse_resetCategories_success() {
-        Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + CATEGORIES_EMPTY;
-
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withCategories().build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE,
+                        PREFIX_EMAIL,
+                        PREFIX_ADDRESS));
     }
 }

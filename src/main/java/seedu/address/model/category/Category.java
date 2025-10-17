@@ -12,7 +12,6 @@ public class Category {
     public static final String MESSAGE_CONSTRAINTS = "Unknown Category (Customer | Supplier | Staff)";
     private static final String[] VALID_VALUES = {"Customer", "Supplier", "Staff"};
 
-
     public final String categoryName;
 
     /**
@@ -45,7 +44,9 @@ public class Category {
         return false;
     }
 
-    /** Converts input to Title Case form ("customer" → "Customer"). */
+    /**
+     * Converts input to Title Case form ("customer" → "Customer").
+     * */
     private static String normalize(String input) {
         String lower = input.trim().toLowerCase();
         return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);

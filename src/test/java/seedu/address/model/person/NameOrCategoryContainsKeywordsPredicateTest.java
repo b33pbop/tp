@@ -76,7 +76,7 @@ public class NameOrCategoryContainsKeywordsPredicateTest {
         // Multiple categories, keyword matches one of them
         predicate = new NameOrCategoryContainsKeywordsPredicate(Collections.singletonList("Supplier"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob")
-                .withCategories("Customer", "Supplier").build()));
+                .withCategories("Supplier").build()));
     }
 
     @Test

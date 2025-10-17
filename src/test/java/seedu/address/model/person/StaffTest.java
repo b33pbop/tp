@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_CATEGORY_STAFF;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
@@ -17,12 +16,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.testutil.StaffBuilder;
 
 public class StaffTest {
-
-    @Test
-    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        Staff staff = new StaffBuilder().build();
-        assertThrows(UnsupportedOperationException.class, () -> staff.getCategories().remove(0));
-    }
 
     @Test
     public void isSameStaff() {
@@ -105,7 +98,7 @@ public class StaffTest {
                 + ", phone=" + aliceStaff.getPhone()
                 + ", email=" + aliceStaff.getEmail()
                 + ", address=" + aliceStaff.getAddress()
-                + ", categories=" + aliceStaff.getCategories() + "}";
+                + ", categories=" + aliceStaff.getCategory() + "}";
         assertEquals(expected, aliceStaff.toString());
     }
 }
