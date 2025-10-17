@@ -47,7 +47,11 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME,
+                PREFIX_PHONE,
+                PREFIX_EMAIL,
+                PREFIX_ADDRESS,
+                PREFIX_CATEGORY);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -84,10 +88,13 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (categories.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> categorySet = categories.size() == 1 && categories.contains("")
-                ? Collections.emptySet()
-                : categories;
-        return Optional.of(ParserUtil.parseCategories(categorySet));
+
+        if (categories.size() > 1) {
+            throw new ParseException("Only one category is allowed per contact.");
+        }
+
+        Category category = ParserUtil.parseCategory(categories.iterator().next());
+        return Optional.of(Collections.singleton(category));
     }
 
 }
