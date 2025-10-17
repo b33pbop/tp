@@ -3,8 +3,6 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +16,7 @@ public class SupplierTest {
         Name testName = new Name("Grace Chan");
         Email testEmail = new Email("grace01@gmail.com");
         Address testAddress = new Address("Block 416 Bukit Batok Drive");
-        Set<Category> testCat = new HashSet<>();
-        testCat.add(new Category("Supplier"));
+        Category testCat = new Category("Supplier");
         Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat, "Computer");
         Order test1 = new Order("Computer", 5, 100.0,
                 LocalDate.of(2023, 10, 2));

@@ -6,7 +6,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 //import java.util.HashSet;
 //import java.util.Objects;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 //import seedu.address.commons.util.ToStringBuilder;
@@ -24,9 +23,9 @@ public class Supplier extends Person {
     /**
      * Every field must be present and not null.
      */
-    public Supplier(Name name, Phone phone, Email email, Address address, Set<Category> categories, String item) {
-        super(name, phone, email, address, categories);
-        requireAllNonNull(name, phone, email, address, categories);
+    public Supplier(Name name, Phone phone, Email email, Address address, Category category, String item) {
+        super(name, phone, email, address, category);
+        requireAllNonNull(name, phone, email, address, category);
         this.item = item;
         this.orders = new ArrayList<>();
     }

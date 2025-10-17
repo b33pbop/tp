@@ -1,9 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
@@ -36,7 +32,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
-        descriptor.setCategories(person.getCategories());
+        descriptor.setCategory(person.getCategory());
     }
 
     /**
@@ -75,9 +71,8 @@ public class EditPersonDescriptorBuilder {
      * Parses the {@code categories} into a {@code Set<Category>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
-    public EditPersonDescriptorBuilder withCategories(String... categories) {
-        Set<Category> categorySet = Stream.of(categories).map(Category::new).collect(Collectors.toSet());
-        descriptor.setCategories(categorySet);
+    public EditPersonDescriptorBuilder withCategories(String category) {
+        descriptor.setCategory(new Category(category));
         return this;
     }
 

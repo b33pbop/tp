@@ -17,13 +17,11 @@ public class SampleDataUtilTest {
         for (Person p : people) {
             // assuming Person#getCategories() returns a
             // Set<Category> and Category#categoryName is accessible or via toString()
-            p.getCategories().forEach(t -> {
-                String v = t.toString().replace("[", "").replace("]", "");
-                assertTrue(
-                        v.equals("Customer") || v.equals("Supplier") || v.equals("Staff"),
-                        "unexpected tag " + v
-                );
-            });
+            String categoryName = p.getCategory().categoryName;
+            assertTrue(
+                    categoryName.equals("Customer") || categoryName.equals("Supplier") || categoryName.equals("Staff"),
+                    "unexpected category " + categoryName
+            );
         }
     }
 }
