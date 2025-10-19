@@ -66,7 +66,7 @@ public class CommandTestUtil {
                 .withCategories(VALID_CATEGORY_STAFF).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withCategories(VALID_CATEGORY_CUSTOMER, VALID_CATEGORY_STAFF).build();
+                .withCategories(VALID_CATEGORY_CUSTOMER).build();
     }
 
     /**

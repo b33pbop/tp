@@ -1,15 +1,9 @@
 package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +26,6 @@ public class ParserUtilTest {
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_CATEGORY_1 = "Customer";
-    private static final String VALID_CATEGORY_2 = "Staff";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -196,25 +189,19 @@ public class ParserUtilTest {
 
     @Test
     public void parseCategories_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> ParserUtil.parseCategories(null));
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseCategory(null));
     }
 
     @Test
-    public void parseCategories_collectionWithInvalidCategories_throwsParseException() {
+    public void parseCategories_collectionWithInvalidCategory_throwsParseException() {
         assertThrows(ParseException.class, ()
-                -> ParserUtil.parseCategories(Arrays.asList(VALID_CATEGORY_1, INVALID_CATEGORY)));
-    }
-
-    @Test
-    public void parseCategories_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseCategories(Collections.emptyList()).isEmpty());
+                -> ParserUtil.parseCategory(INVALID_CATEGORY));
     }
 
     @Test
     public void parseCategories_collectionWithValidCategories_returnsCategorySet() throws Exception {
-        Set<Category> actualCategorySet = ParserUtil.parseCategories(Arrays.asList(VALID_CATEGORY_1, VALID_CATEGORY_2));
-        Set<Category> expectedCategorySet = new HashSet<Category>(Arrays.asList(new Category(VALID_CATEGORY_1),
-                new Category(VALID_CATEGORY_2)));
+        Category actualCategorySet = new Category(VALID_CATEGORY_1);
+        Category expectedCategorySet = new Category(VALID_CATEGORY_1);
 
         assertEquals(expectedCategorySet, actualCategorySet);
     }
