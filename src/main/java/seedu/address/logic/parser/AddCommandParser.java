@@ -19,6 +19,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Shift;
 import seedu.address.model.person.Staff;
+import seedu.address.model.person.Supplier;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -58,6 +59,11 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (category.getCategoryName().equals("Staff")) {
             Person staff = new Staff(name, phone, email, address, category, new Shift("AM"));
             return new AddCommand(staff);
+        }
+
+        if (category.categoryName.equals("Supplier")) {
+            Supplier supplier = new Supplier(name, phone, email, address, category, "Chicken");
+            return new AddCommand(supplier);
         }
 
         Person person = new Person(name, phone, email, address, category);
