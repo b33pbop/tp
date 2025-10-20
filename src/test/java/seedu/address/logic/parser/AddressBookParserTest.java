@@ -22,6 +22,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.UpdateShiftCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameOrCategoryContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -87,6 +88,14 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
+
+    @Test
+    public void parseCommand_updateShift() throws Exception {
+        String validInput = UpdateShiftCommand.COMMAND_WORD + " p/81234567 s/PM";
+        assertTrue(parser.parseCommand(validInput) instanceof UpdateShiftCommand);
+    }
+
+
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {

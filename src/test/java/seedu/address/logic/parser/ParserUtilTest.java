@@ -13,6 +13,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Shift;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
@@ -204,5 +205,19 @@ public class ParserUtilTest {
         Category expectedCategorySet = new Category(VALID_CATEGORY_1);
 
         assertEquals(expectedCategorySet, actualCategorySet);
+    }
+
+    @Test
+    public void parseShift_validShift_returnsShift() throws Exception {
+        assertEquals(new Shift("AM"), ParserUtil.parseShift("AM"));
+        assertEquals(new Shift("PM"), ParserUtil.parseShift("PM"));
+        // With extra spaces
+        assertEquals(new Shift("AM"), ParserUtil.parseShift("  AM  "));
+    }
+    @Test
+    public void parseShift_invalidShift_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseShift("morning"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseShift(""));
+        assertThrows(ParseException.class, () -> ParserUtil.parseShift("123"));
     }
 }
