@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 //import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.category.Category;
 
 /**
@@ -44,7 +45,7 @@ public class Supplier extends Person {
         }
 
         return otherPerson != null
-                && otherPerson.equals(this);
+                && otherPerson.getName().equals(getName());
     }
 
     /**
@@ -63,13 +64,20 @@ public class Supplier extends Person {
         }
 
         Supplier otherPerson = (Supplier) other;
-        return otherPerson.item.equals(this.item);
+        return super.equals(other) && otherPerson.item.equals(this.item);
     }
 
 
     @Override
     public String toString() {
-        return super.toString();
+        return new ToStringBuilder(this)
+                .add("name", super.getName())
+                .add("phone", super.getPhone())
+                .add("email", super.getEmail())
+                .add("address", super.getAddress())
+                .add("category", super.getCategory())
+                .add("item", this.item)
+                .toString();
     }
 
     /**
