@@ -61,7 +61,7 @@ public class UpdateShiftCommand extends Command {
             throw new CommandException(MESSAGE_EMPTY_LIST);
         }
 
-        // ✅ Find person by phone number
+        //  Find person by phone number
         Optional<Person> matchedPerson = personList.stream()
                 .filter(p -> p.getPhone().equals(phone))
                 .findFirst();
@@ -72,7 +72,7 @@ public class UpdateShiftCommand extends Command {
 
         Person personToUpdate = matchedPerson.get();
 
-        // ✅ Check if person is a Staff
+        //  Check if person is a Staff
         if (!(personToUpdate instanceof Staff)) {
             throw new CommandException(String.format(MESSAGE_NOT_A_STAFF, phone));
         }

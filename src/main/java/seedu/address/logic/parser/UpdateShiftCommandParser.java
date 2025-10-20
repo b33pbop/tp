@@ -12,7 +12,7 @@ import seedu.address.model.person.Shift;
 
 /**
  * Parses input arguments and creates a new {@code UpdateShiftCommand} object.
- * Command format: update shift p/<phone> s/<shift>
+ * Command format: update shift p/{@code <phone>} s/{@code <shift>}
  */
 public class UpdateShiftCommandParser implements Parser<UpdateShiftCommand> {
 
@@ -28,7 +28,7 @@ public class UpdateShiftCommandParser implements Parser<UpdateShiftCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PHONE, PREFIX_SHIFT);
 
-        // ✅ Manually check that both required prefixes are present
+        //  Manually check that both required prefixes are present
         boolean hasPhone = argMultimap.getValue(PREFIX_PHONE).isPresent();
         boolean hasShift = argMultimap.getValue(PREFIX_SHIFT).isPresent();
 
