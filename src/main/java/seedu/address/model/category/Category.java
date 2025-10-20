@@ -45,6 +45,14 @@ public class Category {
     }
 
     /**
+     * Getter for category name
+     * @return categoryName as String
+     */
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    /**
      * Converts input to Title Case form ("customer" → "Customer").
      * */
     private static String normalize(String input) {
