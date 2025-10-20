@@ -16,10 +16,10 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Staff;
-import seedu.address.testutil.StaffBuilder;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
+import seedu.address.testutil.StaffBuilder;
 
 public class LogicUpdateShiftIntegrationTest {
 
@@ -27,7 +27,7 @@ public class LogicUpdateShiftIntegrationTest {
     Path tempDir;
 
     @Test
-    void execute_updateShift_updatesStaffShift() throws Exception {
+    void executeUpdateShiftUpdatesStaffShift() throws Exception {
         Path addr = tempDir.resolve("addressbook.json");
         Path prefs = tempDir.resolve("prefs.json");
         StorageManager storage = new StorageManager(
@@ -63,7 +63,7 @@ public class LogicUpdateShiftIntegrationTest {
     }
 
     @Test
-    void execute_updateShift_nonStaff_throwsCommandException() throws Exception {
+    void executeUpdateShiftNonStaffThrowsCommandException() throws Exception {
         Path addr = tempDir.resolve("addressbook.json");
         Path prefs = tempDir.resolve("prefs.json");
         StorageManager storage = new StorageManager(
