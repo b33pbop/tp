@@ -30,6 +30,10 @@ public class Supplier extends Person {
         this.orders = new ArrayList<>();
     }
 
+    public String getItem() {
+        return this.item;
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.

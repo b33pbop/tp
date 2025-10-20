@@ -11,7 +11,6 @@ import seedu.address.model.person.Supplier;
 public class SupplierBuilder extends PersonBuilder {
 
     private String item = "Chicken";
-    private Category category = new Category("Supplier");
 
     /**
      * Creates a default {@code SupplierBuilder} with default item Chicken.
@@ -26,19 +25,20 @@ public class SupplierBuilder extends PersonBuilder {
      *
      * @param personToCopy The person to copy fields from.
      */
-    public SupplierBuilder(Person personToCopy) {
+    public SupplierBuilder(Person personToCopy) throws IllegalArgumentException {
         super(personToCopy);
-    }
 
-    /**
-     * Sets the item of the Supplier being built.
-     *
-     * @param item any valid String for now
-     * @return this builder
-     */
-    public SupplierBuilder withItem(String item) {
-        this.item = item;
-        return this;
+        // Defensive check: only allow Person with Supplier category
+        if (personToCopy instanceof Supplier) {
+            Supplier supplier = (Supplier) personToCopy;
+            this.item = supplier.getItem();
+            this.category = new Category("Supplier");
+        } else if (personToCopy.getCategory().categoryName.equalsIgnoreCase("Supplier")) {
+            this.item = "Chicken";
+            this.category = new Category("Supplier");
+        } else {
+            throw new IllegalArgumentException("Person to copy is not a Supplier");
+        }
     }
 
     @Override
@@ -73,6 +73,17 @@ public class SupplierBuilder extends PersonBuilder {
     @Override
     public SupplierBuilder withCategory(String category) {
         super.withCategory("Supplier"); // always Supplier
+        return this;
+    }
+
+    /**
+     * Sets the item of the Supplier being built.
+     *
+     * @param item any valid String for now
+     * @return this builder
+     */
+    public SupplierBuilder withItem(String item) {
+        this.item = item;
         return this;
     }
 }
