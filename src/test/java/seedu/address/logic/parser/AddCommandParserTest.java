@@ -49,7 +49,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withCategories(VALID_CATEGORY_CUSTOMER).build();
+        Person expectedPerson = new PersonBuilder(BOB).withCategory(VALID_CATEGORY_CUSTOMER).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB

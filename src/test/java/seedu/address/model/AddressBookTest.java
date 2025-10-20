@@ -48,7 +48,7 @@ public class AddressBookTest {
         // Two persons with the same identity fields
         Person editedAlice = new PersonBuilder(ALICE)
                 .withAddress(VALID_ADDRESS_BOB)
-                .withCategories(VALID_CATEGORY_STAFF)
+                .withCategory(VALID_CATEGORY_STAFF)
                 .build();
         List<Person> newPersons = Arrays.asList(ALICE, editedAlice);
         AddressBookStub newData = new AddressBookStub(newPersons);
@@ -77,7 +77,7 @@ public class AddressBookTest {
         addressBook.addPerson(ALICE);
         Person editedAlice = new PersonBuilder(ALICE)
                 .withAddress(VALID_ADDRESS_BOB)
-                .withCategories(VALID_CATEGORY_STAFF)
+                .withCategory(VALID_CATEGORY_STAFF)
                 .build();
         assertTrue(addressBook.hasPerson(editedAlice));
     }
