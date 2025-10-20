@@ -52,7 +52,8 @@ class UpdateShiftCommandTest {
     @Test
     void execute_personNotStaff_throwsCommandException() {
         // Add a non-staff person
-        Person person = new Person(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(), ALICE.getAddress(), ALICE.getCategory());
+        Person person = new Person(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(),
+                ALICE.getAddress(), ALICE.getCategory());
         model.addPerson(person);
 
         UpdateShiftCommand command = new UpdateShiftCommand(person.getPhone(), new Shift("PM"));
@@ -66,7 +67,8 @@ class UpdateShiftCommandTest {
         Phone phone = new Phone("89998888");
         Shift shift = new Shift("PM");
 
-        Person person = new Person(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(), ALICE.getAddress(), ALICE.getCategory());
+        Person person = new Person(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(),
+                ALICE.getAddress(), ALICE.getCategory());
         model.addPerson(person);
 
         UpdateShiftCommand command = new UpdateShiftCommand(phone, shift);
