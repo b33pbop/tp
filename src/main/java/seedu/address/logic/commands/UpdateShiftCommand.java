@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SHIFT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -46,8 +47,8 @@ public class UpdateShiftCommand extends Command {
      * @param newShift The new shift value.
      */
     public UpdateShiftCommand(Phone phone, Shift newShift) {
-        requireNonNull(phone);
-        requireNonNull(newShift);
+        requireAllNonNull(phone, newShift);
+
         this.phone = phone;
         this.newShift = newShift;
     }
@@ -89,11 +90,20 @@ public class UpdateShiftCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof UpdateShiftCommand
-                && phone.equals(((UpdateShiftCommand) other).phone)
-                && newShift.equals(((UpdateShiftCommand) other).newShift));
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof UpdateShiftCommand)) {
+            return false;
+        }
+
+        UpdateShiftCommand otherCommand = (UpdateShiftCommand) other;
+        return phone.equals(otherCommand.phone)
+                && newShift.equals(otherCommand.newShift);
     }
+
 
     @Override
     public String toString() {
