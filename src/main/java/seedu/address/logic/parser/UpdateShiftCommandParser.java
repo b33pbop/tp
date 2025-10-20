@@ -37,7 +37,7 @@ public class UpdateShiftCommandParser implements Parser<UpdateShiftCommand> {
                     MESSAGE_INVALID_COMMAND_FORMAT, UpdateShiftCommand.MESSAGE_USAGE));
         }
 
-        // Prevent duplicate prefixes (optional but good practice)
+        // Prevent duplicate prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PHONE, PREFIX_SHIFT);
 
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
