@@ -1,0 +1,102 @@
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SHIFT;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.List;
+import java.util.Optional;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Shift;
+import seedu.address.model.person.Staff;
+
+/**
+ * Updates the shift of a staff member identified by their phone number.
+ */
+public class UpdateShiftCommand extends Command {
+
+    public static final String COMMAND_WORD = "updateshift";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Updates the shift of a staff member identified by their phone number.\n"
+            + "Parameters: "
+            + PREFIX_PHONE + "PHONE "
+            + PREFIX_SHIFT + "SHIFT\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PHONE + "91234567 "
+            + PREFIX_SHIFT + "PM";
+
+    public static final String MESSAGE_SUCCESS = "Updated shift for %1$s to %2$s.";
+    public static final String MESSAGE_NOT_A_STAFF = "The person with phone number %1$s is not a staff member.";
+    public static final String MESSAGE_PERSON_NOT_FOUND = "No person found with phone number %1$s.";
+    public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
+
+    private final Phone phone;
+    private final Shift newShift;
+
+    /**
+     * Creates an UpdateShiftCommand to update the shift of the specified staff.
+     *
+     * @param phone    Phone number identifying the staff.
+     * @param newShift The new shift value.
+     */
+    public UpdateShiftCommand(Phone phone, Shift newShift) {
+        requireNonNull(phone);
+        requireNonNull(newShift);
+        this.phone = phone;
+        this.newShift = newShift;
+    }
+
+    @Override
+    public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
+        List<Person> personList = model.getFilteredPersonList();
+
+        if (personList.isEmpty()) {
+            throw new CommandException(MESSAGE_EMPTY_LIST);
+        }
+
+        // ✅ Find person by phone number
+        Optional<Person> matchedPerson = personList.stream()
+                .filter(p -> p.getPhone().equals(phone))
+                .findFirst();
+
+        if (matchedPerson.isEmpty()) {
+            throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, phone));
+        }
+
+        Person personToUpdate = matchedPerson.get();
+
+        // ✅ Check if person is a Staff
+        if (!(personToUpdate instanceof Staff)) {
+            throw new CommandException(String.format(MESSAGE_NOT_A_STAFF, phone));
+        }
+
+        Staff staffToUpdate = (Staff) personToUpdate;
+        staffToUpdate.setShift(newShift);
+
+        model.setPerson(personToUpdate, staffToUpdate);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS,
+                staffToUpdate.getName(), newShift.getValue()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof UpdateShiftCommand
+                && phone.equals(((UpdateShiftCommand) other).phone)
+                && newShift.equals(((UpdateShiftCommand) other).newShift));
+    }
+
+    @Override
+    public String toString() {
+        return String.format("UpdateShiftCommand{phone=%s, newShift=%s}", phone, newShift);
+    }
+}
