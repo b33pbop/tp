@@ -22,6 +22,7 @@ public class Supplier extends Person {
     private final ArrayList<Order> orders;
     /**
      * Every field must be present and not null.
+     * @param item item that the supplier supplies, not the order itself.
      */
     public Supplier(Name name, Phone phone, Email email, Address address, Category category, String item) {
         super(name, phone, email, address, category);
