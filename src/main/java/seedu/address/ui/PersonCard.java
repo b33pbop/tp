@@ -55,10 +55,15 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         tags.getChildren().add(new Label(person.getCategory().categoryName));
+
         if (person instanceof Staff) {
             Staff staff = (Staff) person;
             Shift staffShift = staff.getShift();
             shift.setText(staffShift.toString());
         }
+    }
+
+    public Label getShiftLabel() {
+        return shift;
     }
 }
