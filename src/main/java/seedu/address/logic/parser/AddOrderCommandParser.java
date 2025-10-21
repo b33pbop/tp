@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
@@ -14,10 +13,11 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.AddOrderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-public class AddOrderCommandParser implements Parser<AddOrderCommand>{
-
-
-
+/**
+ * Parses the given {@code String} of arguments in the context of the AddOrderCommand
+ * and returns an AddOrderCommand object for execution.
+ */
+public class AddOrderCommandParser implements Parser<AddOrderCommand> {
 
     @Override
     public AddOrderCommand parse(String args) throws ParseException {
