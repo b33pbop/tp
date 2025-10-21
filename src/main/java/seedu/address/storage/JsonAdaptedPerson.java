@@ -19,24 +19,24 @@ import seedu.address.model.person.Staff;
  * Jackson-friendly version of {@link Person}.
  */
 class JsonAdaptedPerson {
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
-    @JsonProperty("name")     private final String name;
-    @JsonProperty("phone")    private final String phone;
-    @JsonProperty("email")    private final String email;
-    @JsonProperty("address")  private final String address;
+    @JsonProperty("name") private final String name;
+    @JsonProperty("phone") private final String phone;
+    @JsonProperty("email") private final String email;
+    @JsonProperty("address") private final String address;
     @JsonProperty("category") private final String category;
 
-    @JsonProperty("shift")            private String  shift;
-    @JsonProperty("numberOfLeaves")   private Integer numberOfLeaves;
+    @JsonProperty("shift") private String shift;
+    @JsonProperty("numberOfLeaves") private Integer numberOfLeaves;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
-    public JsonAdaptedPerson( String name, String phone,
+    public JsonAdaptedPerson(String name, String phone,
              String email, String address, JsonAdaptedCategory category) {
         this.name = name;
         this.phone = phone;
@@ -150,11 +150,14 @@ class JsonAdaptedPerson {
                 throw new IllegalValueException("numberOfLeaves cannot be negative");
             }
 
-            // If you have a convenience Staff ctor with leaves, use it; otherwise adjust after.
+
             Staff staff = new Staff(modelName, modelPhone, modelEmail, modelAddress, modelCategories, modelShift);
             int base = staff.getNumberOfLeaves(); // default is 14
-            if (leaves > base) staff.addLeaves(leaves - base);
-            else if (leaves < base) staff.removeLeaves(base - leaves);
+            if (leaves > base) {
+                staff.addLeaves(leaves - base);
+            } else if (leaves < base) {
+                staff.removeLeaves(base - leaves);
+            }
             return staff;
         }
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelCategories);
