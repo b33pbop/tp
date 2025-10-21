@@ -12,19 +12,16 @@ import seedu.address.testutil.SupplierBuilder;
 
 /**
  * Unit tests for logic in PersonCard, using builders to create test data.
- * Avoids JavaFX dependencies by simulating the PersonCard logic.
  */
 public class PersonCardTest {
-
+    /**
+     * Avoids JavaFX dependencies by simulating the PersonCard logic.
+     */
     private static class FakePersonCard {
-        String name, phone, address, email, shift, category;
+        private String shift;
+
 
         public FakePersonCard(Person person) {
-            name = person.getName().fullName;
-            phone = person.getPhone().value;
-            address = person.getAddress().value;
-            email = person.getEmail().value;
-            category = person.getCategory().categoryName;
 
             if (person instanceof Staff staff) {
                 shift = staff.getShift().toString();
