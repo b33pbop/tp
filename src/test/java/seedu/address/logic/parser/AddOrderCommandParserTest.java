@@ -83,10 +83,9 @@ public class AddOrderCommandParserTest {
         // missing delivery day
         String missingDeliveryDay = " p/ 85355255 i/ Chicken q/ 99 u/ 0.99";
         assertParseFailure(parser, AddOrderCommand.COMMAND_WORD + missingDeliveryDay, expectedErrorMessage);
-        
-        // all prefixes missing 
+
+        // all prefixes missing
         String missingAll = " 85355255 Chicken 99 0.99 every Thursday";
         assertParseFailure(parser, AddOrderCommand.COMMAND_WORD + missingAll, expectedErrorMessage);
-
     }
 }
