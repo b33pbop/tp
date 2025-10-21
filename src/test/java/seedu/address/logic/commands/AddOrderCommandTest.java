@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,36 @@ public class AddOrderCommandTest {
         addCommand.execute(model);
         CommandResult result = addOrderCommand.execute(model);
         assertEquals(AddOrderCommand.MESSAGE_SUCCESS, result.getFeedbackToUser());
+    }
+
+    @Test
+    public void supplierIsNull_failure() throws CommandException {
+        Order newOrder = new OrderBuilder().build();
+        Supplier supplier = new SupplierBuilder().withPhone("91111111").build();
+
+        int supplierPhone = 91111111;
+        String orderItem = newOrder.getItem();
+        int orderQuantity = newOrder.getQuantity();
+        double orderUnitPrice = newOrder.getUnitPrice();
+        String orderDeliveryDay = newOrder.getDeliveryDay();
+        AddOrderCommand addOrderCommand = new AddOrderCommand(supplierPhone, orderItem,
+                orderQuantity, orderUnitPrice,
+                orderDeliveryDay);
+
+        AddCommand addCommand = new AddCommand(supplier);
+        addCommand.execute(model);
+        assertCommandFailure(addOrderCommand, model, AddOrderCommand.MESSAGE_NOT_SUPPLIER);
+    }
+
+    @Test
+    public void personFoundNotSupplier() {
+        Order newOrder = new OrderBuilder().build();
+
+        int supplierPhone = 91111111;
+        String orderItem = newOrder.getItem();
+        int orderQuantity = newOrder.getQuantity();
+        double orderUnitPrice = newOrder.getUnitPrice();
+        String orderDeliveryDay = newOrder.getDeliveryDay();
     }
 
     @Test
