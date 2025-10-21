@@ -75,15 +75,12 @@ public class LogicUpdateShiftIntegrationTest {
         Logic logic = new LogicManager(model, storage);
 
         // Add a non-staff person
-        Person nonStaff = new PersonBuilder().withName("John Doe")
-                .withPhone("89998888")
-                .withEmail("john@example.com")
-                .withCategories("customer")
-                .build();
+        Person nonStaff = new PersonBuilder().build();
         model.addPerson(nonStaff);
 
         //  Try updating shift for non-staff, expect CommandException
-        String updateInput = "updateshift p/89998888 s/PM";
+        //number is default number
+        String updateInput = "updateshift p/85355255 s/PM";
         try {
             logic.execute(updateInput);
         } catch (CommandException e) {
