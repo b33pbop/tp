@@ -139,7 +139,6 @@ class JsonAdaptedPerson {
         final Category modelCategories = new Category(category);
 
         if ("Staff".equalsIgnoreCase(category)) {
-            // Default for old JSON
             final String safeShift = (shift == null || shift.isBlank()) ? "AM" : shift;
             final Shift modelShift = new Shift(safeShift);
 
