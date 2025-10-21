@@ -49,6 +49,5 @@ public class PersonCardTest {
         FakePersonCard card = new FakePersonCard(supplier);
 
         assertEquals("", card.shift);
-
     }
 }

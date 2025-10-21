@@ -62,8 +62,4 @@ public class PersonCard extends UiPart<Region> {
             shift.setText(staffShift.toString());
         }
     }
-
-    public Label getShiftLabel() {
-        return shift;
-    }
 }
