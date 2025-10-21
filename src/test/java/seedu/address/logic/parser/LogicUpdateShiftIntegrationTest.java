@@ -19,6 +19,7 @@ import seedu.address.model.person.Staff;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
+import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.StaffBuilder;
 
 public class LogicUpdateShiftIntegrationTest {
@@ -73,12 +74,11 @@ public class LogicUpdateShiftIntegrationTest {
         Model model = new ModelManager(); // empty state
         Logic logic = new LogicManager(model, storage);
 
-        // Add a non-staff person using StaffBuilder trick (or a PersonBuilder if exists)
-        Person nonStaff = new StaffBuilder().withName("John Doe")
+        // Add a non-staff person
+        Person nonStaff = new PersonBuilder().withName("John Doe")
                 .withPhone("89998888")
                 .withEmail("john@example.com")
-                .withShift("AM")
-                .withCategories("customer") // override category to non-staff
+                .withCategories("customer")
                 .build();
         model.addPerson(nonStaff);
 
