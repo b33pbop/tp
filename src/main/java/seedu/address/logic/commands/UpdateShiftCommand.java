@@ -6,9 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SHIFT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.List;
 import java.util.Optional;
 
+import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -56,7 +56,7 @@ public class UpdateShiftCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> personList = model.getFilteredPersonList();
+        ObservableList<Person> personList = model.getFilteredPersonList();
 
         if (personList.isEmpty()) {
             throw new CommandException(MESSAGE_EMPTY_LIST);
@@ -82,6 +82,7 @@ public class UpdateShiftCommand extends Command {
         staffToUpdate.setShift(newShift);
 
         model.setPerson(personToUpdate, staffToUpdate);
+        //refresh the ui to show updated change
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS,
