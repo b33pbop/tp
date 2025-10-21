@@ -4,6 +4,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.category.Category;
 
@@ -11,6 +14,18 @@ import seedu.address.model.category.Category;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
+
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "category",
+    visible = true
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Supplier.class, name = "Supplier"),
+    @JsonSubTypes.Type(value = Staff.class, name = "Staff")
+})
+
 public class Person {
 
     // Identity fields

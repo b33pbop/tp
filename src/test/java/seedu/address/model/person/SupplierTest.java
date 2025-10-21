@@ -27,7 +27,7 @@ public class SupplierTest {
         Email testEmail = new Email("grace01@gmail.com");
         Address testAddress = new Address("Block 416 Bukit Batok Drive");
         Category testCat = new Category("Supplier");
-        Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat, "Computer");
+        Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat);
         Order test1 = new Order("Computer", 5, 100.0,
                 LocalDate.of(2023, 10, 2));
         Order test2 = new Order("Computer", 10, 120.0,
@@ -53,7 +53,7 @@ public class SupplierTest {
         assertTrue(ALICE.isSameSupplier(editedAlice));
 
         // different name, all other attributes same -> returns false
-        editedAlice = new SupplierBuilder(ALICE).withName(VALID_NAME_BOB).withItem("Apples").build();
+        editedAlice = new SupplierBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSameSupplier(editedAlice));
 
         // name differs in case, all other attributes same -> returns false
@@ -105,7 +105,7 @@ public class SupplierTest {
     public void toStringMethod() {
         String expected = Supplier.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
-                + ", category=" + ALICE.getCategory() + ", item=" + ALICE.getItem() + "}";
+                + ", category=" + ALICE.getCategory() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }
