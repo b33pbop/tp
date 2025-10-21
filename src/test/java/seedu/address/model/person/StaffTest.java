@@ -36,7 +36,7 @@ public class StaffTest {
                 .withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB)
-                .withCategories(VALID_CATEGORY_STAFF)
+                .withCategory(VALID_CATEGORY_STAFF)
                 .withShift("PM")
                 .build();
         assertTrue(aliceStaff.isSameStaff(editedAlice));
@@ -108,7 +108,7 @@ public class StaffTest {
 
         // different categories -> returns false
         editedAlice = new StaffBuilder(ALICE)
-                .withCategories(VALID_CATEGORY_STAFF)
+                .withCategory(VALID_CATEGORY_STAFF)
                 .build();
         assertFalse(aliceStaff.equals(editedAlice));
 
