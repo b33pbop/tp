@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.OrderBuilder;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.SupplierBuilder;
 
 public class AddOrderCommandTest {
@@ -38,7 +36,7 @@ public class AddOrderCommandTest {
         AddCommand addCommand = new AddCommand(supplier);
         addCommand.execute(model);
         CommandResult result = addOrderCommand.execute(model);
-        assertEquals(result.getFeedbackToUser(), AddOrderCommand.MESSAGE_SUCCESS);
+        assertEquals(AddOrderCommand.MESSAGE_SUCCESS, result.getFeedbackToUser());
     }
 
     @Test
@@ -82,7 +80,7 @@ public class AddOrderCommandTest {
         assertNotEquals(null, addPencilsCommand);
 
         // different values -> return false
-        assertFalse(addPensCommand.equals(addPencilsCommand));
+        assertNotEquals(addPensCommand, addPencilsCommand);
 
     }
 }
