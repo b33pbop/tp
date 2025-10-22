@@ -19,13 +19,12 @@ import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Supplier;
 
+/**
+ * Updates an order in a specified supplier's list of orders
+ */
 public class UpdateOrderCommand extends Command {
 
     public static final String COMMAND_WORD = "update";
-
-    public final int supplierPhone;
-    public final int orderIndex;
-    public final UpdateOrderDescriptor descriptor;
 
     public static final String MESSAGE_UPDATE_SUCCESS = "Order has been updated successfully";
     public static final String MESSAGE_NO_CHANGE = "Values given are exactly the same, no update made.";
@@ -49,6 +48,11 @@ public class UpdateOrderCommand extends Command {
             + PREFIX_QUANTITY + "100"
             + PREFIX_UNITPRICE + "$0.90"
             + PREFIX_DELIVERYDAY + "every Tuesday";
+
+    public final int supplierPhone;
+    public final int orderIndex;
+    public final UpdateOrderDescriptor descriptor;
+
 
     /**
      * @param orderIndex of the order in the supplier's list to edit
@@ -77,7 +81,7 @@ public class UpdateOrderCommand extends Command {
         if (person == null) {
             throw new CommandException(MESSAGE_NOT_FOUND);
         }
-        if (!person.getCategory().toString().equals("[Supplier]")){
+        if (!person.getCategory().toString().equals("[Supplier]")) {
             throw new CommandException(MESSAGE_NOT_SUPPLIER);
         }
 
@@ -112,8 +116,14 @@ public class UpdateOrderCommand extends Command {
                 && this.descriptor.equals(otherUpdateOrderCommand.descriptor);
     }
 
+    /**
+     * Creates a new order based on the existing and new parameters
+     * @param toEdit The pre-existing order to be edited
+     * @param descriptor The descriptor that contains information on the parameter to be updated
+     * @return A new order with the newly updated parameters
+     */
     public static Order createEditedOrder(Order toEdit, UpdateOrderDescriptor descriptor) {
-        assert toEdit!= null;
+        assert toEdit != null;
 
         String updatedItem = descriptor.getItem().orElse(toEdit.getItem());
         int updatedQuantity = descriptor.getQuantity().orElse(toEdit.getQuantity());
@@ -123,6 +133,9 @@ public class UpdateOrderCommand extends Command {
         return new Order(updatedItem, updatedQuantity, updatedUnitPrice, updatedDeliveryDay);
     }
 
+    /**
+     * Represents the information to be edited in an existing order
+     */
     public static class UpdateOrderDescriptor {
         private String item;
         private Integer quantity;
@@ -132,7 +145,7 @@ public class UpdateOrderCommand extends Command {
         public UpdateOrderDescriptor() {}
 
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(item,quantity,unitPrice,deliveryDay);
+            return CollectionUtil.isAnyNonNull(item, quantity, unitPrice, deliveryDay);
         }
 
         public Optional<String> getItem() {

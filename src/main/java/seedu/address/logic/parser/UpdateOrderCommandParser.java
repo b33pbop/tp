@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
@@ -10,13 +9,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_UNITPRICE;
 
-import java.time.LocalDate;
-
-
 import seedu.address.logic.commands.UpdateOrderCommand;
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new UpdateOrderCommand object
+ */
 public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
 
     @Override
