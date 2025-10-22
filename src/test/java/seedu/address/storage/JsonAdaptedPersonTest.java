@@ -1,17 +1,24 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Supplier;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";
@@ -129,4 +136,60 @@ public class JsonAdaptedPersonTest {
         assertThrows(IllegalValueException.class, person::toModelType);
     }
 
+    @Test
+    public void toJsonAdaptedPerson_supplierWithOrders_success() throws Exception {
+        // create a supplier with 1 order
+        Supplier supplier = new Supplier(new Name("Fiona Kunz"),
+                new Phone("94824271"),
+                new Email("lydia@example.com"),
+                new Address("little tokyo"),
+                new Category("Supplier"));
+
+        // add an order
+        supplier.addOrder(new Order("Laptop", 10, 1000.0, LocalDate.parse("2025-10-23")));
+
+        // convert to JsonAdaptedPerson
+        JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
+
+        // check that JsonAdaptedOrder list is created correctly
+        assertEquals(1, adaptedPerson.getOrders().size());
+        JsonAdaptedOrder jsonOrder = adaptedPerson.getOrders().get(0);
+        assertEquals("Laptop", jsonOrder.getItem());
+        assertEquals(10, jsonOrder.getQuantity());
+        assertEquals(1000.0, jsonOrder.getUnitPrice());
+        assertEquals("2025-10-23", jsonOrder.getDeliveryDate());
+    }
+
+    @Test
+    public void toModelType_nullCategory_throwsIllegalValueException() {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME,
+                VALID_PHONE,
+                VALID_EMAIL,
+                VALID_ADDRESS,
+                null);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Category.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_supplierWithOrders_success() throws Exception {
+        Supplier supplier = new Supplier(new Name("George Best"),
+                new Phone("94824421"),
+                new Email("anna@example.com"),
+                new Address("4th street"),
+                new Category("Supplier"));
+
+        supplier.addOrder(new Order("Mouse", 5, 50.0, LocalDate.parse("2025-10-24")));
+
+        JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
+        Person modelPerson = adaptedPerson.toModelType();
+
+        assertTrue(modelPerson instanceof Supplier);
+        Supplier modelSupplier = (Supplier) modelPerson;
+        assertEquals(1, modelSupplier.getOrders().size());
+        assertEquals("Mouse", modelSupplier.getOrders().get(0).getItem());
+        assertEquals(5, modelSupplier.getOrders().get(0).getQuantity());
+        assertEquals(50.0, modelSupplier.getOrders().get(0).getUnitPrice());
+        assertEquals(LocalDate.parse("2025-10-24"), modelSupplier.getOrders().get(0).getDeliveryDate());
+    }
 }

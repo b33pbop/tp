@@ -74,6 +74,10 @@ class JsonAdaptedPerson {
         }
     }
 
+    public List<JsonAdaptedOrder> getOrders() {
+        return orders;
+    }
+
     /**
      * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
      *

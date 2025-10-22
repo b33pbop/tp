@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.model.person.Order;
 
@@ -40,6 +41,26 @@ public class JsonAdaptedOrder {
         this.quantity = source.getQuantity();
         this.unitPrice = source.getUnitPrice();
         this.deliveryDate = source.getDeliveryDate().toString();
+    }
+
+    @JsonValue
+    public String getItem() {
+        return item;
+    }
+
+    @JsonValue
+    public int getQuantity() {
+        return quantity;
+    }
+
+    @JsonValue
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    @JsonValue
+    public String getDeliveryDate() {
+        return deliveryDate;
     }
 
     /**

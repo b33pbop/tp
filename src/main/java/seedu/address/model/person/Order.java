@@ -7,10 +7,10 @@ import java.time.LocalDate;
  */
 public class Order {
 
-    private String item;
-    private int quantity;
-    private double unitPrice;
-    private LocalDate deliveryDate;
+    private final String item;
+    private final int quantity;
+    private final double unitPrice;
+    private final LocalDate deliveryDate;
 
     /**
      * Constructor for order
@@ -48,5 +48,21 @@ public class Order {
                 getQuantity(), getItem(), getUnitPrice(), getDeliveryDate());
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Order)) {
+            return false;
+        }
+
+        Order otherOrder = (Order) other;
+        return otherOrder.getItem().equals(getItem())
+                && otherOrder.getQuantity() == getQuantity()
+                && otherOrder.getUnitPrice() == getUnitPrice()
+                && otherOrder.getDeliveryDate().equals(getDeliveryDate());
+    }
 
 }
