@@ -102,10 +102,6 @@ public class Supplier extends Person {
                 .collect(Collectors.joining("\n"));
     }
 
-    public String getItem() {
-        return this.item;
-    }
-
     public int getSize() {
         return this.orders.size();
     }
