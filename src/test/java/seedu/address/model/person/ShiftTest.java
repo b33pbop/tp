@@ -80,4 +80,30 @@ public class ShiftTest {
         assertEquals("AM", amShift.toString());
         assertEquals("PM", pmShift.toString());
     }
+    @Test
+    public void isValidShift_validShifts() {
+        // Should return true for valid shifts
+        assertTrue(Shift.isValidShift("AM"));
+        assertTrue(Shift.isValidShift("PM"));
+
+        // Case-insensitive check
+        assertTrue(Shift.isValidShift("am"));
+        assertTrue(Shift.isValidShift("pm"));
+
+        // Leading/trailing spaces
+        assertTrue(Shift.isValidShift("  AM  "));
+        assertTrue(Shift.isValidShift(" pm "));
+    }
+
+    @Test
+    public void isValidShift_invalidShifts() {
+        // Invalid strings
+        assertFalse(Shift.isValidShift(""));
+        assertFalse(Shift.isValidShift("Morning"));
+        assertFalse(Shift.isValidShift("Night"));
+        assertFalse(Shift.isValidShift("A M"));
+        assertFalse(Shift.isValidShift("P M"));
+        assertFalse(Shift.isValidShift("123"));
+        assertFalse(Shift.isValidShift(null));
+    }
 }
