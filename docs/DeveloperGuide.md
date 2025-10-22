@@ -445,8 +445,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 13. The project should not use any licensed image without attribution.
 14. The system should ensure persistent data storage is updated immediately whenever data is added, edited or deleted.
 15. The system should prevent accidental exposure or loss of contact data due to improper file handling.
-16. All modules (add, delete, search, list) should be independently testable. 
-17. The system should maintain detailed logs of all add, delete, and edit operations for auditing and debugging. 
+16. All modules (add, delete, search, list) should be independently testable.
+17. The system should maintain detailed logs of all add, delete, and edit operations for auditing and debugging.
 18. Code should be documented to allow future developers to understand and maintain it.
 19. Error messages should be understandable by non-technical users.
 
