@@ -82,7 +82,7 @@ public class AddressBookParser {
 
         case UpdateOrderCommand.COMMAND_WORD:
             return new UpdateOrderCommandParser().parse(arguments);
-            
+
         case AddOrderCommand.COMMAND_WORD:
             return new AddOrderCommandParser().parse(arguments);
 
