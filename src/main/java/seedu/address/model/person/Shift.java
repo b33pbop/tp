@@ -11,6 +11,8 @@ public class Shift {
     public static final String MESSAGE_CONSTRAINTS =
             "Shift must be either 'AM' or 'PM' (case-insensitive).";
 
+    private static final String VALIDATION_REGEX = "(?i)^(AM|PM)$";
+
     private final String value;
 
     /**
@@ -28,6 +30,13 @@ public class Shift {
 
         this.value = normalized;
     }
+
+
+    public static boolean isValidShift(String test) {
+        return test != null && test.trim().matches(VALIDATION_REGEX);
+    }
+
+
 
     public String getValue() {
         return value;

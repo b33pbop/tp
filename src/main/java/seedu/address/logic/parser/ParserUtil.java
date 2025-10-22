@@ -10,6 +10,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Shift;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -110,4 +111,22 @@ public class ParserUtil {
         }
         return new Category(trimmedTag);
     }
+
+    /**
+     * Parses a {@code String s} into a {@code Shift}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code s} is invalid.
+     */
+    public static Shift parseShift(String s) throws ParseException {
+        requireNonNull(s);
+        String trimmedShift = s.trim();
+
+        if (!Shift.isValidShift(trimmedShift)) {
+            throw new ParseException(Shift.MESSAGE_CONSTRAINTS);
+        }
+
+        return new Shift(trimmedShift);
+    }
+
 }

@@ -29,6 +29,7 @@ public class Staff extends Person {
         this.shift = shift;
     }
 
+
     /**
      * Returns the staff's current shift.
      *
