@@ -14,6 +14,13 @@ Class UserPrefs
 
 Class UniquePersonList
 Class Person
+Class Staff {
+- shift : Shift
+- numberOfLeaves : int
++ getShift() : Shift
++ addLeaves(int)
++ removeLeaves(int)
+}
 Class Address
 Class Email
 Class Name
@@ -43,6 +50,7 @@ Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
 
+Staff .up.|> Person
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
