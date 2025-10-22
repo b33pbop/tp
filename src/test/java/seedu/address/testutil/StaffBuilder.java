@@ -72,8 +72,8 @@ public class StaffBuilder extends PersonBuilder {
     }
 
     @Override
-    public StaffBuilder withCategories(String category) {
-        super.withCategories(category);
+    public StaffBuilder withCategory(String category) {
+        super.withCategory(category);
         return this;
     }
 }
