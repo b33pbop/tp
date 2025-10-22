@@ -58,6 +58,5 @@ public class PersonCard extends UiPart<Region> {
             Supplier supplier = (Supplier) person;
             orders.setText(supplier.listOrders());
         }
-
     }
 }

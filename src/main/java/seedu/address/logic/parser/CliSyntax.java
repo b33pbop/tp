@@ -13,13 +13,10 @@ public class CliSyntax {
     public static final Prefix PREFIX_CATEGORY = new Prefix("c/");
     public static final Prefix PREFIX_SHIFT = new Prefix("s/");
 
+    public static final Prefix PREFIX_ORDERNUM = new Prefix("o/");
     public static final Prefix PREFIX_ITEM = new Prefix("i/");
     public static final Prefix PREFIX_QUANTITY = new Prefix("q/");
     public static final Prefix PREFIX_UNITPRICE = new Prefix("u/");
     public static final Prefix PREFIX_DELIVERYDAY = new Prefix("d/");
-    public static final Prefix PREFIX_ORDERNUM = new Prefix("o/");
-
-
-
 
 }

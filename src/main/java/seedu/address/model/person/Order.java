@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import java.time.LocalDate;
-
 /**
  * Represents an order made to a supplier
  */
@@ -46,6 +44,38 @@ public class Order {
     public String toString() {
         return String.format("%s of %s (at $%s each) to be delivered %s",
                 getQuantity(), getItem(), getUnitPrice(), getDeliveryDay());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Order)) {
+            return false;
+        }
+
+        Order otherOrder = (Order) other;
+
+        if (!(otherOrder.getItem().equals(this.item))) {
+            return false;
+        }
+
+        if (!(otherOrder.getQuantity() == this.quantity)) {
+            return false;
+        }
+
+        if (!(otherOrder.getUnitPrice() == this.unitPrice)) {
+            return false;
+        }
+
+        if (!(otherOrder.getDeliveryDay().equals(this.deliveryDay))) {
+            return false;
+        }
+
+        return true;
+
     }
 
 

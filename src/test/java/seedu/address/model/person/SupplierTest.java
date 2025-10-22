@@ -26,12 +26,14 @@ public class SupplierTest {
         Address testAddress = new Address("Block 416 Bukit Batok Drive");
         Category testCat = new Category("Supplier");
         Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat, "Computer");
-        Order test1 = new Order("Computer", 5, 100.0, "every Tuesday");
-        Order test2 = new Order("Computer", 10, 120.0, "every Tuesday");
+        Order test1 = new Order("Computer", 5, 100.0,
+                "every Tuesday");
+        Order test2 = new Order("Computer", 10, 120.0,
+                "every Wednesday");
         test.addOrder(test1);
         test.addOrder(test2);
         String expected = "5 of Computer (at $100.0 each) to be delivered every Tuesday"
-              + '\n' + "10 of Computer (at $120.0 each) to be delivered every Tuesday";
+              + '\n' + "10 of Computer (at $120.0 each) to be delivered every Wednesday";
         assertEquals(expected, test.listOrders());
     }
 
