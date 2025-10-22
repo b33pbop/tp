@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.time.LocalDate;
-
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.category.Category;
@@ -18,14 +16,12 @@ public class SupplierTest {
         Address testAddress = new Address("Block 416 Bukit Batok Drive");
         Category testCat = new Category("Supplier");
         Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat, "Computer");
-        Order test1 = new Order("Computer", 5, 100.0,
-                LocalDate.of(2023, 10, 2));
-        Order test2 = new Order("Computer", 10, 120.0,
-                LocalDate.of(2023, 11, 2));
+        Order test1 = new Order("Computer", 5, 100.0, "every Tuesday");
+        Order test2 = new Order("Computer", 10, 120.0, "every Tuesday");
         test.addOrder(test1);
         test.addOrder(test2);
-        String expected = "5 of Computer (at $100.0 each) to be delivered 2023-10-02"
-              + '\n' + "10 of Computer (at $120.0 each) to be delivered 2023-11-02";
+        String expected = "5 of Computer (at $100.0 each) to be delivered every Tuesday"
+              + '\n' + "10 of Computer (at $120.0 each) to be delivered every Tuesday";
         assertEquals(expected, test.listOrders());
     }
 }

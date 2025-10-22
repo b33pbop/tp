@@ -63,20 +63,20 @@ public class NameOrCategoryContainsKeywordsPredicateTest {
         // One keyword matching tag
         NameOrCategoryContainsKeywordsPredicate predicate =
                 new NameOrCategoryContainsKeywordsPredicate(Collections.singletonList("Customer"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withCategories("Customer").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withCategory("Customer").build()));
 
         // Multiple keywords, one matching tag
         predicate = new NameOrCategoryContainsKeywordsPredicate(Arrays.asList("Customer", "Staff"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withCategories("Customer").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withCategory("Customer").build()));
 
         // Mixed-case keywords matching tag
         predicate = new NameOrCategoryContainsKeywordsPredicate(Arrays.asList("CustOmER"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withCategories("Customer").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withCategory("Customer").build()));
 
         // Multiple categories, keyword matches one of them
         predicate = new NameOrCategoryContainsKeywordsPredicate(Collections.singletonList("Supplier"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob")
-                .withCategories("Supplier").build()));
+                .withCategory("Supplier").build()));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class NameOrCategoryContainsKeywordsPredicateTest {
         // Different keywords matching name and tag respectively
         NameOrCategoryContainsKeywordsPredicate predicate =
                 new NameOrCategoryContainsKeywordsPredicate(Arrays.asList("Alice", "Customer"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withCategories("Customer").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withCategory("Customer").build()));
     }
 
     @Test
@@ -92,17 +92,17 @@ public class NameOrCategoryContainsKeywordsPredicateTest {
         // Zero keywords
         NameOrCategoryContainsKeywordsPredicate predicate =
                 new NameOrCategoryContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withCategories("Customer").build()));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withCategory("Customer").build()));
 
         // Non-matching keyword
         predicate = new NameOrCategoryContainsKeywordsPredicate(Arrays.asList("Carol"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").withCategories("Customer").build()));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").withCategory("Customer").build()));
 
         // Keywords match phone, email and address, but do not match name or categories
         predicate = new NameOrCategoryContainsKeywordsPredicate(Arrays.asList("91234567", "alice@email.com",
                 "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("91234567")
-                .withEmail("alice@email.com").withAddress("Main Street").withCategories("Customer").build()));
+                .withEmail("alice@email.com").withAddress("Main Street").withCategory("Customer").build()));
     }
 
     @Test

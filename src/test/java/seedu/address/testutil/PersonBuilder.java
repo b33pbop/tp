@@ -57,7 +57,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code categories} into a {@code Set<Category>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withCategories(String category) {
+    public PersonBuilder withCategory(String category) {
         this.category = new Category(category);
         return this;
     }
