@@ -30,13 +30,18 @@ public class Supplier extends Person {
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */
-    public boolean isSameSupplier(Supplier otherPerson) {
+    @Override
+    public boolean isSamePerson(Person otherPerson) {
         if (otherPerson == this) {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        // Only consider duplicates with the same type
+        if (!(otherPerson instanceof Supplier)) {
+            return false;
+        }
+
+        return getName().equals(otherPerson.getName());
     }
 
     /**
@@ -55,7 +60,7 @@ public class Supplier extends Person {
         }
 
         Supplier otherPerson = (Supplier) other;
-        return super.equals(other);
+        return super.equals(otherPerson);
     }
 
 
@@ -78,6 +83,10 @@ public class Supplier extends Person {
         orders.add(newOrder);
     }
 
+    public ArrayList<Order> getOrders() {
+        return this.orders;
+    }
+
     /**
      * Returns a string content the orders placed under supplier
      * @return String of orders in list
@@ -87,6 +96,4 @@ public class Supplier extends Person {
                 .map(Order::toString)
                 .collect(Collectors.joining("\n"));
     }
-
-
 }

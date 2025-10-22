@@ -42,28 +42,28 @@ public class SupplierTest {
     @Test
     public void isSameSupplier() {
         // same object -> returns true
-        assertTrue(ALICE.isSameSupplier(ALICE));
+        assertTrue(ALICE.isSamePerson(ALICE));
 
         // null -> returns false
-        assertFalse(ALICE.isSameSupplier(null));
+        assertFalse(ALICE.isSamePerson(null));
 
         // same name, all other attributes different -> returns true
         Supplier editedAlice = new SupplierBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withCategory(VALID_CATEGORY_STAFF).build();
-        assertTrue(ALICE.isSameSupplier(editedAlice));
+        assertTrue(ALICE.isSamePerson(editedAlice));
 
         // different name, all other attributes same -> returns false
         editedAlice = new SupplierBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        assertFalse(ALICE.isSameSupplier(editedAlice));
+        assertFalse(ALICE.isSamePerson(editedAlice));
 
         // name differs in case, all other attributes same -> returns false
         Supplier editedBob = new SupplierBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
-        assertFalse(BOB.isSameSupplier(editedBob));
+        assertFalse(BOB.isSamePerson(editedBob));
 
         // name has trailing spaces, all other attributes same -> returns false
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new SupplierBuilder(BOB).withName(nameWithTrailingSpaces).build();
-        assertFalse(BOB.isSameSupplier(editedBob));
+        assertFalse(BOB.isSamePerson(editedBob));
     }
 
     @Test

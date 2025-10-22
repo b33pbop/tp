@@ -24,7 +24,7 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
-    private static final JsonAdaptedCategory VALID_CATEGORY = new JsonAdaptedCategory(BENSON.getCategory());
+    private static final String VALID_CATEGORY = BENSON.getCategory().getCategoryName();
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
@@ -124,9 +124,8 @@ public class JsonAdaptedPersonTest {
 
     @Test
     public void toModelType_invalidCategories_throwsIllegalValueException() {
-        JsonAdaptedCategory invalidCategories = new JsonAdaptedCategory(INVALID_CATEGORY);
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, invalidCategories);
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, INVALID_CATEGORY);
         assertThrows(IllegalValueException.class, person::toModelType);
     }
 

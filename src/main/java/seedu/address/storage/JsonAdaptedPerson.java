@@ -1,5 +1,8 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,8 +11,10 @@ import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Supplier;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -18,24 +23,27 @@ class JsonAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
-    private final String name;
-    private final String phone;
-    private final String email;
-    private final String address;
-    private final JsonAdaptedCategory category;
+    @JsonProperty("name") private final String name;
+    @JsonProperty("phone") private final String phone;
+    @JsonProperty("email") private final String email;
+    @JsonProperty("address") private final String address;
+    @JsonProperty("category") private final String category;
 
-    /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
-     */
+    @JsonProperty("orders") private final List<JsonAdaptedOrder> orders; // only for Supplier class
+
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("category") JsonAdaptedCategory category) {
+    public JsonAdaptedPerson(@JsonProperty(value = "name") String name,
+                             @JsonProperty(value = "phone") String phone,
+                             @JsonProperty(value = "email") String email,
+                             @JsonProperty(value = "address") String address,
+                             @JsonProperty(value = "category") String category
+    ) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.category = category;
+        this.orders = null;
     }
 
     /**
@@ -46,7 +54,24 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        category = new JsonAdaptedCategory(source.getCategory().categoryName);
+        Category sourceCategory = source.getCategory();
+        category = sourceCategory.getCategoryName();
+
+        if ("Supplier".equalsIgnoreCase(category) && source instanceof Supplier) {
+            this.orders = new ArrayList<>();
+            Supplier supplier = (Supplier) source;
+            List<Order> orders = supplier.getOrders();
+            for (Order order : orders) {
+                String deliveryDate = order.getDeliveryDate().toString();
+                JsonAdaptedOrder jsonOrder = new JsonAdaptedOrder(order.getItem(),
+                        order.getQuantity(),
+                        order.getUnitPrice(),
+                        deliveryDate);
+                this.orders.add(jsonOrder);
+            }
+        } else {
+            this.orders = null;
+        }
     }
 
     /**
@@ -98,12 +123,35 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Category.class.getSimpleName()));
         }
-        if (!Category.isValidCategoryName(category.getCategoryName())) {
+        if (!Category.isValidCategoryName(category)) {
             throw new IllegalValueException(Category.MESSAGE_CONSTRAINTS);
         }
 
-        final Category modelCategories = new Category(category.getCategoryName());
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelCategories);
+        final Category modelCategory = new Category(category);
+
+        if ("Supplier".equalsIgnoreCase(category)) {
+            return toSupplierModelType(modelCategory, modelName, modelPhone, modelEmail, modelAddress);
+        } else {
+            return new Person(modelName, modelPhone, modelEmail, modelAddress, modelCategory);
+        }
     }
 
+    /**
+     * Converts this Jackson-friendly adapted person object into the model's {@code Supplier} object.
+     */
+    private Supplier toSupplierModelType(Category modelCategory,
+                                       Name modelName,
+                                       Phone modelPhone,
+                                       Email modelEmail,
+                                       Address modelAddress) {
+        Supplier supplier = new Supplier(modelName, modelPhone, modelEmail, modelAddress, modelCategory);
+
+        if (this.orders != null) {
+            for (JsonAdaptedOrder jsonOrder : this.orders) {
+                supplier.addOrder(jsonOrder.toModelType());
+            }
+        }
+
+        return supplier;
+    }
 }
