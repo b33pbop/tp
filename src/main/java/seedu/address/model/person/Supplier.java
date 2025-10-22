@@ -28,6 +28,9 @@ public class Supplier extends Person {
         requireAllNonNull(name, phone, email, address, category);
         this.item = item;
         this.orders = new ArrayList<>();
+
+        // FOR TESTING PURPOSES
+        this.orders.add(new Order("Chicken", 1, 1.0, "Today"));
     }
 
     /**
@@ -84,6 +87,22 @@ public class Supplier extends Person {
         return orders.stream()
                 .map(Order::toString)
                 .collect(Collectors.joining("\n"));
+    }
+
+    public String getItem() {
+        return this.item;
+    }
+
+    public int getSize() {
+        return this.orders.size();
+    }
+
+    public Order getOrder(int index) {
+        return this.orders.get(index - 1);
+    }
+
+    public void updateOrders(int index, Order newOrder) {
+        this.orders.set(index - 1, newOrder);
     }
 
 
