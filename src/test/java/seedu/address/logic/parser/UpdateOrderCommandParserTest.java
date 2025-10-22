@@ -38,7 +38,7 @@ public class UpdateOrderCommandParserTest {
     }
 
     @Test
-    public void duplicateFields_failure(){
+    public void duplicateFields_failure() {
         String validInput = " p/ 91111111 o/ 1 i/ Testing q/ 99 u/ 0.99 d/ every Monday";
 
         // duplicate phone

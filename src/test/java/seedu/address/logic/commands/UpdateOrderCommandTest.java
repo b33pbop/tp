@@ -59,10 +59,10 @@ public class UpdateOrderCommandTest {
                 100,
                 0.5,
                 "every Friday");
-        Supplier finalSupplier =new SupplierBuilder().withCategory("Supplier").build();
+        Supplier finalSupplier = new SupplierBuilder().withCategory("Supplier").build();
         finalSupplier.addOrder(finalOrder);
 
-        UpdateOrderDescriptor changedSome= new UpdateOrderDescriptor();
+        UpdateOrderDescriptor changedSome = new UpdateOrderDescriptor();
         changedSome.updateItem("Changed item");
         changedSome.updateQuantity(100);
 
@@ -90,7 +90,7 @@ public class UpdateOrderCommandTest {
                 100,
                 5.5,
                 "Changed Day");
-        Supplier finalSupplier =new SupplierBuilder().withCategory("Supplier").build();
+        Supplier finalSupplier = new SupplierBuilder().withCategory("Supplier").build();
         finalSupplier.addOrder(finalOrder);
 
         UpdateOrderDescriptor changedAll = new UpdateOrderDescriptor();

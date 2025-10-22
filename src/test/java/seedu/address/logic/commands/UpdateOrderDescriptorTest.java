@@ -2,10 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.UpdateOrderCommand.createEditedOrder;
-
-import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,19 +30,19 @@ public class UpdateOrderDescriptorTest {
         assertNotEquals(orderWithEditedName, baseOrder);
 
         // if quantity different -> no equal
-        UpdateOrderDescriptor quantityTest  = new UpdateOrderDescriptor();
+        UpdateOrderDescriptor quantityTest = new UpdateOrderDescriptor();
         quantityTest.updateQuantity(100);
         Order orderWithEditedQuantity = createEditedOrder(baseOrder, quantityTest);
         assertNotEquals(orderWithEditedQuantity, baseOrder);
 
         // if unit price different -> no equal
-        UpdateOrderDescriptor unitPriceTest  = new UpdateOrderDescriptor();
+        UpdateOrderDescriptor unitPriceTest = new UpdateOrderDescriptor();
         unitPriceTest.updateUnitPrice(0.5);
         Order orderWithEditedUnitPrice = createEditedOrder(baseOrder, unitPriceTest);
         assertNotEquals(orderWithEditedUnitPrice, baseOrder);
 
         // if delivery date different -> no equal
-        UpdateOrderDescriptor deliveryDateTest  = new UpdateOrderDescriptor();
+        UpdateOrderDescriptor deliveryDateTest = new UpdateOrderDescriptor();
         deliveryDateTest.updateDeliveryDay("every Saturday");
         Order orderWithEditedDeliveryDate = createEditedOrder(baseOrder, deliveryDateTest);
         assertNotEquals(orderWithEditedDeliveryDate, baseOrder);
