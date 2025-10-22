@@ -30,9 +30,6 @@ public class Supplier extends Person {
         requireAllNonNull(name, phone, email, address, category);
         this.item = item;
         this.orders = new ArrayList<>();
-
-        // FOR TESTING PURPOSES
-        this.orders.add(new Order("Chicken", 1, 1.0, "Today"));
     }
 
     public String getItem() {
