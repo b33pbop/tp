@@ -99,5 +99,17 @@ public class Supplier extends Person {
                 .collect(Collectors.joining("\n"));
     }
 
+    public int getSize() {
+        return this.orders.size();
+    }
+
+    public Order getOrder(int index) {
+        return this.orders.get(index - 1);
+    }
+
+    public void updateOrders(int index, Order newOrder) {
+        this.orders.set(index - 1, newOrder);
+    }
+
 
 }

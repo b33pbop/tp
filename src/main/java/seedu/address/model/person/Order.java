@@ -15,7 +15,7 @@ public class Order {
      * @param item name of item to be ordered
      * @param quantity quantity of item
      * @param unitPrice price of each item
-     * @param deliveryDay date to be delivered
+     * @param deliveryDay day to be delivered
      */
     public Order(String item, int quantity, double unitPrice, String deliveryDay) {
         this.item = item;
