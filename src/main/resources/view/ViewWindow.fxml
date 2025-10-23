@@ -45,11 +45,4 @@
     </Scene>
   </scene>
 </fx:root>
-        </children>
-        <padding>
-          <Insets top="10" right="10" bottom="10" left="10" />
-        </padding>
-      </GridPane>
-    </Scene>
-  </scene>
-</fx:root>
+

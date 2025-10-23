@@ -67,10 +67,21 @@ public class ViewWindow extends UiPart<Stage> {
      * Hides all category-specific fields until needed.
      */
     private void hideAllExtraFields() {
+        // hide and un-manage staff-specific fields
         staffShiftLabel.setVisible(false);
+        staffShiftLabel.setManaged(false);
         staffLeavesLabel.setVisible(false);
+        staffLeavesLabel.setManaged(false);
+        staffShiftLabel.setText("");
+        staffLeavesLabel.setText("");
+
+        // hide and un-manage supplier-specific fields
         supplierItemLabel.setVisible(false);
+        supplierItemLabel.setManaged(false);
         supplierOrdersLabel.setVisible(false);
+        supplierOrdersLabel.setManaged(false);
+        supplierItemLabel.setText("");
+        supplierOrdersLabel.setText("");
     }
 
     /**
@@ -87,12 +98,16 @@ public class ViewWindow extends UiPart<Stage> {
 
         if (person instanceof Staff staff) {
             staffShiftLabel.setVisible(true);
+            staffShiftLabel.setManaged(true);
             staffLeavesLabel.setVisible(true);
+            staffLeavesLabel.setManaged(true);
             staffShiftLabel.setText("Shift: " + staff.getShift().toString());
             staffLeavesLabel.setText("Remaining Leaves: " + staff.getNumberOfLeaves());
         } else if (person instanceof Supplier supplier) {
             supplierItemLabel.setVisible(true);
+            supplierItemLabel.setManaged(true);
             supplierOrdersLabel.setVisible(true);
+            supplierOrdersLabel.setManaged(true);
             supplierItemLabel.setText("Supplies: " + supplier.getItem());
             String orders = supplier.listOrders();
             supplierOrdersLabel.setText("Orders:\n" + (orders.isEmpty() ? "No orders" : orders));
