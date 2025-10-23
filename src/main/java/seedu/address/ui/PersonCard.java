@@ -8,6 +8,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Shift;
 import seedu.address.model.person.Staff;
+import seedu.address.model.person.Supplier;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -42,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label shift;
+    @FXML
+    private Label orders;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -60,6 +63,10 @@ public class PersonCard extends UiPart<Region> {
             Staff staff = (Staff) person;
             Shift staffShift = staff.getShift();
             shift.setText(staffShift.toString());
+        }
+        if (person instanceof Supplier) {
+            Supplier supplier = (Supplier) person;
+            orders.setText(supplier.listOrders());
         }
     }
 }
