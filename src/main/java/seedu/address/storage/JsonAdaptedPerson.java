@@ -16,9 +16,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Supplier;
 import seedu.address.model.person.Shift;
 import seedu.address.model.person.Staff;
+import seedu.address.model.person.Supplier;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -35,7 +35,7 @@ class JsonAdaptedPerson {
     @JsonProperty("address") private final String address;
     @JsonProperty("category") private final String category;
 
-    @JsonProperty("orders") private final List<JsonAdaptedOrder> orders; // only for Supplier class
+    @JsonProperty("orders") private List<JsonAdaptedOrder> orders; // only for Supplier class
     @JsonProperty("shift") private String shift;
     @JsonProperty("numberOfLeaves") private Integer numberOfLeaves;
 
@@ -86,11 +86,11 @@ class JsonAdaptedPerson {
             Supplier supplier = (Supplier) source;
             List<Order> orders = supplier.getOrders();
             for (Order order : orders) {
-                String deliveryDate = order.getDeliveryDate().toString();
+                String deliveryDay = order.getDeliveryDay();
                 JsonAdaptedOrder jsonOrder = new JsonAdaptedOrder(order.getItem(),
                         order.getQuantity(),
                         order.getUnitPrice(),
-                        deliveryDate);
+                        deliveryDay);
                 this.orders.add(jsonOrder);
             }
         } else if (source instanceof Staff) {

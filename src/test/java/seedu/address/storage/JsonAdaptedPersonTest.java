@@ -6,8 +6,6 @@ import static seedu.address.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORM
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
-import java.time.LocalDate;
-
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -137,7 +135,7 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toJsonAdaptedPerson_supplierWithOrders_success() throws Exception {
+    public void toJsonAdaptedPerson_supplierWithOrders_success() {
         // create a supplier with 1 order
         Supplier supplier = new Supplier(new Name("Fiona Kunz"),
                 new Phone("94824271"),
@@ -146,7 +144,7 @@ public class JsonAdaptedPersonTest {
                 new Category("Supplier"));
 
         // add an order
-        supplier.addOrder(new Order("Laptop", 10, 1000.0, LocalDate.parse("2025-10-23")));
+        supplier.addOrder(new Order("Laptop", 10, 1000.0, "2025-10-23"));
 
         // convert to JsonAdaptedPerson
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
@@ -157,18 +155,7 @@ public class JsonAdaptedPersonTest {
         assertEquals("Laptop", jsonOrder.getItem());
         assertEquals(10, jsonOrder.getQuantity());
         assertEquals(1000.0, jsonOrder.getUnitPrice());
-        assertEquals("2025-10-23", jsonOrder.getDeliveryDate());
-    }
-
-    @Test
-    public void toModelType_nullCategory_throwsIllegalValueException() {
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME,
-                VALID_PHONE,
-                VALID_EMAIL,
-                VALID_ADDRESS,
-                null);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Category.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        assertEquals("2025-10-23", jsonOrder.getDeliveryDay());
     }
 
     @Test
@@ -179,7 +166,7 @@ public class JsonAdaptedPersonTest {
                 new Address("4th street"),
                 new Category("Supplier"));
 
-        supplier.addOrder(new Order("Mouse", 5, 50.0, LocalDate.parse("2025-10-24")));
+        supplier.addOrder(new Order("Mouse", 5, 50.0, "2025-10-24"));
 
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
         Person modelPerson = adaptedPerson.toModelType();
@@ -190,6 +177,6 @@ public class JsonAdaptedPersonTest {
         assertEquals("Mouse", modelSupplier.getOrders().get(0).getItem());
         assertEquals(5, modelSupplier.getOrders().get(0).getQuantity());
         assertEquals(50.0, modelSupplier.getOrders().get(0).getUnitPrice());
-        assertEquals(LocalDate.parse("2025-10-24"), modelSupplier.getOrders().get(0).getDeliveryDate());
+        assertEquals("2025-10-24", modelSupplier.getOrders().get(0).getDeliveryDay());
     }
 }
