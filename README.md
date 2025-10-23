@@ -19,10 +19,10 @@ GhostConnect is a desktop application designed for **tech-savvy ghost kitchen ma
 
 Our app helps ghost kitchen managers manage contacts in fast-paced delivery-only food businesses. It offers:
 
-- Categorisation of contacts (supplier, staff, partner brands, delivery riders)  
-- Relationship linking  
-- Quick fuzzy search  
-- Archiving of inactive contacts  
+- Categorisation of contacts (supplier, staff, partner brands, delivery riders)
+- Relationship linking
+- Quick fuzzy search
+- Archiving of inactive contacts
 
 This solves the problem of **high turnover and fragmented contact information**.
 
@@ -32,11 +32,11 @@ This solves the problem of **high turnover and fragmented contact information**.
 
 Each contact entry contains the following required information:
 
-- Name  
-- Contact Number  
-- Address  
-- Email  
-- Category  
+- Name
+- Contact Number
+- Address
+- Email
+- Category
 
 ---
 

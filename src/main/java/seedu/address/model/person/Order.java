@@ -5,17 +5,17 @@ package seedu.address.model.person;
  */
 public class Order {
 
-    private String item;
-    private int quantity;
-    private double unitPrice;
-    private String deliveryDay;
+    private final String item;
+    private final int quantity;
+    private final double unitPrice;
+    private final String deliveryDay;
 
     /**
      * Constructor for order
      * @param item name of item to be ordered
      * @param quantity quantity of item
      * @param unitPrice price of each item
-     * @param deliveryDay date to be delivered
+     * @param deliveryDay day to be delivered
      */
     public Order(String item, int quantity, double unitPrice, String deliveryDay) {
         this.item = item;
@@ -77,6 +77,4 @@ public class Order {
         return true;
 
     }
-
-
 }

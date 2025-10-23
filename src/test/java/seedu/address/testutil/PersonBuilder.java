@@ -6,6 +6,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Shift;
 
 /**
  * A utility class to help with building Person objects.
@@ -23,6 +24,7 @@ public class PersonBuilder {
     protected Email email;
     protected Address address;
     protected Category category;
+    protected Shift shift;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -33,6 +35,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         category = new Category(DEFAULT_CATEGORY);
+        shift = new Shift("AM");
     }
 
     /**
@@ -44,6 +47,12 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         category = personToCopy.getCategory();
+        // If the person is a Staff, copy their shift; otherwise default to AM
+        if (personToCopy instanceof seedu.address.model.person.Staff staffPerson) {
+            shift = staffPerson.getShift();
+        } else {
+            shift = new Shift("AM");
+        }
     }
 
     /**
@@ -59,6 +68,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withCategory(String category) {
         this.category = new Category(category);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Shift} of the {@code Person} that we are building (used for Staff).
+     */
+    public PersonBuilder withShift(String shift) {
+        this.shift = new Shift(shift);
         return this;
     }
 
