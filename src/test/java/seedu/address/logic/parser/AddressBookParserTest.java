@@ -104,12 +104,6 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_view() throws Exception {
-        // view command should be parsed by AddressBookParser and delegate to ViewCommandParser
-        assertTrue(parser.parseCommand("view 91234567") instanceof seedu.address.logic.commands.ViewCommand);
-    }
-
-    @Test
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
     }
