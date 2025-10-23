@@ -6,6 +6,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Shift;
+import seedu.address.model.person.Staff;
 import seedu.address.model.person.Supplier;
 
 /**
@@ -40,6 +42,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
+    private Label shift;
+    @FXML
     private Label orders;
 
     /**
@@ -54,6 +58,12 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         tags.getChildren().add(new Label(person.getCategory().categoryName));
+
+        if (person instanceof Staff) {
+            Staff staff = (Staff) person;
+            Shift staffShift = staff.getShift();
+            shift.setText(staffShift.toString());
+        }
         if (person instanceof Supplier) {
             Supplier supplier = (Supplier) person;
             orders.setText(supplier.listOrders());
