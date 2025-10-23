@@ -33,7 +33,7 @@
 
           <!-- Supplier specific fields -->
           <Label fx:id="supplierItemLabel" text="" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2" />
-          <Label fx:id="supplierOrdersLabel" text="" GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="2" 
+          <Label fx:id="supplierOrdersLabel" text="" GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="2"
                  wrapText="true" maxWidth="300" />
 
           <Button fx:id="closeButton" text="Close" onAction="#handleClose" GridPane.rowIndex="9" GridPane.columnIndex="1" />

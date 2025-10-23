@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_PERSON_NOT_FOUND;
@@ -15,8 +14,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Phone;
-import seedu.address.testutil.PersonBuilder;
-
 /**
  * Contains integration tests (interaction with the Model) for {@code ViewCommand}.
  */
@@ -79,7 +76,8 @@ public class ViewCommandTest {
         Phone nonExistentPhone = new Phone("81234567");
         ViewCommand viewCommand = new ViewCommand(nonExistentPhone);
 
-        assertCommandFailure(viewCommand, model, 
+        assertCommandFailure(viewCommand, model,
             String.format(MESSAGE_PERSON_NOT_FOUND, nonExistentPhone));
     }
 }
+

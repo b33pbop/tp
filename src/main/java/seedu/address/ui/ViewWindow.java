@@ -49,6 +49,11 @@ public class ViewWindow extends UiPart<Stage> {
     @FXML
     private Button closeButton;
 
+    /**
+     * Creates a new ViewWindow using the given Stage as root.
+     *
+     * @param root The Stage to use as the root of this ViewWindow
+     */
     public ViewWindow(Stage root) {
         super(FXML, root);
         hideAllExtraFields();
