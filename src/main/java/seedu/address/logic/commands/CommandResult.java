@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.person.Person;
 
 /**
  * Represents the result of a command execution.
@@ -19,13 +20,29 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
+    /** The application should show a person detail window. */
+    private final boolean showPerson;
+
+    /** The person to show in the UI. May be null if showPerson is false. */
+    private final Person personToShow;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+        this(feedbackToUser, showHelp, exit, false, null);
+    }
+
+    /**
+     * Constructs a {@code CommandResult} with the specified fields including showPerson.
+     */
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
+                         boolean showPerson, Person personToShow) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
+        this.showPerson = showPerson;
+        this.personToShow = personToShow;
     }
 
     /**
@@ -48,6 +65,14 @@ public class CommandResult {
         return exit;
     }
 
+    public boolean isShowPerson() {
+        return showPerson;
+    }
+
+    public Person getPersonToShow() {
+        return personToShow;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -62,12 +87,14 @@ public class CommandResult {
         CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && showHelp == otherCommandResult.showHelp
-                && exit == otherCommandResult.exit;
+                && exit == otherCommandResult.exit
+                && showPerson == otherCommandResult.showPerson
+                && Objects.equals(personToShow, otherCommandResult.personToShow);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser, showHelp, exit, showPerson, personToShow);
     }
 
     @Override

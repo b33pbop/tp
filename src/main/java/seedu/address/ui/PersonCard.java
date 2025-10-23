@@ -58,15 +58,27 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         tags.getChildren().add(new Label(person.getCategory().categoryName));
+        // Hide and clear category-specific fields by default
+        shift.setVisible(false);
+        shift.setManaged(false);
+        shift.setText("");
+
+        orders.setVisible(false);
+        orders.setManaged(false);
+        orders.setText("");
 
         if (person instanceof Staff) {
             Staff staff = (Staff) person;
             Shift staffShift = staff.getShift();
             shift.setText(staffShift.toString());
+            shift.setVisible(true);
+            shift.setManaged(true);
         }
         if (person instanceof Supplier) {
             Supplier supplier = (Supplier) person;
             orders.setText(supplier.listOrders());
+            orders.setVisible(true);
+            orders.setManaged(true);
         }
     }
 }
