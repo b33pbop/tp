@@ -19,6 +19,7 @@ public class PersonCardTest {
      */
     private static class FakePersonCard {
         private String shift;
+        private String orders;
 
 
         public FakePersonCard(Person person) {
@@ -27,6 +28,11 @@ public class PersonCardTest {
                 shift = staff.getShift().toString();
             } else {
                 shift = "";
+            }
+            if (person instanceof Supplier supplier) {
+                orders = supplier.listOrders();
+            } else {
+                orders = "";
             }
         }
     }
@@ -46,5 +52,22 @@ public class PersonCardTest {
         FakePersonCard card = new FakePersonCard(supplier);
 
         assertEquals("", card.shift);
+    }
+
+    @Test
+    public void personCard_supplier_setsOrdersCorrectly() {
+        Supplier supplier = new SupplierBuilder().build();
+        // ensure supplier has no orders by default
+        FakePersonCard card = new FakePersonCard(supplier);
+
+        assertEquals("", card.orders);
+    }
+
+    @Test
+    public void personCard_nonSupplier_ordersIsEmpty() {
+        Staff staff = new StaffBuilder().build();
+        FakePersonCard card = new FakePersonCard(staff);
+
+        assertEquals("", card.orders);
     }
 }

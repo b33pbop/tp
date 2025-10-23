@@ -60,4 +60,19 @@ public class CommandResultTest {
                 + ", exit=" + commandResult.isExit() + "}";
         assertEquals(expected, commandResult.toString());
     }
+
+    @Test
+    public void equals_showPerson_and_personToShow() {
+        seedu.address.model.person.Person person = new seedu.address.testutil.PersonBuilder().build();
+        CommandResult cr1 = new CommandResult("f", false, false, true, person);
+        CommandResult cr2 = new CommandResult("f", false, false, true, person);
+
+        assertTrue(cr1.equals(cr2));
+        assertEquals(cr1.hashCode(), cr2.hashCode());
+
+        // different person -> not equal
+        seedu.address.model.person.Person other = new seedu.address.testutil.PersonBuilder().withName("Different").build();
+        CommandResult cr3 = new CommandResult("f", false, false, true, other);
+        assertFalse(cr1.equals(cr3));
+    }
 }
