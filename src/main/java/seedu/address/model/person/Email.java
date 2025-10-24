@@ -41,7 +41,7 @@ public class Email {
     public Email(String email) {
         requireNonNull(email);
         checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
-        value = email;
+        value = email.toLowerCase();
     }
 
     /**
@@ -75,5 +75,4 @@ public class Email {
     public int hashCode() {
         return value.hashCode();
     }
-
 }

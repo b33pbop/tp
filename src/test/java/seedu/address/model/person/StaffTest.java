@@ -47,18 +47,18 @@ public class StaffTest {
                 .build();
         assertFalse(aliceStaff.isSameStaff(editedAlice));
 
-        // name differs in case, all other attributes same -> returns false
+        // name differs in case, all other attributes same -> returns true
         Staff editedBob = new StaffBuilder(BOB)
                 .withName(VALID_NAME_BOB.toLowerCase())
                 .build();
-        assertFalse(new StaffBuilder(BOB).build().isSameStaff(editedBob));
+        assertTrue(new StaffBuilder(BOB).build().isSameStaff(editedBob));
 
-        // name has trailing spaces, all other attributes same -> returns false
+        // name has trailing spaces, all other attributes same -> returns true
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new StaffBuilder(BOB)
                 .withName(nameWithTrailingSpaces)
                 .build();
-        assertFalse(new StaffBuilder(BOB).build().isSameStaff(editedBob));
+        assertTrue(new StaffBuilder(BOB).build().isSameStaff(editedBob));
     }
 
     @Test
