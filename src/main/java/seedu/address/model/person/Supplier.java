@@ -27,24 +27,6 @@ public class Supplier extends Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
-     * This defines a weaker notion of equality between two persons.
-     */
-    @Override
-    public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
-            return true;
-        }
-
-        // Only consider duplicates with the same type
-        if (!(otherPerson instanceof Supplier)) {
-            return false;
-        }
-
-        return getName().equals(otherPerson.getName());
-    }
-
-    /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
