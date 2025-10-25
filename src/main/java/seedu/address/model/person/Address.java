@@ -3,6 +3,10 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+
 /**
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddressCharacters(String)}
@@ -41,7 +45,7 @@ public class Address {
         requireNonNull(address);
         checkArgument(isValidAddressCharacters(address), INVALID_ADDRESS_LENGTH_MESSAGE_CONSTRAINTS);
         checkArgument(isValidAddressLength(address), INVALID_CHARACTER_MESSAGE_CONSTRAINTS);
-        value = address;
+        value = toTitleCase(address);
     }
 
     /**
@@ -80,4 +84,9 @@ public class Address {
         return value.hashCode();
     }
 
+    private String toTitleCase(String input) {
+        return Arrays.stream(input.trim().split("\\s+"))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
+    }
 }

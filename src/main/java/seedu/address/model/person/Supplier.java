@@ -2,13 +2,9 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-//import java.util.Collections;
-//import java.util.HashSet;
-//import java.util.Objects;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-//import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.category.Category;
 
@@ -19,34 +15,15 @@ import seedu.address.model.category.Category;
 public class Supplier extends Person {
 
     // Identity fields
-    private final String item;
     private final ArrayList<Order> orders;
+
     /**
      * Every field must be present and not null.
-     * @param item item that the supplier supplies, not the order itself.
      */
-    public Supplier(Name name, Phone phone, Email email, Address address, Category category, String item) {
+    public Supplier(Name name, Phone phone, Email email, Address address, Category category) {
         super(name, phone, email, address, category);
         requireAllNonNull(name, phone, email, address, category);
-        this.item = item;
         this.orders = new ArrayList<>();
-    }
-
-    public String getItem() {
-        return this.item;
-    }
-
-    /**
-     * Returns true if both persons have the same name.
-     * This defines a weaker notion of equality between two persons.
-     */
-    public boolean isSameSupplier(Supplier otherPerson) {
-        if (otherPerson == this) {
-            return true;
-        }
-
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
     }
 
     /**
@@ -65,7 +42,7 @@ public class Supplier extends Person {
         }
 
         Supplier otherPerson = (Supplier) other;
-        return super.equals(other) && otherPerson.item.equals(this.item);
+        return super.equals(otherPerson);
     }
 
 
@@ -77,7 +54,6 @@ public class Supplier extends Person {
                 .add("email", super.getEmail())
                 .add("address", super.getAddress())
                 .add("category", super.getCategory())
-                .add("item", this.item)
                 .toString();
     }
 
@@ -87,6 +63,10 @@ public class Supplier extends Person {
      */
     public void addOrder(Order newOrder) {
         orders.add(newOrder);
+    }
+
+    public ArrayList<Order> getOrders() {
+        return this.orders;
     }
 
     /**
@@ -110,6 +90,4 @@ public class Supplier extends Person {
     public void updateOrders(int index, Order newOrder) {
         this.orders.set(index - 1, newOrder);
     }
-
-
 }

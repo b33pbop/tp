@@ -11,6 +11,7 @@ import seedu.address.model.category.Category;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
+
 public class Person {
 
     // Identity fields
@@ -55,11 +56,15 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both persons have the same name OR same phone number.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
+        if (otherPerson == null) {
+            return false;
+        }
+
+        if (otherPerson == this || otherPerson.phone.equals(this.phone)) {
             return true;
         }
 
