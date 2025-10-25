@@ -20,8 +20,13 @@ class JsonAdaptedPersonStaffTest {
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         Person p = jap.toModelType();
-        assertTrue(p instanceof Staff);
+        assert p != null : "Converted person should not be null";
+        assert p instanceof Staff : "Expected Staff instance";
+
         Staff st = (Staff) p;
+        assert st.getShift() != null : "Shift must be non-null";
+
+        assertTrue(p instanceof Staff);
         assertEquals("AM", st.getShift().getValue());
         assertEquals(14, st.getNumberOfLeaves());
     }
@@ -34,6 +39,9 @@ class JsonAdaptedPersonStaffTest {
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         Staff st = (Staff) jap.toModelType();
+        assert st != null : "Converted person should not be null";
+        assert st instanceof Staff : "Expected Staff instance";
+        assert st.getShift() != null : "Shift must be non-null";
         assertEquals("AM", st.getShift().getValue());
     }
 
@@ -45,6 +53,9 @@ class JsonAdaptedPersonStaffTest {
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         Staff st = (Staff) jap.toModelType();
+        assert st != null : "Converted person should not be null";
+        assert st instanceof Staff : "Expected Staff instance";
+        assert st.getShift() != null : "Shift must be non-null";
         assertEquals(20, st.getNumberOfLeaves());
     }
 
@@ -56,6 +67,9 @@ class JsonAdaptedPersonStaffTest {
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         Staff st = (Staff) jap.toModelType();
+        assert st != null : "Converted person should not be null";
+        assert st instanceof Staff : "Expected Staff instance";
+        assert st.getShift() != null : "Shift must be non-null";
         assertEquals(10, st.getNumberOfLeaves());
     }
 
