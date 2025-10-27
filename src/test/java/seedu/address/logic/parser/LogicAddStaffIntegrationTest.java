@@ -45,7 +45,10 @@ public class LogicAddStaffIntegrationTest {
 
         assertEquals(1, model.getFilteredPersonList().size(), "Exactly one person should be added");
         Person created = model.getFilteredPersonList().get(0);
-        assertTrue(created instanceof Staff, "Created person must be a Staff instance");
+        assert created != null : "Person list should not be empty";
+        assert created instanceof Staff : "Expected a staff instance";
+        assert ((Staff) created).getShift() != null : "Staff should have a shift";
+
         assertEquals("Alex Tan", created.getName().fullName);
         assertEquals("AM", ((Staff) created).getShift().getValue());
     }
