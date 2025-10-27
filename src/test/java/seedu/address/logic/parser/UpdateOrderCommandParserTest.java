@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.UpdateOrderCommand;
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.SupplierBuilder;
@@ -147,5 +150,33 @@ public class UpdateOrderCommandParserTest {
         assertParseSuccess(parser, userInput + "d/ Updated", updateDeliveryDayOnly);
 
 
+    }
+
+    @Test
+    public void parse_unitPriceWithDollar_success() throws ParseException {
+        String args = "p/91234567 o/1 i/Pens q/100 u/$0.90 d/Tuesday";
+        UpdateOrderCommand cmd = parser.parse(args);
+        assertEquals(0.90, cmd.descriptor.getUnitPrice().get());
+    }
+
+    @Test
+    public void parse_unitPriceWithoutDollar_success() throws ParseException {
+        String args = "p/91234567 o/1 i/Pens q/100 u/0.90 d/Tuesday";
+        UpdateOrderCommand cmd = parser.parse(args);
+        assertEquals(0.90, cmd.descriptor.getUnitPrice().get());
+    }
+
+    @Test
+    public void parse_withDeliveryDay_success() throws ParseException {
+        String args = "p/91234567 o/1 i/Pens q/100 u/0.90 d/Tuesday";
+        UpdateOrderCommand cmd = parser.parse(args);
+        assertEquals("Tuesday", cmd.descriptor.getDeliveryDay().get());
+    }
+
+    @Test
+    public void parse_withoutDeliveryDay_success() throws ParseException {
+        String args = "p/91234567 o/1 i/Pens q/100 u/0.90";
+        UpdateOrderCommand cmd = parser.parse(args);
+        assertFalse(cmd.descriptor.getDeliveryDay().isPresent());
     }
 }

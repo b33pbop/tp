@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddOrderCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.OrderBuilder;
@@ -87,5 +89,19 @@ public class AddOrderCommandParserTest {
         // all prefixes missing
         String missingAll = " 85355255 Chicken 99 0.99 every Thursday";
         assertParseFailure(parser, AddOrderCommand.COMMAND_WORD + missingAll, expectedErrorMessage);
+    }
+
+    @Test
+    public void parse_unitPriceWithDollar_success() throws ParseException {
+        String args = "p/85355255 i/Chicken q/99 u/$0.99 d/every Thursday";
+        AddOrderCommand cmd = parser.parse(args);
+        assertEquals(0.99, cmd.getOrderUnitPrice());
+    }
+
+    @Test
+    public void parse_unitPriceWithoutDollar_success() throws ParseException {
+        String args = "p/85355255 i/Chicken q/99 u/0.99 d/every Thursday";
+        AddOrderCommand cmd = parser.parse(args);
+        assertEquals(0.99, cmd.getOrderUnitPrice());
     }
 }

@@ -18,8 +18,7 @@ public class ViewCommand extends Command {
     public static final String COMMAND_WORD = "view";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Views a person's details by phone number.\n"
-            + "Parameters: PHONE\n"
-            + "Example: " + COMMAND_WORD + " 91234567";
+        + "Example: " + COMMAND_WORD + " p/91234567";
 
     private final Phone targetPhone;
 

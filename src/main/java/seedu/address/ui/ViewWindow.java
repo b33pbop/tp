@@ -40,8 +40,7 @@ public class ViewWindow extends UiPart<Stage> {
     @FXML
     private Label staffLeavesLabel;
 
-    @FXML
-    private Label supplierItemLabel;
+
 
     @FXML
     private Label supplierOrdersLabel;
@@ -76,11 +75,8 @@ public class ViewWindow extends UiPart<Stage> {
         staffLeavesLabel.setText("");
 
         // hide and un-manage supplier-specific fields
-        supplierItemLabel.setVisible(false);
-        supplierItemLabel.setManaged(false);
         supplierOrdersLabel.setVisible(false);
         supplierOrdersLabel.setManaged(false);
-        supplierItemLabel.setText("");
         supplierOrdersLabel.setText("");
     }
 
@@ -104,11 +100,10 @@ public class ViewWindow extends UiPart<Stage> {
             staffShiftLabel.setText("Shift: " + staff.getShift().toString());
             staffLeavesLabel.setText("Remaining Leaves: " + staff.getNumberOfLeaves());
         } else if (person instanceof Supplier supplier) {
-            supplierItemLabel.setVisible(true);
-            supplierItemLabel.setManaged(true);
+            // removed supplierItemLabel
             supplierOrdersLabel.setVisible(true);
             supplierOrdersLabel.setManaged(true);
-            supplierItemLabel.setText("Supplies: " + supplier.getOrders());
+            // removed supplierItemLabel
             String orders = supplier.listOrders();
             supplierOrdersLabel.setText("Orders:\n" + (orders.isEmpty() ? "No orders" : orders));
         }

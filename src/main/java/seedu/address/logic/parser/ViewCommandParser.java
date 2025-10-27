@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -13,15 +14,15 @@ public class ViewCommandParser implements Parser<ViewCommand> {
 
     @Override
     public ViewCommand parse(String args) throws ParseException {
-        String trimmed = args.trim();
-        if (trimmed.isEmpty()) {
+        String trimmedArgs = args.trim();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(trimmedArgs, PREFIX_PHONE);
+        if (!argMultimap.getValue(PREFIX_PHONE).isPresent() || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
         }
-
-        if (!Phone.isValidPhone(trimmed)) {
-            throw new ParseException("Invalid phone number format.");
+        String phoneValue = argMultimap.getValue(PREFIX_PHONE).get();
+        if (!Phone.isValidPhone(phoneValue)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
         }
-
-        return new ViewCommand(new Phone(trimmed));
+        return new ViewCommand(new Phone(phoneValue));
     }
 }

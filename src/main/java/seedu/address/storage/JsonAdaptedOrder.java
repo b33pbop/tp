@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.model.person.Order;
 
@@ -40,22 +39,15 @@ public class JsonAdaptedOrder {
         this.deliveryDay = source.getDeliveryDay();
     }
 
-    @JsonValue
     public String getItem() {
         return item;
     }
-
-    @JsonValue
     public int getQuantity() {
         return quantity;
     }
-
-    @JsonValue
     public double getUnitPrice() {
         return unitPrice;
     }
-
-    @JsonValue
     public String getDeliveryDay() {
         return deliveryDay;
     }
