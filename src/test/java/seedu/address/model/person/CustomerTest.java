@@ -8,11 +8,13 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_CATEGORY_CUSTOM
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalCustomers.ALICE;
 import static seedu.address.testutil.TypicalCustomers.BOB;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.tier.Tier;
 import seedu.address.testutil.CustomerBuilder;
 
 public class CustomerTest {
@@ -82,6 +84,50 @@ public class CustomerTest {
         // different address -> returns false
         editedAlice = new CustomerBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
+    }
+
+    @Test
+    public void addPointsFromSpending_pointsAccumulatedCorrectly() {
+        Customer customer = new CustomerBuilder().build();
+
+        // Spending 100.75 should give 100 points (truncating)
+        customer.addPointsFromSpending(100.75);
+        assertEquals(100, customer.getPoints());
+
+        // Add more spending
+        customer.addPointsFromSpending(50.5);
+        assertEquals(150, customer.getPoints());
+    }
+
+    @Test
+    public void addPointsFromSpending_tierUpdatedCorrectly() {
+        Customer customer = new CustomerBuilder().build();
+
+        // MEMBER
+        assertEquals(Tier.MEMBER, customer.getTier());
+
+        // BRONZE (100 points)
+        customer.addPointsFromSpending(150); // 150 points
+        assertEquals(Tier.BRONZE, customer.getTier());
+
+        // SILVER (500 points)
+        customer.addPointsFromSpending(400); // total 550 points
+        assertEquals(Tier.SILVER, customer.getTier());
+
+        // GOLD (1000 points)
+        customer.addPointsFromSpending(500); // total 1050 points
+        assertEquals(Tier.GOLD, customer.getTier());
+
+        // PLATINUM (2500 points)
+        customer.addPointsFromSpending(2000); // total 3050 points
+        assertEquals(Tier.PLATINUM, customer.getTier());
+    }
+
+    @Test
+    public void addPointsFromSpending_negativeAmount_throwsException() {
+        Customer customer = new CustomerBuilder().build();
+
+        assertThrows(IllegalArgumentException.class, () -> customer.addPointsFromSpending(-10));
     }
 
     @Test

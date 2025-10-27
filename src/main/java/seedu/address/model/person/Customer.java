@@ -37,7 +37,11 @@ public class Customer extends Person {
      *
      * @param amountSpent Amount of money a customer spends.
      */
-    public void addPointsFromSpending(double amountSpent) {
+    public void addPointsFromSpending(double amountSpent) throws IllegalArgumentException {
+        if (amountSpent < 0) {
+            throw new IllegalArgumentException("Amount spent cannot be negative");
+        }
+
         int points = calculatePointsFromSpending(amountSpent);
         this.points += points;
         updateTier();
