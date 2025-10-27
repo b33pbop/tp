@@ -32,22 +32,15 @@ public class UpdateOrderCommand extends Command {
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
     public static final String MESSAGE_OUT_OF_BOUNDS = "Index given is out of bounds of supplier's list of orders.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the details of the order identified "
-            + "by the index number used in the supplier's order list. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_ORDERNUM + "ORDER NUMBER] "
-            + "[" + PREFIX_ITEM + "ITEM] "
-            + "[" + PREFIX_QUANTITY + "QUANTITY] "
-            + "[" + PREFIX_UNITPRICE + "UNIT PRICE] "
-            + "[" + PREFIX_DELIVERYDAY + "DELIVERY DAY]...\n"
-            + "Example: " + COMMAND_WORD
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_ORDERNUM + "1"
-            + PREFIX_ITEM + "Pens"
-            + PREFIX_QUANTITY + "100"
-            + PREFIX_UNITPRICE + "$0.90"
-            + PREFIX_DELIVERYDAY + "every Tuesday";
+        + "by the index number used in the supplier's order list. "
+        + "Existing values will be overwritten by the input values.\n"
+        + "Example: " + COMMAND_WORD + " "
+        + PREFIX_PHONE + "91234567 "
+        + PREFIX_ORDERNUM + "1 "
+        + PREFIX_ITEM + "Pens "
+        + PREFIX_QUANTITY + "100 "
+        + PREFIX_UNITPRICE + "$0.90 "
+        + PREFIX_DELIVERYDAY + "every Tuesday";
 
     public final int supplierPhone;
     public final int orderIndex;
