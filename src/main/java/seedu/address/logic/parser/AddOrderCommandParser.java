@@ -44,7 +44,11 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
         int supplierPhone = Integer.parseInt(argMultimap.getValue(PREFIX_PHONE).get());
         String orderItem = argMultimap.getValue(PREFIX_ITEM).get();
         int orderQuantity = Integer.parseInt(argMultimap.getValue(PREFIX_QUANTITY).get());
-        double orderUnitPrice = Double.parseDouble(argMultimap.getValue(PREFIX_UNITPRICE).get());
+        String unitPriceRaw = argMultimap.getValue(PREFIX_UNITPRICE).get().trim();
+        if (unitPriceRaw.startsWith("$")) {
+            unitPriceRaw = unitPriceRaw.substring(1);
+        }
+        double orderUnitPrice = Double.parseDouble(unitPriceRaw);
         String orderDeliveryDay = argMultimap.getValue(PREFIX_DELIVERYDAY).get();
 
         return new AddOrderCommand(supplierPhone, orderItem, orderQuantity, orderUnitPrice, orderDeliveryDay);

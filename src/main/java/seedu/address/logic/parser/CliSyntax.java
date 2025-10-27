@@ -19,4 +19,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_UNITPRICE = new Prefix("u/");
     public static final Prefix PREFIX_DELIVERYDAY = new Prefix("d/");
 
+    public static final Prefix PREFIX_INDEX = new Prefix("i/");
+
 }

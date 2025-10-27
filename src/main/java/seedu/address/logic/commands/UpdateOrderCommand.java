@@ -24,7 +24,7 @@ import seedu.address.model.person.Supplier;
  */
 public class UpdateOrderCommand extends Command {
 
-    public static final String COMMAND_WORD = "update";
+    public static final String COMMAND_WORD = "updateOrder";
 
     public static final String MESSAGE_UPDATE_SUCCESS = "Order has been updated successfully";
     public static final String MESSAGE_NO_CHANGE = "Values given are exactly the same, no update made.";

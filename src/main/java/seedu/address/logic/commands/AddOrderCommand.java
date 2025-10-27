@@ -16,12 +16,12 @@ import seedu.address.model.person.Supplier;
 
 
 /**
-* Adds an order to the specified supplier's list of orders
-*/
+ * Adds an order to the specified supplier's list of orders.
+ */
 
 public class AddOrderCommand extends Command {
 
-    public static final String COMMAND_WORD = "order";
+    public static final String COMMAND_WORD = "addOrder";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a order to the supplier's order list. "
             + "Parameters: "
@@ -57,8 +57,8 @@ public class AddOrderCommand extends Command {
      */
 
     public AddOrderCommand(int supplierPhone, String newOrderItem,
-                           int newOrderQuantity, double newOrderUnitPrice,
-                           String newOrderDeliveryDay) {
+            int newOrderQuantity, double newOrderUnitPrice,
+            String newOrderDeliveryDay) {
         this.supplierPhone = supplierPhone;
         this.newOrderItem = newOrderItem;
         this.newOrderQuantity = newOrderQuantity;
@@ -68,7 +68,6 @@ public class AddOrderCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-
         // finds person tagged to phone number
         Person foundPerson = null;
         requireNonNull(model);
@@ -88,16 +87,18 @@ public class AddOrderCommand extends Command {
             throw new CommandException(MESSAGE_NOT_SUPPLIER);
         }
         // creates the new order (no parameters can be missing)
-
         Order newOrder = new Order(this.newOrderItem,
-                                    this.newOrderQuantity,
-                                    this.newOrderUnitPrice,
-                                    this.newOrderDeliveryDay);
+                this.newOrderQuantity,
+                this.newOrderUnitPrice,
+                this.newOrderDeliveryDay);
 
         // adds it to the back of the list
-
         Supplier foundSupplier = (Supplier) foundPerson;
         foundSupplier.addOrder(newOrder);
+
+        // Persist the updated supplier in the model/address book
+        // Remove the old supplier and add the updated one
+        model.setPerson(foundPerson, foundSupplier);
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
