@@ -44,19 +44,6 @@ public class Customer extends Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
-     * This defines a weaker notion of equality between two persons.
-     */
-    public boolean isSameCustomer(Customer otherPerson) {
-        if (otherPerson == this) {
-            return true;
-        }
-
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
-    }
-
-    /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
@@ -67,11 +54,12 @@ public class Customer extends Person {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Customer otherPerson)) {
+        if (!(other instanceof Customer)) {
             return false;
         }
 
-        return otherPerson.isSameCustomer(this);
+        Customer otherPerson = (Customer) other;
+        return super.equals(otherPerson);
     }
 
     @Override
