@@ -38,6 +38,7 @@ public class AddOrderCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Order added successfully";
     public static final String MESSAGE_NOT_FOUND = "Entry with that phone number cannot be found.";
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
+    public static final String MESSAGE_DUPLICATE_ORDER = "Order already exists in the list, please try again";
 
     // Instance variables
     private final int supplierPhone;
@@ -96,8 +97,12 @@ public class AddOrderCommand extends Command {
                 this.newOrderUnitPrice,
                 this.newOrderDeliveryDay);
 
+
         // adds it to the back of the list
         Supplier foundSupplier = (Supplier) foundPerson;
+        if (foundSupplier.hasOrder(newOrder)) {
+            throw new CommandException(MESSAGE_DUPLICATE_ORDER);
+        }
         foundSupplier.addOrder(newOrder);
 
         // Persist the updated supplier in the model/address book
