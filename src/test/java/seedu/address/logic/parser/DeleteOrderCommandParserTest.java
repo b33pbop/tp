@@ -13,13 +13,13 @@ public class DeleteOrderCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsDeleteOrderCommand() throws Exception {
-        DeleteOrderCommand command = parser.parse(" p/91234567 i/1");
+        DeleteOrderCommand command = parser.parse(" p/91234567 o/1");
         assertEquals(new DeleteOrderCommand(91234567, 1), command);
     }
 
     @Test
     public void parse_missingPhone_throwsParseException() {
-        assertThrows(ParseException.class, () -> parser.parse(" i/1"));
+        assertThrows(ParseException.class, () -> parser.parse(" o/1"));
     }
 
     @Test
@@ -29,12 +29,12 @@ public class DeleteOrderCommandParserTest {
 
     @Test
     public void parse_invalidIndex_throwsParseException() {
-        assertThrows(ParseException.class, () -> parser.parse(" p/91234567 i/notanumber"));
+        assertThrows(ParseException.class, () -> parser.parse(" p/91234567 o/notanumber"));
     }
 
     @Test
     public void parse_invalidPhone_throwsParseException() {
-        assertThrows(ParseException.class, () -> parser.parse(" p/notanumber i/1"));
+        assertThrows(ParseException.class, () -> parser.parse(" p/notanumber o/1"));
     }
 
     @Test

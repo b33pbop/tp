@@ -20,9 +20,8 @@ import seedu.address.model.person.Supplier;
  */
 
 public class AddOrderCommand extends Command {
-
+    // Static variables
     public static final String COMMAND_WORD = "addOrder";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a order to the supplier's order list. "
             + "Parameters: "
             + PREFIX_PHONE + "PHONE "
@@ -36,17 +35,18 @@ public class AddOrderCommand extends Command {
             + PREFIX_QUANTITY + "50 "
             + PREFIX_UNITPRICE + "$0.60 "
             + PREFIX_DELIVERYDAY + "every Thursday\n";
-
     public static final String MESSAGE_SUCCESS = "Order added successfully";
     public static final String MESSAGE_NOT_FOUND = "Entry with that phone number cannot be found.";
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
 
+    // Instance variables
     private final int supplierPhone;
     private final String newOrderItem;
     private final int newOrderQuantity;
     private final double newOrderUnitPrice;
     private final String newOrderDeliveryDay;
 
+    // Constructor
     /**
      * Creates an AddOrderCommand to add the order to a supplier's list of orders
      * @param supplierPhone The phone number of the specified supplier
@@ -55,7 +55,6 @@ public class AddOrderCommand extends Command {
      * @param newOrderUnitPrice The unit price of the new item in the new order
      * @param newOrderDeliveryDay The estimated day of delivery of the new order
      */
-
     public AddOrderCommand(int supplierPhone, String newOrderItem,
             int newOrderQuantity, double newOrderUnitPrice,
             String newOrderDeliveryDay) {
@@ -64,6 +63,11 @@ public class AddOrderCommand extends Command {
         this.newOrderQuantity = newOrderQuantity;
         this.newOrderUnitPrice = newOrderUnitPrice;
         this.newOrderDeliveryDay = newOrderDeliveryDay;
+    }
+
+    // Public getter for unit price
+    public double getOrderUnitPrice() {
+        return newOrderUnitPrice;
     }
 
     @Override

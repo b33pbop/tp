@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import javafx.collections.ObservableList;
@@ -17,12 +16,12 @@ public class DeleteOrderCommand extends Command {
     public static final String COMMAND_WORD = "deleteOrder";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes an order from the supplier's order list. "
-            + "Parameters: "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_INDEX + "ORDER_INDEX\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_INDEX + "1";
+        + "Parameters: "
+        + PREFIX_PHONE + "PHONE "
+        + seedu.address.logic.parser.CliSyntax.PREFIX_ORDERNUM + "ORDER_INDEX\n"
+        + "Example: " + COMMAND_WORD + " "
+        + PREFIX_PHONE + "91234567 "
+        + seedu.address.logic.parser.CliSyntax.PREFIX_ORDERNUM + "1";
 
     public static final String MESSAGE_SUCCESS = "Order deleted successfully";
     public static final String MESSAGE_NOT_FOUND = "Entry with that phone number cannot be found.";
