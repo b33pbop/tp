@@ -6,6 +6,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents an Order's item's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidItemName(String)}
@@ -27,7 +29,7 @@ public class ItemName {
      *
      * @param itemName A valid name.
      */
-    public ItemName(String itemName) {
+    public ItemName(@JsonProperty("itemName") String itemName) {
         requireNonNull(itemName);
         checkArgument(isValidItemName(itemName), MESSAGE_CONSTRAINTS);
         this.itemName = toTitleCase(itemName);
