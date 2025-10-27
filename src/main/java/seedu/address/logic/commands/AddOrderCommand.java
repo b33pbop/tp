@@ -10,8 +10,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_UNITPRICE;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.ItemName;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 
 
@@ -41,8 +43,8 @@ public class AddOrderCommand extends Command {
     public static final String MESSAGE_DUPLICATE_ORDER = "Order already exists in the list, please try again";
 
     // Instance variables
-    private final int supplierPhone;
-    private final String newOrderItem;
+    private final Phone supplierPhone;
+    private final ItemName newOrderItem;
     private final int newOrderQuantity;
     private final double newOrderUnitPrice;
     private final String newOrderDeliveryDay;
@@ -56,7 +58,7 @@ public class AddOrderCommand extends Command {
      * @param newOrderUnitPrice The unit price of the new item in the new order
      * @param newOrderDeliveryDay The estimated day of delivery of the new order
      */
-    public AddOrderCommand(int supplierPhone, String newOrderItem,
+    public AddOrderCommand(Phone supplierPhone, ItemName newOrderItem,
             int newOrderQuantity, double newOrderUnitPrice,
             String newOrderDeliveryDay) {
         this.supplierPhone = supplierPhone;
@@ -78,7 +80,7 @@ public class AddOrderCommand extends Command {
         requireNonNull(model);
         ObservableList<Person> currentList = model.getAddressBook().getPersonList();
         for (int i = 0; i < currentList.size(); i++) {
-            if (Integer.parseInt(currentList.get(i).getPhone().toString()) == this.supplierPhone) {
+            if (currentList.get(i).getPhone().equals(this.supplierPhone)) {
                 foundPerson = currentList.get(i);
                 break;
             }

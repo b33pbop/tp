@@ -18,6 +18,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.UpdateOrderCommand;
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ItemName;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.SupplierBuilder;
@@ -74,7 +75,7 @@ public class UpdateOrderCommandParserTest {
         String userInput = "update p/ 85355255 o/ 1 i/ Updated q/ 1000 u/ 111.11 d/ Today";
 
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
-        Order baseOrder = new Order("Pencils",
+        Order baseOrder = new Order(new ItemName("Pencils"),
                 40,
                 0.5,
                 "every Friday");
@@ -82,7 +83,7 @@ public class UpdateOrderCommandParserTest {
         int supplierPhone = Integer.parseInt(supplier.getPhone().value);
 
         UpdateOrderDescriptor updateOrderDescriptor = new UpdateOrderDescriptor();
-        updateOrderDescriptor.updateItem("Updated");
+        updateOrderDescriptor.updateItem(new ItemName("Changed item"));
         updateOrderDescriptor.updateQuantity(1000);
         updateOrderDescriptor.updateUnitPrice(111.11);
         updateOrderDescriptor.updateDeliveryDay("Today");
@@ -98,7 +99,7 @@ public class UpdateOrderCommandParserTest {
         String userInput = "update p/ 85355255 o/ 1 q/ 1000 d/ Today";
 
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
-        Order baseOrder = new Order("Pencils",
+        Order baseOrder = new Order(new ItemName("Pencils"),
                 40,
                 0.5,
                 "every Friday");
@@ -118,7 +119,7 @@ public class UpdateOrderCommandParserTest {
     public void oneFieldIncluded() {
         String userInput = "update p/ 85355255 o/ 1 ";
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
-        Order baseOrder = new Order("Pencils",
+        Order baseOrder = new Order(new ItemName("Pencils"),
                 40,
                 0.5,
                 "every Friday");
@@ -127,7 +128,7 @@ public class UpdateOrderCommandParserTest {
 
         // only item
         UpdateOrderDescriptor onlyItem = new UpdateOrderDescriptor();
-        onlyItem.updateItem("Updated");
+        onlyItem.updateItem(new ItemName("Updated"));
         UpdateOrderCommand updateItemOnly = new UpdateOrderCommand(supplierPhone, 1, onlyItem);
         assertParseSuccess(parser, userInput + "i/ Updated", updateItemOnly);
 

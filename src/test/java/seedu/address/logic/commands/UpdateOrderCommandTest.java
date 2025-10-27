@@ -11,6 +11,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ItemName;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Supplier;
@@ -25,7 +26,7 @@ public class UpdateOrderCommandTest {
 
     @Test
     public void updateOrderWithNoChanges() throws CommandException {
-        Order baseOrder = new Order("Pencils",
+        Order baseOrder = new Order(new ItemName("Pencils"),
                                     40,
                                     0.5,
                                     "every Friday");
@@ -47,7 +48,7 @@ public class UpdateOrderCommandTest {
 
     @Test
     public void updateOrderWithSomeChanges() throws CommandException {
-        Order baseOrder = new Order("Pencils",
+        Order baseOrder = new Order(new ItemName("Pencils"),
                 40,
                 0.5,
                 "every Friday");
@@ -55,7 +56,7 @@ public class UpdateOrderCommandTest {
         AddCommand addCommand = new AddCommand(supplier);
         addCommand.execute(model);
 
-        Order finalOrder = new Order("Changed item",
+        Order finalOrder = new Order(new ItemName("Changed item"),
                 100,
                 0.5,
                 "every Friday");
@@ -63,7 +64,7 @@ public class UpdateOrderCommandTest {
         finalSupplier.addOrder(finalOrder);
 
         UpdateOrderDescriptor changedSome = new UpdateOrderDescriptor();
-        changedSome.updateItem("Changed item");
+        changedSome.updateItem(new ItemName("Changed item"));
         changedSome.updateQuantity(100);
 
         int supplierPhone = Integer.parseInt(supplier.getPhone().value);
@@ -78,7 +79,7 @@ public class UpdateOrderCommandTest {
 
     @Test
     public void updateOrderWithAllChanges() throws CommandException {
-        Order baseOrder = new Order("Pencils",
+        Order baseOrder = new Order(new ItemName("Pencils"),
                 40,
                 0.5,
                 "every Friday");
@@ -86,7 +87,7 @@ public class UpdateOrderCommandTest {
         AddCommand addCommand = new AddCommand(supplier);
         addCommand.execute(model);
 
-        Order finalOrder = new Order("Changed item",
+        Order finalOrder = new Order(new ItemName("Changed item"),
                 100,
                 5.5,
                 "Changed Day");
@@ -94,7 +95,7 @@ public class UpdateOrderCommandTest {
         finalSupplier.addOrder(finalOrder);
 
         UpdateOrderDescriptor changedAll = new UpdateOrderDescriptor();
-        changedAll.updateItem("Changed item");
+        changedAll.updateItem(new ItemName("Changed item"));
         changedAll.updateQuantity(100);
         changedAll.updateUnitPrice(5.5);
         changedAll.updateDeliveryDay("Changed Day");
@@ -133,7 +134,7 @@ public class UpdateOrderCommandTest {
 
     @Test
     public void orderIndexOutOfBounds() throws CommandException {
-        Order baseOrder = new Order("Pencils",
+        Order baseOrder = new Order(new ItemName("Pencils"),
                 40,
                 0.5,
                 "every Friday");

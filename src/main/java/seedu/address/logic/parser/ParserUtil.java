@@ -8,6 +8,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ItemName;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Shift;
@@ -46,6 +47,16 @@ public class ParserUtil {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
+    }
+
+    public static ItemName parseItemName(String itemName) throws ParseException {
+        requireNonNull(itemName);
+        // Remove additional whitespace between parts of the item name
+        String trimmedItemName = itemName.trim().replaceAll("\\s+", " ");
+        if (!Name.isValidName(trimmedItemName)) {
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        }
+        return new ItemName(trimmedItemName);
     }
 
     /**

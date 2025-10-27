@@ -26,9 +26,9 @@ public class SupplierTest {
         Address testAddress = new Address("Block 416 Bukit Batok Drive");
         Category testCat = new Category("Supplier");
         Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat);
-        Order test1 = new Order("Computer", 5, 100.0,
+        Order test1 = new Order(new ItemName("Computer"), 5, 100.0,
                 "every Tuesday");
-        Order test2 = new Order("Computer", 10, 120.0,
+        Order test2 = new Order(new ItemName("Computer"), 10, 120.0,
                 "every Wednesday");
         test.addOrder(test1);
         test.addOrder(test2);

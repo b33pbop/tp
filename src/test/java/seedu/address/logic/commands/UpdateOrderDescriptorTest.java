@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.UpdateOrderCommand.createEditedOrder;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
+import seedu.address.model.person.ItemName;
 import seedu.address.model.person.Order;
 
 public class UpdateOrderDescriptorTest {
@@ -18,14 +19,14 @@ public class UpdateOrderDescriptorTest {
     }
     @Test
     public void successfulUpdateOfParameters() {
-        Order baseOrder = new Order("Pencils",
+        Order baseOrder = new Order(new ItemName("Pencils"),
                                     10,
                                     0.1,
                                     "every Monday");
 
         // if name different -> not equal
         UpdateOrderDescriptor nameTest = new UpdateOrderDescriptor();
-        nameTest.updateItem("Pens");
+        nameTest.updateItem(new ItemName("Changed item"));
         Order orderWithEditedName = createEditedOrder(baseOrder, nameTest);
         assertNotEquals(orderWithEditedName, baseOrder);
 

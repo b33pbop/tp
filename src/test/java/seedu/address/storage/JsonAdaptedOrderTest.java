@@ -1,15 +1,18 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ItemName;
 import seedu.address.model.person.Order;
 
 public class JsonAdaptedOrderTest {
 
-    private static final String VALID_ITEM = "Cabbage";
+    private static final ItemName VALID_ITEM = new ItemName("Cabbage");
     private static final int VALID_QUANTITY = 10;
     private static final double VALID_UNIT_PRICE = 3.25;
     private static final String VALID_DELIVERY_DAY = "2024-12-31";
@@ -76,26 +79,6 @@ public class JsonAdaptedOrderTest {
         Order modelOrder = order.toModelType();
 
         assertEquals(0.0, modelOrder.getUnitPrice());
-    }
-
-    @Test
-    public void toModelType_emptyItem_returnsOrder() {
-        String emptyItem = "";
-        JsonAdaptedOrder order = new JsonAdaptedOrder(emptyItem, VALID_QUANTITY,
-                VALID_UNIT_PRICE, VALID_DELIVERY_DAY);
-        Order modelOrder = order.toModelType();
-
-        assertEquals(emptyItem, modelOrder.getItem());
-    }
-
-    @Test
-    public void toModelType_specialCharactersInItem_returnsOrder() {
-        String specialItem = "Item@With#Special$Chars%";
-        JsonAdaptedOrder order = new JsonAdaptedOrder(specialItem, VALID_QUANTITY,
-                VALID_UNIT_PRICE, VALID_DELIVERY_DAY);
-        Order modelOrder = order.toModelType();
-
-        assertEquals(specialItem, modelOrder.getItem());
     }
 
     @Test

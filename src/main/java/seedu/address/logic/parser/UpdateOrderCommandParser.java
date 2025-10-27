@@ -44,7 +44,7 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
         }
 
         if (argMultimap.getValue(PREFIX_ITEM).isPresent()) {
-            updateOrderDescriptor.updateItem(argMultimap.getValue(PREFIX_ITEM).get());
+            updateOrderDescriptor.updateItem(ParserUtil.parseItemName(argMultimap.getValue(PREFIX_ITEM).get()));
         }
         if (argMultimap.getValue(PREFIX_QUANTITY).isPresent()) {
             updateOrderDescriptor.updateQuantity(Integer.parseInt(argMultimap.getValue(PREFIX_QUANTITY).get()));

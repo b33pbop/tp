@@ -3,15 +3,20 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ItemName;
 import seedu.address.model.person.Order;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.SupplierBuilder;
@@ -25,8 +30,8 @@ public class AddOrderCommandTest {
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order newOrder = new OrderBuilder().build();
 
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
-        String orderItem = newOrder.getItem();
+        Phone supplierPhone = supplier.getPhone();
+        ItemName orderItem = newOrder.getItem();
         int orderQuantity = newOrder.getQuantity();
         double orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
@@ -40,12 +45,12 @@ public class AddOrderCommandTest {
     }
 
     @Test
-    public void supplierIsNull_failure() throws CommandException {
+    public void supplierIsNull_failure() throws CommandException, ParseException {
         Order newOrder = new OrderBuilder().build();
         Supplier supplier = new SupplierBuilder().withPhone("91111111").build();
 
-        int supplierPhone = 91111111;
-        String orderItem = newOrder.getItem();
+        Phone supplierPhone = ParserUtil.parsePhone("91111111");
+        ItemName orderItem = newOrder.getItem();
         int orderQuantity = newOrder.getQuantity();
         double orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
@@ -63,7 +68,7 @@ public class AddOrderCommandTest {
         Order newOrder = new OrderBuilder().build();
 
         int supplierPhone = 91111111;
-        String orderItem = newOrder.getItem();
+        ItemName orderItem = newOrder.getItem();
         int orderQuantity = newOrder.getQuantity();
         double orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
@@ -72,16 +77,16 @@ public class AddOrderCommandTest {
     @Test
     public void equals() {
         Supplier supplier = new SupplierBuilder().build();
-        Order firstOrder = new OrderBuilder().withItem("Pencils").build();
-        Order secondOrder = new OrderBuilder().withItem("Pens").build();
+        Order firstOrder = new OrderBuilder().withItem(new ItemName("Pencils")).build();
+        Order secondOrder = new OrderBuilder().withItem(new ItemName("Pens")).build();
 
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
-        String firstItem = firstOrder.getItem();
+        Phone supplierPhone = supplier.getPhone();
+        ItemName firstItem = firstOrder.getItem();
         int firstQuantity = firstOrder.getQuantity();
         double firstUnitPrice = firstOrder.getUnitPrice();
         String firstDeliveryDay = firstOrder.getDeliveryDay();
 
-        String secondItem = secondOrder.getItem();
+        ItemName secondItem = secondOrder.getItem();
         int secondQuantity = secondOrder.getQuantity();
         double secondUnitPrice = secondOrder.getUnitPrice();
         String secondDeliveryDay = secondOrder.getDeliveryDay();

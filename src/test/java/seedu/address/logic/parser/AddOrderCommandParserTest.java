@@ -29,7 +29,7 @@ public class AddOrderCommandParserTest {
     @Test
     public void allFieldsPresent_success() {
         Order expectedOrder = new OrderBuilder().build();
-        AddOrderCommand expectedCommand = new AddOrderCommand(Integer.parseInt(supplier.getPhone().value),
+        AddOrderCommand expectedCommand = new AddOrderCommand(supplier.getPhone(),
                 expectedOrder.getItem(),
                 expectedOrder.getQuantity(),
                 expectedOrder.getUnitPrice(),
