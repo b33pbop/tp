@@ -6,6 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -25,10 +26,12 @@ public class ItemName {
     public final String itemName;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs a {@code itemName}.
      *
-     * @param itemName A valid name.
+     * @param itemName A valid item name.
      */
+
+    @JsonCreator
     public ItemName(@JsonProperty("itemName") String itemName) {
         requireNonNull(itemName);
         checkArgument(isValidItemName(itemName), MESSAGE_CONSTRAINTS);

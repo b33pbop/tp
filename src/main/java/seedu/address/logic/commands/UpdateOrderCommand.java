@@ -16,6 +16,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Supplier;
@@ -121,7 +122,7 @@ public class UpdateOrderCommand extends Command {
 
         ItemName updatedItem = descriptor.getItem().orElse(toEdit.getItem());
         int updatedQuantity = descriptor.getQuantity().orElse(toEdit.getQuantity());
-        double updatedUnitPrice = descriptor.getUnitPrice().orElse(toEdit.getUnitPrice());
+        ItemUnitPrice updatedUnitPrice = descriptor.getUnitPrice().orElse(toEdit.getUnitPrice());
         String updatedDeliveryDay = descriptor.getDeliveryDay().orElse(toEdit.getDeliveryDay());
 
         return new Order(updatedItem, updatedQuantity, updatedUnitPrice, updatedDeliveryDay);
@@ -133,7 +134,7 @@ public class UpdateOrderCommand extends Command {
     public static class UpdateOrderDescriptor {
         private ItemName item;
         private Integer quantity;
-        private Double unitPrice;
+        private ItemUnitPrice unitPrice;
         private String deliveryDay;
 
         public UpdateOrderDescriptor() {}
@@ -150,7 +151,7 @@ public class UpdateOrderCommand extends Command {
             return Optional.ofNullable(quantity);
         }
 
-        public Optional<Double> getUnitPrice() {
+        public Optional<ItemUnitPrice> getUnitPrice() {
             return Optional.ofNullable(unitPrice);
         }
 
@@ -166,7 +167,7 @@ public class UpdateOrderCommand extends Command {
             this.quantity = newQuantity;
         }
 
-        public void updateUnitPrice(Double newUnitPrice) {
+        public void updateUnitPrice(ItemUnitPrice newUnitPrice) {
             this.unitPrice = newUnitPrice;
         }
 

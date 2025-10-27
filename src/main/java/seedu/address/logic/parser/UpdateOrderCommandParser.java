@@ -12,6 +12,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_UNITPRICE;
 import seedu.address.logic.commands.UpdateOrderCommand;
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ItemUnitPrice;
 
 /**
  * Parses input arguments and creates a new UpdateOrderCommand object
@@ -54,7 +55,7 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
             if (unitPriceRaw.startsWith("$")) {
                 unitPriceRaw = unitPriceRaw.substring(1);
             }
-            updateOrderDescriptor.updateUnitPrice(Double.parseDouble(unitPriceRaw));
+            updateOrderDescriptor.updateUnitPrice(new ItemUnitPrice(unitPriceRaw));
         }
         if (argMultimap.getValue(PREFIX_DELIVERYDAY).isPresent()) {
             updateOrderDescriptor.updateDeliveryDay(argMultimap.getValue(PREFIX_DELIVERYDAY).get());

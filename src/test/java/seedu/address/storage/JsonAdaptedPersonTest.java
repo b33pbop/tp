@@ -13,6 +13,7 @@ import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
@@ -145,7 +146,8 @@ public class JsonAdaptedPersonTest {
                 new Category("Supplier"));
 
         // add an order
-        supplier.addOrder(new Order(new ItemName("Laptop"), 10, 1000.0, "2025-10-23"));
+        supplier.addOrder(new Order(new ItemName("Laptop"), 10,
+                new ItemUnitPrice("1000.0"), "2025-10-23"));
 
         // convert to JsonAdaptedPerson
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
@@ -167,7 +169,8 @@ public class JsonAdaptedPersonTest {
                 new Address("4th street"),
                 new Category("Supplier"));
 
-        supplier.addOrder(new Order(new ItemName("Mouse"), 5, 50.0, "2025-10-24"));
+        supplier.addOrder(new Order(new ItemName("Mouse"), 5,
+                new ItemUnitPrice("50.0"), "2025-10-24"));
 
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
         Person modelPerson = adaptedPerson.toModelType();

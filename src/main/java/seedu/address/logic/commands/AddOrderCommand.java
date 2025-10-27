@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -46,7 +47,7 @@ public class AddOrderCommand extends Command {
     private final Phone supplierPhone;
     private final ItemName newOrderItem;
     private final int newOrderQuantity;
-    private final double newOrderUnitPrice;
+    private final ItemUnitPrice newOrderUnitPrice;
     private final String newOrderDeliveryDay;
 
     // Constructor
@@ -59,7 +60,7 @@ public class AddOrderCommand extends Command {
      * @param newOrderDeliveryDay The estimated day of delivery of the new order
      */
     public AddOrderCommand(Phone supplierPhone, ItemName newOrderItem,
-            int newOrderQuantity, double newOrderUnitPrice,
+            int newOrderQuantity, ItemUnitPrice newOrderUnitPrice,
             String newOrderDeliveryDay) {
         this.supplierPhone = supplierPhone;
         this.newOrderItem = newOrderItem;
@@ -69,7 +70,7 @@ public class AddOrderCommand extends Command {
     }
 
     // Public getter for unit price
-    public double getOrderUnitPrice() {
+    public ItemUnitPrice getOrderUnitPrice() {
         return newOrderUnitPrice;
     }
 

@@ -15,6 +15,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
@@ -33,7 +34,7 @@ public class AddOrderCommandTest {
         Phone supplierPhone = supplier.getPhone();
         ItemName orderItem = newOrder.getItem();
         int orderQuantity = newOrder.getQuantity();
-        double orderUnitPrice = newOrder.getUnitPrice();
+        ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
         AddOrderCommand addOrderCommand = new AddOrderCommand(supplierPhone, orderItem,
                                                                 orderQuantity, orderUnitPrice,
@@ -52,7 +53,7 @@ public class AddOrderCommandTest {
         Phone supplierPhone = ParserUtil.parsePhone("91111111");
         ItemName orderItem = newOrder.getItem();
         int orderQuantity = newOrder.getQuantity();
-        double orderUnitPrice = newOrder.getUnitPrice();
+        ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
         AddOrderCommand addOrderCommand = new AddOrderCommand(supplierPhone, orderItem,
                 orderQuantity, orderUnitPrice,
@@ -64,13 +65,13 @@ public class AddOrderCommandTest {
     }
 
     @Test
-    public void personFoundNotSupplier() {
+    public void personFoundNotSupplier() throws ParseException {
         Order newOrder = new OrderBuilder().build();
 
-        int supplierPhone = 91111111;
+        Phone supplierPhone = ParserUtil.parsePhone("91111111");
         ItemName orderItem = newOrder.getItem();
         int orderQuantity = newOrder.getQuantity();
-        double orderUnitPrice = newOrder.getUnitPrice();
+        ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
     }
 
@@ -83,12 +84,12 @@ public class AddOrderCommandTest {
         Phone supplierPhone = supplier.getPhone();
         ItemName firstItem = firstOrder.getItem();
         int firstQuantity = firstOrder.getQuantity();
-        double firstUnitPrice = firstOrder.getUnitPrice();
+        ItemUnitPrice firstUnitPrice = firstOrder.getUnitPrice();
         String firstDeliveryDay = firstOrder.getDeliveryDay();
 
         ItemName secondItem = secondOrder.getItem();
         int secondQuantity = secondOrder.getQuantity();
-        double secondUnitPrice = secondOrder.getUnitPrice();
+        ItemUnitPrice secondUnitPrice = secondOrder.getUnitPrice();
         String secondDeliveryDay = secondOrder.getDeliveryDay();
 
 

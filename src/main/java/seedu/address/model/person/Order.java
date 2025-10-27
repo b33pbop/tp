@@ -7,7 +7,7 @@ public class Order {
 
     private final ItemName item;
     private final int quantity;
-    private final double unitPrice;
+    private final ItemUnitPrice unitPrice;
     private final String deliveryDay;
 
     /**
@@ -17,7 +17,7 @@ public class Order {
      * @param unitPrice price of each item
      * @param deliveryDay day to be delivered
      */
-    public Order(ItemName item, int quantity, double unitPrice, String deliveryDay) {
+    public Order(ItemName item, int quantity, ItemUnitPrice unitPrice, String deliveryDay) {
         this.item = item;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
@@ -32,7 +32,7 @@ public class Order {
         return quantity;
     }
 
-    public double getUnitPrice() {
+    public ItemUnitPrice getUnitPrice() {
         return unitPrice;
     }
 
@@ -66,7 +66,7 @@ public class Order {
             return false;
         }
 
-        if (!(otherOrder.getUnitPrice() == this.unitPrice)) {
+        if (!(otherOrder.getUnitPrice().equals(this.unitPrice))) {
             return false;
         }
 
