@@ -106,4 +106,13 @@ public class Supplier extends Person {
     public void updateOrders(int index, Order newOrder) {
         this.orders.set(index - 1, newOrder);
     }
+
+    public boolean hasOrder(Order toCheck) {
+        for (Order current : this.orders) {
+            if (current.equals(toCheck)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
