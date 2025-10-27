@@ -3,12 +3,17 @@ package seedu.address.testutil;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Customer;
 import seedu.address.model.person.Person;
+import seedu.address.model.tier.Tier;
+
 
 /**
  * A utility class to help with building {@link Customer} objects.
  * Inherits from {@link PersonBuilder}.
  */
 public class CustomerBuilder extends PersonBuilder {
+
+    private Integer points;
+    private Tier tier;
 
     /**
      * Creates a default {@code SupplierBuilder} with default item Chicken.
@@ -58,7 +63,16 @@ public class CustomerBuilder extends PersonBuilder {
 
     @Override
     public CustomerBuilder withCategory(String category) {
-        super.withCategory("Customer"); // always Supplier
+        super.withCategory("Customer"); // always Customer
+        return this;
+    }
+    public CustomerBuilder withPoints(Integer points) {
+        this.points = points;
+        return this;
+    }
+
+    public CustomerBuilder withTier(Tier tier) {
+        this.tier = tier;
         return this;
     }
 }
