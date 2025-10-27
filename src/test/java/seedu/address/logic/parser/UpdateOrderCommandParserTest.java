@@ -83,7 +83,7 @@ public class UpdateOrderCommandParserTest {
         int supplierPhone = Integer.parseInt(supplier.getPhone().value);
 
         UpdateOrderDescriptor updateOrderDescriptor = new UpdateOrderDescriptor();
-        updateOrderDescriptor.updateItem(new ItemName("Changed item"));
+        updateOrderDescriptor.updateItem(new ItemName("Updated"));
         updateOrderDescriptor.updateQuantity(1000);
         updateOrderDescriptor.updateUnitPrice(111.11);
         updateOrderDescriptor.updateDeliveryDay("Today");
