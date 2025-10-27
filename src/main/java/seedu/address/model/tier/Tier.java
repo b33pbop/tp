@@ -1,4 +1,6 @@
-package seedu.address.model.person;
+package seedu.address.model.tier;
+
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a Customer's membership tier in the address book.
@@ -8,7 +10,7 @@ public enum Tier {
     BRONZE(100, 0.05),
     SILVER(500, 0.10),
     GOLD(1000, 0.15),
-    PLATINUM(5000, 0.20);
+    PLATINUM(2500, 0.20);
 
     private final int minPoints;
     private final double discountRate;
@@ -20,6 +22,7 @@ public enum Tier {
      * @param discountRate A discount rate benefit for a customer in this tier,
      */
     Tier(int minPoints, double discountRate) {
+        requireAllNonNull(minPoints, discountRate);
         this.minPoints = minPoints;
         this.discountRate = discountRate;
     }
@@ -34,8 +37,12 @@ public enum Tier {
 
     /**
      * Returns the current tier based on points.
+     *
+     * @param points Expects a positive integer.
      */
     public static Tier getTierForPoints(int points) {
+        assert points >= 0; // points must be a positive integer
+
         if (points >= PLATINUM.minPoints) {
             return PLATINUM;
         }
