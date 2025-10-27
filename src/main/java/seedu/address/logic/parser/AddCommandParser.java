@@ -13,6 +13,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -61,9 +62,14 @@ public class AddCommandParser implements Parser<AddCommand> {
             return new AddCommand(staff);
         }
 
-        if (category.categoryName.equals("Supplier")) {
+        if (category.getCategoryName().equals("Supplier")) {
             Supplier supplier = new Supplier(name, phone, email, address, category);
             return new AddCommand(supplier);
+        }
+
+        if (category.getCategoryName().equals("Customer")) {
+            Customer customer = new Customer(name, phone, email, address, category);
+            return new AddCommand(customer);
         }
 
         Person person = new Person(name, phone, email, address, category);
