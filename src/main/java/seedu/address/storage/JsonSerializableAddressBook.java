@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Staff;
 import seedu.address.model.person.Supplier;
 
 /**
@@ -53,14 +55,18 @@ class JsonSerializableAddressBook {
             if (addressBook.hasPerson(person)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
-
             if (person instanceof Supplier) {
                 Supplier supplier = (Supplier) person;
                 addressBook.addPerson(supplier);
-            } else {
-                addressBook.addPerson(person);
+            } else if (person instanceof Customer) {
+                Customer customer = (Customer) person;
+                addressBook.addPerson(customer);
+            } else if (person instanceof Staff) {
+                Staff staff = (Staff) person;
+                addressBook.addPerson(staff);
             }
         }
+
         return addressBook;
     }
 

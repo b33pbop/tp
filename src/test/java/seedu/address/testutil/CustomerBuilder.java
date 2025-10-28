@@ -16,7 +16,7 @@ public class CustomerBuilder extends PersonBuilder {
     private Tier tier;
 
     /**
-     * Creates a default {@code SupplierBuilder} with default item Chicken.
+     * Creates a default {@code CustomerBuilder}.
      */
     public CustomerBuilder() {
         super();

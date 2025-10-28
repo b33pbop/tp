@@ -16,7 +16,7 @@ class JsonAdaptedPersonStaffTest {
     @Test
     void toModelType_staffWithoutFields_defaultsApplied() throws Exception {
         String json = """
-          {"name":"X","phone":"91234567","email":"x@e.com","address":"Main","category":"Staff"}
+            {"name":"X","phone":"91234567","email":"x@e.com","address":"Main","category":"Staff"}
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         Person p = jap.toModelType();
@@ -34,8 +34,8 @@ class JsonAdaptedPersonStaffTest {
     @Test
     void toModelType_blankShift_defaultsToAM() throws Exception {
         String json = """
-          {"name":"X","phone":"91234567","email":"x@e.com","address":"Main",
-           "category":"Staff","shift":""}
+            {"name":"X","phone":"91234567","email":"x@e.com","address":"Main",
+            "category":"Staff","shift":""}
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         Staff st = (Staff) jap.toModelType();
@@ -48,8 +48,8 @@ class JsonAdaptedPersonStaffTest {
     @Test
     void toModelType_increaseLeaves_normalized() throws Exception {
         String json = """
-          {"name":"X","phone":"91234567","email":"x@e.com","address":"Main",
-           "category":"Staff","numberOfLeaves":20}
+            {"name":"X","phone":"91234567","email":"x@e.com","address":"Main",
+            "category":"Staff","numberOfLeaves":20}
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         Staff st = (Staff) jap.toModelType();
@@ -62,8 +62,8 @@ class JsonAdaptedPersonStaffTest {
     @Test
     void toModelType_decreaseLeaves_normalized() throws Exception {
         String json = """
-          {"name":"X","phone":"91234567","email":"x@e.com","address":"Main",
-           "category":"Staff","numberOfLeaves":10}
+            {"name":"X","phone":"91234567","email":"x@e.com","address":"Main",
+            "category":"Staff","numberOfLeaves":10}
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         Staff st = (Staff) jap.toModelType();
@@ -77,8 +77,8 @@ class JsonAdaptedPersonStaffTest {
     @Test
     void toModelType_categoryCaseInsensitive_works() throws Exception {
         String json = """
-          {"name":"X","phone":"91234567","email":"x@e.com","address":"Main",
-           "category":"sTaFf","numberOfLeaves":14}
+            {"name":"X","phone":"91234567","email":"x@e.com","address":"Main",
+            "category":"sTaFf","numberOfLeaves":14}
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         assertTrue(jap.toModelType() instanceof Staff);
@@ -87,8 +87,8 @@ class JsonAdaptedPersonStaffTest {
     @Test
     void toModelType_nonStaff_ignoresStaffFields() throws Exception {
         String json = """
-          {"name":"Y","phone":"91234567","email":"y@e.com","address":"Main",
-           "category":"Customer","shift":"AM","numberOfLeaves":99}
+            {"name":"Y","phone":"91234567","email":"y@e.com","address":"Main",
+            "category":"Customer","shift":"AM","numberOfLeaves":99}
             """;
         JsonAdaptedPerson jap = JsonUtil.fromJsonString(json, JsonAdaptedPerson.class);
         Person p = jap.toModelType();
