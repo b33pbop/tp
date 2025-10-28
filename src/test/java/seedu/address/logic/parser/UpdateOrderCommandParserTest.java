@@ -73,7 +73,7 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void allFieldsIncluded() {
-        String userInput = "update p/ 85355255 o/ 1 i/ Updated q/ 1000 u/ 111.11 d/ Today";
+        String userInput = UpdateOrderCommand.COMMAND_WORD + "p/ 85355255 o/ 1 i/ Updated q/ 1000 u/ 111.11 d/ Today";
 
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),

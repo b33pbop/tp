@@ -127,10 +127,10 @@ public class AddOrderCommand extends Command {
         }
 
         AddOrderCommand otherAddOrderCommand = (AddOrderCommand) other;
-        return (supplierPhone == otherAddOrderCommand.supplierPhone)
+        return (supplierPhone.equals(otherAddOrderCommand.supplierPhone))
                 && (newOrderItem.equals(otherAddOrderCommand.newOrderItem))
                 && (newOrderQuantity == otherAddOrderCommand.newOrderQuantity)
-                && (newOrderUnitPrice == otherAddOrderCommand.newOrderUnitPrice)
+                && (newOrderUnitPrice.equals(otherAddOrderCommand.newOrderUnitPrice))
                 && (newOrderDeliveryDay.equals(otherAddOrderCommand.newOrderDeliveryDay));
     }
 }

@@ -23,7 +23,7 @@ import seedu.address.testutil.SupplierBuilder;
 
 public class AddOrderCommandParserTest {
     private AddOrderCommandParser parser = new AddOrderCommandParser();
-    private Supplier supplier = new SupplierBuilder().build();
+    private Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
     private String expectedInput = " p/ 85355255 i/ Chicken q/ 99 u/ 0.99 d/ every Thursday";
 
 

@@ -17,9 +17,11 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.OrderBuilder;
+import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.SupplierBuilder;
 
 public class AddOrderCommandTest {
@@ -65,14 +67,23 @@ public class AddOrderCommandTest {
     }
 
     @Test
-    public void personFoundNotSupplier() throws ParseException {
+    public void personFoundNotSupplier() throws ParseException, CommandException {
         Order newOrder = new OrderBuilder().build();
+        Person notSupplier = new PersonBuilder().withPhone("91111111").build();
 
         Phone supplierPhone = ParserUtil.parsePhone("91111111");
         ItemName orderItem = newOrder.getItem();
         int orderQuantity = newOrder.getQuantity();
         ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
+
+        AddOrderCommand addOrderCommand = new AddOrderCommand(supplierPhone, orderItem,
+                orderQuantity, orderUnitPrice,
+                orderDeliveryDay);
+
+        AddCommand addCommand = new AddCommand(notSupplier);
+        addCommand.execute(model);
+        assertCommandFailure(addOrderCommand, model, AddOrderCommand.MESSAGE_NOT_SUPPLIER);
     }
 
     @Test
