@@ -43,11 +43,8 @@ public class UpdateOrderCommandTest {
         Phone supplierPhone = supplier.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, emptyDescriptor);
 
-        String expectedMessage = UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS;
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(model.getFilteredPersonList().get(0), supplier);
-
-        assertCommandSuccess(updateOrderCommand, model, expectedMessage, expectedModel);
+        String expectedMessage = UpdateOrderCommand.MESSAGE_DUPLICATE_ORDER;
+        assertCommandFailure(updateOrderCommand, model, expectedMessage);
     }
 
     @Test
