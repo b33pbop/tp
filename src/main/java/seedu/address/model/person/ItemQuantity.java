@@ -24,9 +24,9 @@ public class ItemQuantity {
      */
     @JsonCreator
     public ItemQuantity(@JsonProperty("itemQuantity") String itemQuantity) {
-       requireNonNull(itemQuantity);
-       checkArgument(isValidItemQuantity(itemQuantity.trim()), MESSAGE_CONSTRAINTS);
-       this.itemQuantity = itemQuantity;
+        requireNonNull(itemQuantity);
+        checkArgument(isValidItemQuantity(itemQuantity.trim()), MESSAGE_CONSTRAINTS);
+        this.itemQuantity = itemQuantity;
     }
 
     public static boolean isValidItemQuantity(String test) {

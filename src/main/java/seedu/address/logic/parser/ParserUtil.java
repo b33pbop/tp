@@ -93,7 +93,7 @@ public class ParserUtil {
      * @return An ItemUnitPrice object
      * @throws ParseException If the given input is invalid
      */
-    public static ItemUnitPrice parseItemUnitPrice (String itemUnitPrice) throws ParseException {
+    public static ItemUnitPrice parseItemUnitPrice(String itemUnitPrice) throws ParseException {
         requireNonNull(itemUnitPrice);
         // Remove additional whitespace between parts of the item name
         String trimmedItemUnitPrice = itemUnitPrice.trim().replaceAll("\\s+", " ");
