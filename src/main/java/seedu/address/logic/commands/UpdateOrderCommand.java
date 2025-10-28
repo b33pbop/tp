@@ -36,6 +36,7 @@ public class UpdateOrderCommand extends Command {
     public static final String MESSAGE_NOT_FOUND = "Entry with that phone number cannot be found.";
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
     public static final String MESSAGE_OUT_OF_BOUNDS = "Index given is out of bounds of supplier's list of orders.";
+    public static final String MESSAGE_DUPLICATE_ORDER = "Order with identical values already exists.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the details of the order identified "
         + "by the index number used in the supplier's order list. "
         + "Existing values will be overwritten by the input values.\n"
@@ -90,6 +91,10 @@ public class UpdateOrderCommand extends Command {
         }
 
         Order newOrder = createEditedOrder(supplier.getOrder(this.orderIndex), this.descriptor);
+
+        if (supplier.hasOrder(newOrder)) {
+            throw new CommandException(MESSAGE_DUPLICATE_ORDER);
+        }
         supplier.updateOrders(this.orderIndex, newOrder);
 
         model.setPerson(person, supplier);
