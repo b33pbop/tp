@@ -48,7 +48,7 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
             updateOrderDescriptor.updateItem(ParserUtil.parseItemName(argMultimap.getValue(PREFIX_ITEM).get()));
         }
         if (argMultimap.getValue(PREFIX_QUANTITY).isPresent()) {
-            updateOrderDescriptor.updateQuantity(Integer.parseInt(argMultimap.getValue(PREFIX_QUANTITY).get()));
+            updateOrderDescriptor.updateQuantity(ParserUtil.parseItemQuantity(argMultimap.getValue(PREFIX_QUANTITY).get()));
         }
         if (argMultimap.getValue(PREFIX_UNITPRICE).isPresent()) {
             String unitPriceRaw = argMultimap.getValue(PREFIX_UNITPRICE).get().trim();

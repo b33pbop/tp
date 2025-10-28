@@ -16,6 +16,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
@@ -121,7 +122,7 @@ public class UpdateOrderCommand extends Command {
         assert toEdit != null;
 
         ItemName updatedItem = descriptor.getItem().orElse(toEdit.getItem());
-        int updatedQuantity = descriptor.getQuantity().orElse(toEdit.getQuantity());
+        ItemQuantity updatedQuantity = descriptor.getQuantity().orElse(toEdit.getQuantity());
         ItemUnitPrice updatedUnitPrice = descriptor.getUnitPrice().orElse(toEdit.getUnitPrice());
         String updatedDeliveryDay = descriptor.getDeliveryDay().orElse(toEdit.getDeliveryDay());
 
@@ -133,7 +134,7 @@ public class UpdateOrderCommand extends Command {
      */
     public static class UpdateOrderDescriptor {
         private ItemName item;
-        private Integer quantity;
+        private ItemQuantity quantity;
         private ItemUnitPrice unitPrice;
         private String deliveryDay;
 
@@ -147,7 +148,7 @@ public class UpdateOrderCommand extends Command {
             return Optional.ofNullable(item);
         }
 
-        public Optional<Integer> getQuantity() {
+        public Optional<ItemQuantity> getQuantity() {
             return Optional.ofNullable(quantity);
         }
 
@@ -163,7 +164,7 @@ public class UpdateOrderCommand extends Command {
             this.item = newItem;
         }
 
-        public void updateQuantity(Integer newQuantity) {
+        public void updateQuantity(ItemQuantity newQuantity) {
             this.quantity = newQuantity;
         }
 

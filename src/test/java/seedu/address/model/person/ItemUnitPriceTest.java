@@ -24,10 +24,10 @@ public class ItemUnitPriceTest {
 
     @Test
     public void isValidUnitPrice() {
-        // null name
+        // null unit price
         assertThrows(NullPointerException.class, () -> ItemUnitPrice.isValidItemUnitPrice(null));
 
-        // invalid name
+        // invalid unit price
         assertFalse(ItemUnitPrice.isValidItemUnitPrice("")); // empty string
         assertFalse(ItemUnitPrice.isValidItemUnitPrice(" ")); // spaces only
         assertFalse(ItemUnitPrice.isValidItemUnitPrice("^")); // only non-alphanumeric characters

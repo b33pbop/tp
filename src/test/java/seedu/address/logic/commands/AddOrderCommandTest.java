@@ -15,6 +15,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
@@ -35,7 +36,7 @@ public class AddOrderCommandTest {
 
         Phone supplierPhone = supplier.getPhone();
         ItemName orderItem = newOrder.getItem();
-        int orderQuantity = newOrder.getQuantity();
+        ItemQuantity orderQuantity = newOrder.getQuantity();
         ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
         AddOrderCommand addOrderCommand = new AddOrderCommand(supplierPhone, orderItem,
@@ -54,7 +55,7 @@ public class AddOrderCommandTest {
 
         Phone supplierPhone = ParserUtil.parsePhone("91111111");
         ItemName orderItem = newOrder.getItem();
-        int orderQuantity = newOrder.getQuantity();
+        ItemQuantity orderQuantity = newOrder.getQuantity();
         ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
         AddOrderCommand addOrderCommand = new AddOrderCommand(supplierPhone, orderItem,
@@ -73,7 +74,7 @@ public class AddOrderCommandTest {
 
         Phone supplierPhone = ParserUtil.parsePhone("91111111");
         ItemName orderItem = newOrder.getItem();
-        int orderQuantity = newOrder.getQuantity();
+        ItemQuantity orderQuantity = newOrder.getQuantity();
         ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
         String orderDeliveryDay = newOrder.getDeliveryDay();
 
@@ -94,12 +95,12 @@ public class AddOrderCommandTest {
 
         Phone supplierPhone = supplier.getPhone();
         ItemName firstItem = firstOrder.getItem();
-        int firstQuantity = firstOrder.getQuantity();
+        ItemQuantity firstQuantity = firstOrder.getQuantity();
         ItemUnitPrice firstUnitPrice = firstOrder.getUnitPrice();
         String firstDeliveryDay = firstOrder.getDeliveryDay();
 
         ItemName secondItem = secondOrder.getItem();
-        int secondQuantity = secondOrder.getQuantity();
+        ItemQuantity secondQuantity = secondOrder.getQuantity();
         ItemUnitPrice secondUnitPrice = secondOrder.getUnitPrice();
         String secondDeliveryDay = secondOrder.getDeliveryDay();
 

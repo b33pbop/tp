@@ -6,7 +6,7 @@ package seedu.address.model.person;
 public class Order {
 
     private final ItemName item;
-    private final int quantity;
+    private final ItemQuantity quantity;
     private final ItemUnitPrice unitPrice;
     private final String deliveryDay;
 
@@ -17,7 +17,7 @@ public class Order {
      * @param unitPrice price of each item
      * @param deliveryDay day to be delivered
      */
-    public Order(ItemName item, int quantity, ItemUnitPrice unitPrice, String deliveryDay) {
+    public Order(ItemName item, ItemQuantity quantity, ItemUnitPrice unitPrice, String deliveryDay) {
         this.item = item;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
@@ -28,7 +28,7 @@ public class Order {
         return item;
     }
 
-    public int getQuantity() {
+    public ItemQuantity getQuantity() {
         return quantity;
     }
 

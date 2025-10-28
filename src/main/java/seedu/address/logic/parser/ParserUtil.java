@@ -9,6 +9,8 @@ import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Shift;
@@ -48,7 +50,13 @@ public class ParserUtil {
         }
         return new Name(trimmedName);
     }
-
+    /**
+     * Parses a {@code String itemName} into a {@code ItemName}
+     * Leading and trailing white spaces will be trimmed.
+     * @param itemName The user input for itemUnitPrice
+     * @return An ItemName object
+     * @throws ParseException If the given input is invalid
+     */
     public static ItemName parseItemName(String itemName) throws ParseException {
         requireNonNull(itemName);
         // Remove additional whitespace between parts of the item name
@@ -58,6 +66,41 @@ public class ParserUtil {
         }
         return new ItemName(trimmedItemName);
     }
+
+    /**
+     * Parses a {@code String itemName} into a {@code ItemName}
+     * Leading and trailing white spaces will be trimmed.
+     * @param itemQuantity The user input for itemUnitPrice
+     * @return An ItemName object
+     * @throws ParseException If the given input is invalid
+     */
+    public static ItemQuantity parseItemQuantity(String itemQuantity) throws ParseException {
+        requireNonNull(itemQuantity);
+        // Remove additional whitespace between parts of the item name
+        String trimmedItemQuantity = itemQuantity.trim().replaceAll("\\s+", " ");
+        if (!ItemQuantity.isValidItemQuantity(trimmedItemQuantity)) {
+            throw new ParseException(ItemQuantity.MESSAGE_CONSTRAINTS);
+        }
+        return new ItemQuantity(trimmedItemQuantity);
+    }
+
+    /**
+     * Parses a {@code String itemUnitPrice} into a {@code ItemUnitPrice}
+     * Leading and trailing white spaces will be trimmed.
+     * @param itemUnitPrice The user input for itemUnitPrice
+     * @return An ItemUnitPrice object
+     * @throws ParseException If the given input is invalid
+     */
+    public static ItemUnitPrice parseItemUnitPrice (String itemUnitPrice) throws ParseException {
+        requireNonNull(itemUnitPrice);
+        // Remove additional whitespace between parts of the item name
+        String trimmedItemUnitPrice = itemUnitPrice.trim().replaceAll("\\s+", " ");
+        if (!ItemUnitPrice.isValidItemUnitPrice(trimmedItemUnitPrice)) {
+            throw new ParseException(ItemUnitPrice.MESSAGE_CONSTRAINTS);
+        }
+        return new ItemUnitPrice(trimmedItemUnitPrice);
+    }
+
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.

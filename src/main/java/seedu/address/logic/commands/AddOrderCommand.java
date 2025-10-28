@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
@@ -46,7 +47,7 @@ public class AddOrderCommand extends Command {
     // Instance variables
     private final Phone supplierPhone;
     private final ItemName newOrderItem;
-    private final int newOrderQuantity;
+    private final ItemQuantity newOrderQuantity;
     private final ItemUnitPrice newOrderUnitPrice;
     private final String newOrderDeliveryDay;
 
@@ -60,7 +61,7 @@ public class AddOrderCommand extends Command {
      * @param newOrderDeliveryDay The estimated day of delivery of the new order
      */
     public AddOrderCommand(Phone supplierPhone, ItemName newOrderItem,
-            int newOrderQuantity, ItemUnitPrice newOrderUnitPrice,
+            ItemQuantity newOrderQuantity, ItemUnitPrice newOrderUnitPrice,
             String newOrderDeliveryDay) {
         this.supplierPhone = supplierPhone;
         this.newOrderItem = newOrderItem;
@@ -129,7 +130,7 @@ public class AddOrderCommand extends Command {
         AddOrderCommand otherAddOrderCommand = (AddOrderCommand) other;
         return (supplierPhone.equals(otherAddOrderCommand.supplierPhone))
                 && (newOrderItem.equals(otherAddOrderCommand.newOrderItem))
-                && (newOrderQuantity == otherAddOrderCommand.newOrderQuantity)
+                && (newOrderQuantity.equals(otherAddOrderCommand.newOrderQuantity))
                 && (newOrderUnitPrice.equals(otherAddOrderCommand.newOrderUnitPrice))
                 && (newOrderDeliveryDay.equals(otherAddOrderCommand.newOrderDeliveryDay));
     }

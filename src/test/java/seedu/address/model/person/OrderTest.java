@@ -35,7 +35,7 @@ public class OrderTest {
         assertNotEquals(baseCopy, differentName);
 
         // different quantity
-        Order differentQuantity = new OrderBuilder().withQuantity(1717).build();
+        Order differentQuantity = new OrderBuilder().withQuantity(new ItemQuantity("1717")).build();
         assertNotEquals(baseCopy, differentQuantity);
 
         // different unit price -> return false

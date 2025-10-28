@@ -8,13 +8,14 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 
 public class JsonAdaptedOrderTest {
 
     private static final ItemName VALID_ITEM = new ItemName("Cabbage");
-    private static final int VALID_QUANTITY = 10;
+    private static final ItemQuantity VALID_QUANTITY = new ItemQuantity("10");
     private static final ItemUnitPrice VALID_UNIT_PRICE = new ItemUnitPrice("3.25");
     private static final String VALID_DELIVERY_DAY = "2024-12-31";
 
@@ -43,34 +44,18 @@ public class JsonAdaptedOrderTest {
     }
 
     @Test
-    public void toModelType_negativeQuantity_returnsOrder() {
-        // Assuming negative quantities are allowed (returns, etc.)
-        int negativeQuantity = -5;
-        JsonAdaptedOrder order = new JsonAdaptedOrder(VALID_ITEM, negativeQuantity,
-                VALID_UNIT_PRICE, VALID_DELIVERY_DAY);
-        Order modelOrder = order.toModelType();
-
-        assertEquals(negativeQuantity, modelOrder.getQuantity());
+    public void toModelType_negativeQuantity_failure() {
+        assertThrows(IllegalArgumentException.class, () -> new ItemQuantity(("-5")));
     }
 
     @Test
-    public void toModelType_zeroQuantity_returnsOrder() {
-        JsonAdaptedOrder order = new JsonAdaptedOrder(VALID_ITEM, 0,
-                VALID_UNIT_PRICE, VALID_DELIVERY_DAY);
-        Order modelOrder = order.toModelType();
-
-        assertEquals(0, modelOrder.getQuantity());
+    public void toModelType_zeroQuantity_failure() {
+        assertThrows(IllegalArgumentException.class, () -> new ItemQuantity(("0")));
     }
 
     @Test
     public void toModelType_negativeUnitPrice_returnsOrder() {
-        // Assuming negative prices are allowed (discounts, refunds, etc.)
-        ItemUnitPrice negativePrice = new ItemUnitPrice("-50.0");
-        JsonAdaptedOrder order = new JsonAdaptedOrder(VALID_ITEM, VALID_QUANTITY,
-                negativePrice, VALID_DELIVERY_DAY);
-        Order modelOrder = order.toModelType();
-
-        assertEquals(negativePrice, modelOrder.getUnitPrice());
+        assertThrows(IllegalArgumentException.class, () -> new ItemUnitPrice(("-5.9")));
     }
 
     @Test

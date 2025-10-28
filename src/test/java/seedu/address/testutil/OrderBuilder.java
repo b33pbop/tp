@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 
@@ -10,12 +11,12 @@ import seedu.address.model.person.Order;
 public class OrderBuilder {
 
     public static final ItemName DEFAULT_ITEM = new ItemName("Chicken");
-    public static final int DEFAULT_QUANTITY = 99;
+    public static final ItemQuantity DEFAULT_QUANTITY = new ItemQuantity("99");
     public static final ItemUnitPrice DEFAULT_UNITPRICE = new ItemUnitPrice("0.99");
     public static final String DEFAULT_DELIVERYDAY = "every Thursday";
 
     protected ItemName item;
-    protected int quantity;
+    protected ItemQuantity quantity;
     protected ItemUnitPrice unitPrice;
     protected String deliveryDay;
 
@@ -55,7 +56,7 @@ public class OrderBuilder {
      * @param quantity The quantity of the item in the new order
      * @return An OrderBuilder object with the quantity of the item specified
      */
-    public OrderBuilder withQuantity(int quantity) {
+    public OrderBuilder withQuantity(ItemQuantity quantity) {
         this.quantity = quantity;
         return this;
     }
