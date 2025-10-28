@@ -66,6 +66,9 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
+        case seedu.address.logic.commands.DeleteOrderCommand.COMMAND_WORD:
+            return new seedu.address.logic.parser.DeleteOrderCommandParser().parse(arguments);
+
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 

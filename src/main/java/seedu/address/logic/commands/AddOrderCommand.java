@@ -16,13 +16,12 @@ import seedu.address.model.person.Supplier;
 
 
 /**
-* Adds an order to the specified supplier's list of orders
-*/
+ * Adds an order to the specified supplier's list of orders.
+ */
 
 public class AddOrderCommand extends Command {
-
-    public static final String COMMAND_WORD = "order";
-
+    // Static variables
+    public static final String COMMAND_WORD = "addOrder";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a order to the supplier's order list. "
             + "Parameters: "
             + PREFIX_PHONE + "PHONE "
@@ -36,17 +35,18 @@ public class AddOrderCommand extends Command {
             + PREFIX_QUANTITY + "50 "
             + PREFIX_UNITPRICE + "$0.60 "
             + PREFIX_DELIVERYDAY + "every Thursday\n";
-
     public static final String MESSAGE_SUCCESS = "Order added successfully";
     public static final String MESSAGE_NOT_FOUND = "Entry with that phone number cannot be found.";
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
 
+    // Instance variables
     private final int supplierPhone;
     private final String newOrderItem;
     private final int newOrderQuantity;
     private final double newOrderUnitPrice;
     private final String newOrderDeliveryDay;
 
+    // Constructor
     /**
      * Creates an AddOrderCommand to add the order to a supplier's list of orders
      * @param supplierPhone The phone number of the specified supplier
@@ -55,10 +55,9 @@ public class AddOrderCommand extends Command {
      * @param newOrderUnitPrice The unit price of the new item in the new order
      * @param newOrderDeliveryDay The estimated day of delivery of the new order
      */
-
     public AddOrderCommand(int supplierPhone, String newOrderItem,
-                           int newOrderQuantity, double newOrderUnitPrice,
-                           String newOrderDeliveryDay) {
+            int newOrderQuantity, double newOrderUnitPrice,
+            String newOrderDeliveryDay) {
         this.supplierPhone = supplierPhone;
         this.newOrderItem = newOrderItem;
         this.newOrderQuantity = newOrderQuantity;
@@ -66,9 +65,13 @@ public class AddOrderCommand extends Command {
         this.newOrderDeliveryDay = newOrderDeliveryDay;
     }
 
+    // Public getter for unit price
+    public double getOrderUnitPrice() {
+        return newOrderUnitPrice;
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
-
         // finds person tagged to phone number
         Person foundPerson = null;
         requireNonNull(model);
@@ -88,16 +91,18 @@ public class AddOrderCommand extends Command {
             throw new CommandException(MESSAGE_NOT_SUPPLIER);
         }
         // creates the new order (no parameters can be missing)
-
         Order newOrder = new Order(this.newOrderItem,
-                                    this.newOrderQuantity,
-                                    this.newOrderUnitPrice,
-                                    this.newOrderDeliveryDay);
+                this.newOrderQuantity,
+                this.newOrderUnitPrice,
+                this.newOrderDeliveryDay);
 
         // adds it to the back of the list
-
         Supplier foundSupplier = (Supplier) foundPerson;
         foundSupplier.addOrder(newOrder);
+
+        // Persist the updated supplier in the model/address book
+        // Remove the old supplier and add the updated one
+        model.setPerson(foundPerson, foundSupplier);
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
