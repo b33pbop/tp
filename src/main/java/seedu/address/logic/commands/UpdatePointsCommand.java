@@ -23,7 +23,7 @@ public class UpdatePointsCommand extends Command {
     public static final String COMMAND_WORD = "updatepoints";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds the specified amount spent to a customer’s total spending.\n"
+            + ": Award points to the customer based on the specified amount spent.\n"
             + "Parameters: "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_BILL_AMOUNT + "BILL AMOUNT\n"

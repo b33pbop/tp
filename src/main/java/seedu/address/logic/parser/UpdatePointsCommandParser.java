@@ -15,7 +15,10 @@ import seedu.address.model.person.Phone;
  */
 public class UpdatePointsCommandParser implements Parser<UpdatePointsCommand> {
 
+    public static final String MESSAGE_INVALID_AMOUNT =
+            "Amount must be a positive number with at most 2 decimal places.";
     private static final String DECIMAL_REGEX = "^\\d+(\\.\\d{1,2})?$"; // up to 2 decimal places
+
 
     /**
      * Parses the given {@code String} of arguments in the context of the {@code UpdatePointsCommand}
@@ -45,18 +48,18 @@ public class UpdatePointsCommandParser implements Parser<UpdatePointsCommand> {
 
         // Validate format: numeric, up to 2 decimal places
         if (!amountStr.matches(DECIMAL_REGEX)) {
-            throw new ParseException("Amount must be a positive number with at most 2 decimal places.");
+            throw new ParseException(MESSAGE_INVALID_AMOUNT);
         }
 
         double amount;
         try {
             amount = Double.parseDouble(amountStr);
         } catch (NumberFormatException e) {
-            throw new ParseException("Invalid number format for amount.");
+            throw new ParseException(MESSAGE_INVALID_AMOUNT);
         }
 
         if (amount <= 0) {
-            throw new ParseException("Amount must be greater than zero.");
+            throw new ParseException(MESSAGE_INVALID_AMOUNT);
         }
 
         return new UpdatePointsCommand(phone, amount);
