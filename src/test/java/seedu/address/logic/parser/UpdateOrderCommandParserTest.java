@@ -153,8 +153,12 @@ public class UpdateOrderCommandParserTest {
         onlyDeliveryDay.updateDeliveryDay(new ItemDeliveryDay("Updated"));
         UpdateOrderCommand updateDeliveryDayOnly = new UpdateOrderCommand(supplierPhone, 1, onlyDeliveryDay);
         assertParseSuccess(parser, userInput + "d/ Updated", updateDeliveryDayOnly);
+    }
 
-
+    @Test
+    public void noFieldsIncluded() throws ParseException{
+        String userInput = "updateOrder p/ 85355255 o/ 1 ";
+        assertParseFailure(parser, userInput, UpdateOrderCommand.MESSAGE_NO_CHANGE);
     }
 
     @Test
