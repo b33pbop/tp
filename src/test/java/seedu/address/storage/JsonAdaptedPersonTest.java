@@ -11,12 +11,14 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
+import seedu.address.model.tier.Tier;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";
@@ -178,5 +180,54 @@ public class JsonAdaptedPersonTest {
         assertEquals(5, modelSupplier.getOrders().get(0).getQuantity());
         assertEquals(50.0, modelSupplier.getOrders().get(0).getUnitPrice());
         assertEquals("2025-10-24", modelSupplier.getOrders().get(0).getDeliveryDay());
+    }
+
+    @Test
+    public void toJsonAdaptedPerson_customerBronzeTierUpgrade_success() {
+        // create a Customer
+        Customer customer = new Customer(new Name("Fiona Kunz"),
+                new Phone("94824271"),
+                new Email("lydia@example.com"),
+                new Address("little tokyo"),
+                new Category("Customer"));
+
+        // convert to JsonAdaptedPerson
+        JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(customer);
+
+        // check that Customer is parsed correctly
+        assertEquals(0, adaptedPerson.getPoints());
+        assertEquals(Tier.MEMBER, adaptedPerson.getTier());
+
+        // update points of customer
+        customer.addPointsFromSpending(100);
+        JsonAdaptedPerson updatedAdaptedPerson = new JsonAdaptedPerson(customer);
+
+        // check that Customer is parsed correctly
+        assertEquals(100, updatedAdaptedPerson.getPoints());
+        assertEquals(Tier.BRONZE, updatedAdaptedPerson.getTier());
+    }
+
+    @Test
+    public void toModelType_customerBronzeTier_success() throws Exception {
+        // create a Customer
+        Customer customer = new Customer(new Name("Fiona Kunz"),
+                new Phone("94824271"),
+                new Email("lydia@example.com"),
+                new Address("little tokyo"),
+                new Category("Customer"));
+
+        // update points of customer
+        customer.addPointsFromSpending(100);
+        JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(customer);
+
+        // convert back to Customer
+        Person modelPerson = adaptedPerson.toModelType();
+
+        assertTrue(modelPerson instanceof Customer);
+        Customer modelCustomer = (Customer) modelPerson;
+
+        // check that Customer is parsed correctly
+        assertEquals(100, modelCustomer.getPoints());
+        assertEquals(Tier.BRONZE, modelCustomer.getTier());
     }
 }

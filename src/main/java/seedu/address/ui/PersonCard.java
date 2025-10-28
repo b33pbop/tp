@@ -5,10 +5,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Shift;
 import seedu.address.model.person.Staff;
 import seedu.address.model.person.Supplier;
+import seedu.address.model.tier.Tier;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -45,6 +47,10 @@ public class PersonCard extends UiPart<Region> {
     private Label shift;
     @FXML
     private Label orders;
+    @FXML
+    private Label tier;
+    @FXML
+    private Label points;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -66,6 +72,20 @@ public class PersonCard extends UiPart<Region> {
         orders.setVisible(false);
         orders.setManaged(false);
         orders.setText("");
+
+        if (person instanceof Customer) {
+            Customer customer = (Customer) person;
+            Integer customerPoints = customer.getPoints();
+            Tier customerTier = customer.getTier();
+
+            if (points != null) {
+                points.setText(customerPoints != null ? customerPoints.toString() : "0");
+            }
+            if (tier != null) {
+                tier.setText(customerTier != null ? customerTier.toString() : "N/A");
+            }
+        }
+
 
         if (person instanceof Staff) {
             Staff staff = (Staff) person;
