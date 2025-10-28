@@ -38,6 +38,23 @@ public class SupplierTest {
     }
 
     @Test
+    public void testHasOrder() {
+        Phone testPhone = new Phone("82192309");
+        Name testName = new Name("Grace Chan");
+        Email testEmail = new Email("grace01@gmail.com");
+        Address testAddress = new Address("Block 416 Bukit Batok Drive");
+        Category testCat = new Category("Supplier");
+        Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat);
+        Order doesExist = new Order(new ItemName("Computer"), new ItemQuantity("5"), new ItemUnitPrice("100.00"),
+                new ItemDeliveryDay("every Tuesday"));
+        Order doesNotExist = new Order(new ItemName("Computer"), new ItemQuantity("10"), new ItemUnitPrice("120.00"),
+                new ItemDeliveryDay("every Wednesday"));
+        test.addOrder(doesExist);
+        assertEquals(true, test.hasOrder(doesExist));
+        assertEquals(false, test.hasOrder(doesNotExist));
+    }
+
+    @Test
     public void isSamePerson() {
         // same object -> returns true
         assertTrue(ALICE.isSamePerson(ALICE));
