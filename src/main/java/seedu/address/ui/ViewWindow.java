@@ -7,9 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Staff;
 import seedu.address.model.person.Supplier;
+import seedu.address.model.tier.Tier;
 
 /**
  * Controller for a person detail view popup
@@ -40,10 +42,14 @@ public class ViewWindow extends UiPart<Stage> {
     @FXML
     private Label staffLeavesLabel;
 
-
-
     @FXML
     private Label supplierOrdersLabel;
+
+    @FXML
+    private Label customerPointsLabel;
+
+    @FXML
+    private Label customerTierLabel;
 
     @FXML
     private Button closeButton;
@@ -78,6 +84,13 @@ public class ViewWindow extends UiPart<Stage> {
         supplierOrdersLabel.setVisible(false);
         supplierOrdersLabel.setManaged(false);
         supplierOrdersLabel.setText("");
+
+        customerPointsLabel.setVisible(true);
+        customerTierLabel.setVisible(true);
+        customerPointsLabel.setManaged(true);
+        customerTierLabel.setManaged(true);
+        customerPointsLabel.setText("");
+        customerTierLabel.setText("");
     }
 
     /**
@@ -106,6 +119,15 @@ public class ViewWindow extends UiPart<Stage> {
             // removed supplierItemLabel
             String orders = supplier.listOrders();
             supplierOrdersLabel.setText("Orders:\n" + (orders.isEmpty() ? "No orders" : orders));
+        } else if (person instanceof Customer customer) {
+            customerPointsLabel.setVisible(true);
+            customerTierLabel.setVisible(true);
+            customerPointsLabel.setManaged(true);
+            customerTierLabel.setManaged(true);
+            int points = customer.getPoints();
+            Tier tier = customer.getTier();
+            customerPointsLabel.setText("Points: " + points);
+            customerTierLabel.setText("Tier: " + tier);
         }
     }
 
