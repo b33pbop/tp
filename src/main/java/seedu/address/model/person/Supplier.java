@@ -27,22 +27,6 @@ public class Supplier extends Person {
     }
 
     /**
-     * Returns true if both persons have the same name or phone.
-     * This defines a weaker notion of equality between two persons.
-     */
-    @Override
-    public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
-            return true;
-        }
-        // Only consider duplicates with the same type
-        if (!(otherPerson instanceof Supplier)) {
-            return false;
-        }
-        return getName().equals(otherPerson.getName()) || getPhone().equals(otherPerson.getPhone());
-    }
-
-    /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
@@ -105,5 +89,19 @@ public class Supplier extends Person {
 
     public void updateOrders(int index, Order newOrder) {
         this.orders.set(index - 1, newOrder);
+    }
+
+    /**
+     * Checks whether the specified order exists in the list
+     * @param toCheck The order to be checked
+     * @return A boolean value indicating whether the order is in the list
+     */
+    public boolean hasOrder(Order toCheck) {
+        for (Order current : this.orders) {
+            if (current.equals(toCheck)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

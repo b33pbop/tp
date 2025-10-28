@@ -27,23 +27,24 @@ public class OrderTest {
         assertNotEquals(baseCopy, 17);
 
         // different order -> return false
-        Order editedCopy = new OrderBuilder().withItem("Not An Item").build();
+        Order editedCopy = new OrderBuilder().withItem(new ItemName("Not an item")).build();
         assertNotEquals(baseCopy, editedCopy);
 
         // different item -> return false
-        Order differentName = new OrderBuilder().withItem("Changed Item").build();
+        Order differentName = new OrderBuilder().withItem(new ItemName("Changed item")).build();
         assertNotEquals(baseCopy, differentName);
 
         // different quantity
-        Order differentQuantity = new OrderBuilder().withQuantity(1717).build();
+        Order differentQuantity = new OrderBuilder().withQuantity(new ItemQuantity("1717")).build();
         assertNotEquals(baseCopy, differentQuantity);
 
         // different unit price -> return false
-        Order differentUnitPrice = new OrderBuilder().withUnitPrice(0.17).build();
+        Order differentUnitPrice = new OrderBuilder().withUnitPrice(new ItemUnitPrice("0.17")).build();
         assertNotEquals(baseCopy, differentUnitPrice);
 
         // different delivery day -> return false
-        Order differentDeliveryDay = new OrderBuilder().withDeliveryDay("Changed Day of Delivery").build();
+        Order differentDeliveryDay = new OrderBuilder().withDeliveryDay(
+                new ItemDeliveryDay("Changed Day of Delivery")).build();
         assertNotEquals(baseCopy, differentDeliveryDay);
     }
 }

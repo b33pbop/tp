@@ -26,15 +26,32 @@ public class SupplierTest {
         Address testAddress = new Address("Block 416 Bukit Batok Drive");
         Category testCat = new Category("Supplier");
         Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat);
-        Order test1 = new Order("Computer", 5, 100.0,
-                "every Tuesday");
-        Order test2 = new Order("Computer", 10, 120.0,
-                "every Wednesday");
+        Order test1 = new Order(new ItemName("Computer"), new ItemQuantity("5"), new ItemUnitPrice("100.00"),
+                new ItemDeliveryDay("every Tuesday"));
+        Order test2 = new Order(new ItemName("Computer"), new ItemQuantity("10"), new ItemUnitPrice("120.00"),
+                new ItemDeliveryDay("every Wednesday"));
         test.addOrder(test1);
         test.addOrder(test2);
-        String expected = "5 of Computer (at $100.0 each) to be delivered every Tuesday"
-              + '\n' + "10 of Computer (at $120.0 each) to be delivered every Wednesday";
+        String expected = "5 of Computer (at $100.00 each) to be delivered every Tuesday"
+              + '\n' + "10 of Computer (at $120.00 each) to be delivered every Wednesday";
         assertEquals(expected, test.listOrders());
+    }
+
+    @Test
+    public void testHasOrder() {
+        Phone testPhone = new Phone("82192309");
+        Name testName = new Name("Grace Chan");
+        Email testEmail = new Email("grace01@gmail.com");
+        Address testAddress = new Address("Block 416 Bukit Batok Drive");
+        Category testCat = new Category("Supplier");
+        Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat);
+        Order doesExist = new Order(new ItemName("Computer"), new ItemQuantity("5"), new ItemUnitPrice("100.00"),
+                new ItemDeliveryDay("every Tuesday"));
+        Order doesNotExist = new Order(new ItemName("Computer"), new ItemQuantity("10"), new ItemUnitPrice("120.00"),
+                new ItemDeliveryDay("every Wednesday"));
+        test.addOrder(doesExist);
+        assertEquals(true, test.hasOrder(doesExist));
+        assertEquals(false, test.hasOrder(doesNotExist));
     }
 
     @Test

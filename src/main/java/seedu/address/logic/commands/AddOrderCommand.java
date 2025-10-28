@@ -10,8 +10,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_UNITPRICE;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.ItemDeliveryDay;
+import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 
 
@@ -38,13 +43,14 @@ public class AddOrderCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Order added successfully";
     public static final String MESSAGE_NOT_FOUND = "Entry with that phone number cannot be found.";
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
+    public static final String MESSAGE_DUPLICATE_ORDER = "Order already exists in the list, please try again";
 
     // Instance variables
-    private final int supplierPhone;
-    private final String newOrderItem;
-    private final int newOrderQuantity;
-    private final double newOrderUnitPrice;
-    private final String newOrderDeliveryDay;
+    private final Phone supplierPhone;
+    private final ItemName newOrderItem;
+    private final ItemQuantity newOrderQuantity;
+    private final ItemUnitPrice newOrderUnitPrice;
+    private final ItemDeliveryDay newOrderDeliveryDay;
 
     // Constructor
     /**
@@ -55,9 +61,9 @@ public class AddOrderCommand extends Command {
      * @param newOrderUnitPrice The unit price of the new item in the new order
      * @param newOrderDeliveryDay The estimated day of delivery of the new order
      */
-    public AddOrderCommand(int supplierPhone, String newOrderItem,
-            int newOrderQuantity, double newOrderUnitPrice,
-            String newOrderDeliveryDay) {
+    public AddOrderCommand(Phone supplierPhone, ItemName newOrderItem,
+            ItemQuantity newOrderQuantity, ItemUnitPrice newOrderUnitPrice,
+            ItemDeliveryDay newOrderDeliveryDay) {
         this.supplierPhone = supplierPhone;
         this.newOrderItem = newOrderItem;
         this.newOrderQuantity = newOrderQuantity;
@@ -66,7 +72,7 @@ public class AddOrderCommand extends Command {
     }
 
     // Public getter for unit price
-    public double getOrderUnitPrice() {
+    public ItemUnitPrice getOrderUnitPrice() {
         return newOrderUnitPrice;
     }
 
@@ -77,7 +83,7 @@ public class AddOrderCommand extends Command {
         requireNonNull(model);
         ObservableList<Person> currentList = model.getAddressBook().getPersonList();
         for (int i = 0; i < currentList.size(); i++) {
-            if (Integer.parseInt(currentList.get(i).getPhone().toString()) == this.supplierPhone) {
+            if (currentList.get(i).getPhone().equals(this.supplierPhone)) {
                 foundPerson = currentList.get(i);
                 break;
             }
@@ -96,8 +102,12 @@ public class AddOrderCommand extends Command {
                 this.newOrderUnitPrice,
                 this.newOrderDeliveryDay);
 
+
         // adds it to the back of the list
         Supplier foundSupplier = (Supplier) foundPerson;
+        if (foundSupplier.hasOrder(newOrder)) {
+            throw new CommandException(MESSAGE_DUPLICATE_ORDER);
+        }
         foundSupplier.addOrder(newOrder);
 
         // Persist the updated supplier in the model/address book
@@ -119,10 +129,10 @@ public class AddOrderCommand extends Command {
         }
 
         AddOrderCommand otherAddOrderCommand = (AddOrderCommand) other;
-        return (supplierPhone == otherAddOrderCommand.supplierPhone)
+        return (supplierPhone.equals(otherAddOrderCommand.supplierPhone))
                 && (newOrderItem.equals(otherAddOrderCommand.newOrderItem))
-                && (newOrderQuantity == otherAddOrderCommand.newOrderQuantity)
-                && (newOrderUnitPrice == otherAddOrderCommand.newOrderUnitPrice)
+                && (newOrderQuantity.equals(otherAddOrderCommand.newOrderQuantity))
+                && (newOrderUnitPrice.equals(otherAddOrderCommand.newOrderUnitPrice))
                 && (newOrderDeliveryDay.equals(otherAddOrderCommand.newOrderDeliveryDay));
     }
 }

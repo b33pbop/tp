@@ -13,6 +13,10 @@ import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Customer;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ItemDeliveryDay;
+import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
@@ -146,7 +150,8 @@ public class JsonAdaptedPersonTest {
                 new Category("Supplier"));
 
         // add an order
-        supplier.addOrder(new Order("Laptop", 10, 1000.0, "2025-10-23"));
+        supplier.addOrder(new Order(new ItemName("Laptop"), new ItemQuantity("10"),
+                new ItemUnitPrice("1000.0"), new ItemDeliveryDay("every Friday")));
 
         // convert to JsonAdaptedPerson
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
@@ -154,10 +159,10 @@ public class JsonAdaptedPersonTest {
         // check that JsonAdaptedOrder list is created correctly
         assertEquals(1, adaptedPerson.getOrders().size());
         JsonAdaptedOrder jsonOrder = adaptedPerson.getOrders().get(0);
-        assertEquals("Laptop", jsonOrder.getItem());
-        assertEquals(10, jsonOrder.getQuantity());
-        assertEquals(1000.0, jsonOrder.getUnitPrice());
-        assertEquals("2025-10-23", jsonOrder.getDeliveryDay());
+        assertEquals(new ItemName("Laptop"), jsonOrder.getItem());
+        assertEquals(new ItemQuantity("10"), jsonOrder.getQuantity());
+        assertEquals(new ItemUnitPrice("1000.0"), jsonOrder.getUnitPrice());
+        assertEquals(new ItemDeliveryDay("every Friday"), jsonOrder.getDeliveryDay());
     }
 
     @Test
@@ -168,7 +173,8 @@ public class JsonAdaptedPersonTest {
                 new Address("4th street"),
                 new Category("Supplier"));
 
-        supplier.addOrder(new Order("Mouse", 5, 50.0, "2025-10-24"));
+        supplier.addOrder(new Order(new ItemName("Mouse"), new ItemQuantity("5"),
+                new ItemUnitPrice("50.0"), new ItemDeliveryDay("every Friday")));
 
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
         Person modelPerson = adaptedPerson.toModelType();
@@ -176,10 +182,10 @@ public class JsonAdaptedPersonTest {
         assertTrue(modelPerson instanceof Supplier);
         Supplier modelSupplier = (Supplier) modelPerson;
         assertEquals(1, modelSupplier.getOrders().size());
-        assertEquals("Mouse", modelSupplier.getOrders().get(0).getItem());
-        assertEquals(5, modelSupplier.getOrders().get(0).getQuantity());
-        assertEquals(50.0, modelSupplier.getOrders().get(0).getUnitPrice());
-        assertEquals("2025-10-24", modelSupplier.getOrders().get(0).getDeliveryDay());
+        assertEquals(new ItemName("Mouse"), modelSupplier.getOrders().get(0).getItem());
+        assertEquals(new ItemQuantity("5"), modelSupplier.getOrders().get(0).getQuantity());
+        assertEquals(new ItemUnitPrice("50.0"), modelSupplier.getOrders().get(0).getUnitPrice());
+        assertEquals(new ItemDeliveryDay("every Friday"), modelSupplier.getOrders().get(0).getDeliveryDay());
     }
 
     @Test

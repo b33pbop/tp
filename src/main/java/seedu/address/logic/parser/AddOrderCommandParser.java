@@ -12,6 +12,11 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddOrderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ItemDeliveryDay;
+import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
+import seedu.address.model.person.ItemUnitPrice;
+import seedu.address.model.person.Phone;
 
 /**
  * Parses the given {@code String} of arguments in the context of the AddOrderCommand
@@ -41,15 +46,16 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
                 PREFIX_DELIVERYDAY);
 
         // then process from their formats into strings
-        int supplierPhone = Integer.parseInt(argMultimap.getValue(PREFIX_PHONE).get());
-        String orderItem = argMultimap.getValue(PREFIX_ITEM).get();
-        int orderQuantity = Integer.parseInt(argMultimap.getValue(PREFIX_QUANTITY).get());
+        Phone supplierPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
+        ItemName orderItem = ParserUtil.parseItemName(argMultimap.getValue(PREFIX_ITEM).get());
+        ItemQuantity orderQuantity = ParserUtil.parseItemQuantity(argMultimap.getValue(PREFIX_QUANTITY).get());
         String unitPriceRaw = argMultimap.getValue(PREFIX_UNITPRICE).get().trim();
         if (unitPriceRaw.startsWith("$")) {
             unitPriceRaw = unitPriceRaw.substring(1);
         }
-        double orderUnitPrice = Double.parseDouble(unitPriceRaw);
-        String orderDeliveryDay = argMultimap.getValue(PREFIX_DELIVERYDAY).get();
+        ItemUnitPrice orderUnitPrice = ParserUtil.parseItemUnitPrice(unitPriceRaw);
+        ItemDeliveryDay orderDeliveryDay = ParserUtil.parseItemDeliveryDay(
+                                                argMultimap.getValue(PREFIX_DELIVERYDAY).get());
 
         return new AddOrderCommand(supplierPhone, orderItem, orderQuantity, orderUnitPrice, orderDeliveryDay);
     }

@@ -1,5 +1,9 @@
 package seedu.address.testutil;
 
+import seedu.address.model.person.ItemDeliveryDay;
+import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 
 /**
@@ -7,15 +11,15 @@ import seedu.address.model.person.Order;
  */
 public class OrderBuilder {
 
-    public static final String DEFAULT_ITEM = "Chicken";
-    public static final int DEFAULT_QUANTITY = 99;
-    public static final double DEFAULT_UNITPRICE = 0.99;
-    public static final String DEFAULT_DELIVERYDAY = "every Thursday";
+    public static final ItemName DEFAULT_ITEM = new ItemName("Chicken");
+    public static final ItemQuantity DEFAULT_QUANTITY = new ItemQuantity("99");
+    public static final ItemUnitPrice DEFAULT_UNITPRICE = new ItemUnitPrice("0.99");
+    public static final ItemDeliveryDay DEFAULT_DELIVERYDAY = new ItemDeliveryDay("every Thursday");
 
-    protected String item;
-    protected int quantity;
-    protected double unitPrice;
-    protected String deliveryDay;
+    protected ItemName item;
+    protected ItemQuantity quantity;
+    protected ItemUnitPrice unitPrice;
+    protected ItemDeliveryDay deliveryDay;
 
     /**
      * Creates an Order with the default details
@@ -43,7 +47,7 @@ public class OrderBuilder {
      * @param item The name of the item in the new order
      * @return An OrderBuilder object with the name of the item specified
      */
-    public OrderBuilder withItem(String item) {
+    public OrderBuilder withItem(ItemName item) {
         this.item = item;
         return this;
     }
@@ -53,7 +57,7 @@ public class OrderBuilder {
      * @param quantity The quantity of the item in the new order
      * @return An OrderBuilder object with the quantity of the item specified
      */
-    public OrderBuilder withQuantity(int quantity) {
+    public OrderBuilder withQuantity(ItemQuantity quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -63,7 +67,7 @@ public class OrderBuilder {
      * @param unitPrice The unit price of the item in the new order
      * @return An OrderBuilder object with the unit price of the item specified
      */
-    public OrderBuilder withUnitPrice(double unitPrice) {
+    public OrderBuilder withUnitPrice(ItemUnitPrice unitPrice) {
         this.unitPrice = unitPrice;
         return this;
     }
@@ -73,7 +77,7 @@ public class OrderBuilder {
      * @param deliveryDay The day of delivery of the item in the new order
      * @return An OrderBuilder object with the delivery day of the item specified
      */
-    public OrderBuilder withDeliveryDay(String deliveryDay) {
+    public OrderBuilder withDeliveryDay(ItemDeliveryDay deliveryDay) {
         this.deliveryDay = deliveryDay;
         return this;
     }

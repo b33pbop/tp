@@ -15,6 +15,10 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.ItemDeliveryDay;
+import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Supplier;
@@ -118,10 +122,10 @@ public class UpdateOrderCommand extends Command {
     public static Order createEditedOrder(Order toEdit, UpdateOrderDescriptor descriptor) {
         assert toEdit != null;
 
-        String updatedItem = descriptor.getItem().orElse(toEdit.getItem());
-        int updatedQuantity = descriptor.getQuantity().orElse(toEdit.getQuantity());
-        double updatedUnitPrice = descriptor.getUnitPrice().orElse(toEdit.getUnitPrice());
-        String updatedDeliveryDay = descriptor.getDeliveryDay().orElse(toEdit.getDeliveryDay());
+        ItemName updatedItem = descriptor.getItem().orElse(toEdit.getItem());
+        ItemQuantity updatedQuantity = descriptor.getQuantity().orElse(toEdit.getQuantity());
+        ItemUnitPrice updatedUnitPrice = descriptor.getUnitPrice().orElse(toEdit.getUnitPrice());
+        ItemDeliveryDay updatedDeliveryDay = descriptor.getDeliveryDay().orElse(toEdit.getDeliveryDay());
 
         return new Order(updatedItem, updatedQuantity, updatedUnitPrice, updatedDeliveryDay);
     }
@@ -130,10 +134,10 @@ public class UpdateOrderCommand extends Command {
      * Represents the information to be edited in an existing order
      */
     public static class UpdateOrderDescriptor {
-        private String item;
-        private Integer quantity;
-        private Double unitPrice;
-        private String deliveryDay;
+        private ItemName item;
+        private ItemQuantity quantity;
+        private ItemUnitPrice unitPrice;
+        private ItemDeliveryDay deliveryDay;
 
         public UpdateOrderDescriptor() {}
 
@@ -141,35 +145,35 @@ public class UpdateOrderCommand extends Command {
             return CollectionUtil.isAnyNonNull(item, quantity, unitPrice, deliveryDay);
         }
 
-        public Optional<String> getItem() {
+        public Optional<ItemName> getItem() {
             return Optional.ofNullable(item);
         }
 
-        public Optional<Integer> getQuantity() {
+        public Optional<ItemQuantity> getQuantity() {
             return Optional.ofNullable(quantity);
         }
 
-        public Optional<Double> getUnitPrice() {
+        public Optional<ItemUnitPrice> getUnitPrice() {
             return Optional.ofNullable(unitPrice);
         }
 
-        public Optional<String> getDeliveryDay() {
+        public Optional<ItemDeliveryDay> getDeliveryDay() {
             return Optional.ofNullable(deliveryDay);
         }
 
-        public void updateItem(String newItem) {
+        public void updateItem(ItemName newItem) {
             this.item = newItem;
         }
 
-        public void updateQuantity(Integer newQuantity) {
+        public void updateQuantity(ItemQuantity newQuantity) {
             this.quantity = newQuantity;
         }
 
-        public void updateUnitPrice(Double newUnitPrice) {
+        public void updateUnitPrice(ItemUnitPrice newUnitPrice) {
             this.unitPrice = newUnitPrice;
         }
 
-        public void updateDeliveryDay(String newDeliveryDay) {
+        public void updateDeliveryDay(ItemDeliveryDay newDeliveryDay) {
             this.deliveryDay = newDeliveryDay;
         }
 

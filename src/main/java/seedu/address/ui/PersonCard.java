@@ -73,6 +73,14 @@ public class PersonCard extends UiPart<Region> {
         orders.setManaged(false);
         orders.setText("");
 
+        tier.setVisible(false);
+        tier.setManaged(false);
+        tier.setText("");
+
+        points.setVisible(false);
+        tier.setManaged(false);
+        tier.setText("");
+
         if (person instanceof Customer) {
             Customer customer = (Customer) person;
             Integer customerPoints = customer.getPoints();
@@ -80,9 +88,13 @@ public class PersonCard extends UiPart<Region> {
 
             if (points != null) {
                 points.setText(customerPoints != null ? customerPoints.toString() : "0");
+                points.setVisible(true);
+                points.setManaged(true);
             }
             if (tier != null) {
                 tier.setText(customerTier != null ? customerTier.toString() : "N/A");
+                tier.setVisible(true);
+                tier.setManaged(true);
             }
         }
 
