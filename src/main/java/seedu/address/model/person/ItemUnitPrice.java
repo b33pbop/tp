@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
- * Represents the number of items for a specific order.
+ * Represents the price of the items for a specific order.
  * Guarantees: immutable; is valid as declared in {@link #isValidItemUnitPrice(String)}
  */
 public class ItemUnitPrice {
