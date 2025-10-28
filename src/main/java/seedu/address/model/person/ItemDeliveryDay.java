@@ -60,10 +60,4 @@ public class ItemDeliveryDay {
         ItemDeliveryDay otherName = (ItemDeliveryDay) other;
         return this.itemDeliveryDay.equals(otherName.itemDeliveryDay);
     }
-
-    private String toTitleCase(String input) {
-        return Arrays.stream(input.trim().split("\\s+"))
-                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
-                .collect(Collectors.joining(" "));
-    }
 }
