@@ -85,10 +85,10 @@ public class ViewWindow extends UiPart<Stage> {
         supplierOrdersLabel.setManaged(false);
         supplierOrdersLabel.setText("");
 
-        customerPointsLabel.setVisible(true);
-        customerTierLabel.setVisible(true);
-        customerPointsLabel.setManaged(true);
-        customerTierLabel.setManaged(true);
+        customerPointsLabel.setVisible(false);
+        customerTierLabel.setVisible(false);
+        customerPointsLabel.setManaged(false);
+        customerTierLabel.setManaged(false);
         customerPointsLabel.setText("");
         customerTierLabel.setText("");
     }
