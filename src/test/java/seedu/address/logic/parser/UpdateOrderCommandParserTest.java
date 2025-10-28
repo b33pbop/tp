@@ -156,7 +156,7 @@ public class UpdateOrderCommandParserTest {
     }
 
     @Test
-    public void noFieldsIncluded() throws ParseException{
+    public void noFieldsIncluded() {
         String userInput = "updateOrder p/ 85355255 o/ 1 ";
         assertParseFailure(parser, userInput, UpdateOrderCommand.MESSAGE_NO_CHANGE);
     }
