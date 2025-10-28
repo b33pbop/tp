@@ -3,6 +3,10 @@ package seedu.address.storage;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import seedu.address.model.person.ItemDeliveryDay;
+import seedu.address.model.person.ItemName;
+import seedu.address.model.person.ItemQuantity;
+import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 
 /**
@@ -10,19 +14,19 @@ import seedu.address.model.person.Order;
  */
 public class JsonAdaptedOrder {
 
-    private final String item;
-    private final int quantity;
-    private final double unitPrice;
-    private final String deliveryDay; // store as a string for JSON
+    private final ItemName item;
+    private final ItemQuantity quantity;
+    private final ItemUnitPrice unitPrice;
+    private final ItemDeliveryDay deliveryDay; // store as a string for JSON
 
     /**
      * Constructs a {@code JsonAdaptedOrder} with the given order details.
      */
     @JsonCreator
-    public JsonAdaptedOrder(@JsonProperty("item") String item,
-                            @JsonProperty("quantity") int quantity,
-                            @JsonProperty("unitPrice") double unitPrice,
-                            @JsonProperty("deliveryDay") String deliveryDay) {
+    public JsonAdaptedOrder(@JsonProperty("itemName") ItemName item,
+                            @JsonProperty("quantity") ItemQuantity quantity,
+                            @JsonProperty("itemUnitPrice") ItemUnitPrice unitPrice,
+                            @JsonProperty("deliveryDay") ItemDeliveryDay deliveryDay) {
         this.item = item;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
@@ -39,16 +43,16 @@ public class JsonAdaptedOrder {
         this.deliveryDay = source.getDeliveryDay();
     }
 
-    public String getItem() {
+    public ItemName getItem() {
         return item;
     }
-    public int getQuantity() {
+    public ItemQuantity getQuantity() {
         return quantity;
     }
-    public double getUnitPrice() {
+    public ItemUnitPrice getUnitPrice() {
         return unitPrice;
     }
-    public String getDeliveryDay() {
+    public ItemDeliveryDay getDeliveryDay() {
         return deliveryDay;
     }
 

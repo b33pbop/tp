@@ -5,10 +5,10 @@ package seedu.address.model.person;
  */
 public class Order {
 
-    private final String item;
-    private final int quantity;
-    private final double unitPrice;
-    private final String deliveryDay;
+    private final ItemName item;
+    private final ItemQuantity quantity;
+    private final ItemUnitPrice unitPrice;
+    private final ItemDeliveryDay deliveryDay;
 
     /**
      * Constructor for order
@@ -17,26 +17,26 @@ public class Order {
      * @param unitPrice price of each item
      * @param deliveryDay day to be delivered
      */
-    public Order(String item, int quantity, double unitPrice, String deliveryDay) {
+    public Order(ItemName item, ItemQuantity quantity, ItemUnitPrice unitPrice, ItemDeliveryDay deliveryDay) {
         this.item = item;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.deliveryDay = deliveryDay;
     }
 
-    public String getItem() {
+    public ItemName getItem() {
         return item;
     }
 
-    public int getQuantity() {
+    public ItemQuantity getQuantity() {
         return quantity;
     }
 
-    public double getUnitPrice() {
+    public ItemUnitPrice getUnitPrice() {
         return unitPrice;
     }
 
-    public String getDeliveryDay() {
+    public ItemDeliveryDay getDeliveryDay() {
         return deliveryDay;
     }
 
@@ -62,11 +62,11 @@ public class Order {
             return false;
         }
 
-        if (!(otherOrder.getQuantity() == this.quantity)) {
+        if (!(otherOrder.getQuantity().equals(this.quantity))) {
             return false;
         }
 
-        if (!(otherOrder.getUnitPrice() == this.unitPrice)) {
+        if (!(otherOrder.getUnitPrice().equals(this.unitPrice))) {
             return false;
         }
 

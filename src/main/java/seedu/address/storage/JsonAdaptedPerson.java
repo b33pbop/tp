@@ -13,6 +13,7 @@ import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Customer;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
@@ -104,7 +105,7 @@ class JsonAdaptedPerson {
             Supplier supplier = (Supplier) source;
             List<Order> orders = supplier.getOrders();
             for (Order order : orders) {
-                String deliveryDay = order.getDeliveryDay();
+                ItemDeliveryDay deliveryDay = order.getDeliveryDay();
                 JsonAdaptedOrder jsonOrder = new JsonAdaptedOrder(order.getItem(),
                         order.getQuantity(),
                         order.getUnitPrice(),

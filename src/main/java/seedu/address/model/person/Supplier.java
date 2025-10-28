@@ -106,4 +106,18 @@ public class Supplier extends Person {
     public void updateOrders(int index, Order newOrder) {
         this.orders.set(index - 1, newOrder);
     }
+
+    /**
+     * Checks whether the specified order exists in the list
+     * @param toCheck The order to be checked
+     * @return A boolean value indicating whether the order is in the list
+     */
+    public boolean hasOrder(Order toCheck) {
+        for (Order current : this.orders) {
+            if (current.equals(toCheck)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
