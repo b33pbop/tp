@@ -32,10 +32,10 @@
           <Label fx:id="staffLeavesLabel" text="" GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2" />
 
           <!-- Supplier specific fields -->
-          <Label fx:id="supplierItemLabel" text="" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2" />
           <Label fx:id="supplierOrdersLabel" text="" GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="2"
                  wrapText="true" maxWidth="300" />
 
+          <!-- Customer specific fields -->
           <Label fx:id="customerPointsLabel" text="" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2" />
           <Label fx:id="customerTierLabel" text="" GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="2"
                  wrapText="true" maxWidth="300" />
