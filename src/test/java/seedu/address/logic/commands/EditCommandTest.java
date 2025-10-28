@@ -25,7 +25,15 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.category.Category;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Customer;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Supplier;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -146,6 +154,94 @@ public class EditCommandTest {
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Tests editing a customer to a supplier preserves orders if applicable.
+     */
+    @Test
+    public void execute_categoryChangeCustomerToSupplier_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        // Change category to Supplier
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withName(personToEdit.getName().fullName)
+                .withPhone(personToEdit.getPhone().value)
+                .withEmail(personToEdit.getEmail().value)
+                .withAddress(personToEdit.getAddress().value)
+                .withCategories("Supplier")
+                .build();
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        Supplier editedSupplier = new Supplier(personToEdit.getName(), personToEdit.getPhone(),
+                personToEdit.getEmail(), personToEdit.getAddress(), new Category("Supplier"));
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                Messages.format(editedSupplier));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedSupplier);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests editing a person without changing category (same subclass).
+     */
+    @Test
+    public void execute_editSameCategoryCustomer_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withName("New Name")
+                .build();
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        Customer editedCustomer = new Customer(new Name("New Name"), personToEdit.getPhone(),
+                personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getCategory());
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                Messages.format(editedCustomer));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedCustomer);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests editing a supplier preserves orders.
+     */
+    @Test
+    public void execute_editSupplierPreservesOrders_success() {
+        Supplier supplier = new Supplier(new Name("Supplier"), new Phone("91234567"), new Email("supplier@test.com"),
+                new Address("Block 1"), new Category("Supplier"));
+        Order order = new Order(new seedu.address.model.person.ItemName("Item"),
+                new seedu.address.model.person.ItemQuantity("2"),
+                new seedu.address.model.person.ItemUnitPrice("10.0"),
+                new seedu.address.model.person.ItemDeliveryDay("Monday"));
+        supplier.addOrder(order);
+
+        model.addPerson(supplier);
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withName("Supplier Edited")
+                .build();
+        EditCommand editCommand = new EditCommand(Index.fromOneBased(model.getFilteredPersonList().size()), descriptor);
+
+        Supplier editedSupplier = new Supplier(new Name("Supplier Edited"), supplier.getPhone(), supplier.getEmail(),
+                supplier.getAddress(), supplier.getCategory());
+        editedSupplier.addOrder(order);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                Messages.format(editedSupplier));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(supplier, editedSupplier);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
