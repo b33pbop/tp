@@ -21,6 +21,7 @@ import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 
 /**
@@ -46,7 +47,7 @@ public class UpdateOrderCommand extends Command {
         + PREFIX_UNITPRICE + "$0.90 "
         + PREFIX_DELIVERYDAY + "every Tuesday";
 
-    public final int supplierPhone;
+    public final Phone supplierPhone;
     public final int orderIndex;
     public final UpdateOrderDescriptor descriptor;
 
@@ -54,7 +55,7 @@ public class UpdateOrderCommand extends Command {
     /**
      * @param orderIndex of the order in the supplier's list to edit
      */
-    public UpdateOrderCommand(int supplierPhone, int orderIndex, UpdateOrderDescriptor descriptor) {
+    public UpdateOrderCommand(Phone supplierPhone, int orderIndex, UpdateOrderDescriptor descriptor) {
         requireNonNull(descriptor);
 
         this.supplierPhone = supplierPhone;
@@ -69,7 +70,7 @@ public class UpdateOrderCommand extends Command {
         Person person = null;
         ObservableList<Person> currentList = model.getAddressBook().getPersonList();
         for (int i = 0; i < currentList.size(); i++) {
-            if (Integer.parseInt(currentList.get(i).getPhone().toString()) == this.supplierPhone) {
+            if (currentList.get(i).getPhone().equals(this.supplierPhone)) {
                 person = currentList.get(i);
                 break;
             }
@@ -108,7 +109,7 @@ public class UpdateOrderCommand extends Command {
         }
 
         UpdateOrderCommand otherUpdateOrderCommand = (UpdateOrderCommand) other;
-        return this.supplierPhone == otherUpdateOrderCommand.supplierPhone
+        return this.supplierPhone.equals(otherUpdateOrderCommand.supplierPhone)
                 && this.orderIndex == otherUpdateOrderCommand.orderIndex
                 && this.descriptor.equals(otherUpdateOrderCommand.descriptor);
     }
@@ -194,8 +195,6 @@ public class UpdateOrderCommand extends Command {
             boolean isQuantitySame = Objects.equals(this.quantity, otherUpdateOrderDescriptor.quantity);
             boolean isUnitPriceSame = Objects.equals(this.unitPrice, otherUpdateOrderDescriptor.unitPrice);
             boolean isDeliveryDaySame = Objects.equals(this.deliveryDay, otherUpdateOrderDescriptor.deliveryDay);
-
-
 
             return isItemSame && isQuantitySame && isUnitPriceSame && isDeliveryDaySame;
         }

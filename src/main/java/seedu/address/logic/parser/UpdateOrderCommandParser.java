@@ -15,6 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
+import seedu.address.model.person.Phone;
 
 /**
  * Parses input arguments and creates a new UpdateOrderCommand object
@@ -69,7 +70,7 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
             throw new ParseException(UpdateOrderCommand.MESSAGE_NO_CHANGE);
         }
 
-        int supplierPhone = Integer.parseInt(argMultimap.getValue(PREFIX_PHONE).get());
+        Phone supplierPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         int orderNumber = Integer.parseInt(argMultimap.getValue(PREFIX_ORDERNUM).get());
 
         return new UpdateOrderCommand(supplierPhone, orderNumber, updateOrderDescriptor);

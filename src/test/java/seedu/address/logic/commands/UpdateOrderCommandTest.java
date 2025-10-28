@@ -17,6 +17,7 @@ import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.SupplierBuilder;
@@ -39,7 +40,7 @@ public class UpdateOrderCommandTest {
         AddCommand addCommand = new AddCommand(supplier);
         addCommand.execute(model);
 
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, emptyDescriptor);
 
         String expectedMessage = UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS;
@@ -70,7 +71,7 @@ public class UpdateOrderCommandTest {
         changedSome.updateItem(new ItemName("Changed item"));
         changedSome.updateQuantity(new ItemQuantity("100"));
 
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, changedSome);
 
         String expectedMessage = UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS;
@@ -103,7 +104,7 @@ public class UpdateOrderCommandTest {
         changedAll.updateUnitPrice(new ItemUnitPrice("5.5"));
         changedAll.updateDeliveryDay(new ItemDeliveryDay("Changed Day"));
 
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, changedAll);
 
         String expectedMessage = UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS;
@@ -115,7 +116,7 @@ public class UpdateOrderCommandTest {
 
     @Test
     public void supplierNotFound_failure() {
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
         UpdateOrderDescriptor emptyDescriptor = new UpdateOrderDescriptor();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, emptyDescriptor);
         assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_NOT_FOUND);
@@ -129,7 +130,7 @@ public class UpdateOrderCommandTest {
         AddCommand addCommand = new AddCommand(testPerson);
         addCommand.execute(model);
 
-        int testPersonPhone = Integer.parseInt(testPerson.getPhone().value);
+        Phone testPersonPhone = testPerson.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(testPersonPhone, 1, emptyDescriptor);
         assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_NOT_SUPPLIER);
 
@@ -146,7 +147,7 @@ public class UpdateOrderCommandTest {
         addCommand.execute(model);
 
         UpdateOrderDescriptor emptyDescriptor = new UpdateOrderDescriptor();
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 6, emptyDescriptor);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());

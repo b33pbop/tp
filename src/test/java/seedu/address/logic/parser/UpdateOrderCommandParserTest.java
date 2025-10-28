@@ -23,6 +23,7 @@ import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.SupplierBuilder;
 
@@ -83,7 +84,7 @@ public class UpdateOrderCommandParserTest {
                 new ItemUnitPrice("0.5"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
 
         UpdateOrderDescriptor updateOrderDescriptor = new UpdateOrderDescriptor();
         updateOrderDescriptor.updateItem(new ItemName("Updated"));
@@ -99,7 +100,7 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void someFieldsIncluded() {
-        String userInput = "update p/ 85355255 o/ 1 q/ 1000 d/ Today";
+        String userInput = "updateOrder p/ 85355255 o/ 1 q/ 1000 d/ Today";
 
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
@@ -107,7 +108,7 @@ public class UpdateOrderCommandParserTest {
                 new ItemUnitPrice("0.5"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
 
         UpdateOrderDescriptor updateOrderDescriptor = new UpdateOrderDescriptor();
         updateOrderDescriptor.updateQuantity(new ItemQuantity("1000"));
@@ -120,14 +121,14 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void oneFieldIncluded() {
-        String userInput = "update p/ 85355255 o/ 1 ";
+        String userInput = "updateOrder p/ 85355255 o/ 1 ";
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
                 new ItemUnitPrice("0.5"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
 
         // only item
         UpdateOrderDescriptor onlyItem = new UpdateOrderDescriptor();
