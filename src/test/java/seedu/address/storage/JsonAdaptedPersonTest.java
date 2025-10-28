@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -148,7 +149,7 @@ public class JsonAdaptedPersonTest {
 
         // add an order
         supplier.addOrder(new Order(new ItemName("Laptop"), new ItemQuantity("10"),
-                new ItemUnitPrice("1000.0"), "2025-10-23"));
+                new ItemUnitPrice("1000.0"), new ItemDeliveryDay("every Friday")));
 
         // convert to JsonAdaptedPerson
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
@@ -159,7 +160,7 @@ public class JsonAdaptedPersonTest {
         assertEquals(new ItemName("Laptop"), jsonOrder.getItem());
         assertEquals(new ItemQuantity("10"), jsonOrder.getQuantity());
         assertEquals(new ItemUnitPrice("1000.0"), jsonOrder.getUnitPrice());
-        assertEquals("2025-10-23", jsonOrder.getDeliveryDay());
+        assertEquals(new ItemDeliveryDay("every Friday"), jsonOrder.getDeliveryDay());
     }
 
     @Test
@@ -171,7 +172,7 @@ public class JsonAdaptedPersonTest {
                 new Category("Supplier"));
 
         supplier.addOrder(new Order(new ItemName("Mouse"), new ItemQuantity("5"),
-                new ItemUnitPrice("50.0"), "2025-10-24"));
+                new ItemUnitPrice("50.0"), new ItemDeliveryDay("every Friday")));
 
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
         Person modelPerson = adaptedPerson.toModelType();
@@ -182,6 +183,6 @@ public class JsonAdaptedPersonTest {
         assertEquals(new ItemName("Mouse"), modelSupplier.getOrders().get(0).getItem());
         assertEquals(new ItemQuantity("5"), modelSupplier.getOrders().get(0).getQuantity());
         assertEquals(new ItemUnitPrice("50.0"), modelSupplier.getOrders().get(0).getUnitPrice());
-        assertEquals("2025-10-24", modelSupplier.getOrders().get(0).getDeliveryDay());
+        assertEquals(new ItemDeliveryDay("every Friday"), modelSupplier.getOrders().get(0).getDeliveryDay());
     }
 }

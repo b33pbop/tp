@@ -27,9 +27,9 @@ public class SupplierTest {
         Category testCat = new Category("Supplier");
         Supplier test = new Supplier(testName, testPhone, testEmail, testAddress, testCat);
         Order test1 = new Order(new ItemName("Computer"), new ItemQuantity("5"), new ItemUnitPrice("100.00"),
-                "every Tuesday");
+                new ItemDeliveryDay("every Tuesday"));
         Order test2 = new Order(new ItemName("Computer"), new ItemQuantity("10"), new ItemUnitPrice("120.00"),
-                "every Wednesday");
+                new ItemDeliveryDay("every Wednesday"));
         test.addOrder(test1);
         test.addOrder(test2);
         String expected = "5 of Computer (at $100.00 each) to be delivered every Tuesday"

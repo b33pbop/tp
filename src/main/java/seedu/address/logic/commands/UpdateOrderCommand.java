@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -124,7 +125,7 @@ public class UpdateOrderCommand extends Command {
         ItemName updatedItem = descriptor.getItem().orElse(toEdit.getItem());
         ItemQuantity updatedQuantity = descriptor.getQuantity().orElse(toEdit.getQuantity());
         ItemUnitPrice updatedUnitPrice = descriptor.getUnitPrice().orElse(toEdit.getUnitPrice());
-        String updatedDeliveryDay = descriptor.getDeliveryDay().orElse(toEdit.getDeliveryDay());
+        ItemDeliveryDay updatedDeliveryDay = descriptor.getDeliveryDay().orElse(toEdit.getDeliveryDay());
 
         return new Order(updatedItem, updatedQuantity, updatedUnitPrice, updatedDeliveryDay);
     }
@@ -136,7 +137,7 @@ public class UpdateOrderCommand extends Command {
         private ItemName item;
         private ItemQuantity quantity;
         private ItemUnitPrice unitPrice;
-        private String deliveryDay;
+        private ItemDeliveryDay deliveryDay;
 
         public UpdateOrderDescriptor() {}
 
@@ -156,7 +157,7 @@ public class UpdateOrderCommand extends Command {
             return Optional.ofNullable(unitPrice);
         }
 
-        public Optional<String> getDeliveryDay() {
+        public Optional<ItemDeliveryDay> getDeliveryDay() {
             return Optional.ofNullable(deliveryDay);
         }
 
@@ -172,7 +173,7 @@ public class UpdateOrderCommand extends Command {
             this.unitPrice = newUnitPrice;
         }
 
-        public void updateDeliveryDay(String newDeliveryDay) {
+        public void updateDeliveryDay(ItemDeliveryDay newDeliveryDay) {
             this.deliveryDay = newDeliveryDay;
         }
 

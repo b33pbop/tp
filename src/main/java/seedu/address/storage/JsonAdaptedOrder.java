@@ -3,6 +3,7 @@ package seedu.address.storage;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -16,7 +17,7 @@ public class JsonAdaptedOrder {
     private final ItemName item;
     private final ItemQuantity quantity;
     private final ItemUnitPrice unitPrice;
-    private final String deliveryDay; // store as a string for JSON
+    private final ItemDeliveryDay deliveryDay; // store as a string for JSON
 
     /**
      * Constructs a {@code JsonAdaptedOrder} with the given order details.
@@ -25,7 +26,7 @@ public class JsonAdaptedOrder {
     public JsonAdaptedOrder(@JsonProperty("itemName") ItemName item,
                             @JsonProperty("quantity") ItemQuantity quantity,
                             @JsonProperty("itemUnitPrice") ItemUnitPrice unitPrice,
-                            @JsonProperty("deliveryDay") String deliveryDay) {
+                            @JsonProperty("deliveryDay") ItemDeliveryDay deliveryDay) {
         this.item = item;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
@@ -51,7 +52,7 @@ public class JsonAdaptedOrder {
     public ItemUnitPrice getUnitPrice() {
         return unitPrice;
     }
-    public String getDeliveryDay() {
+    public ItemDeliveryDay getDeliveryDay() {
         return deliveryDay;
     }
 

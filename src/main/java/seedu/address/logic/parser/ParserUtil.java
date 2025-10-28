@@ -8,6 +8,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -50,6 +51,7 @@ public class ParserUtil {
         }
         return new Name(trimmedName);
     }
+
     /**
      * Parses a {@code String itemName} into a {@code ItemName}
      * Leading and trailing white spaces will be trimmed.
@@ -99,6 +101,23 @@ public class ParserUtil {
             throw new ParseException(ItemUnitPrice.MESSAGE_CONSTRAINTS);
         }
         return new ItemUnitPrice(trimmedItemUnitPrice);
+    }
+
+    /**
+     * Parses a {@code String itemDeliveryDay} into a {@code ItemDeliveryDay}
+     * Leading and trailing white spaces will be trimmed.
+     * @param itemDeliveryDay The user input for itemUnitPrice
+     * @return An ItemName object
+     * @throws ParseException If the given input is invalid
+     */
+    public static ItemDeliveryDay parseItemDeliveryDay(String itemDeliveryDay) throws ParseException {
+        requireNonNull(itemDeliveryDay);
+        // Remove additional whitespace between parts of the item name
+        String trimmedItemDeliveryDay = itemDeliveryDay.trim().replaceAll("\\s+", " ");
+        if (!ItemDeliveryDay.isValidItemDeliveryDay(trimmedItemDeliveryDay)) {
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        }
+        return new ItemDeliveryDay(trimmedItemDeliveryDay);
     }
 
 

@@ -43,7 +43,8 @@ public class OrderTest {
         assertNotEquals(baseCopy, differentUnitPrice);
 
         // different delivery day -> return false
-        Order differentDeliveryDay = new OrderBuilder().withDeliveryDay("Changed Day of Delivery").build();
+        Order differentDeliveryDay = new OrderBuilder().withDeliveryDay(
+                new ItemDeliveryDay("Changed Day of Delivery")).build();
         assertNotEquals(baseCopy, differentDeliveryDay);
     }
 }

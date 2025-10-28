@@ -12,6 +12,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_UNITPRICE;
 import seedu.address.logic.commands.UpdateOrderCommand;
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ItemDeliveryDay;
+import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 
 /**
@@ -48,7 +50,8 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
             updateOrderDescriptor.updateItem(ParserUtil.parseItemName(argMultimap.getValue(PREFIX_ITEM).get()));
         }
         if (argMultimap.getValue(PREFIX_QUANTITY).isPresent()) {
-            updateOrderDescriptor.updateQuantity(ParserUtil.parseItemQuantity(argMultimap.getValue(PREFIX_QUANTITY).get()));
+            ItemQuantity quantityRaw = ParserUtil.parseItemQuantity(argMultimap.getValue(PREFIX_QUANTITY).get());
+            updateOrderDescriptor.updateQuantity(quantityRaw);
         }
         if (argMultimap.getValue(PREFIX_UNITPRICE).isPresent()) {
             String unitPriceRaw = argMultimap.getValue(PREFIX_UNITPRICE).get().trim();
@@ -58,7 +61,8 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
             updateOrderDescriptor.updateUnitPrice(new ItemUnitPrice(unitPriceRaw));
         }
         if (argMultimap.getValue(PREFIX_DELIVERYDAY).isPresent()) {
-            updateOrderDescriptor.updateDeliveryDay(argMultimap.getValue(PREFIX_DELIVERYDAY).get());
+            String deliveryDayRaw = argMultimap.getValue(PREFIX_DELIVERYDAY).get();
+            updateOrderDescriptor.updateDeliveryDay(new ItemDeliveryDay(deliveryDayRaw));
         }
 
         if (!updateOrderDescriptor.isAnyFieldEdited()) {

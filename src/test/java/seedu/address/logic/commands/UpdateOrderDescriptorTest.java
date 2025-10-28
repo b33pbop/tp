@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.UpdateOrderCommand.createEditedOrder;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -24,7 +25,7 @@ public class UpdateOrderDescriptorTest {
         Order baseOrder = new Order(new ItemName("Pencils"),
                                     new ItemQuantity("10"),
                                     new ItemUnitPrice("0.1"),
-                                    "every Monday");
+                                    new ItemDeliveryDay("every Monday"));
 
         // if name different -> not equal
         UpdateOrderDescriptor nameTest = new UpdateOrderDescriptor();
@@ -46,7 +47,7 @@ public class UpdateOrderDescriptorTest {
 
         // if delivery date different -> no equal
         UpdateOrderDescriptor deliveryDateTest = new UpdateOrderDescriptor();
-        deliveryDateTest.updateDeliveryDay("every Saturday");
+        deliveryDateTest.updateDeliveryDay(new ItemDeliveryDay("every Saturday"));
         Order orderWithEditedDeliveryDate = createEditedOrder(baseOrder, deliveryDateTest);
         assertNotEquals(orderWithEditedDeliveryDate, baseOrder);
     }

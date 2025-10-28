@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -14,6 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -38,7 +38,7 @@ public class AddOrderCommandTest {
         ItemName orderItem = newOrder.getItem();
         ItemQuantity orderQuantity = newOrder.getQuantity();
         ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
-        String orderDeliveryDay = newOrder.getDeliveryDay();
+        ItemDeliveryDay orderDeliveryDay = newOrder.getDeliveryDay();
         AddOrderCommand addOrderCommand = new AddOrderCommand(supplierPhone, orderItem,
                                                                 orderQuantity, orderUnitPrice,
                                                                 orderDeliveryDay);
@@ -57,7 +57,7 @@ public class AddOrderCommandTest {
         ItemName orderItem = newOrder.getItem();
         ItemQuantity orderQuantity = newOrder.getQuantity();
         ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
-        String orderDeliveryDay = newOrder.getDeliveryDay();
+        ItemDeliveryDay orderDeliveryDay = newOrder.getDeliveryDay();
         AddOrderCommand addOrderCommand = new AddOrderCommand(supplierPhone, orderItem,
                 orderQuantity, orderUnitPrice,
                 orderDeliveryDay);
@@ -76,7 +76,7 @@ public class AddOrderCommandTest {
         ItemName orderItem = newOrder.getItem();
         ItemQuantity orderQuantity = newOrder.getQuantity();
         ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
-        String orderDeliveryDay = newOrder.getDeliveryDay();
+        ItemDeliveryDay orderDeliveryDay = newOrder.getDeliveryDay();
 
         AddOrderCommand addOrderCommand = new AddOrderCommand(supplierPhone, orderItem,
                 orderQuantity, orderUnitPrice,
@@ -97,12 +97,12 @@ public class AddOrderCommandTest {
         ItemName firstItem = firstOrder.getItem();
         ItemQuantity firstQuantity = firstOrder.getQuantity();
         ItemUnitPrice firstUnitPrice = firstOrder.getUnitPrice();
-        String firstDeliveryDay = firstOrder.getDeliveryDay();
+        ItemDeliveryDay firstDeliveryDay = firstOrder.getDeliveryDay();
 
         ItemName secondItem = secondOrder.getItem();
         ItemQuantity secondQuantity = secondOrder.getQuantity();
         ItemUnitPrice secondUnitPrice = secondOrder.getUnitPrice();
-        String secondDeliveryDay = secondOrder.getDeliveryDay();
+        ItemDeliveryDay secondDeliveryDay = secondOrder.getDeliveryDay();
 
 
         AddOrderCommand addPencilsCommand = new AddOrderCommand(supplierPhone, firstItem,

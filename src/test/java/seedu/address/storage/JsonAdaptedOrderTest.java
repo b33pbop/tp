@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -17,10 +17,7 @@ public class JsonAdaptedOrderTest {
     private static final ItemName VALID_ITEM = new ItemName("Cabbage");
     private static final ItemQuantity VALID_QUANTITY = new ItemQuantity("10");
     private static final ItemUnitPrice VALID_UNIT_PRICE = new ItemUnitPrice("3.25");
-    private static final String VALID_DELIVERY_DAY = "2024-12-31";
-
-    private static final String INVALID_DELIVERY_DAY = "invalid-date";
-    private static final String INVALID_DELIVERY_DAY_FORMAT = "31/12/2024"; // Wrong format
+    private static final ItemDeliveryDay VALID_DELIVERY_DAY = new ItemDeliveryDay("Every Tuesday");
 
     private static final Order VALID_ORDER = new Order(VALID_ITEM, VALID_QUANTITY,
             VALID_UNIT_PRICE, VALID_DELIVERY_DAY);
@@ -78,13 +75,4 @@ public class JsonAdaptedOrderTest {
         assertEquals(VALID_DELIVERY_DAY, adaptedOrder.getDeliveryDay());
     }
 
-    @Test
-    public void toModelType_minimumDate_returnsOrder() {
-        String minDay = "0001-01-01";
-        JsonAdaptedOrder order = new JsonAdaptedOrder(VALID_ITEM, VALID_QUANTITY,
-                VALID_UNIT_PRICE, minDay);
-        Order modelOrder = order.toModelType();
-
-        assertEquals(minDay, modelOrder.getDeliveryDay());
-    }
 }

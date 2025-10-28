@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -56,7 +57,7 @@ public class DeleteOrderCommandTest {
             new seedu.address.model.category.Category("Supplier")
         );
         supplier.getOrders().add(new Order(new ItemName("Pens"), new ItemQuantity("100"),
-                new ItemUnitPrice("0.90"), "Tuesday"));
+                new ItemUnitPrice("0.90"), new ItemDeliveryDay("Tuesday")));
         model.addPerson(supplier);
         DeleteOrderCommand cmd = new DeleteOrderCommand(91234567, 2); // Only 1 order
         CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));

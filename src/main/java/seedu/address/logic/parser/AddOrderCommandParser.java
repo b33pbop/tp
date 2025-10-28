@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddOrderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -53,7 +54,8 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
             unitPriceRaw = unitPriceRaw.substring(1);
         }
         ItemUnitPrice orderUnitPrice = ParserUtil.parseItemUnitPrice(unitPriceRaw);
-        String orderDeliveryDay = argMultimap.getValue(PREFIX_DELIVERYDAY).get();
+        ItemDeliveryDay orderDeliveryDay = ParserUtil.parseItemDeliveryDay(
+                                                argMultimap.getValue(PREFIX_DELIVERYDAY).get());
 
         return new AddOrderCommand(supplierPhone, orderItem, orderQuantity, orderUnitPrice, orderDeliveryDay);
     }

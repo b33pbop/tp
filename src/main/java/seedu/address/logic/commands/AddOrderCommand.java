@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_UNITPRICE;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -49,7 +50,7 @@ public class AddOrderCommand extends Command {
     private final ItemName newOrderItem;
     private final ItemQuantity newOrderQuantity;
     private final ItemUnitPrice newOrderUnitPrice;
-    private final String newOrderDeliveryDay;
+    private final ItemDeliveryDay newOrderDeliveryDay;
 
     // Constructor
     /**
@@ -62,7 +63,7 @@ public class AddOrderCommand extends Command {
      */
     public AddOrderCommand(Phone supplierPhone, ItemName newOrderItem,
             ItemQuantity newOrderQuantity, ItemUnitPrice newOrderUnitPrice,
-            String newOrderDeliveryDay) {
+            ItemDeliveryDay newOrderDeliveryDay) {
         this.supplierPhone = supplierPhone;
         this.newOrderItem = newOrderItem;
         this.newOrderQuantity = newOrderQuantity;

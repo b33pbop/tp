@@ -18,6 +18,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.UpdateOrderCommand;
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
@@ -80,7 +81,7 @@ public class UpdateOrderCommandParserTest {
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
                 new ItemUnitPrice("0.5"),
-                "every Friday");
+                new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         int supplierPhone = Integer.parseInt(supplier.getPhone().value);
 
@@ -88,7 +89,7 @@ public class UpdateOrderCommandParserTest {
         updateOrderDescriptor.updateItem(new ItemName("Updated"));
         updateOrderDescriptor.updateQuantity(new ItemQuantity("1000"));
         updateOrderDescriptor.updateUnitPrice(new ItemUnitPrice("111.11"));
-        updateOrderDescriptor.updateDeliveryDay("Today");
+        updateOrderDescriptor.updateDeliveryDay(new ItemDeliveryDay("Today"));
 
         UpdateOrderCommand expectedCommand = new UpdateOrderCommand(supplierPhone, 1, updateOrderDescriptor);
 
@@ -104,13 +105,13 @@ public class UpdateOrderCommandParserTest {
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
                 new ItemUnitPrice("0.5"),
-                "every Friday");
+                new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         int supplierPhone = Integer.parseInt(supplier.getPhone().value);
 
         UpdateOrderDescriptor updateOrderDescriptor = new UpdateOrderDescriptor();
         updateOrderDescriptor.updateQuantity(new ItemQuantity("1000"));
-        updateOrderDescriptor.updateDeliveryDay("Today");
+        updateOrderDescriptor.updateDeliveryDay(new ItemDeliveryDay("Today"));
 
         UpdateOrderCommand expectedCommand = new UpdateOrderCommand(supplierPhone, 1, updateOrderDescriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -124,7 +125,7 @@ public class UpdateOrderCommandParserTest {
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
                 new ItemUnitPrice("0.5"),
-                "every Friday");
+                new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         int supplierPhone = Integer.parseInt(supplier.getPhone().value);
 
@@ -148,7 +149,7 @@ public class UpdateOrderCommandParserTest {
 
         // only delivery day
         UpdateOrderDescriptor onlyDeliveryDay = new UpdateOrderDescriptor();
-        onlyDeliveryDay.updateDeliveryDay("Updated");
+        onlyDeliveryDay.updateDeliveryDay(new ItemDeliveryDay("Updated"));
         UpdateOrderCommand updateDeliveryDayOnly = new UpdateOrderCommand(supplierPhone, 1, onlyDeliveryDay);
         assertParseSuccess(parser, userInput + "d/ Updated", updateDeliveryDayOnly);
 
@@ -173,7 +174,7 @@ public class UpdateOrderCommandParserTest {
     public void parse_withDeliveryDay_success() throws ParseException {
         String args = "p/91234567 o/1 i/Pens q/100 u/0.90 d/Tuesday";
         UpdateOrderCommand cmd = parser.parse(args);
-        assertEquals("Tuesday", cmd.descriptor.getDeliveryDay().get());
+        assertEquals(new ItemDeliveryDay("Tuesday"), cmd.descriptor.getDeliveryDay().get());
     }
 
     @Test
