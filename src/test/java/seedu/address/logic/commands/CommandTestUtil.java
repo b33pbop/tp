@@ -98,6 +98,25 @@ public class CommandTestUtil {
     }
 
     /**
+     * Less strict version of {@link #assertCommandSuccess(Command, Model, String, Model)}.
+     * This method does not check other aspects of the model such as filtered lists or
+     * selected person. Useful for tests where only the address book content and command
+     * result message matter.
+     */
+    public static void assertCommandSuccessAddressBookOnly(Command command, Model actualModel,
+                                                           String expectedMessage, Model expectedModel) {
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
+        try {
+            CommandResult result = command.execute(actualModel);
+            assertEquals(expectedCommandResult, result);
+            // Only check the address book
+            assertEquals(expectedModel.getAddressBook(), actualModel.getAddressBook());
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>

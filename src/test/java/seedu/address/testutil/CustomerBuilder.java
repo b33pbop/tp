@@ -11,7 +11,7 @@ import seedu.address.model.person.Person;
 public class CustomerBuilder extends PersonBuilder {
 
     /**
-     * Creates a default {@code SupplierBuilder} with default item Chicken.
+     * Creates a default {@code CustomerBuilder}.
      */
     public CustomerBuilder() {
         super();
@@ -58,7 +58,7 @@ public class CustomerBuilder extends PersonBuilder {
 
     @Override
     public CustomerBuilder withCategory(String category) {
-        super.withCategory("Customer"); // always Supplier
+        super.withCategory("Customer"); // always Customer
         return this;
     }
 }

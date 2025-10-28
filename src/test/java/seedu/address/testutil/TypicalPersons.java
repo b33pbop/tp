@@ -23,38 +23,44 @@ import seedu.address.model.person.Person;
  */
 public class TypicalPersons {
 
-    public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
+    public static final Person ALICE = new CustomerBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("94351253")
-            .withCategory("Customer").build();
-    public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
+            .withPhone("94351253").withCategory("Customer").build();
+    public static final Person BENSON = new CustomerBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withCategory("Customer").build();
-    public static final Person CARL = new StaffBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").withCategory("Staff").build();
-    public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withCategory("Customer").build();
-    public static final Person ELLE = new StaffBuilder().withName("Elle Meyer").withPhone("94822241")
-            .withEmail("werner@example.com").withAddress("michegan ave").withCategory("Staff").build();
-    public static final Person FIONA = new SupplierBuilder().withName("Fiona Kunz").withPhone("94824271")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withCategory("Supplier").build();
-    public static final Person GEORGE = new SupplierBuilder().withName("George Best").withPhone("94824421")
-            .withEmail("anna@example.com").withAddress("4th street").withCategory("Supplier").build();
+    public static final Person CARL = new StaffBuilder().withName("Carl Kurz")
+            .withPhone("95352563").withEmail("heinz@example.com")
+            .withAddress("wall street").withCategory("Staff").build();
+    public static final Person DANIEL = new CustomerBuilder().withName("Daniel Meier")
+            .withPhone("87652533").withEmail("cornelia@example.com")
+            .withAddress("10th street").withCategory("Customer").build();
+    public static final Person ELLE = new StaffBuilder().withName("Elle Meyer")
+            .withPhone("94822241").withEmail("werner@example.com")
+            .withAddress("michegan ave").withCategory("Staff").build();
+    public static final Person FIONA = new SupplierBuilder().withName("Fiona Kunz")
+            .withPhone("94824271").withEmail("lydia@example.com")
+            .withAddress("little tokyo").withCategory("Supplier").build();
+    public static final Person GEORGE = new SupplierBuilder().withName("George Best")
+            .withPhone("94824421").withEmail("anna@example.com")
+            .withAddress("4th street").withCategory("Supplier").build();
 
     // Manually added
-    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84824241")
-            .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("84821311")
-            .withEmail("hans@example.com").withAddress("chicago ave").build();
+    public static final Person HOON = new PersonBuilder().withName("Hoon Meier")
+            .withPhone("84824241").withEmail("stefan@example.com")
+            .withAddress("little india").build();
+    public static final Person IDA = new PersonBuilder().withName("Ida Mueller")
+            .withPhone("84821311").withEmail("hans@example.com")
+            .withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withCategory(VALID_CATEGORY_STAFF).build();
+    public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY)
+            .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+            .withAddress(VALID_ADDRESS_AMY).withCategory(VALID_CATEGORY_STAFF).build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-            .withCategory(VALID_CATEGORY_CUSTOMER)
-            .build();
+            .withCategory(VALID_CATEGORY_CUSTOMER).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

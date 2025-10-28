@@ -4,12 +4,22 @@
     "phone": "94351253",
     "email": "alice@example.com",
     "address": "123, Jurong West Ave 6, #08-111",
-    "category": "Customer"
+    "category": "Customer",
+    "orders" : null,
+    "shift" : null,
+    "numberOfLeaves" : null,
+    "points" : 0,
+    "tier" : "MEMBER"
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
     "address": "4th street",
-    "category": "Staff"
+    "category": "Staff",
+    "orders" : null,
+    "shift" : "AM",
+    "numberOfLeaves" : 14,
+    "points" : null,
+    "tier" : null
   } ]
 }
