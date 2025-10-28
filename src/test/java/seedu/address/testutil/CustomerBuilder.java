@@ -66,11 +66,22 @@ public class CustomerBuilder extends PersonBuilder {
         super.withCategory("Customer"); // always Customer
         return this;
     }
+
+    /**
+     * Build customer with specific number of points
+     * @param points
+     * @return
+     */
     public CustomerBuilder withPoints(Integer points) {
         this.points = points;
         return this;
     }
 
+    /**
+     * Build customer with specific tier
+     * @param tier
+     * @return
+     */
     public CustomerBuilder withTier(Tier tier) {
         this.tier = tier;
         return this;
