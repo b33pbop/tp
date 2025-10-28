@@ -20,7 +20,7 @@ import seedu.address.model.person.Phone;
  */
 public class UpdatePointsCommand extends Command {
 
-    public static final String COMMAND_WORD = "updatepoints";
+    public static final String COMMAND_WORD = "updatePoints";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Award points to the customer based on the specified amount spent.\n"
