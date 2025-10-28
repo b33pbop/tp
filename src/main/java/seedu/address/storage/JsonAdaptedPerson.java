@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
@@ -19,14 +20,14 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Shift;
 import seedu.address.model.person.Staff;
 import seedu.address.model.person.Supplier;
+import seedu.address.model.tier.Tier;
 
 /**
  * Jackson-friendly version of {@link Person}.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 class JsonAdaptedPerson {
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     @JsonProperty("name") private final String name;
@@ -35,9 +36,16 @@ class JsonAdaptedPerson {
     @JsonProperty("address") private final String address;
     @JsonProperty("category") private final String category;
 
-    @JsonProperty("orders") private List<JsonAdaptedOrder> orders; // only for Supplier class
+    // only for Supplier class
+    @JsonProperty("orders") private List<JsonAdaptedOrder> orders;
+
+    // only for Staff class
     @JsonProperty("shift") private String shift;
     @JsonProperty("numberOfLeaves") private Integer numberOfLeaves;
+
+    // only for Customer class
+    @JsonProperty("points") private Integer points;
+    @JsonProperty("tier") private Tier tier;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -48,9 +56,14 @@ class JsonAdaptedPerson {
         this.phone = phone;
         this.email = email;
         this.address = address;
+
         this.category = (category == null) ? null : category.getCategoryName();
+
         this.shift = null;
         this.numberOfLeaves = null;
+
+        this.points = null;
+        this.tier = null;
     }
 
     @JsonCreator
@@ -65,9 +78,14 @@ class JsonAdaptedPerson {
         this.email = email;
         this.address = address;
         this.category = category;
+
         this.orders = null;
+
         this.shift = null;
         this.numberOfLeaves = null;
+
+        this.points = null;
+        this.tier = null;
     }
 
     /**
@@ -81,7 +99,7 @@ class JsonAdaptedPerson {
         Category sourceCategory = source.getCategory();
         category = sourceCategory.getCategoryName();
 
-        if ("Supplier".equalsIgnoreCase(category) && source instanceof Supplier) {
+        if (source instanceof Supplier) {
             this.orders = new ArrayList<>();
             Supplier supplier = (Supplier) source;
             List<Order> orders = supplier.getOrders();
@@ -94,18 +112,34 @@ class JsonAdaptedPerson {
                 this.orders.add(jsonOrder);
             }
         } else if (source instanceof Staff) {
-            Staff st = (Staff) source;
-            this.shift = st.getShift() == null ? null : st.getShift().getValue();
-            this.numberOfLeaves = st.getNumberOfLeaves();
+            Staff staff = (Staff) source;
+            this.shift = staff.getShift() == null ? null : staff.getShift().getValue();
+            this.numberOfLeaves = staff.getNumberOfLeaves();
+        } else if (source instanceof Customer) {
+            Customer customer = (Customer) source;
+            this.points = customer.getPoints();
+            this.tier = customer.getTier();
         } else {
             this.orders = null;
+
             this.shift = null;
             this.numberOfLeaves = null;
+
+            this.points = null;
+            this.tier = null;
         }
     }
 
     public List<JsonAdaptedOrder> getOrders() {
         return orders;
+    }
+
+    public int getPoints() {
+        return (this.points == null) ? 0 : this.points;
+    }
+
+    public Tier getTier() {
+        return (this.tier == null) ? Tier.MEMBER : this.tier;
     }
 
     /**
@@ -167,31 +201,19 @@ class JsonAdaptedPerson {
             return toSupplierModelType(modelCategory, modelName, modelPhone, modelEmail, modelAddress);
         }
 
+        if ("Customer".equalsIgnoreCase(category)) {
+            return toCustomerModelType(modelCategory, modelName, modelPhone, modelEmail, modelAddress);
+        }
+
         if ("Staff".equalsIgnoreCase(category)) {
-            final String safeShift = (shift == null || shift.isBlank()) ? "AM" : shift;
-            final Shift modelShift = new Shift(safeShift);
-
-            final int leaves = (numberOfLeaves == null) ? 14 : numberOfLeaves;
-            if (leaves < 0) {
-                throw new IllegalValueException("numberOfLeaves cannot be negative");
-            }
-
-
-            Staff staff = new Staff(modelName, modelPhone, modelEmail, modelAddress, modelCategory, modelShift);
-            int base = staff.getNumberOfLeaves(); // default is 14
-            if (leaves > base) {
-                staff.addLeaves(leaves - base);
-            } else if (leaves < base) {
-                staff.removeLeaves(base - leaves);
-            }
-            return staff;
+            return toStaffModelType(modelCategory, modelName, modelPhone, modelEmail, modelAddress);
         }
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelCategory);
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Supplier} object.
+     * Converts this Jackson-friendly adapted person object into a {@code Supplier} object.
      */
     private Supplier toSupplierModelType(Category modelCategory,
                                        Name modelName,
@@ -207,5 +229,47 @@ class JsonAdaptedPerson {
         }
 
         return supplier;
+    }
+
+    /**
+     * Converts this Jackson-friendly adapted person object into a {@code Customer} object.
+     */
+    private Customer toCustomerModelType(Category modelCategory,
+                                         Name modelName,
+                                         Phone modelPhone,
+                                         Email modelEmail,
+                                         Address modelAddress) {
+        Customer customer = new Customer(modelName, modelPhone, modelEmail, modelAddress, modelCategory);
+
+        int modelPoints = (this.points == null) ? 0 : this.points;
+        customer.addPointsFromSpending(modelPoints);
+
+        return customer;
+    }
+
+    /**
+     * Converts this Jackson-friendly adapted person object into a {@code Staff} object.
+     */
+    private Staff toStaffModelType(Category modelCategory,
+                                   Name modelName,
+                                   Phone modelPhone,
+                                   Email modelEmail,
+                                   Address modelAddress) throws IllegalValueException {
+        final String safeShift = (shift == null || shift.isBlank()) ? "AM" : shift;
+        final Shift modelShift = new Shift(safeShift);
+
+        final int leaves = (numberOfLeaves == null) ? 14 : numberOfLeaves;
+        if (leaves < 0) {
+            throw new IllegalValueException("numberOfLeaves cannot be negative");
+        }
+
+        Staff staff = new Staff(modelName, modelPhone, modelEmail, modelAddress, modelCategory, modelShift);
+        int base = staff.getNumberOfLeaves(); // default is 14
+        if (leaves > base) {
+            staff.addLeaves(leaves - base);
+        } else if (leaves < base) {
+            staff.removeLeaves(base - leaves);
+        }
+        return staff;
     }
 }
