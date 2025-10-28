@@ -71,7 +71,7 @@ public class Customer extends Person {
         return super.toString();
     }
 
-    private int calculatePointsFromSpending(double amount) {
+    public int calculatePointsFromSpending(double amount) {
         return (int) amount; // truncates decimal points
     }
 
