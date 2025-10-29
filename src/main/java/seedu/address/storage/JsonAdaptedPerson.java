@@ -116,6 +116,7 @@ class JsonAdaptedPerson {
             Staff staff = (Staff) source;
             this.shift = staff.getShift() == null ? null : staff.getShift().getValue();
             this.numberOfLeaves = staff.getNumberOfLeaves();
+            assert numberOfLeaves >= 0 : "Staff leaves must not be negative";
         } else if (source instanceof Customer) {
             Customer customer = (Customer) source;
             this.points = customer.getPoints();
