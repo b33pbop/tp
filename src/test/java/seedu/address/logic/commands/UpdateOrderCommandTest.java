@@ -156,11 +156,8 @@ public class UpdateOrderCommandTest {
         changeNameDescriptor.updateItem(new ItemName("Updated"));
 
         Phone supplierPhone = supplier.getPhone();
-        UpdateOrderCommand upperLimit = new UpdateOrderCommand(supplierPhone,
+        UpdateOrderCommand wrongValue = new UpdateOrderCommand(supplierPhone,
                                                                 new OrderIndex("6"),
-                                                                changeNameDescriptor);
-        UpdateOrderCommand lowerLimit = new UpdateOrderCommand(supplierPhone,
-                                                                new OrderIndex("0"),
                                                                 changeNameDescriptor);
         UpdateOrderCommand correctValue = new UpdateOrderCommand(supplierPhone,
                                                                 new OrderIndex("1"),
@@ -168,8 +165,7 @@ public class UpdateOrderCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
-        assertCommandFailure(upperLimit, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
-        assertCommandFailure(lowerLimit, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
+        assertCommandFailure(wrongValue, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
         assertCommandSuccess(correctValue, model, UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS, expectedModel);
     }
 

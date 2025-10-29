@@ -36,6 +36,9 @@ public class OrderIndexTest {
         assertFalse(OrderIndex.isValidOrderIndex("^")); // only non-alphanumeric characters
         assertFalse(OrderIndex.isValidOrderIndex("peter*")); // contains non-alphanumeric characters
         assertFalse(OrderIndex.isValidOrderIndex("0.99999")); // no decimals allowed
+        assertFalse(OrderIndex.isValidOrderIndex("0")); // 0 itself is not allowed
+
+
 
         // valid quantity
         assertTrue(OrderIndex.isValidOrderIndex("1")); // numbers only
