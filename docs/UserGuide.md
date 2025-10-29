@@ -154,6 +154,35 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+## Adding points to Customer: `updatePoints`
+
+Award points for specified customer based of amount spent.
+
+Format: `updatePoints [p/PHONE] [b/BILL_AMOUNT]`
+
+* Can only be performed on Customers.
+* Bill amount can be any positive number with at most 2 decimal points e.g. `50`, `50.15`, `50.1`
+* Customer Tier will update based on number of points accumulated.
+
+Examples:
+* `updatePoints p/98765432 b/100000.00` adds `100000 points` for `John Doe`
+<br>
+  ![result for 'updatePoints p/98765432 b/100000.00'](images/updatePointsResult.png)
+
+## Update shift for Staff: `updateShift`
+
+Update shift for the specified staff.
+
+Format: `updatePoints [p/PHONE] [s/SHIFT]`
+
+* Can only be performed on Staff.
+* Shift value is limited to onl `AM` or `PM`.
+
+Examples:
+* `updateShift p/98765432 b/PM` updates shift to `PM` for `John Doe`
+  <br>
+  ![result for 'updateShift p/98765412 b/PM'](images/updateShiftResult.png)
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -199,10 +228,14 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**UpdatePoints**   | `updatePoints [p/PHONE] [b/BILL_AMOUNT]`<br> e.g `updatePoints p/98765432 b/100.00`
+**UpdateShift**   | `updateShift [p/PHONE] [s/SHIFT]`<br> e.g `updatePoints p/98765432 b/PM`
 **List**   | `list`
 **Help**   | `help`
+
+
