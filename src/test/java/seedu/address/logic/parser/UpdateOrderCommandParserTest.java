@@ -152,7 +152,9 @@ public class UpdateOrderCommandParserTest {
         // only unit price
         UpdateOrderDescriptor onlyUnitPrice = new UpdateOrderDescriptor();
         onlyUnitPrice.updateUnitPrice(new ItemUnitPrice("2.22"));
-        UpdateOrderCommand updateUnitPriceOnly = new UpdateOrderCommand(supplierPhone, new OrderIndex("1"), onlyUnitPrice);
+        UpdateOrderCommand updateUnitPriceOnly = new UpdateOrderCommand(supplierPhone,
+                                                                        new OrderIndex("1"),
+                                                                        onlyUnitPrice);
         assertParseSuccess(parser, userInput + "u/ 2.22", updateUnitPriceOnly);
 
         // only delivery day

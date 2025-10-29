@@ -198,7 +198,9 @@ public class UpdateOrderCommandTest {
         // different descriptor
         UpdateOrderDescriptor updateDescriptor = new UpdateOrderDescriptor();
         updateDescriptor.updateItem(new ItemName("Different Item"));
-        UpdateOrderCommand differentDescriptor = new UpdateOrderCommand(supplierPhone, new OrderIndex("1"), updateDescriptor);
+        UpdateOrderCommand differentDescriptor = new UpdateOrderCommand(supplierPhone,
+                                                                        new OrderIndex("1"),
+                                                                        updateDescriptor);
         assertNotEquals(toCompare, differentDescriptor);
 
     }
