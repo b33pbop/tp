@@ -175,7 +175,8 @@ public class UpdateOrderCommandTest {
 
         // another type of command
         AddCommand addCommand = new AddCommand(supplier);
-        assertFalse(addCommand.equals(toCompare));
+        assertNotEquals(toCompare, addCommand);
+        assertNotEquals(null, toCompare);
 
         // different phone number
         Phone anotherPhone = new Phone("91111234");

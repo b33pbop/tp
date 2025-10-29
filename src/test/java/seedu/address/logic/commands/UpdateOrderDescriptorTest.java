@@ -61,5 +61,25 @@ public class UpdateOrderDescriptorTest {
 
         // another data type
         assertNotEquals(baseDescriptor, 10);
+
+        // different item name
+        UpdateOrderDescriptor differentName = new UpdateOrderDescriptor();
+        differentName.updateItem(new ItemName("Testing"));
+        assertNotEquals(differentName, baseDescriptor);
+
+        // different item quantity
+        UpdateOrderDescriptor differentQuantity = new UpdateOrderDescriptor();
+        differentQuantity.updateQuantity(new ItemQuantity("20"));
+        assertNotEquals(differentQuantity, baseDescriptor);
+
+        // different item unit price
+        UpdateOrderDescriptor differentUnitPrice = new UpdateOrderDescriptor();
+        differentUnitPrice.updateUnitPrice(new ItemUnitPrice("20.23"));
+        assertNotEquals(differentUnitPrice, baseDescriptor);
+
+        // different item delivery day
+        UpdateOrderDescriptor differentDeliveryDay = new UpdateOrderDescriptor();
+        differentDeliveryDay.updateDeliveryDay(new ItemDeliveryDay("Tuesday"));
+        assertNotEquals(differentDeliveryDay, baseDescriptor);
     }
 }
