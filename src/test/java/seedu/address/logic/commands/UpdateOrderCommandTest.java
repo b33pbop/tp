@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 
@@ -161,10 +162,22 @@ public class UpdateOrderCommandTest {
         Phone supplierPhone = supplier.getPhone();
 
         UpdateOrderCommand toCompare = new UpdateOrderCommand(supplierPhone, 1, baseDescriptor);
-        UpdateOrderCommand otherCompare = new UpdateOrderCommand(supplierPhone, 1, baseDescriptor);
+        UpdateOrderCommand sameCompare = new UpdateOrderCommand(supplierPhone, 1, baseDescriptor);
 
-        assertEquals(toCompare, otherCompare);
+        assertEquals(toCompare, sameCompare);
 
+        // different phone number
+        Phone anotherPhone = new Phone("91111234");
+        UpdateOrderCommand differentPhone = new UpdateOrderCommand(anotherPhone, 1, baseDescriptor);
+        assertNotEquals(toCompare, differentPhone);
+
+        // different descriptor
+        UpdateOrderDescriptor updateDescriptor = new UpdateOrderDescriptor();
+        updateDescriptor.updateItem(new ItemName("Different Item"));
+        UpdateOrderCommand differentDescriptor = new UpdateOrderCommand(supplierPhone,1,
+                updateDescriptor);
+
+        assertNotEquals(toCompare, differentDescriptor);
 
     }
 
