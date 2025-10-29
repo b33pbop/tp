@@ -159,7 +159,7 @@ Format: `clear`
 
 Award points for specified customer based of amount spent.
 
-Format: `updatePoints [p/PHONE] [b/BILL_AMOUNT]`
+Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 
 * Can only be performed on Customers.
 * Bill amount can be any positive number with at most 2 decimal points e.g. `50`, `50.15`, `50.1`
@@ -174,10 +174,10 @@ Examples:
 
 Update shift for the specified staff.
 
-Format: `updatePoints [p/PHONE] [s/SHIFT]`
+Format: `updatePoints p/PHONE s/SHIFT`
 
 * Can only be performed on Staff.
-* Shift value is limited to onl `AM` or `PM`.
+* Shift value is limited to only `AM` or `PM`.
 
 Examples:
 * `updateShift p/98765432 b/PM` updates shift to `PM` for `John Doe`
@@ -229,13 +229,13 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer`
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**UpdatePoints**   | `updatePoints [p/PHONE] [b/BILL_AMOUNT]`<br> e.g `updatePoints p/98765432 b/100.00`
-**UpdateShift**   | `updateShift [p/PHONE] [s/SHIFT]`<br> e.g `updatePoints p/98765432 b/PM`
+**UpdatePoints**   | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`
+**UpdateShift**   | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`
 **List**   | `list`
 **Help**   | `help`
 
