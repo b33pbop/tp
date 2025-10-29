@@ -1,32 +1,48 @@
 ---
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
+layout: default.md
+title: "User Guide"
+pageNav: 3
 ---
 
-# AB-3 User Guide
+# GhostConnect User Guide
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+GhostConnect is a **desktop app for managing contacts, optimized for fast and efficient use through a Command Line Interface** (CLI) while retaining the convenience of a **Graphical User Interface (GUI)**.
+Designed for users who value speed and precision, GhostConnect lets you organize, search, and update your contacts seamlessly &ndash; faster than traditional GUI-based contact managers.
 
-<!-- * Table of Contents -->
+<details>
+    <summary> Table of Contents </summary>
+
+- [Quick Start](#quick-start)
+- [Features](#features)
+  - [Help](#accessing-the-help-page-help)
+  - [Adding a Contact](#adding-a-contact-add)
+  - [Listing all Contacts](#listing-all-contacts-list)
+  - [Editing a Contact](#editing-a-contact-edit)
+  - [Locating Contacts by Name or Category](#locating-contacts-by-name-or-category-find)
+  - [Deleting a Contact](#deleting-a-contact-delete)
+  - [Clearing all Contacts](#clearing-all-contacts-clear)
+- [Command Summary](#command-summary)
+
+</details>
+
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+## Quick Start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ghostConnect.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
@@ -64,7 +80,9 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+### General Commands
+
+#### Accessing the Help Page: `help`
 
 Shows a message explaining how to access the help page.
 
@@ -72,8 +90,7 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-
-### Adding a person: `add`
+#### Adding a Contact: `add`
 
 Adds a person to the address book.
 
@@ -83,20 +100,20 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/CATEGORY`
 
 <box type="tip" seamless></box>
 
-**Tip:** A person can only belong to either of these 3 categories: Customer | Supplier | Staff 
+**Tip:** A person can only belong to one of these 3 categories: `Customer` / `Supplier` / `Staff`.
 </box>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/Customer` <br>
 * `add n/Betsy Crowe e/betsycrowe@example.com a/Yishun p/68998899 c/Staff`<br>
 
-### Listing all persons : `list`
+#### Listing all Contacts: `list`
 
 Shows a list of all persons in the address book.
 
 Format: `list`
 
-### Editing a person : `edit`
+#### Editing a Contact: `edit`
 
 Edits an existing person in the address book.
 
@@ -112,7 +129,7 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower c/Customer` Edits the name of the 2nd person to be `Betsy Crower` and category to `Customer`
 
-### Locating persons by name or tag: `find`
+#### Locating Contacts by Name or Category: `find`
 
 Finds persons whose names or category contain any of the given keywords.
 
@@ -132,7 +149,7 @@ Examples:
 * `find colleagues family` returns all persons tagged with `colleagues` or `family`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+#### Deleting a Contact: `delete`
 
 Deletes the specified person from the address book.
 
@@ -146,13 +163,15 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
-### Clearing all entries : `clear`
+#### Clearing all Contacts: `clear`
 
 Clears all entries from the address book.
 
 Format: `clear`
 
-## Adding points to Customer: `updatePoints`
+### Category Specific Commands
+
+#### Adding Points to a Customer Contact: `updatePoints`
 
 Award points for specified customer based of amount spent.
 
@@ -167,7 +186,7 @@ Examples:
 <br>
   ![result for 'updatePoints p/98765432 b/100000.00'](images/updatePointsResult.png)
 
-## Update shift for Staff: `updateShift`
+#### Changing Shift for a Staff Contact: `updateShift`
 
 Update shift for the specified staff.
 
@@ -181,17 +200,17 @@ Examples:
   <br>
   ![result for 'updateShift p/98765412 b/PM'](images/updateShiftResult.png)
 
-### Exiting the program : `exit`
+### Exiting the Program: `exit`
 
 Exits the program.
 
 Format: `exit`
 
-### Saving the data
+### Saving the Data
 
 AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+### Editing the Data File
 
 AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
@@ -202,7 +221,7 @@ If your changes to the data file makes its format invalid, AddressBook will disc
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
-### Archiving data files `[coming in v2.0]`
+### Archiving Data Files `[coming in v2.0]`
 
 _Details coming soon ..._
 
