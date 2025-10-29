@@ -13,7 +13,6 @@ import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Order;
 import seedu.address.model.person.OrderIndex;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Shift;
