@@ -81,7 +81,7 @@ public class AddOrderCommand extends Command {
         // finds person tagged to phone number
         Person foundPerson = null;
         requireNonNull(model);
-        ObservableList<Person> currentList = model.getAddressBook().getPersonList();
+        ObservableList<Person> currentList = model.getFilteredPersonList();
         for (int i = 0; i < currentList.size(); i++) {
             if (currentList.get(i).getPhone().equals(this.supplierPhone)) {
                 foundPerson = currentList.get(i);
