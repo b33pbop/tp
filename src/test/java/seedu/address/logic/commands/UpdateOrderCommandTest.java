@@ -118,7 +118,8 @@ public class UpdateOrderCommandTest {
         Phone supplierPhone = supplier.getPhone();
         UpdateOrderDescriptor emptyDescriptor = new UpdateOrderDescriptor();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, emptyDescriptor);
-        assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_NOT_FOUND);
+        assertCommandFailure(updateOrderCommand, model,
+              UpdateOrderCommand.MESSAGE_EMPTY_LIST);
     }
 
     @Test
@@ -131,7 +132,8 @@ public class UpdateOrderCommandTest {
 
         Phone testPersonPhone = testPerson.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(testPersonPhone, 1, emptyDescriptor);
-        assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_NOT_SUPPLIER);
+        assertCommandFailure(updateOrderCommand, model,
+                String.format(AddOrderCommand.MESSAGE_NOT_SUPPLIER, testPersonPhone));
 
     }
 

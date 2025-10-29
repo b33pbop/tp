@@ -64,7 +64,8 @@ public class AddOrderCommandTest {
 
         AddCommand addCommand = new AddCommand(supplier);
         addCommand.execute(model);
-        assertCommandFailure(addOrderCommand, model, AddOrderCommand.MESSAGE_NOT_SUPPLIER);
+        assertCommandFailure(addOrderCommand, model,
+                String.format(AddOrderCommand.MESSAGE_NOT_SUPPLIER, supplierPhone));
     }
 
     @Test
@@ -84,7 +85,8 @@ public class AddOrderCommandTest {
 
         AddCommand addCommand = new AddCommand(notSupplier);
         addCommand.execute(model);
-        assertCommandFailure(addOrderCommand, model, AddOrderCommand.MESSAGE_NOT_SUPPLIER);
+        assertCommandFailure(addOrderCommand, model,
+                String.format(AddOrderCommand.MESSAGE_NOT_SUPPLIER, supplierPhone));
     }
 
     @Test
