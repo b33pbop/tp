@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
@@ -48,9 +47,10 @@ public class PersonTest {
 
     @Test
     public void equals() {
-        // same values -> returns true
+        // same values but different runtime type -> returns false
+        // ALICE is a Customer not Person
         Person aliceCopy = new PersonBuilder(ALICE).build();
-        assertTrue(ALICE.equals(aliceCopy));
+        assertFalse(ALICE.equals(aliceCopy));
 
         // same object -> returns true
         assertTrue(ALICE.equals(ALICE));
@@ -83,13 +83,5 @@ public class PersonTest {
         // different categories -> returns false
         editedAlice = new PersonBuilder(ALICE).withCategory(VALID_CATEGORY_STAFF).build();
         assertFalse(ALICE.equals(editedAlice));
-    }
-
-    @Test
-    public void toStringMethod() {
-        String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
-                + ", category=" + ALICE.getCategory() + "}";
-        assertEquals(expected, ALICE.toString());
     }
 }

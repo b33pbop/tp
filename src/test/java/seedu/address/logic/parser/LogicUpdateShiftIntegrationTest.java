@@ -49,7 +49,7 @@ public class LogicUpdateShiftIntegrationTest {
         model.addPerson(staff);
 
         // Update the staff's shift
-        String updateInput = "updateshift p/81234567 s/PM";
+        String updateInput = "updateShift p/81234567 s/PM";
         CommandResult updateResult = logic.execute(updateInput);
 
         // Check feedback contains success message
@@ -80,7 +80,7 @@ public class LogicUpdateShiftIntegrationTest {
 
         //  Try updating shift for non-staff, expect CommandException
         //number is default number
-        String updateInput = "updateshift p/85355255 s/PM";
+        String updateInput = "updateShift p/85355255 s/PM";
         try {
             logic.execute(updateInput);
         } catch (CommandException e) {
