@@ -59,6 +59,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (category.getCategoryName().equals("Staff")) {
             Person staff = new Staff(name, phone, email, address, category, new Shift("AM"));
+            assert staff instanceof Person : "Staff needs to be person";
             return new AddCommand(staff);
         }
 
