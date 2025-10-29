@@ -117,7 +117,7 @@ public class PersonCard extends UiPart<Region> {
 
     private void showSupplierFields(Supplier supplier) {
         String orderList = supplier.listOrders();
-        orders.setText("\uD83D\uDCE6 Orders: " + (orderList.isEmpty() ? "None" : orderList));
+        orders.setText("\uD83D\uDCE6 Orders: \n" + (orderList.isEmpty() ? "None" : orderList));
         show(orders);
     }
 
