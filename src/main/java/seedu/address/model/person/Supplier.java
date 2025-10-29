@@ -92,7 +92,7 @@ public class Supplier extends Person {
      */
     public String listOrders() {
         return IntStream.range(0, orders.size())
-                .mapToObj(i -> String.valueOf(i+1)+ ". " + orders.get(i).toString())
+                .mapToObj(i -> String.valueOf(i + 1) + ". " + orders.get(i).toString())
                 .collect(Collectors.joining("\n"));
     }
 
