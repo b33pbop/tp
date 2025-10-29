@@ -60,16 +60,24 @@ public class Person {
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
+        if (otherPerson == this) {
+            return true;
+        }
         if (otherPerson == null) {
             return false;
         }
-
-        if (otherPerson == this || otherPerson.phone.equals(this.phone)) {
-            return true;
-        }
-
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        return otherPerson.getName().equals(getName())
+                || otherPerson.getPhone().equals(getPhone());
+//        if (otherPerson == null) {
+//            return false;
+//        }
+//
+//        if (otherPerson == this || otherPerson.phone.equals(this.phone)) {
+//            return true;
+//        }
+//
+//        return otherPerson != null
+//                && otherPerson.getName().equals(getName());
     }
 
     /**

@@ -11,6 +11,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.testutil.TypicalSuppliers.ALICE;
 import static seedu.address.testutil.TypicalSuppliers.BOB;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.category.Category;
@@ -52,6 +54,32 @@ public class SupplierTest {
         test.addOrder(doesExist);
         assertEquals(true, test.hasOrder(doesExist));
         assertEquals(false, test.hasOrder(doesNotExist));
+    }
+
+    @Test
+    public void getOrders_modifyReturnedList_originalListUnchanged() {
+        // setup supplier and order
+        Phone testPhone = new Phone("82192309");
+        Name testName = new Name("Grace Chan");
+        Email testEmail = new Email("grace01@gmail.com");
+        Address testAddress = new Address("Block 416 Bukit Batok Drive");
+        Category testCat = new Category("Supplier");
+
+        Supplier supplier = new Supplier(testName, testPhone, testEmail, testAddress, testCat);
+        Order testOrder = new Order(new ItemName("Computer"), new ItemQuantity("5"), new ItemUnitPrice("100.00"),
+                new ItemDeliveryDay("every Tuesday"));
+
+        supplier.addOrder(testOrder);
+
+        // get a copy of orders
+        List<Order> retrievedOrders = supplier.getOrders();
+
+        // modify the copy
+        retrievedOrders.clear();
+
+        // assert original list in supplier remains unchanged
+        assertEquals(1, supplier.getOrders().size());
+        assertEquals(testOrder, supplier.getOrders().get(0));
     }
 
     @Test

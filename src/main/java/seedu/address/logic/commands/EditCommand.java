@@ -23,8 +23,12 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Customer;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Shift;
+import seedu.address.model.person.Staff;
+import seedu.address.model.person.Supplier;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -77,7 +81,7 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        if (!personToEdit.equals(editedPerson) && model.hasPersonExcluding(editedPerson, personToEdit)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
@@ -99,21 +103,29 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Category updatedCategory = editPersonDescriptor.getCategory().orElse(personToEdit.getCategory());
 
-        if (personToEdit instanceof Customer) {
-            Customer originalCustomer = (Customer) personToEdit;
-            return editCustomer(originalCustomer, updatedName, updatedPhone, updatedEmail, updatedAddress,
+        if ("Customer".equalsIgnoreCase(updatedCategory.getCategoryName())) {
+            return editToCustomer(personToEdit, updatedName, updatedPhone, updatedEmail, updatedAddress,
+                    updatedCategory);
+        } else if ("Supplier".equalsIgnoreCase(updatedCategory.getCategoryName())) {
+            return editToSupplier(personToEdit, updatedName, updatedPhone, updatedEmail, updatedAddress,
+                    updatedCategory);
+        } else if ("Staff".equalsIgnoreCase(updatedCategory.getCategoryName())) {
+            return editToStaff(personToEdit, updatedName, updatedPhone, updatedEmail, updatedAddress,
                     updatedCategory);
         }
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCategory);
+
+        // logically unreachable, but required for compilation
+        throw new AssertionError("Unexpected category: " + updatedCategory.getCategoryName());
     }
 
-    private static Person editCustomer(Customer originalCustomer,
+    private static Person editToCustomer(Person originalPerson,
                                        Name updatedName,
                                        Phone updatedPhone,
                                        Email updatedEmail,
                                        Address updatedAddress,
                                        Category updatedCategory) {
-        if ("Customer".equalsIgnoreCase(updatedCategory.getCategoryName())) {
+        if (originalPerson instanceof Customer) {
+            Customer originalCustomer = (Customer) originalPerson;
             Customer editedCustomer = new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress,
                     updatedCategory);
             editedCustomer.addPointsFromSpending(originalCustomer.getPoints());
@@ -121,6 +133,44 @@ public class EditCommand extends Command {
         }
 
         return new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCategory);
+    }
+
+    private static Person editToSupplier(Person originalPerson,
+                                         Name updatedName,
+                                         Phone updatedPhone,
+                                         Email updatedEmail,
+                                         Address updatedAddress,
+                                         Category updatedCategory) {
+        if (originalPerson instanceof Supplier) {
+            Supplier originalSupplier = (Supplier) originalPerson;
+            Supplier editedSupplier = new Supplier(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                    updatedCategory);
+            List<Order> originalOrders = originalSupplier.getOrders();
+            for (Order order : originalOrders) {
+                editedSupplier.addOrder(order);
+            }
+            return editedSupplier;
+        }
+
+        return new Supplier(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCategory);
+    }
+
+    private static Person editToStaff(Person originalPerson,
+                                         Name updatedName,
+                                         Phone updatedPhone,
+                                         Email updatedEmail,
+                                         Address updatedAddress,
+                                         Category updatedCategory) {
+        if (originalPerson instanceof Staff) {
+            Staff originalStaff = (Staff) originalPerson;
+            Shift originalShift = originalStaff.getShift();
+
+            Staff editedStaff = new Staff(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                    updatedCategory, originalShift);
+            return editedStaff;
+        }
+
+        return new Staff(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCategory, new Shift("AM"));
     }
 
     @Override
