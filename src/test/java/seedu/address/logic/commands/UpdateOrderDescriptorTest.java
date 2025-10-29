@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.UpdateOrderCommand.createEditedOrder;
@@ -50,5 +51,15 @@ public class UpdateOrderDescriptorTest {
         deliveryDateTest.updateDeliveryDay(new ItemDeliveryDay("every Saturday"));
         Order orderWithEditedDeliveryDate = createEditedOrder(baseOrder, deliveryDateTest);
         assertNotEquals(orderWithEditedDeliveryDate, baseOrder);
+    }
+
+    @Test
+    public void equals() {
+        UpdateOrderDescriptor baseDescriptor = new UpdateOrderDescriptor();
+
+        assertEquals(baseDescriptor, baseDescriptor);
+
+        // another data type
+        assertNotEquals(baseDescriptor, 10);
     }
 }

@@ -164,7 +164,12 @@ public class UpdateOrderCommandTest {
         UpdateOrderCommand toCompare = new UpdateOrderCommand(supplierPhone, 1, baseDescriptor);
         UpdateOrderCommand sameCompare = new UpdateOrderCommand(supplierPhone, 1, baseDescriptor);
 
+        assertEquals(toCompare, toCompare);
         assertEquals(toCompare, sameCompare);
+
+        // another type of command
+        AddCommand addCommand = new AddCommand(supplier);
+        assertNotEquals(addCommand, toCompare);
 
         // different phone number
         Phone anotherPhone = new Phone("91111234");
