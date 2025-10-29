@@ -154,6 +154,16 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+### Adding orders for Suppliers: `addOrder`
+
+Adds an Order to the specified Supplier's list of orders.
+
+Format: `addOrder p/ PHONE_NUMBER o/ ORDER_INDEX i/ ITEM_NAME q/ QUANTITY u/ UNIT_PRICE d/ DELIVERY_DAY`
+
+* Adds an order to the Supplier with the specified `PHONE_NUMBER`
+* All fields of the order must be included
+* Duplicate orders will not be allowed 
+
 ### Exiting the program : `exit`
 
 Exits the program.
