@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class Address {
 
     public static final String INVALID_CHARACTER_MESSAGE_CONSTRAINTS = "Invalid characters found"
-            + " - only letters, apostrophes, hyphens, hashes and spaces are allowed";
+            + " - only letters, apostrophes, commas, hyphens, hashes and spaces are allowed";
 
     public static final String INVALID_ADDRESS_LENGTH_MESSAGE_CONSTRAINTS = "Length of Address does not match criteria"
             + " - Address must be between 2 - 100 characters";

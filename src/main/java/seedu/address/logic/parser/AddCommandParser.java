@@ -13,6 +13,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -52,7 +53,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_CATEGORY);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).map(String::toLowerCase).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Category category = ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get());
 
@@ -61,9 +62,14 @@ public class AddCommandParser implements Parser<AddCommand> {
             return new AddCommand(staff);
         }
 
-        if (category.categoryName.equals("Supplier")) {
+        if (category.getCategoryName().equals("Supplier")) {
             Supplier supplier = new Supplier(name, phone, email, address, category);
             return new AddCommand(supplier);
+        }
+
+        if (category.getCategoryName().equals("Customer")) {
+            Customer customer = new Customer(name, phone, email, address, category);
+            return new AddCommand(customer);
         }
 
         Person person = new Person(name, phone, email, address, category);

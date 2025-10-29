@@ -23,6 +23,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.UpdatePointsCommand;
 import seedu.address.logic.commands.UpdateShiftCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameOrCategoryContainsKeywordsPredicate;
@@ -61,6 +62,14 @@ public class AddressBookParserTest {
         var command = parser.parseCommand("deleteOrder " + args);
         assertTrue(command instanceof DeleteOrderCommand);
     }
+
+    @Test
+    public void parseCommand_updatePoints() throws Exception {
+        String args = "p/91234567 b/200";
+        var command = parser.parseCommand(UpdatePointsCommand.COMMAND_WORD + " " + args);
+        assertTrue(command instanceof UpdatePointsCommand);
+    }
+
 
     @Test
     public void parseCommand_edit() throws Exception {

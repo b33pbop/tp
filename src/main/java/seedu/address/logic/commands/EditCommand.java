@@ -20,6 +20,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -98,7 +99,28 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Category updatedCategory = editPersonDescriptor.getCategory().orElse(personToEdit.getCategory());
 
+        if (personToEdit instanceof Customer) {
+            Customer originalCustomer = (Customer) personToEdit;
+            return editCustomer(originalCustomer, updatedName, updatedPhone, updatedEmail, updatedAddress,
+                    updatedCategory);
+        }
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCategory);
+    }
+
+    private static Person editCustomer(Customer originalCustomer,
+                                       Name updatedName,
+                                       Phone updatedPhone,
+                                       Email updatedEmail,
+                                       Address updatedAddress,
+                                       Category updatedCategory) {
+        if ("Customer".equalsIgnoreCase(updatedCategory.getCategoryName())) {
+            Customer editedCustomer = new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                    updatedCategory);
+            editedCustomer.addPointsFromSpending(originalCustomer.getPoints());
+            return editedCustomer;
+        }
+
+        return new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCategory);
     }
 
     @Override

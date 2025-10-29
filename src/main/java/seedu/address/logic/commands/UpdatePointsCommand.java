@@ -2,8 +2,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BILL_AMOUNT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SHIFT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Optional;
@@ -11,46 +11,44 @@ import java.util.Optional;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Shift;
-import seedu.address.model.person.Staff;
 
 /**
- * Updates the shift of a staff member identified by their phone number.
+ * Updates the spending amount of a customer identified by their phone number.
  */
-public class UpdateShiftCommand extends Command {
+public class UpdatePointsCommand extends Command {
 
-    public static final String COMMAND_WORD = "updateShift";
+    public static final String COMMAND_WORD = "updatePoints";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Updates the shift of a staff member identified by their phone number.\n"
+            + ": Award points to the customer based on the specified amount spent.\n"
             + "Parameters: "
             + PREFIX_PHONE + "PHONE "
-            + PREFIX_SHIFT + "SHIFT\n"
+            + PREFIX_BILL_AMOUNT + "BILL AMOUNT\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_SHIFT + "PM";
+            + PREFIX_BILL_AMOUNT + "50.0";
 
-    public static final String MESSAGE_SUCCESS = "Updated shift for %1$s to %2$s.";
-    public static final String MESSAGE_NOT_A_STAFF = "The person with phone number %1$s is not a staff member.";
+    public static final String MESSAGE_SUCCESS = "Added %2$d points for %1$s.";
+    public static final String MESSAGE_NOT_A_CUSTOMER = "The person with phone number %1$s is not a customer.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "No person found with phone number %1$s.";
     public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
 
     private final Phone phone;
-    private final Shift newShift;
+    private final double amount;
 
     /**
-     * Creates an UpdateShiftCommand to update the shift of the specified staff.
+     * Creates an UpdatePointsCommand to add spending to the specified customer.
      *
-     * @param phone    Phone number identifying the staff.
-     * @param newShift The new shift value.
+     * @param phone  Phone number identifying the customer.
+     * @param billAmount Amount spent to add.
      */
-    public UpdateShiftCommand(Phone phone, Shift newShift) {
-        requireAllNonNull(phone, newShift);
-
+    public UpdatePointsCommand(Phone phone, double billAmount) {
+        requireAllNonNull(phone);
         this.phone = phone;
-        this.newShift = newShift;
+        this.amount = billAmount;
     }
 
     @Override
@@ -62,7 +60,7 @@ public class UpdateShiftCommand extends Command {
             throw new CommandException(MESSAGE_EMPTY_LIST);
         }
 
-        //  Find person by phone number
+        // Find person by phone number
         Optional<Person> matchedPerson = personList.stream()
                 .filter(p -> p.getPhone().equals(phone))
                 .findFirst();
@@ -73,20 +71,22 @@ public class UpdateShiftCommand extends Command {
 
         Person personToUpdate = matchedPerson.get();
 
-        //  Check if person is a Staff
-        if (!(personToUpdate instanceof Staff)) {
-            throw new CommandException(String.format(MESSAGE_NOT_A_STAFF, phone));
+        // Ensure person is a Customer
+        if (!(personToUpdate instanceof Customer)) {
+            throw new CommandException(String.format(MESSAGE_NOT_A_CUSTOMER, phone));
         }
 
-        Staff staffToUpdate = (Staff) personToUpdate;
-        staffToUpdate.setShift(newShift);
+        // Update amount spent
+        Customer customerToUpdate = (Customer) personToUpdate;
+        customerToUpdate.addPointsFromSpending(amount);
+        int pointsAdded = customerToUpdate.calculatePointsFromSpending(amount);
 
-        model.setPerson(personToUpdate, staffToUpdate);
-        //refresh the ui to show updated change
+        // Replace the old person with updated customer in the model
+        model.setPerson(personToUpdate, customerToUpdate);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS,
-                staffToUpdate.getName(), newShift.getValue()));
+                customerToUpdate.getName(), pointsAdded));
     }
 
     @Override
@@ -96,18 +96,17 @@ public class UpdateShiftCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof UpdateShiftCommand)) {
+        if (!(other instanceof UpdatePointsCommand)) {
             return false;
         }
 
-        UpdateShiftCommand otherCommand = (UpdateShiftCommand) other;
+        UpdatePointsCommand otherCommand = (UpdatePointsCommand) other;
         return phone.equals(otherCommand.phone)
-                && newShift.equals(otherCommand.newShift);
+                && Double.compare(amount, otherCommand.amount) == 0;
     }
-
 
     @Override
     public String toString() {
-        return String.format("UpdateShiftCommand{phone=%s, newShift=%s}", phone, newShift);
+        return String.format("UpdatePointsCommand{phone=%s, amount=%.2f}", phone, amount);
     }
 }

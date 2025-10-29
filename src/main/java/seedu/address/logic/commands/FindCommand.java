@@ -18,7 +18,7 @@ public class FindCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names or categories"
         + " contain any of "
         + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-        + "Example: " + COMMAND_WORD + " alice bob friends";
+        + "Example: " + COMMAND_WORD + " alice bob customer";
 
     private final NameOrCategoryContainsKeywordsPredicate predicate;
 
