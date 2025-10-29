@@ -31,7 +31,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 c/Customer` : Adds a customer contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -52,11 +52,8 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* All fields are compulsory.<br>
+  e.g `n/NAME c/Category` can be used as `n/John Doe c/Customer` or as `n/John Doe c/Supplier`, but not `n/John Doe`.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -80,16 +77,18 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/CATEGORY`
+
+* Contact to be added cannot have the same name or phone number as existing contacts
 
 <box type="tip" seamless></box>
 
-**Tip:** A person can have any number of categories (including 0)
+**Tip:** A person can only belong to either of these 3 categories: Customer | Supplier | Staff 
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/Customer` <br>
+* `add n/Betsy Crowe e/betsycrowe@example.com a/Yishun p/68998899 c/Staff`<br>
 
 ### Listing all persons : `list`
 
@@ -101,36 +100,35 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing categories, the existing categories of the person will be removed i.e adding of categories is not cumulative.
-* You can remove all the person’s categories by typing `t/` without
-    specifying any categories after it.
+* Input values for name/phone must not be the same as the name/phone of other existing contacts. 
+* When editing a contact’s category, any fields specific to the previous category will be replaced with those of the new category.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing categories.
+*  `edit 2 n/Betsy Crower c/Customer` Edits the name of the 2nd person to be `Betsy Crower` and category to `Customer`
 
 ### Locating persons by name or tag: `find`
 
-Finds persons whose names or categories contain any of the given keywords.
+Finds persons whose names or category contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Both names and categories are searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Substrings will also be matched e.g. `Cho` will match `Nicholas`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`
-* `find friends` returns all persons tagged with `friends`
+* `find cust` returns all persons with `Customer` category
 * `find colleagues family` returns all persons tagged with `colleagues` or `family`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
@@ -158,7 +156,7 @@ Format: `clear`
 
 Award points for specified customer based of amount spent.
 
-Format: `updatePoints [p/PHONE] [b/BILL_AMOUNT]`
+Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 
 * Can only be performed on Customers.
 * Bill amount can be any positive number with at most 2 decimal points e.g. `50`, `50.15`, `50.1`
@@ -173,10 +171,10 @@ Examples:
 
 Update shift for the specified staff.
 
-Format: `updatePoints [p/PHONE] [s/SHIFT]`
+Format: `updatePoints p/PHONE s/SHIFT`
 
 * Can only be performed on Staff.
-* Shift value is limited to onl `AM` or `PM`.
+* Shift value is limited to only `AM` or `PM`.
 
 Examples:
 * `updateShift p/98765432 b/PM` updates shift to `PM` for `John Doe`
@@ -228,13 +226,13 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer`
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**UpdatePoints**   | `updatePoints [p/PHONE] [b/BILL_AMOUNT]`<br> e.g `updatePoints p/98765432 b/100.00`
-**UpdateShift**   | `updateShift [p/PHONE] [s/SHIFT]`<br> e.g `updatePoints p/98765432 b/PM`
+**UpdatePoints**   | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`
+**UpdateShift**   | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`
 **List**   | `list`
 **Help**   | `help`
 

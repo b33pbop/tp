@@ -21,7 +21,7 @@ import seedu.address.model.person.Staff;
  */
 public class UpdateShiftCommand extends Command {
 
-    public static final String COMMAND_WORD = "updateshift";
+    public static final String COMMAND_WORD = "updateShift";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates the shift of a staff member identified by their phone number.\n"
