@@ -12,7 +12,7 @@ public class Category {
     public static final String MESSAGE_CONSTRAINTS = "Unknown Category (Customer | Supplier | Staff)";
     private static final String[] VALID_VALUES = {"Customer", "Supplier", "Staff"};
 
-    public final String categoryName;
+    private final String categoryName;
 
     /**
      * Constructs a {@code Category}.
