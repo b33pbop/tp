@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 
@@ -151,6 +152,19 @@ public class UpdateOrderCommandTest {
         expectedModel.setPerson(model.getFilteredPersonList().get(0), supplier);
 
         assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
+    }
+
+    @Test
+    public void equals() {
+        UpdateOrderDescriptor baseDescriptor = new UpdateOrderDescriptor();
+        baseDescriptor.updateItem(new ItemName("Item"));
+        Phone supplierPhone = supplier.getPhone();
+
+        UpdateOrderCommand toCompare = new UpdateOrderCommand(supplierPhone, 1, baseDescriptor);
+        UpdateOrderCommand otherCompare = new UpdateOrderCommand(supplierPhone, 1, baseDescriptor);
+
+        assertEquals(toCompare, otherCompare);
+
 
     }
 
