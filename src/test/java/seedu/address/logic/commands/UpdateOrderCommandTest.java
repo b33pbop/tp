@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -145,14 +146,19 @@ public class UpdateOrderCommandTest {
         AddCommand addCommand = new AddCommand(supplier);
         addCommand.execute(model);
 
-        UpdateOrderDescriptor emptyDescriptor = new UpdateOrderDescriptor();
+        UpdateOrderDescriptor changeNameDescriptor = new UpdateOrderDescriptor();
+        changeNameDescriptor.updateItem(new ItemName("Updated"));
+
         Phone supplierPhone = supplier.getPhone();
-        UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 6, emptyDescriptor);
+        UpdateOrderCommand upperLimit = new UpdateOrderCommand(supplierPhone, 6, changeNameDescriptor);
+        UpdateOrderCommand lowerLimit = new UpdateOrderCommand(supplierPhone, 0, changeNameDescriptor);
+        UpdateOrderCommand correctValue = new UpdateOrderCommand(supplierPhone, 1, changeNameDescriptor);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(model.getFilteredPersonList().get(0), supplier);
 
-        assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
+        assertCommandFailure(upperLimit, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
+        assertCommandFailure(lowerLimit, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
+        assertCommandSuccess(correctValue, model, UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -169,7 +175,7 @@ public class UpdateOrderCommandTest {
 
         // another type of command
         AddCommand addCommand = new AddCommand(supplier);
-        assertNotEquals(addCommand, toCompare);
+        assertFalse(addCommand.equals(toCompare));
 
         // different phone number
         Phone anotherPhone = new Phone("91111234");
