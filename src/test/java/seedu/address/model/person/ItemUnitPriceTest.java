@@ -13,7 +13,7 @@ public class ItemUnitPriceTest {
     }
 
     @Test
-    public void constructor_invalidName_throwsIllegalArgumentException() {
+    public void constructor_invalidUnitPrice_throwsIllegalArgumentException() {
         String emptyUnitPrice = "";
         assertThrows(IllegalArgumentException.class, () -> new ItemUnitPrice(emptyUnitPrice));
 

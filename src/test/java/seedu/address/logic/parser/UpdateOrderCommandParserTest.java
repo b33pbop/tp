@@ -23,6 +23,7 @@ import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
+import seedu.address.model.person.OrderIndex;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.SupplierBuilder;
@@ -92,7 +93,9 @@ public class UpdateOrderCommandParserTest {
         updateOrderDescriptor.updateUnitPrice(new ItemUnitPrice("111.11"));
         updateOrderDescriptor.updateDeliveryDay(new ItemDeliveryDay("Today"));
 
-        UpdateOrderCommand expectedCommand = new UpdateOrderCommand(supplierPhone, 1, updateOrderDescriptor);
+        UpdateOrderCommand expectedCommand = new UpdateOrderCommand(supplierPhone,
+                                                                    new OrderIndex("1"),
+                                                                    updateOrderDescriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -114,7 +117,9 @@ public class UpdateOrderCommandParserTest {
         updateOrderDescriptor.updateQuantity(new ItemQuantity("1000"));
         updateOrderDescriptor.updateDeliveryDay(new ItemDeliveryDay("Today"));
 
-        UpdateOrderCommand expectedCommand = new UpdateOrderCommand(supplierPhone, 1, updateOrderDescriptor);
+        UpdateOrderCommand expectedCommand = new UpdateOrderCommand(supplierPhone,
+                                                                    new OrderIndex("1"),
+                                                                    updateOrderDescriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
     }
@@ -133,25 +138,29 @@ public class UpdateOrderCommandParserTest {
         // only item
         UpdateOrderDescriptor onlyItem = new UpdateOrderDescriptor();
         onlyItem.updateItem(new ItemName("Updated"));
-        UpdateOrderCommand updateItemOnly = new UpdateOrderCommand(supplierPhone, 1, onlyItem);
+        UpdateOrderCommand updateItemOnly = new UpdateOrderCommand(supplierPhone, new OrderIndex("1"), onlyItem);
         assertParseSuccess(parser, userInput + "i/ Updated", updateItemOnly);
 
         // only quantity
         UpdateOrderDescriptor onlyQuantity = new UpdateOrderDescriptor();
         onlyQuantity.updateQuantity(new ItemQuantity("20"));
-        UpdateOrderCommand updateQuantityOnly = new UpdateOrderCommand(supplierPhone, 1, onlyQuantity);
+        UpdateOrderCommand updateQuantityOnly = new UpdateOrderCommand(supplierPhone,
+                                                                        new OrderIndex("1"),
+                                                                        onlyQuantity);
         assertParseSuccess(parser, userInput + "q/ 20", updateQuantityOnly);
 
         // only unit price
         UpdateOrderDescriptor onlyUnitPrice = new UpdateOrderDescriptor();
         onlyUnitPrice.updateUnitPrice(new ItemUnitPrice("2.22"));
-        UpdateOrderCommand updateUnitPriceOnly = new UpdateOrderCommand(supplierPhone, 1, onlyUnitPrice);
+        UpdateOrderCommand updateUnitPriceOnly = new UpdateOrderCommand(supplierPhone, new OrderIndex("1"), onlyUnitPrice);
         assertParseSuccess(parser, userInput + "u/ 2.22", updateUnitPriceOnly);
 
         // only delivery day
         UpdateOrderDescriptor onlyDeliveryDay = new UpdateOrderDescriptor();
         onlyDeliveryDay.updateDeliveryDay(new ItemDeliveryDay("Updated"));
-        UpdateOrderCommand updateDeliveryDayOnly = new UpdateOrderCommand(supplierPhone, 1, onlyDeliveryDay);
+        UpdateOrderCommand updateDeliveryDayOnly = new UpdateOrderCommand(supplierPhone,
+                                                                            new OrderIndex("1"),
+                                                                            onlyDeliveryDay);
         assertParseSuccess(parser, userInput + "d/ Updated", updateDeliveryDayOnly);
     }
 

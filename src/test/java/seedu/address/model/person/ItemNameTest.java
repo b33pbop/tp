@@ -14,7 +14,7 @@ public class ItemNameTest {
     }
 
     @Test
-    public void constructor_invalidName_throwsIllegalArgumentException() {
+    public void constructor_invalidItemName_throwsIllegalArgumentException() {
         String emptyItemName = "";
         assertThrows(IllegalArgumentException.class, () -> new ItemName(emptyItemName));
 
