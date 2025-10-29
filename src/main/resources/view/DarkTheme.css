@@ -344,9 +344,24 @@
 
 #category .label {
     -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+.category-customer {
+    -fx-background-color: #3e7b91; /* blue */
+    -fx-text-fill: white;
+}
+
+.category-staff {
+    -fx-background-color: #ff1493; /* pink */
+    -fx-text-fill: white;
+}
+
+.category-supplier {
+    -fx-background-color: #4caf50; /* green */
+    -fx-text-fill: white;
+}
+

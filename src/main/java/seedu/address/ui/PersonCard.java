@@ -63,7 +63,27 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText("\uD83D\uDCDE Phone: " + person.getPhone().value);
-        category.getChildren().add(new Label(person.getCategory().getCategoryName()));
+
+        // Create a label for the category
+        Label categoryLabel = new Label(person.getCategory().getCategoryName());
+
+        // Assign style class based on category
+        switch (person.getCategory().getCategoryName().toLowerCase()) {
+        case "customer":
+            categoryLabel.getStyleClass().add("category-customer");
+            break;
+        case "staff":
+            categoryLabel.getStyleClass().add("category-staff");
+            break;
+        case "supplier":
+            categoryLabel.getStyleClass().add("category-supplier");
+            break;
+        default:
+            categoryLabel.setStyle("-fx-background-color: gray; -fx-text-fill: white;");
+            break;
+        }
+
+        category.getChildren().add(categoryLabel);
 
         // Hide and clear category-specific fields by default
         hideCategorySpecificFields();
