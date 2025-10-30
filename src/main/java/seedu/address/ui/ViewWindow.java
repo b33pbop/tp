@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Customer;
@@ -45,6 +46,8 @@ public class ViewWindow extends UiPart<Stage> {
     @FXML
     private Label supplierOrdersLabel;
 
+    @FXML
+    private GridPane backgroundPane;
     @FXML
     private Label customerPointsLabel;
 
@@ -97,6 +100,15 @@ public class ViewWindow extends UiPart<Stage> {
      * Populate the view window with the given person's details.
      */
     public void setPerson(Person person) {
+        // Set all formatting dynamically (no hardcoding in FXML)
+        backgroundPane.setHgap(10);
+        backgroundPane.setVgap(10);
+        backgroundPane.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
+        backgroundPane.setStyle(
+            backgroundPane.getStyle()
+            + "; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 12, 0.2, 0, 4;"
+            + " border-width: 2; border-color: #ffe066;"
+        );
         hideAllExtraFields();
 
         nameLabel.setText(person.getName().toString());
@@ -129,6 +141,53 @@ public class ViewWindow extends UiPart<Stage> {
             customerPointsLabel.setText("Points: " + points);
             customerTierLabel.setText("Tier: " + tier);
         }
+
+        // Set background color to match tag color for each category
+        String category = person.getCategory().getCategoryName().toLowerCase();
+        String bgColor;
+        String textColor = "#222";
+        switch (category) {
+        case "customer":
+            bgColor = "#3e7b91"; // blue (tag color)
+            textColor = "white";
+            break;
+        case "staff":
+            bgColor = "#ff1493"; // pink (tag color)
+            textColor = "white";
+            break;
+        case "supplier":
+            bgColor = "#4caf50"; // green (tag color)
+            textColor = "white";
+            break;
+        default:
+            bgColor = "#888888"; // neutral gray for any unexpected category
+            textColor = "white";
+            break;
+        }
+        backgroundPane.setStyle(
+            "-fx-background-color: " + bgColor
+            + "; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 12, 0.2, 0, 4); "
+            + "border-width: 2; border-color: #ffe066;"
+            + "; -fx-text-fill: " + textColor + ";"
+        );
+
+        // Standard font size for all labels
+        String labelStyle = "-fx-font-size: 16px; -fx-text-fill: " + textColor + ";";
+        nameLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: " + textColor + ";");
+        phoneLabel.setStyle(labelStyle);
+        emailLabel.setStyle(labelStyle);
+        addressLabel.setStyle(labelStyle);
+        categoryLabel.setStyle(labelStyle);
+        staffShiftLabel.setStyle(labelStyle);
+        staffLeavesLabel.setStyle(labelStyle);
+        supplierOrdersLabel.setStyle(labelStyle);
+        customerPointsLabel.setStyle(labelStyle);
+        customerTierLabel.setStyle(labelStyle);
+
+        // Standardize window size
+        Stage stage = (Stage) backgroundPane.getScene().getWindow();
+        stage.setWidth(400);
+        stage.setHeight(420);
     }
 
     /**

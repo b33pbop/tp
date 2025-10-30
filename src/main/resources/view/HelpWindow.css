@@ -1,8 +1,10 @@
-#copyButton, #helpMessage {
+#helpMessage {
     -fx-text-fill: white;
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 #copyButton {
+    -fx-text-fill: white;
     -fx-background-color: dimgray;
 }
 
@@ -14,6 +16,10 @@
     -fx-background-color: darkgray;
 }
 
-#helpMessageContainer {
+.scroll-pane {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.scroll-pane .viewport {
     -fx-background-color: derive(#1d1d1d, 20%);
 }

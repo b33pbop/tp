@@ -185,12 +185,10 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             if (commandResult.isShowPerson()) {
-                if (!viewWindow.isShowing()) {
-                    viewWindow.setPerson(commandResult.getPersonToShow());
-                    viewWindow.show();
-                } else {
-                    viewWindow.focus();
-                }
+                // Allow multiple view windows (post-it style)
+                ViewWindow newViewWindow = new ViewWindow();
+                newViewWindow.setPerson(commandResult.getPersonToShow());
+                newViewWindow.show();
             }
 
             if (commandResult.isExit()) {

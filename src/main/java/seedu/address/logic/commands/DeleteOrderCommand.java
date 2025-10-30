@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 
 /**
@@ -15,7 +16,7 @@ import seedu.address.model.person.Supplier;
 public class DeleteOrderCommand extends Command {
     public static final String COMMAND_WORD = "deleteOrder";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes an order from the supplier's order list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes an order from the supplier's order list.\n"
         + "Parameters: "
         + PREFIX_PHONE + "PHONE "
         + seedu.address.logic.parser.CliSyntax.PREFIX_ORDERNUM + "ORDER_INDEX\n"
@@ -28,7 +29,7 @@ public class DeleteOrderCommand extends Command {
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
     public static final String MESSAGE_INVALID_ORDER_INDEX = "Invalid order index for this supplier.";
 
-    private final int supplierPhone;
+    private final Phone supplierPhone;
     private final int orderIndex;
 
     /**
@@ -36,7 +37,7 @@ public class DeleteOrderCommand extends Command {
      * @param supplierPhone The phone number of the specified supplier
      * @param orderIndex The index (1-based) of the order to delete
      */
-    public DeleteOrderCommand(int supplierPhone, int orderIndex) {
+    public DeleteOrderCommand(Phone supplierPhone, int orderIndex) {
         this.supplierPhone = supplierPhone;
         this.orderIndex = orderIndex;
     }
@@ -47,7 +48,7 @@ public class DeleteOrderCommand extends Command {
         Person foundPerson = null;
         ObservableList<Person> currentList = model.getAddressBook().getPersonList();
         for (int i = 0; i < currentList.size(); i++) {
-            if (Integer.parseInt(currentList.get(i).getPhone().toString()) == this.supplierPhone) {
+            if (currentList.get(i).getPhone().equals(this.supplierPhone)) {
                 foundPerson = currentList.get(i);
                 break;
             }
@@ -62,7 +63,7 @@ public class DeleteOrderCommand extends Command {
         if (orderIndex < 1 || orderIndex > foundSupplier.getOrders().size()) {
             throw new CommandException(MESSAGE_INVALID_ORDER_INDEX);
         }
-        foundSupplier.getOrders().remove(orderIndex - 1);
+        foundSupplier.removeOrder(orderIndex);
         model.setPerson(foundPerson, foundSupplier);
         return new CommandResult(MESSAGE_SUCCESS);
     }
@@ -76,6 +77,6 @@ public class DeleteOrderCommand extends Command {
             return false;
         }
         DeleteOrderCommand otherCommand = (DeleteOrderCommand) other;
-        return supplierPhone == otherCommand.supplierPhone && orderIndex == otherCommand.orderIndex;
+        return supplierPhone.equals(otherCommand.supplierPhone) && orderIndex == otherCommand.orderIndex;
     }
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.DeleteOrderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Phone;
 
 public class DeleteOrderCommandParserTest {
     private final DeleteOrderCommandParser parser = new DeleteOrderCommandParser();
@@ -14,7 +15,7 @@ public class DeleteOrderCommandParserTest {
     @Test
     public void parse_validArgs_returnsDeleteOrderCommand() throws Exception {
         DeleteOrderCommand command = parser.parse(" p/91234567 o/1");
-        assertEquals(new DeleteOrderCommand(91234567, 1), command);
+        assertEquals(new DeleteOrderCommand(new Phone("91234567"), 1), command);
     }
 
     @Test

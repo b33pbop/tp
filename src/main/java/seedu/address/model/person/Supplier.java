@@ -93,6 +93,14 @@ public class Supplier extends Person {
     }
 
     /**
+     * Removes an order from the supplier's order list.
+     * @param index The 1-based index of the order to remove
+     */
+    public void removeOrder(int index) {
+        this.orders.remove(index - 1);
+    }
+
+    /**
      * Checks whether the specified order exists in the list
      * @param toCheck The order to be checked
      * @return A boolean value indicating whether the order is in the list

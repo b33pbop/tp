@@ -71,6 +71,10 @@ public class UiManager implements Ui {
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
         alert.getDialogPane().setId(ALERT_DIALOG_PANE_FIELD_ID);
+        // Make the content label taller so one more line is visible
+        alert.getDialogPane().lookupAll(".content.label").forEach(node -> {
+            node.setStyle("-fx-min-height: 160px; -fx-pref-height: 160px; -fx-font-size: 15px; -fx-wrap-text: true;");
+        });
         alert.showAndWait();
     }
 

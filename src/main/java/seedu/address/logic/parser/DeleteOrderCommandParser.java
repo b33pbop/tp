@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import seedu.address.logic.commands.DeleteOrderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.OrderIndex;
+import seedu.address.model.person.Phone;
 
 /**
  * Parses input arguments and creates a new DeleteOrderCommand object
@@ -20,21 +22,9 @@ public class DeleteOrderCommandParser implements Parser<DeleteOrderCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteOrderCommand.MESSAGE_USAGE));
         }
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PHONE, PREFIX_ORDERNUM);
-        int supplierPhone;
-        int orderIndex;
-        try {
-            supplierPhone = Integer.parseInt(argMultimap.getValue(PREFIX_PHONE).get());
-        } catch (NumberFormatException e) {
-            throw new ParseException("Phone number must be numeric.");
-        }
-        try {
-            orderIndex = Integer.parseInt(argMultimap.getValue(PREFIX_ORDERNUM).get());
-        } catch (NumberFormatException e) {
-            throw new ParseException("Order index must be a valid integer.");
-        }
-        if (orderIndex < 1) {
-            throw new ParseException("Order index must be a positive integer.");
-        }
+        Phone supplierPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
+        OrderIndex orderIndexParsed = ParserUtil.parseOrderIndex(argMultimap.getValue(PREFIX_ORDERNUM).get());
+        int orderIndex = Integer.parseInt(orderIndexParsed.toString());
         return new DeleteOrderCommand(supplierPhone, orderIndex);
     }
 

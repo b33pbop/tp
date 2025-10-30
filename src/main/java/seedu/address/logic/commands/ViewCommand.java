@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import java.util.Optional;
 
@@ -18,7 +19,8 @@ public class ViewCommand extends Command {
     public static final String COMMAND_WORD = "view";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Views a person's details by phone number.\n"
-        + "Example: " + COMMAND_WORD + " p/91234567";
+        + "Parameters: " + PREFIX_PHONE + "PHONE\n"
+        + "Example: " + COMMAND_WORD + " " + PREFIX_PHONE + "91234567";
 
     private final Phone targetPhone;
 

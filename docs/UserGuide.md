@@ -380,7 +380,9 @@ _Details coming soon ..._
 | **List**          | General      | `list`                                                                                                                                                |
 | **Edit**          | General      | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                               |
 | **Find**          | General      | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                            |
+| **View**          | General      | `view p/PHONE`<br> e.g., `view p/91234567`                                                                                                            |
 | **Delete**        | General      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                   |
+| **Clear**         | General      | `clear`                                                                                                                                               |
 | **Exit**          | General      | `exit`                                                                                                                                                |
 | **Update Points** | Customer     | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                       |
 | **Update Shift**  | Staff        | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                   |
