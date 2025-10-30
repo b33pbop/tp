@@ -13,6 +13,7 @@ import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OrderIndex;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Shift;
 
@@ -50,6 +51,22 @@ public class ParserUtil {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static OrderIndex parseOrderIndex(String orderIndex) throws ParseException {
+        requireNonNull(orderIndex);
+        // Remove additional whitespace between parts of the name
+        String trimmedOrderIndex = orderIndex.trim().replaceAll("\\s+", " ");
+        if (!OrderIndex.isValidOrderIndex(trimmedOrderIndex)) {
+            throw new ParseException(OrderIndex.MESSAGE_CONSTRAINTS);
+        }
+        return new OrderIndex(trimmedOrderIndex);
     }
 
     /**
