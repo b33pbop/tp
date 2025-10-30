@@ -297,7 +297,6 @@ Example:
 * `deleteOrder p/91234567 o/1`
 * The above command will delete the first order in John Doe's order list
 
-
 </box>
 
 ### Miscellaneous
