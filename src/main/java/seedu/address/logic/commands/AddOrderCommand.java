@@ -41,9 +41,10 @@ public class AddOrderCommand extends Command {
             + PREFIX_UNITPRICE + "$0.60 "
             + PREFIX_DELIVERYDAY + "every Thursday\n";
     public static final String MESSAGE_SUCCESS = "Order added successfully";
-    public static final String MESSAGE_NOT_FOUND = "Entry with that phone number cannot be found.";
-    public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
-    public static final String MESSAGE_DUPLICATE_ORDER = "Order already exists in the list, please try again";
+    public static final String MESSAGE_NOT_FOUND = "No person found with phone number %1$s.";
+    public static final String MESSAGE_NOT_SUPPLIER = "The person with phone number %1$s is not a supplier.";
+    public static final String MESSAGE_DUPLICATE_ORDER = "Order already exists in the list.";
+    public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
 
     // Instance variables
     private final Phone supplierPhone;
@@ -91,10 +92,10 @@ public class AddOrderCommand extends Command {
 
         // checks if it's a supplier and if it is a supplier
         if (foundPerson == null) {
-            throw new CommandException(MESSAGE_NOT_FOUND);
+            throw new CommandException(String.format(MESSAGE_NOT_FOUND, supplierPhone));
         }
         if (!foundPerson.getCategory().toString().equals("[Supplier]")) {
-            throw new CommandException(MESSAGE_NOT_SUPPLIER);
+            throw new CommandException(String.format(MESSAGE_NOT_SUPPLIER, supplierPhone));
         }
         // creates the new order (no parameters can be missing)
         Order newOrder = new Order(this.newOrderItem,
