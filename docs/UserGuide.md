@@ -246,6 +246,7 @@ Examples:
 * `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`
 * The above command creates an order in John Doe's order list.
 * The order indicates an order of 20 Chicken, at the unit price of $5.60, to be delivered every Tuesday.
+![result for 'addOrder p/91234567 i/Chicken q/20 u/9.80 d/every Tuesday'](images/addOrderResult.png)
 
 #### **Updating Order from a Supplier: `updateOrder`**
 
@@ -267,11 +268,13 @@ Example:
 * Assuming that the below order is added into John Doe's order list, and it is the only order in the list:
     * Item Name - Chicken
     * Quantity - 20
-    * Unit Price - 5.60
+    * Unit Price - 9.80
     * Delivery Day - every Tuesday
 
-* `updateOrder p/91234567 o/1 i/Fish`
+* `updateOrder p/91234567 o/1 q/100`
 * The above command will edit the first order in John Doe's order list, such that the item name is changed to `Fish`.
+  
+![result for 'updateOrder p/91234567 o/1 q/100'](images/updateOrderResult.png)
 
 #### **Deleting Order from a Supplier: `deleteOrder`**
 
@@ -293,7 +296,6 @@ Example:
 
 * `deleteOrder p/91234567 o/1`
 * The above command will delete the first order in John Doe's order list
-
 
 </box>
 
