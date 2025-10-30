@@ -17,7 +17,7 @@ public class SampleDataUtilTest {
         for (Person p : people) {
             // assuming Person#getCategories() returns a
             // Set<Category> and Category#categoryName is accessible or via toString()
-            String categoryName = p.getCategory().categoryName;
+            String categoryName = p.getCategory().getCategoryName();
             assertTrue(
                     categoryName.equals("Customer") || categoryName.equals("Supplier") || categoryName.equals("Staff"),
                     "unexpected category " + categoryName

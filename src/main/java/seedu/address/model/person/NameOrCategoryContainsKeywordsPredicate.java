@@ -18,7 +18,7 @@ public class NameOrCategoryContainsKeywordsPredicate implements Predicate<Person
     @Override
     public boolean test(Person person) {
         String nameLower = person.getName().fullName.toLowerCase();
-        String categoryLower = person.getCategory().categoryName.toLowerCase();
+        String categoryLower = person.getCategory().getCategoryName().toLowerCase();
 
         return keywords.stream()
                 .map(String::toLowerCase)

@@ -100,7 +100,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/CATEGORY`
 
 <box type="tip" seamless></box>
 
-**Tip:** A person can only belong to one of these 3 categories: `Customer` / `Supplier` / `Staff`.
+**Tip:** A person can only belong to either of these 3 categories: Customer | Supplier | Staff
 </box>
 
 Examples:
@@ -122,7 +122,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* Input values for name/phone must not be the same as the name/phone of other existing contacts. 
+* Input values for name/phone must not be the same as the name/phone of other existing contacts.
 * When editing a contact’s category, any fields specific to the previous category will be replaced with those of the new category.
 
 Examples:
@@ -178,7 +178,7 @@ Format: `addOrder p/PHONE_NUMBER i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_
 Examples:
 
 Assuming that the Supplier `John Doe` has the phone number `91234567`
-* `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday` 
+* `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`
 * The above command creates an order in John Doe's order list.
 * The order indicates an order of 20 Chicken, at the unit price of $5.60, to be delivered every Tuesday.
 
@@ -204,7 +204,7 @@ Example:
     * Unit Price - 5.60
     * Delivery Day - every Tuesday
 
-* `updateOrder p/91234567 o/1 i/Fish` 
+* `updateOrder p/91234567 o/1 i/Fish`
 * The above command will edit the first order in John Doe's order list, such that the item name is changed to `Fish`.
 
 ## Clearing all entries : `clear`

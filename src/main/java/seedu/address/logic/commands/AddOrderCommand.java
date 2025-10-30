@@ -82,7 +82,7 @@ public class AddOrderCommand extends Command {
         // finds person tagged to phone number
         Person foundPerson = null;
         requireNonNull(model);
-        ObservableList<Person> currentList = model.getAddressBook().getPersonList();
+        ObservableList<Person> currentList = model.getFilteredPersonList();
 
         if (currentList.isEmpty()) {
             throw new CommandException(MESSAGE_EMPTY_LIST);
