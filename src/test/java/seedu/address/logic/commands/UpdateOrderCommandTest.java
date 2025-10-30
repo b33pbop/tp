@@ -202,7 +202,7 @@ public class UpdateOrderCommandTest {
                 ALICE.getAddress(), ALICE.getCategory());
         model.addPerson(person);
 
-        UpdateOrderCommand command = new UpdateOrderCommand(phone, 1, baseDescriptor );
+        UpdateOrderCommand command = new UpdateOrderCommand(phone, 1, baseDescriptor);
 
         Exception exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(String.format(UpdateOrderCommand.MESSAGE_NOT_FOUND, phone), exception.getMessage());

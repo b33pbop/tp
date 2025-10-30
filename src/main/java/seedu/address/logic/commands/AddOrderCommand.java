@@ -83,6 +83,11 @@ public class AddOrderCommand extends Command {
         Person foundPerson = null;
         requireNonNull(model);
         ObservableList<Person> currentList = model.getFilteredPersonList();
+
+        if (currentList.isEmpty()) {
+            throw new CommandException(MESSAGE_EMPTY_LIST);
+        }
+
         for (int i = 0; i < currentList.size(); i++) {
             if (currentList.get(i).getPhone().equals(this.supplierPhone)) {
                 foundPerson = currentList.get(i);
