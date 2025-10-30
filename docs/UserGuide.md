@@ -44,20 +44,6 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 --------------------------------------------------------------------------------------------------------------------
 
 ## Features
-* [Help: `help`](#help)
-* [Adding a person: `add`](#add)
-* [Listing all persons: `list`](#list)
-* [Editing a person: `edit`](#edit)
-* [Locating persons by name or tag: `find`](#find)
-* [Deleting a person: `delete`](#delete)
-* [Add Order for Supplier: `addOrder`](#addOrder)
-* [Update Order for Supplier: `updateOrder`](#updateOrder)
-* [Add Points to Customer: `updatePoints`](#updatePoints)
-* [Update Shift for Staff: `updateShift`](#updateShift)
-* [Clearing all entries: `clear`](#clear)
-* [Exiting the progam: `exit`](#exit)
-* [Saving the data](#savingData)
-* [Editing the data file](#editData)
 
 <box type="info" seamless></box>
 
@@ -87,7 +73,7 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### <a name="add"> Adding a person: `add`</a>
+### Adding a person: `add`
 
 Adds a person to the address book.
 
@@ -104,13 +90,13 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/Customer` <br>
 * `add n/Betsy Crowe e/betsycrowe@example.com a/Yishun p/68998899 c/Staff`<br>
 
-### <a name="list"> Listing all persons : `list` </a>
+### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
 
 Format: `list`
 
-### <a name="edit"> Editing a person : `edit` </a>
+### Editing a person : `edit`
 
 Edits an existing person in the address book.
 
@@ -126,7 +112,7 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower c/Customer` Edits the name of the 2nd person to be `Betsy Crower` and category to `Customer`
 
-### <a name="find"> Locating persons by name or tag: `find` </a >
+### Locating persons by name or tag: `find`
 
 Finds persons whose names or category contain any of the given keywords.
 
@@ -146,7 +132,7 @@ Examples:
 * `find colleagues family` returns all persons tagged with `colleagues` or `family`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### <a name="delete"> Deleting a person : `delete` </a>
+### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
 
@@ -161,7 +147,7 @@ Examples:
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 
-### <a name="addOrder"> Add Order for Supplier: `addOrder` </a>
+### Add Order for Supplier: `addOrder`
 
 Adds an Order to the specified Supplier's list of orders.
 
@@ -182,7 +168,7 @@ Assuming that the Supplier `Supplier` has the phone number `91234567`
 
 ![result for 'addOrder p/91234567 i/Chicken q/20 u/9.80 d/every Tuesday'](images/addOrderResult.png)
 
-### <a name="updateOrder"> Update Order for Supplier: `updateOrder` </a>
+### Update Order for Supplier: `updateOrder`
 
 Updates a specified order in a Supplier's order list.
 
@@ -209,7 +195,7 @@ Example:
   
 ![result for 'updateOrder p/91234567 o/1 q/100'](images/updateOrderResult.png)
 
-### <a name="updatePoints"> Adding points to Customer: `updatePoints` </a>
+### Adding points to Customer: `updatePoints`
 
 Award points for specified customer based of amount spent.
 
@@ -224,7 +210,7 @@ Examples:
 <br>
   ![result for 'updatePoints p/98765432 b/100000.00'](images/updatePointsResult.png)
 
-### <a name="updateShift"> Update shift for Staff: `updateShift` </a>
+### Update shift for Staff: `updateShift`
 
 Update shift for the specified staff.
 
@@ -238,23 +224,23 @@ Examples:
   <br>
   ![result for 'updateShift p/98765412 b/PM'](images/updateShiftResult.png)
 
-### <a name="clear"> Clearing all entries : `clear` </a>
+### Clearing all entries : `clear`
 
 Clears all entries from the address book.
 
 Format: `clear`
 
-### <a name="exit"> Exiting the program : `exit` </a>
+### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
-### <a name="savingData"> Saving the data </a>
+### Saving the data
 
 AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### <a name="editData"> Editing the data file </a>
+### Editing the data file
 
 AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
