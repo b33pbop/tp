@@ -288,22 +288,23 @@ Tech-savvy ghost kitchen managers who:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                       | I want to …​                                         | So that I can…​                                                        |
-|----------|-----------------------------------------------|------------------------------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                      | see usage instructions                               | refer to instructions when I forget how to use the App                 |
-| `* * *`  | manager                                       | add a new contact                                    |                                                                        |
-| `* * *`  | manager                                       | delete a contact                                     | remove entries that I no longer need                                   |
-| `* * *`  | manager                                       | find a contact by name                               | locate details of persons without having to go through the entire list |
-| `* * *`  | manager                                       | edit a contact                                       | update changed phone numbers, emails or addresses                      |
-| `* * *`  | manager                                       | categorise a contact (Supplier, Staff, Customer)     | filter contacts by groups                                              |
-| `* *`    | manager                                       | archive contacts                                     | keep my contact clean and remove inactive contacts                     |
-| `* *`    | manager                                       | unarchive contacts                                   | restore contacts so they will not be lost                              |
-| `* *`    | manager                                       | mark a staff contact as inactive (e.g., on leave)    | I don’t accidentally assign tasks to them.                             |
-| `*`      | manager                                       | record staff shifts with their contacts              | reach out to the right staff on duty                                   |
-| `* `     | manager                                       | attach notes to a contact                            | remember context like “delivers only on weekends”                      |
-| `*`      | manager                                       | search for staff by their shift timings              | See all at once the staff that should be on duty                       |
-| `*`      | manager with many persons in the address book | sort persons by name                                 | locate a person easily                                                 |
-| `*`      | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
+| Priority | As a …​                                       | I want to …​                                          | So that I can…​                                                        |
+|---------|-----------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
+| `* * *` | new user                                      | see usage instructions                                | refer to instructions when I forget how to use the App                 |
+| `* * *` | manager                                       | add a new contact                                     |                                                                        |
+| `* * *` | manager                                       | delete a contact                                      | remove entries that I no longer need                                   |
+| `* * *` | manager                                       | find a contact by name                                | locate details of persons without having to go through the entire list |
+| `* * `  | manager                                       | edit a contact                                        | update changed phone numbers, emails or addresses                      |
+| `* * `  | manager                                       | categorise a contact (Supplier, Staff, Customer)      | filter contacts by groups                                              |
+| `* `    | manager                                       | add orders for Suppliers                              | keep track of delivery from specific suppliers.                        |
+| `* `    | manager                                       | update orders for Suppliers                           | update changed quantity, unit price, etc                               |
+| `* `    | manager                                       | delete orders from specific suppliers                 | remove entries indicating completed or cancelled deliveries            |
+| `* `    | manager                                       | mark a staff contact as inactive (e.g., on leave)     | I don’t accidentally assign tasks to them.                             |
+| `*`     | manager                                       | record staff shifts with their contacts               | reach out to the right staff on duty                                   |
+| `* `    | manager                                       | attach notes to a contact                             | remember context like “delivers only on weekends”                      |
+| `*`     | manager                                       | search for staff by their shift timings               | See all at once the staff that should be on duty                       |
+| `*`     | manager with many persons in the address book | sort persons by name                                  | locate a person easily                                                 |
+| `*`     | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
 
 *{More to be added}*
 
@@ -357,51 +358,48 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. System informs Manager and offers to **Add new contact (U1)**
     * Use case ends.
 
-**U3. Link related contacts**
+**U3. Adding Orders to Supplier**
 
 **Actor: Manager**
 
 **MSS**
 
-1. Manager selects contact
-2. Manager initiates **Link Contact**
-3. System prompts for another contact to link and relationship type.
-4. Manager provides information
-5. System records the relationship
+1. Manager selects contact.
+2. Manager initiates **Add Order**.
+3. Manager keys in order details, such as Item Name, Quantity, Unit Price and Delivery Day.
+4. System adds order into the specified supplier's list of orders.
 
    Use case ends.
 
 **Extensions**
 
-* 3a. Target contact not found
-    * 3a1. System informs manager and offers to **Add new contact (U2)**
-    * Use case resumes at step 3
-* 5a. Relationship already exists
-    * 5a1. System notifies Manager, no duplicate link created
+* 1a. Target contact found is not a Supplier
+    * 1a1. System informs manager that contact found is not a Supplier.
+    * Use case ends.
+* 3a. Order with identical values already exists
+    * 3a1. System informs manager of the duplicate order, duplicate order is not created.
     * Use case ends.
 
-**U4. Archive a contact**
+**U4. Updating Order for Supplier**
 
 **Actor: Manager**
 
 **MSS**
 
-1. Manager selects contact
-2. Manager initiates **Archive Contact**
-3. System prompts Manager to confirm the action
-4. Manager confirms
-5. System marks contact as archived and removes it from active lists.
+1. Manager selects contact and order to be updated.
+2. Manager initiates **Update Order**
+3. Manager keys in the information to be updated for the order, such as Item Quantity, Item Name, etc
+4. System updates the corresponding order in the specified supplier's order list.
 
    Use case ends.
 
 **Extensions**
 
-* 3a. Contact has active relationships
-    * 3a1. System informs manager and lists linked contacts.
-    * 3a2. Manager may cancel or proceed.
-    * Use case resumes at step 3 or ends.
-* 5a. Manager chooses to restore contact.
-    * 5a1. System un-archives and returns contact to active list.
+* 1a. Target contact not found
+    * 1a1. System informs manager that no contact with the matching phone number was found.
+    * Use case ends.
+* 3a. Order with identical values already exists
+    * 3a1. System informs manager of the duplicate order, duplicate order is not created.
     * Use case ends.
 
 **U5. View contacts by category**
@@ -425,7 +423,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 4a. Too many contacts to display.
     * 5a1. System requests further filter input.
     * Use case ends.
-
 
 
 ### Non-Functional Requirements
