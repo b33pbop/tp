@@ -71,7 +71,7 @@ public class Supplier extends Person {
     }
 
     /**
-     * Returns a string content the orders placed under supplier
+     * Returns a string content the orders placed under supplier in numbered list format
      * @return String of orders in list
      */
     public String listOrders() {
