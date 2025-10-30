@@ -163,7 +163,51 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
-#### Clearing all Contacts: `clear`
+### Add Order for Supplier: `addOrder`
+
+Adds an Order to the specified Supplier's list of orders.
+
+Format: `addOrder p/PHONE_NUMBER i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`
+
+* Supplier is specified through their `PHONE_NUMBER`
+* `ITEM_NAME` and `DELIVERY_DAY` can only be filled with alphanumeric characters.
+* `QUANTITY` can only be positive numerical values that are above 0.
+* `UNIT PRICE` can only be positive numerical values, that are up to 2 decimal places.
+* Duplicate orders will not be added into the supplier's list of orders.
+
+Examples:
+
+Assuming that the Supplier `John Doe` has the phone number `91234567`
+* `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday` 
+* The above command creates an order in John Doe's order list.
+* The order indicates an order of 20 Chicken, at the unit price of $5.60, to be delivered every Tuesday.
+
+### Update Order for Supplier: `updateOrder`
+
+Updates a specified order in a Supplier's order list.
+
+Format: `updateOrder p/PHONE_NUMBER o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`
+
+* Edits the order found in the specified Supplier's order list.
+* Order is found at the specified `ORDER_INDEX`.
+* At least one of the optional fields must be provided.
+* * `ITEM_NAME` and `DELIVERY_DAY` can only be filled with alphanumeric characters.
+* `QUANTITY` can only be positive numerical values that are above 0.
+* `UNIT PRICE` can only be positive numerical values, that are up to 2 decimal places.
+* In the event of duplicate orders upon updating, the command will not be executed.
+
+Example:
+* Assuming that the Supplier `John Doe` has the phone number `91234567`
+* Assuming that the below order is added into John Doe's order list, and it is the only order in the list
+    * Item Name - Chicken
+    * Quantity - 20
+    * Unit Price - 5.60
+    * Delivery Day - every Tuesday
+
+* `updateOrder p/91234567 o/1 i/Fish` 
+* The above command will edit the first order in John Doe's order list, such that the item name is changed to `Fish`.
+
+## Clearing all entries : `clear`
 
 Clears all entries from the address book.
 

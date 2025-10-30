@@ -114,4 +114,36 @@ public class NameOrCategoryContainsKeywordsPredicateTest {
                 + "{keywords=" + keywords + "}";
         assertEquals(expected, predicate.toString());
     }
+
+    @Test
+    public void test_nameContainsSubstring_returnsTrue() {
+        NameOrCategoryContainsKeywordsPredicate predicate =
+                new NameOrCategoryContainsKeywordsPredicate(List.of("cho"));
+        Person person = new PersonBuilder().withName("Nicholas Tan").withCategory("Customer").build();
+        assertTrue(predicate.test(person));
+    }
+
+    @Test
+    public void test_categoryContainsSubstring_returnsTrue() {
+        NameOrCategoryContainsKeywordsPredicate predicate =
+                new NameOrCategoryContainsKeywordsPredicate(List.of("cust"));
+        Person person = new PersonBuilder().withName("Nicholas Tan").withCategory("Customer").build();
+        assertTrue(predicate.test(person));
+    }
+
+    @Test
+    public void test_caseInsensitiveMatch_returnsTrue() {
+        NameOrCategoryContainsKeywordsPredicate predicate =
+                new NameOrCategoryContainsKeywordsPredicate(List.of("NICH"));
+        Person person = new PersonBuilder().withName("Nicholas Tan").withCategory("Customer").build();
+        assertTrue(predicate.test(person));
+    }
+
+    @Test
+    public void test_noMatch_returnsFalse() {
+        NameOrCategoryContainsKeywordsPredicate predicate =
+                new NameOrCategoryContainsKeywordsPredicate(List.of("zzz"));
+        Person person = new PersonBuilder().withName("Nicholas").withCategory("Customer").build();
+        assertFalse(predicate.test(person));
+    }
 }
