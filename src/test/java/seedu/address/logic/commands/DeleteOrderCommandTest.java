@@ -19,13 +19,14 @@ import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 
 public class DeleteOrderCommandTest {
     @Test
     public void execute_supplierNotFound_throwsCommandException() {
         Model model = new ModelManager();
-        DeleteOrderCommand cmd = new DeleteOrderCommand(99999999, 1);
+        DeleteOrderCommand cmd = new DeleteOrderCommand(new Phone("99999999"), 1);
         CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
         assertEquals(MESSAGE_NOT_FOUND, ex.getMessage());
     }
@@ -41,7 +42,7 @@ public class DeleteOrderCommandTest {
             new seedu.address.model.category.Category("Staff")
         );
         model.addPerson(person);
-        DeleteOrderCommand cmd = new DeleteOrderCommand(91234567, 1);
+        DeleteOrderCommand cmd = new DeleteOrderCommand(new Phone("91234567"), 1);
         CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
         assertEquals(MESSAGE_NOT_SUPPLIER, ex.getMessage());
     }
@@ -59,16 +60,16 @@ public class DeleteOrderCommandTest {
         supplier.getOrders().add(new Order(new ItemName("Pens"), new ItemQuantity("100"),
                 new ItemUnitPrice("0.90"), new ItemDeliveryDay("Tuesday")));
         model.addPerson(supplier);
-        DeleteOrderCommand cmd = new DeleteOrderCommand(91234567, 2); // Only 1 order
+        DeleteOrderCommand cmd = new DeleteOrderCommand(new Phone("91234567"), 2); // Only 1 order
         CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
         assertEquals(MESSAGE_INVALID_ORDER_INDEX, ex.getMessage());
     }
 
     @Test
     public void equals_variousCases() {
-        DeleteOrderCommand cmd1 = new DeleteOrderCommand(91234567, 1);
-        DeleteOrderCommand cmd2 = new DeleteOrderCommand(91234567, 1);
-        DeleteOrderCommand cmd3 = new DeleteOrderCommand(81234567, 1);
+        DeleteOrderCommand cmd1 = new DeleteOrderCommand(new Phone("91234567"), 1);
+        DeleteOrderCommand cmd2 = new DeleteOrderCommand(new Phone("91234567"), 1);
+        DeleteOrderCommand cmd3 = new DeleteOrderCommand(new Phone("81234567"), 1);
         assertTrue(cmd1.equals(cmd1)); // same object
         assertTrue(cmd1.equals(cmd2)); // same values
         assertFalse(cmd1.equals(cmd3)); // different phone
