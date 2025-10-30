@@ -20,6 +20,7 @@ import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
+import seedu.address.model.person.OrderIndex;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
@@ -50,14 +51,17 @@ public class UpdateOrderCommand extends Command {
         + PREFIX_DELIVERYDAY + "every Tuesday";
 
     public final Phone supplierPhone;
-    public final int orderIndex;
+    public final OrderIndex orderIndex;
     public final UpdateOrderDescriptor descriptor;
 
 
     /**
-     * @param orderIndex of the order in the supplier's list to edit
+     * Creates an UpdateOrderCommand object
+     * @param supplierPhone The phone number of the specified supplier
+     * @param orderIndex The index of the order specified
+     * @param descriptor The object holding information regarding the changes
      */
-    public UpdateOrderCommand(Phone supplierPhone, int orderIndex, UpdateOrderDescriptor descriptor) {
+    public UpdateOrderCommand(Phone supplierPhone, OrderIndex orderIndex, UpdateOrderDescriptor descriptor) {
         requireNonNull(descriptor);
 
         this.supplierPhone = supplierPhone;
@@ -91,17 +95,18 @@ public class UpdateOrderCommand extends Command {
         }
 
         Supplier supplier = (Supplier) person;
+        int orderIndex = Integer.parseInt(this.orderIndex.toString());
 
-        if (!(this.orderIndex > 0 && this.orderIndex <= supplier.getSize())) {
+        if (!(orderIndex > 0 && orderIndex <= supplier.getSize())) {
             throw new CommandException(MESSAGE_OUT_OF_BOUNDS);
         }
 
-        Order newOrder = createEditedOrder(supplier.getOrder(this.orderIndex), this.descriptor);
+        Order newOrder = createEditedOrder(supplier.getOrder(orderIndex), this.descriptor);
 
         if (supplier.hasOrder(newOrder)) {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
         }
-        supplier.updateOrders(this.orderIndex, newOrder);
+        supplier.updateOrders(orderIndex, newOrder);
 
         model.setPerson(person, supplier);
 
@@ -121,7 +126,7 @@ public class UpdateOrderCommand extends Command {
 
         UpdateOrderCommand otherUpdateOrderCommand = (UpdateOrderCommand) other;
         return this.supplierPhone.equals(otherUpdateOrderCommand.supplierPhone)
-                && this.orderIndex == otherUpdateOrderCommand.orderIndex
+                && this.orderIndex.equals(otherUpdateOrderCommand.orderIndex)
                 && this.descriptor.equals(otherUpdateOrderCommand.descriptor);
     }
 

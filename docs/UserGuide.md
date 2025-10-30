@@ -64,7 +64,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+### <a name="help"> Viewing help : `help` </a>
 
 Shows a message explaining how to access the help page.
 
@@ -161,10 +161,12 @@ Format: `addOrder p/PHONE_NUMBER i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_
 
 Examples:
 
-Assuming that the Supplier `John Doe` has the phone number `91234567`
-* `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`
-* The above command creates an order in John Doe's order list.
-* The order indicates an order of 20 Chicken, at the unit price of $5.60, to be delivered every Tuesday.
+Assuming that the Supplier `Supplier` has the phone number `91234567`
+* `addOrder p/91234567 i/Chicken q/20 u/9.80 d/every Tuesday`
+* The above command creates an order in Supplier's order list.
+* The order indicates an order of 20 Chicken, at the unit price of $9.80, to be delivered every Tuesday.
+
+![result for 'addOrder p/91234567 i/Chicken q/20 u/9.80 d/every Tuesday'](images/addOrderResult.png)
 
 ### Update Order for Supplier: `updateOrder`
 
@@ -181,23 +183,19 @@ Format: `updateOrder p/PHONE_NUMBER o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/
 * In the event of duplicate orders upon updating, the command will not be executed.
 
 Example:
-* Assuming that the Supplier `John Doe` has the phone number `91234567`
-* Assuming that the below order is added into John Doe's order list, and it is the only order in the list
+* Assuming that the Supplier `Supplier` has the phone number `91234567`
+* Assuming that the below order is added into Supplier's order list, and it is the only order in the list
     * Item Name - Chicken
     * Quantity - 20
-    * Unit Price - 5.60
+    * Unit Price - 9.80
     * Delivery Day - every Tuesday
 
-* `updateOrder p/91234567 o/1 i/Fish`
+* `updateOrder p/91234567 o/1 q/100`
 * The above command will edit the first order in John Doe's order list, such that the item name is changed to `Fish`.
+  
+![result for 'updateOrder p/91234567 o/1 q/100'](images/updateOrderResult.png)
 
-## Clearing all entries : `clear`
-
-Clears all entries from the address book.
-
-Format: `clear`
-
-## Adding points to Customer: `updatePoints`
+### Adding points to Customer: `updatePoints`
 
 Award points for specified customer based of amount spent.
 
@@ -212,7 +210,7 @@ Examples:
 <br>
   ![result for 'updatePoints p/98765432 b/100000.00'](images/updatePointsResult.png)
 
-## Update shift for Staff: `updateShift`
+### Update shift for Staff: `updateShift`
 
 Update shift for the specified staff.
 
@@ -225,6 +223,12 @@ Examples:
 * `updateShift p/98765432 b/PM` updates shift to `PM` for `John Doe`
   <br>
   ![result for 'updateShift p/98765412 b/PM'](images/updateShiftResult.png)
+
+### Clearing all entries : `clear`
+
+Clears all entries from the address book.
+
+Format: `clear`
 
 ### Exiting the program : `exit`
 
