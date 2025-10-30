@@ -78,4 +78,20 @@ public class Customer extends Person {
     private void updateTier() {
         this.tier = Tier.getTierForPoints(this.points);
     }
+
+    /**
+     * Spends the poitns to redeem a benefit
+     * @param pointsToRedeem number of points to be redeemed
+     * @throws IllegalArgumentException
+     */
+    public void redeemPoints(int pointsToRedeem) throws IllegalArgumentException {
+        if (pointsToRedeem < 0) {
+            throw new IllegalArgumentException("Points to redeem cannot be negative");
+        }
+        if (pointsToRedeem > this.points) {
+            throw new IllegalArgumentException("Customer does not have enough points to redeem");
+        }
+        this.points -= pointsToRedeem;
+        updateTier();
+    }
 }
