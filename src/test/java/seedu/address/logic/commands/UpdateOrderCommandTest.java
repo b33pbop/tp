@@ -138,7 +138,9 @@ public class UpdateOrderCommandTest {
         addCommand.execute(model);
 
         Phone testPersonPhone = testPerson.getPhone();
-        UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(testPersonPhone, new OrderIndex("1"), emptyDescriptor);
+        UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(testPersonPhone,
+                                                                        new OrderIndex("1"),
+                                                                        emptyDescriptor);
         assertCommandFailure(updateOrderCommand, model,
                 String.format(AddOrderCommand.MESSAGE_NOT_SUPPLIER, testPersonPhone));
 
