@@ -89,6 +89,36 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasPersonExcluding_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasPersonExcluding(null, ALICE));
+    }
+
+    @Test
+    public void hasPersonExcluding_nullExclude_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasPersonExcluding(ALICE, null));
+    }
+
+    @Test
+    public void hasPersonExcluding_personNotInAddressBook_returnsFalse() {
+        modelManager.addPerson(ALICE);
+        assertFalse(modelManager.hasPersonExcluding(BENSON, ALICE)); // BENSON not in address book
+    }
+
+    @Test
+    public void hasPersonExcluding_personIsExcluded_returnsFalse() {
+        modelManager.addPerson(ALICE);
+        assertFalse(modelManager.hasPersonExcluding(ALICE, ALICE)); // ALICE is the excluded person
+    }
+
+    @Test
+    public void hasPersonExcluding_personExistsAndNotExcluded_returnsTrue() {
+        modelManager.addPerson(ALICE);
+        modelManager.addPerson(BENSON);
+        // Check if ALICE exists when excluding BENSON
+        assertTrue(modelManager.hasPersonExcluding(ALICE, BENSON));
+    }
+
+    @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
     }
