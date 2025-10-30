@@ -2,8 +2,10 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import org.junit.jupiter.api.Test;
 
@@ -118,7 +120,8 @@ public class UpdateOrderCommandTest {
         Phone supplierPhone = supplier.getPhone();
         UpdateOrderDescriptor emptyDescriptor = new UpdateOrderDescriptor();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, emptyDescriptor);
-        assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_NOT_FOUND);
+        assertCommandFailure(updateOrderCommand, model,
+              UpdateOrderCommand.MESSAGE_EMPTY_LIST);
     }
 
     @Test
@@ -131,7 +134,8 @@ public class UpdateOrderCommandTest {
 
         Phone testPersonPhone = testPerson.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(testPersonPhone, 1, emptyDescriptor);
-        assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_NOT_SUPPLIER);
+        assertCommandFailure(updateOrderCommand, model,
+                String.format(AddOrderCommand.MESSAGE_NOT_SUPPLIER, testPersonPhone));
 
     }
 
@@ -187,7 +191,21 @@ public class UpdateOrderCommandTest {
         updateDescriptor.updateItem(new ItemName("Different Item"));
         UpdateOrderCommand differentDescriptor = new UpdateOrderCommand(supplierPhone, 1, updateDescriptor);
         assertNotEquals(toCompare, differentDescriptor);
+    }
 
+    @Test
+    void execute_personNotFound_throwsCommandException() {
+        Phone phone = new Phone("89998888");
+        UpdateOrderDescriptor baseDescriptor = new UpdateOrderDescriptor();
+
+        Person person = new Person(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(),
+                ALICE.getAddress(), ALICE.getCategory());
+        model.addPerson(person);
+
+        UpdateOrderCommand command = new UpdateOrderCommand(phone, 1, baseDescriptor );
+
+        Exception exception = assertThrows(CommandException.class, () -> command.execute(model));
+        assertEquals(String.format(UpdateOrderCommand.MESSAGE_NOT_FOUND, phone), exception.getMessage());
     }
 
 }
