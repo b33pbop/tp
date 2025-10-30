@@ -175,8 +175,12 @@ public class UpdateOrderCommandTest {
         baseDescriptor.updateItem(new ItemName("Item"));
         Phone supplierPhone = supplier.getPhone();
 
-        UpdateOrderCommand toCompare = new UpdateOrderCommand(supplierPhone, new OrderIndex("1"), baseDescriptor);
-        UpdateOrderCommand sameCompare = new UpdateOrderCommand(supplierPhone, new OrderIndex("1"), baseDescriptor);
+        UpdateOrderCommand toCompare = new UpdateOrderCommand(supplierPhone,
+                                                                new OrderIndex("1"),
+                                                                baseDescriptor);
+        UpdateOrderCommand sameCompare = new UpdateOrderCommand(supplierPhone,
+                                                                new OrderIndex("1"),
+                                                                baseDescriptor);
 
         assertEquals(toCompare, toCompare);
         assertEquals(toCompare, sameCompare);
