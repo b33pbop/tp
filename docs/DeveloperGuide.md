@@ -6,7 +6,33 @@ pageNav: 3
 
 # AB-3 Developer Guide
 
-<!-- * Table of Contents -->
+<details>
+    <summary> Table of Contents </summary>
+
+- [Acknowledgements](#acknowledgements)
+- [Setting up, getting started](#setting-up-getting-started)
+- [Design](#design)
+    - [Architecture](#architecture)
+    - [UI component](#ui-component)
+    - [Logic component](#logic-component)
+    - [Model component](#model-component)
+    - [Storage component](#storage-component)
+    - [Common classes](#common-classes)
+- [Implementation](#implementation)
+- [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+- [Appendix: Requirements](#appendix-requirements)
+  - [Product scope](#product-scope)
+  - [User stories](#user-stories)
+  - [Use cases](#use-cases)
+  - [Non-Functional Requirements](#non-functional-requirements)
+  - [Glossary](#glossary)
+- [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+  - [Launch and shutdown](#launch-and-shutdown)
+  - [Deleting a person](#deleting-a-person)
+  - [Saving data](#saving-data)
+
+</details>
+
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
@@ -14,6 +40,10 @@ pageNav: 3
 ## **Acknowledgements**
 
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is based on [SE-EDU AddressBook Level 3](https://github.com/se-edu/addressbook-level3).
+Parts of the code and documentation were adapted from it.
+Fuzzy search functionality was inspired by the [Levenshtein Distance algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance).
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -289,23 +319,24 @@ Tech-savvy ghost kitchen managers who:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                       | I want to …​                                          | So that I can…​                                                        |
-|---------|-----------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
-| `* * *` | new user                                      | see usage instructions                                | refer to instructions when I forget how to use the App                 |
-| `* * *` | manager                                       | add a new contact                                     |                                                                        |
-| `* * *` | manager                                       | delete a contact                                      | remove entries that I no longer need                                   |
-| `* * *` | manager                                       | find a contact by name                                | locate details of persons without having to go through the entire list |
-| `* * `  | manager                                       | edit a contact                                        | update changed phone numbers, emails or addresses                      |
-| `* * `  | manager                                       | categorise a contact (Supplier, Staff, Customer)      | filter contacts by groups                                              |
-| `* `    | manager                                       | add orders for Suppliers                              | keep track of delivery from specific suppliers.                        |
-| `* `    | manager                                       | update orders for Suppliers                           | update changed quantity, unit price, etc                               |
-| `* `    | manager                                       | delete orders from specific suppliers                 | remove entries indicating completed or cancelled deliveries            |
-| `* `    | manager                                       | mark a staff contact as inactive (e.g., on leave)     | I don’t accidentally assign tasks to them.                             |
-| `*`     | manager                                       | record staff shifts with their contacts               | reach out to the right staff on duty                                   |
-| `* `    | manager                                       | attach notes to a contact                             | remember context like “delivers only on weekends”                      |
-| `*`     | manager                                       | search for staff by their shift timings               | See all at once the staff that should be on duty                       |
-| `*`     | manager with many persons in the address book | sort persons by name                                  | locate a person easily                                                 |
-| `*`     | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
+| Priority | As a …​                                    | I want to …​                                       |  So that I can…​                                                    |
+|----------|-----------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
+| `* * *`  | new user                                      | see usage instructions                                | refer to instructions when I forget how to use the App                 |
+| `* * *`  | manager                                       | add a new contact                                     |                                                                        |
+| `* * *`  | manager                                       | delete a contact                                      | remove entries that I no longer need                                   |
+| `* * *`  | manager                                       | find a contact by name                                | locate details of persons without having to go through the entire list |
+| `* * `   | manager                                       | edit a contact                                        | update changed phone numbers, emails or addresses                      |
+| `* * `   | manager                                       | categorise a contact (Supplier, Staff, Customer)      | filter contacts by groups                                              |
+| `* `     | manager                                       | add orders for Suppliers                              | keep track of delivery from specific suppliers.                        |
+| `* `     | manager                                       | update orders for Suppliers                           | update changed quantity, unit price, etc                               |
+| `* `     | manager                                       | delete orders from specific suppliers                 | remove entries indicating completed or cancelled deliveries            |
+| `* `     | manager                                       | mark a staff contact as inactive (e.g., on leave)     | I don’t accidentally assign tasks to them.                             |
+| `*`      | manager                                       | record staff shifts with their contacts               | reach out to the right staff on duty                                   |
+| `* `     | manager                                       | attach notes to a contact                             | remember context like “delivers only on weekends”                      |
+| `*`      | manager                                       | search for staff by their shift timings               | See all at once the staff that should be on duty                       |
+| `*`      | manager with many persons in the address book | sort persons by name                                  | locate a person easily                                                 |
+| `*`      | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
+
 
 *{More to be added}*
 
