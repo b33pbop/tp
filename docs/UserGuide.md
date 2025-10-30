@@ -142,8 +142,26 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower c/Customer` Edits the name of the 2nd person to be `Betsy Crower` and category to `Customer`.
+* `edit 1 p/91234567 e/johndoe@example.com`  
+  Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+
+  <table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/Edit1.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/Edit2.png" width="300"/></td>
+    </tr>
+  </table>
+
+* `edit 2 n/Betsy Crower c/Customer`  
+  Edits the name of the 2nd person to be `Betsy Crower` and category to `Customer`.
+
+  <table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/Edit3.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/Edit4.png" width="300"/></td>
+    </tr>
+  </table>
+
 
 #### **Locating Contacts by Name or Category: `find`**
 
@@ -179,7 +197,19 @@ Format: `delete INDEX`
 Examples:
 
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
+  <table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/Delete1.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/Delete2.png" width="300"/></td>
+    </tr>
+  </table>
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+  <table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/Delete3.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/Delete4.png" width="300"/></td>
+    </tr>
+  </table>
 
 #### **Clearing all Contacts: `clear`**
 
