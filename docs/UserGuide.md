@@ -122,11 +122,15 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/Customer` <br>
 * `add n/Betsy Crowe e/betsycrowe@example.com a/Yishun p/68998899 c/Staff`<br>
 
+![result for above commands](images/addResult.png)
+
 #### **Listing all Contacts: `list`**
 
 Shows a list of all persons in the address book.
 
 Format: `list`
+
+![result for 'list'](images/listResult.png)
 
 #### **Editing a Contact: `edit`**
 
@@ -272,7 +276,7 @@ Example:
     * Delivery Day - every Tuesday
 
 * `updateOrder p/91234567 o/1 q/100`
-* The above command will edit the first order in John Doe's order list, such that the item name is changed to `Fish`.
+* The above command will edit the first order in John Doe's order list, such that the quantity is changed to `100`.
   
 ![result for 'updateOrder p/91234567 o/1 q/100'](images/updateOrderResult.png)
 
