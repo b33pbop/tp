@@ -10,7 +10,7 @@
 <fx:root resizable="false" title="Person Details" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <scene>
     <Scene>
-      <GridPane hgap="10" vgap="10">
+  <GridPane fx:id="backgroundPane">
         <children>
           <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
           <Label fx:id="nameLabel" text="" GridPane.rowIndex="0" GridPane.columnIndex="1" />
@@ -42,9 +42,7 @@
 
           <Button fx:id="closeButton" text="Close" onAction="#handleClose" GridPane.rowIndex="9" GridPane.columnIndex="1" />
         </children>
-        <padding>
-          <Insets top="10" right="10" bottom="10" left="10" />
-        </padding>
+        <!-- Padding and spacing will be set in Java code -->
       </GridPane>
     </Scene>
   </scene>

@@ -15,7 +15,7 @@ import seedu.address.model.person.Supplier;
 public class DeleteOrderCommand extends Command {
     public static final String COMMAND_WORD = "deleteOrder";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes an order from the supplier's order list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes an order from the supplier's order list.\n"
         + "Parameters: "
         + PREFIX_PHONE + "PHONE "
         + seedu.address.logic.parser.CliSyntax.PREFIX_ORDERNUM + "ORDER_INDEX\n"

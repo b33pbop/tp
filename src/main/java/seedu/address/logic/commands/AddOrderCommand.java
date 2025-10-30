@@ -27,19 +27,19 @@ import seedu.address.model.person.Supplier;
 public class AddOrderCommand extends Command {
     // Static variables
     public static final String COMMAND_WORD = "addOrder";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a order to the supplier's order list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a order to the supplier's order list.\n"
             + "Parameters: "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_ITEM + "ITEM "
             + PREFIX_QUANTITY + "QUANTITY "
-            + PREFIX_UNITPRICE + "UNITPRICE"
+            + PREFIX_UNITPRICE + "UNITPRICE "
             + PREFIX_DELIVERYDAY + "DELIVERYDAY\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_ITEM + "Markers "
             + PREFIX_QUANTITY + "50 "
             + PREFIX_UNITPRICE + "$0.60 "
-            + PREFIX_DELIVERYDAY + "every Thursday\n";
+            + PREFIX_DELIVERYDAY + "every Thursday";
     public static final String MESSAGE_SUCCESS = "Order added successfully";
     public static final String MESSAGE_NOT_FOUND = "No person found with phone number %1$s.";
     public static final String MESSAGE_NOT_SUPPLIER = "The person with phone number %1$s is not a supplier.";
