@@ -119,14 +119,14 @@ public class UpdateOrderCommandTest {
     }
 
     @Test
-    public void supplierNotFound_failure() {
+    public void emptyList_failure() {
         Phone supplierPhone = supplier.getPhone();
         UpdateOrderDescriptor emptyDescriptor = new UpdateOrderDescriptor();
 
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone,
                                                                         new OrderIndex("1"),
                                                                         emptyDescriptor);
-        assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_NOT_FOUND);
+        assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_EMPTY_LIST);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class UpdateOrderCommandTest {
         addCommand.execute(model);
 
         Phone testPersonPhone = testPerson.getPhone();
-        UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(testPersonPhone, 1, emptyDescriptor);
+        UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(testPersonPhone, new OrderIndex("1"), emptyDescriptor);
         assertCommandFailure(updateOrderCommand, model,
                 String.format(AddOrderCommand.MESSAGE_NOT_SUPPLIER, testPersonPhone));
 
@@ -215,7 +215,7 @@ public class UpdateOrderCommandTest {
                 ALICE.getAddress(), ALICE.getCategory());
         model.addPerson(person);
 
-        UpdateOrderCommand command = new UpdateOrderCommand(phone, 1, baseDescriptor );
+        UpdateOrderCommand command = new UpdateOrderCommand(phone, new OrderIndex("1"), baseDescriptor);
 
         Exception exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(String.format(UpdateOrderCommand.MESSAGE_NOT_FOUND, phone), exception.getMessage());
