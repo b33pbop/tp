@@ -31,10 +31,11 @@ public class UpdateOrderCommand extends Command {
 
     public static final String COMMAND_WORD = "updateOrder";
 
+    public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
     public static final String MESSAGE_UPDATE_SUCCESS = "Order has been updated successfully";
     public static final String MESSAGE_NO_CHANGE = "Values given are exactly the same, no update made.";
-    public static final String MESSAGE_NOT_FOUND = "Entry with that phone number cannot be found.";
-    public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
+    public static final String MESSAGE_NOT_FOUND = "No person found with phone number %1$s.";
+    public static final String MESSAGE_NOT_SUPPLIER = "The person with phone number %1$s is not a supplier.";
     public static final String MESSAGE_OUT_OF_BOUNDS = "Index given is out of bounds of supplier's list of orders.";
     public static final String MESSAGE_DUPLICATE_ORDER = "Order with identical values already exists.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the details of the order identified "
@@ -70,6 +71,11 @@ public class UpdateOrderCommand extends Command {
         requireNonNull(model);
         Person person = null;
         ObservableList<Person> currentList = model.getAddressBook().getPersonList();
+
+        if (currentList.isEmpty()) {
+            throw new CommandException(MESSAGE_EMPTY_LIST);
+        }
+
         for (int i = 0; i < currentList.size(); i++) {
             if (currentList.get(i).getPhone().equals(this.supplierPhone)) {
                 person = currentList.get(i);
@@ -78,10 +84,10 @@ public class UpdateOrderCommand extends Command {
         }
 
         if (person == null) {
-            throw new CommandException(MESSAGE_NOT_FOUND);
+            throw new CommandException(String.format(MESSAGE_NOT_FOUND, supplierPhone));
         }
         if (!person.getCategory().toString().equals("[Supplier]")) {
-            throw new CommandException(MESSAGE_NOT_SUPPLIER);
+            throw new CommandException(String.format(MESSAGE_NOT_SUPPLIER, supplierPhone));
         }
 
         Supplier supplier = (Supplier) person;
