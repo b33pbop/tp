@@ -31,7 +31,7 @@ public class PersonUtil {
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
-        sb.append(PREFIX_CATEGORY + person.getCategory().categoryName + " ");
+        sb.append(PREFIX_CATEGORY + person.getCategory().getCategoryName() + " ");
         return sb.toString();
     }
 
@@ -49,7 +49,7 @@ public class PersonUtil {
         descriptor.getAddress().ifPresent(address ->
                 sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
         descriptor.getCategory().ifPresent(category ->
-                sb.append(PREFIX_CATEGORY).append(category.categoryName).append(" "));
+                sb.append(PREFIX_CATEGORY).append(category.getCategoryName()).append(" "));
         return sb.toString();
     }
 }
