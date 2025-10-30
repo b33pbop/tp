@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 
@@ -17,6 +19,7 @@ import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Supplier;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.SupplierBuilder;
@@ -39,14 +42,11 @@ public class UpdateOrderCommandTest {
         AddCommand addCommand = new AddCommand(supplier);
         addCommand.execute(model);
 
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, emptyDescriptor);
 
-        String expectedMessage = UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS;
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(model.getFilteredPersonList().get(0), supplier);
-
-        assertCommandSuccess(updateOrderCommand, model, expectedMessage, expectedModel);
+        String expectedMessage = UpdateOrderCommand.MESSAGE_DUPLICATE_ORDER;
+        assertCommandFailure(updateOrderCommand, model, expectedMessage);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class UpdateOrderCommandTest {
         changedSome.updateItem(new ItemName("Changed item"));
         changedSome.updateQuantity(new ItemQuantity("100"));
 
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, changedSome);
 
         String expectedMessage = UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS;
@@ -103,7 +103,7 @@ public class UpdateOrderCommandTest {
         changedAll.updateUnitPrice(new ItemUnitPrice("5.5"));
         changedAll.updateDeliveryDay(new ItemDeliveryDay("Changed Day"));
 
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, changedAll);
 
         String expectedMessage = UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS;
@@ -115,7 +115,7 @@ public class UpdateOrderCommandTest {
 
     @Test
     public void supplierNotFound_failure() {
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
+        Phone supplierPhone = supplier.getPhone();
         UpdateOrderDescriptor emptyDescriptor = new UpdateOrderDescriptor();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 1, emptyDescriptor);
         assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_NOT_FOUND);
@@ -129,7 +129,7 @@ public class UpdateOrderCommandTest {
         AddCommand addCommand = new AddCommand(testPerson);
         addCommand.execute(model);
 
-        int testPersonPhone = Integer.parseInt(testPerson.getPhone().value);
+        Phone testPersonPhone = testPerson.getPhone();
         UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(testPersonPhone, 1, emptyDescriptor);
         assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_NOT_SUPPLIER);
 
@@ -145,14 +145,48 @@ public class UpdateOrderCommandTest {
         AddCommand addCommand = new AddCommand(supplier);
         addCommand.execute(model);
 
-        UpdateOrderDescriptor emptyDescriptor = new UpdateOrderDescriptor();
-        int supplierPhone = Integer.parseInt(supplier.getPhone().value);
-        UpdateOrderCommand updateOrderCommand = new UpdateOrderCommand(supplierPhone, 6, emptyDescriptor);
+        UpdateOrderDescriptor changeNameDescriptor = new UpdateOrderDescriptor();
+        changeNameDescriptor.updateItem(new ItemName("Updated"));
+
+        Phone supplierPhone = supplier.getPhone();
+        UpdateOrderCommand upperLimit = new UpdateOrderCommand(supplierPhone, 6, changeNameDescriptor);
+        UpdateOrderCommand lowerLimit = new UpdateOrderCommand(supplierPhone, 0, changeNameDescriptor);
+        UpdateOrderCommand correctValue = new UpdateOrderCommand(supplierPhone, 1, changeNameDescriptor);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(model.getFilteredPersonList().get(0), supplier);
 
-        assertCommandFailure(updateOrderCommand, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
+        assertCommandFailure(upperLimit, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
+        assertCommandFailure(lowerLimit, model, UpdateOrderCommand.MESSAGE_OUT_OF_BOUNDS);
+        assertCommandSuccess(correctValue, model, UpdateOrderCommand.MESSAGE_UPDATE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        UpdateOrderDescriptor baseDescriptor = new UpdateOrderDescriptor();
+        baseDescriptor.updateItem(new ItemName("Item"));
+        Phone supplierPhone = supplier.getPhone();
+
+        UpdateOrderCommand toCompare = new UpdateOrderCommand(supplierPhone, 1, baseDescriptor);
+        UpdateOrderCommand sameCompare = new UpdateOrderCommand(supplierPhone, 1, baseDescriptor);
+
+        assertEquals(toCompare, toCompare);
+        assertEquals(toCompare, sameCompare);
+
+        // another type of command
+        AddCommand addCommand = new AddCommand(supplier);
+        assertNotEquals(toCompare, addCommand);
+        assertNotEquals(null, toCompare);
+
+        // different phone number
+        Phone anotherPhone = new Phone("91111234");
+        UpdateOrderCommand differentPhone = new UpdateOrderCommand(anotherPhone, 1, baseDescriptor);
+        assertNotEquals(toCompare, differentPhone);
+
+        // different descriptor
+        UpdateOrderDescriptor updateDescriptor = new UpdateOrderDescriptor();
+        updateDescriptor.updateItem(new ItemName("Different Item"));
+        UpdateOrderCommand differentDescriptor = new UpdateOrderCommand(supplierPhone, 1, updateDescriptor);
+        assertNotEquals(toCompare, differentDescriptor);
 
     }
 

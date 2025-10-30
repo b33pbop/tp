@@ -67,7 +67,7 @@ public class Supplier extends Person {
     }
 
     public ArrayList<Order> getOrders() {
-        return this.orders;
+        return new ArrayList<>(this.orders);
     }
 
     /**

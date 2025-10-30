@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.UpdateOrderCommand.createEditedOrder;
@@ -50,5 +51,35 @@ public class UpdateOrderDescriptorTest {
         deliveryDateTest.updateDeliveryDay(new ItemDeliveryDay("every Saturday"));
         Order orderWithEditedDeliveryDate = createEditedOrder(baseOrder, deliveryDateTest);
         assertNotEquals(orderWithEditedDeliveryDate, baseOrder);
+    }
+
+    @Test
+    public void equals() {
+        UpdateOrderDescriptor baseDescriptor = new UpdateOrderDescriptor();
+
+        assertEquals(baseDescriptor, baseDescriptor);
+
+        // another data type
+        assertNotEquals(baseDescriptor, 10);
+
+        // different item name
+        UpdateOrderDescriptor differentName = new UpdateOrderDescriptor();
+        differentName.updateItem(new ItemName("Testing"));
+        assertNotEquals(differentName, baseDescriptor);
+
+        // different item quantity
+        UpdateOrderDescriptor differentQuantity = new UpdateOrderDescriptor();
+        differentQuantity.updateQuantity(new ItemQuantity("20"));
+        assertNotEquals(differentQuantity, baseDescriptor);
+
+        // different item unit price
+        UpdateOrderDescriptor differentUnitPrice = new UpdateOrderDescriptor();
+        differentUnitPrice.updateUnitPrice(new ItemUnitPrice("20.23"));
+        assertNotEquals(differentUnitPrice, baseDescriptor);
+
+        // different item delivery day
+        UpdateOrderDescriptor differentDeliveryDay = new UpdateOrderDescriptor();
+        differentDeliveryDay.updateDeliveryDay(new ItemDeliveryDay("Tuesday"));
+        assertNotEquals(differentDeliveryDay, baseDescriptor);
     }
 }
