@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -64,7 +65,8 @@ public class AddOrderCommandTest {
 
         AddCommand addCommand = new AddCommand(supplier);
         addCommand.execute(model);
-        assertCommandFailure(addOrderCommand, model, AddOrderCommand.MESSAGE_NOT_SUPPLIER);
+        assertCommandFailure(addOrderCommand, model,
+                String.format(AddOrderCommand.MESSAGE_NOT_SUPPLIER, supplierPhone));
     }
 
     @Test
@@ -84,7 +86,8 @@ public class AddOrderCommandTest {
 
         AddCommand addCommand = new AddCommand(notSupplier);
         addCommand.execute(model);
-        assertCommandFailure(addOrderCommand, model, AddOrderCommand.MESSAGE_NOT_SUPPLIER);
+        assertCommandFailure(addOrderCommand, model,
+                String.format(AddOrderCommand.MESSAGE_NOT_SUPPLIER, supplierPhone));
     }
 
     @Test
@@ -130,5 +133,41 @@ public class AddOrderCommandTest {
         // different values -> return false
         assertNotEquals(addPensCommand, addPencilsCommand);
 
+    }
+
+    @Test
+    void execute_emptyList_throwsCommandException() {
+        // Model is empty
+        model = new ModelManager();
+
+        Order newOrder = new OrderBuilder().build();
+        ItemName orderItem = newOrder.getItem();
+        ItemQuantity orderQuantity = newOrder.getQuantity();
+        ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
+        ItemDeliveryDay orderDeliveryDay = newOrder.getDeliveryDay();
+
+        AddOrderCommand command = new AddOrderCommand(new Phone("81234567"), orderItem,
+                orderQuantity, orderUnitPrice,
+                orderDeliveryDay);
+
+        Exception exception = assertThrows(CommandException.class, () -> command.execute(model));
+        assertEquals(UpdateOrderCommand.MESSAGE_EMPTY_LIST, exception.getMessage());
+    }
+
+    @Test
+    void execute_personNotFound_throwsCommandException() {
+        Order newOrder = new OrderBuilder().build();
+        ItemName orderItem = newOrder.getItem();
+        ItemQuantity orderQuantity = newOrder.getQuantity();
+        ItemUnitPrice orderUnitPrice = newOrder.getUnitPrice();
+        ItemDeliveryDay orderDeliveryDay = newOrder.getDeliveryDay();
+        Phone newPhone = new Phone("81234567");
+
+        AddOrderCommand command = new AddOrderCommand(newPhone, orderItem,
+                orderQuantity, orderUnitPrice,
+                orderDeliveryDay);
+
+        Exception exception = assertThrows(CommandException.class, () -> command.execute(model));
+        assertEquals(String.format(AddOrderCommand.MESSAGE_NOT_FOUND, newPhone), exception.getMessage());
     }
 }
