@@ -319,26 +319,25 @@ Tech-savvy ghost kitchen managers who:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                                       |  So that I can…​                                                    |
-|----------|-----------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                      | see usage instructions                                | refer to instructions when I forget how to use the App                 |
-| `* * *`  | manager                                       | add a new contact                                     |                                                                        |
-| `* * *`  | manager                                       | delete a contact                                      | remove entries that I no longer need                                   |
-| `* * *`  | manager                                       | find a contact by name                                | locate details of persons without having to go through the entire list |
-| `* * `   | manager                                       | edit a contact                                        | update changed phone numbers, emails or addresses                      |
-| `* * `   | manager                                       | categorise a contact (Supplier, Staff, Customer)      | filter contacts by groups                                              |
-| `* `     | manager                                       | add orders for Suppliers                              | keep track of delivery from specific suppliers.                        |
-| `* `     | manager                                       | update orders for Suppliers                           | update changed quantity, unit price, etc                               |
-| `* `     | manager                                       | delete orders from specific suppliers                 | remove entries indicating completed or cancelled deliveries            |
-| `* `     | manager                                       | mark a staff contact as inactive (e.g., on leave)     | I don’t accidentally assign tasks to them.                             |
-| `*`      | manager                                       | record staff shifts with their contacts               | reach out to the right staff on duty                                   |
-| `* `     | manager                                       | attach notes to a contact                             | remember context like “delivers only on weekends”                      |
-| `*`      | manager                                       | search for staff by their shift timings               | See all at once the staff that should be on duty                       |
-| `*`      | manager with many persons in the address book | sort persons by name                                  | locate a person easily                                                 |
-| `*`      | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
-
-
-*{More to be added}*
+| Priority | As a …​                                       | I want to …​                                          | So that I can…​                                                        |
+|---------|-----------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
+| `* * *` | new user                                      | see usage instructions                                | refer to instructions when I forget how to use the App                 |
+| `* * *` | manager                                       | add a new contact                                     |                                                                        |
+| `* * *` | manager                                       | delete a contact                                      | remove entries that I no longer need                                   |
+| `* * *` | manager                                       | find a contact by name                                | locate details of persons without having to go through the entire list |
+| `* * *` | manager                                       | edit a contact                                        | update changed phone numbers, emails or addresses                      |
+| `* * *` | manager                                       | categorise a contact (Supplier, Staff, Customer)      | filter contacts by groups                                              |
+| `* * * ` | manager                                       | add orders for Suppliers                              | keep track of delivery from specific suppliers.                        |
+| `* * *` | manager                                       | update orders for Suppliers                           | update changed quantity, unit price, etc                               |
+| `* * `  | manager                                       | track customer spending                               | update their membership tier                                           |
+| `* * `  | manager                                       | update staff shift timing                             | track who is working that day                                          |
+| `* *`   | manager                                       | delete orders from specific suppliers                 | remove entries indicating completed or cancelled deliveries            |
+| `* *`   | manager                                       | mark a staff contact as inactive (e.g., on leave)     | I don’t accidentally assign tasks to them.                             |
+| `*`     | manager                                       | record staff shifts with their contacts               | reach out to the right staff on duty                                   |
+| `* `    | manager                                       | attach notes to a contact                             | remember context like “delivers only on weekends”                      |
+| `*`     | manager                                       | search for staff by their shift timings               | See all at once the staff that should be on duty                       |
+| `*`     | manager with many persons in the address book | sort persons by name                                  | locate a person easily                                                 |
+| `*`     | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
 
 ### Use cases
 
@@ -479,11 +478,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 18. Code should be documented to allow future developers to understand and maintain it.
 19. Error messages should be understandable by non-technical users.
 
-*{More to be added}*
-
 ### Glossary
 
 * **Manager**: Ghost kitchen manager that is using the application
+* **Customer**: Customers who have signed up for a membership for a loyalty program
 * **Fuzzy Search**: A search technique to find results approximately matching a query instead of an exact match
 * **GUI-Driven Systems**: Software systems that depend on visual elements like buttons and menus for user interaction
 * **Archiving**: The process of storing data in an organized manner for long-term retention
@@ -541,3 +539,8 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+## **Appendix: Effort**
+wip
+
+## **Appendix: Planned Enhancements**
