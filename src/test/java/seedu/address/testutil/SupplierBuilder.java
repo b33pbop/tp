@@ -10,8 +10,6 @@ import seedu.address.model.person.Supplier;
  */
 public class SupplierBuilder extends PersonBuilder {
 
-    private String item = "Chicken";
-
     /**
      * Creates a default {@code SupplierBuilder} with default item Chicken.
      */
@@ -32,8 +30,7 @@ public class SupplierBuilder extends PersonBuilder {
         if (personToCopy instanceof Supplier) {
             Supplier supplier = (Supplier) personToCopy;
             this.category = new Category("Supplier");
-        } else if (personToCopy.getCategory().categoryName.equalsIgnoreCase("Supplier")) {
-            this.item = "Chicken";
+        } else if (personToCopy.getCategory().getCategoryName().equalsIgnoreCase("Supplier")) {
             this.category = new Category("Supplier");
         } else {
             throw new IllegalArgumentException("Person to copy is not a Supplier");

@@ -4,6 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.category.Category;
@@ -70,12 +71,12 @@ public class Supplier extends Person {
     }
 
     /**
-     * Returns a string content the orders placed under supplier
+     * Returns a string content the orders placed under supplier in numbered list format
      * @return String of orders in list
      */
     public String listOrders() {
-        return orders.stream()
-                .map(Order::toString)
+        return IntStream.range(0, orders.size())
+                .mapToObj(i -> (i + 1) + ". " + orders.get(i).toString())
                 .collect(Collectors.joining("\n"));
     }
 

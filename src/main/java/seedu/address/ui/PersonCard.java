@@ -13,7 +13,7 @@ import seedu.address.model.person.Supplier;
 import seedu.address.model.tier.Tier;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * A UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
 
@@ -38,11 +38,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
-    private Label email;
-    @FXML
-    private FlowPane tags;
+    private FlowPane category;
     @FXML
     private Label shift;
     @FXML
@@ -58,59 +54,90 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+        initializeCommonFields(displayedIndex);
+        displayCategorySpecificInfo();
+    }
+
+    // ---------- Common Info ----------
+    private void initializeCommonFields(int displayedIndex) {
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        tags.getChildren().add(new Label(person.getCategory().categoryName));
+        phone.setText("\uD83D\uDCDE Phone: " + person.getPhone().value);
+
+        // Create a label for the category
+        Label categoryLabel = new Label(person.getCategory().getCategoryName());
+
+        // Assign style class based on category
+        switch (person.getCategory().getCategoryName().toLowerCase()) {
+        case "customer":
+            categoryLabel.getStyleClass().add("category-customer");
+            break;
+        case "staff":
+            categoryLabel.getStyleClass().add("category-staff");
+            break;
+        case "supplier":
+            categoryLabel.getStyleClass().add("category-supplier");
+            break;
+        default:
+            categoryLabel.setStyle("-fx-background-color: gray; -fx-text-fill: white;");
+            break;
+        }
+
+        category.getChildren().add(categoryLabel);
+
         // Hide and clear category-specific fields by default
-        shift.setVisible(false);
-        shift.setManaged(false);
-        shift.setText("");
+        hideCategorySpecificFields();
+    }
 
-        orders.setVisible(false);
-        orders.setManaged(false);
-        orders.setText("");
-
-        tier.setVisible(false);
-        tier.setManaged(false);
-        tier.setText("");
-
-        points.setVisible(false);
-        tier.setManaged(false);
-        tier.setText("");
-
-        if (person instanceof Customer) {
-            Customer customer = (Customer) person;
-            Integer customerPoints = customer.getPoints();
-            Tier customerTier = customer.getTier();
-
-            if (points != null) {
-                points.setText(customerPoints != null ? customerPoints.toString() : "0");
-                points.setVisible(true);
-                points.setManaged(true);
-            }
-            if (tier != null) {
-                tier.setText(customerTier != null ? customerTier.toString() : "N/A");
-                tier.setVisible(true);
-                tier.setManaged(true);
-            }
+    // ---------- Category-Specific Info ----------
+    private void displayCategorySpecificInfo() {
+        if (person instanceof Customer customer) {
+            showCustomerFields(customer);
+        } else if (person instanceof Staff staff) {
+            showStaffFields(staff);
+        } else if (person instanceof Supplier supplier) {
+            showSupplierFields(supplier);
         }
+    }
 
+    private void showCustomerFields(Customer customer) {
+        int customerPoints = customer.getPoints();
+        Tier customerTier = customer.getTier();
 
-        if (person instanceof Staff) {
-            Staff staff = (Staff) person;
-            Shift staffShift = staff.getShift();
-            shift.setText(staffShift.toString());
-            shift.setVisible(true);
-            shift.setManaged(true);
+        points.setText("\u2B50 Points: " + customerPoints);
+        tier.setText("\uD83C\uDFC5 Tier: " + (customerTier != null ? customerTier.toString() : "N/A"));
+        show(points, tier);
+    }
+
+    private void showStaffFields(Staff staff) {
+        Shift staffShift = staff.getShift();
+        shift.setText("\uD83D\uDD52 Shift: " + (staffShift != null ? staffShift.toString() : "N/A"));
+        show(shift);
+    }
+
+    private void showSupplierFields(Supplier supplier) {
+        String orderList = supplier.listOrders();
+        orders.setText("\uD83D\uDCE6 Orders: \n" + (orderList.isEmpty() ? "None" : orderList));
+        show(orders);
+    }
+
+    // ---------- Utility Methods ----------
+    private void hideCategorySpecificFields() {
+        hide(shift, orders, tier, points);
+    }
+
+    private void hide(Label... labels) {
+        for (Label label : labels) {
+            label.setVisible(false);
+            label.setManaged(false);
+            label.setText("");
         }
-        if (person instanceof Supplier) {
-            Supplier supplier = (Supplier) person;
-            orders.setText(supplier.listOrders());
-            orders.setVisible(true);
-            orders.setManaged(true);
+    }
+
+    private void show(Label... labels) {
+        for (Label label : labels) {
+            label.setVisible(true);
+            label.setManaged(true);
         }
     }
 }
