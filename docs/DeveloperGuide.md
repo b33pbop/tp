@@ -544,3 +544,6 @@ testers are expected to do more *exploratory* testing.
 wip
 
 ## **Appendix: Planned Enhancements**
+1. Adding a command to deduct and update number of leaves for a staff.
+2. Improving shift system to track shifts in the current month.
+3. Improving membership system to implement discounts for customers in tiers.
