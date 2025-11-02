@@ -39,7 +39,7 @@ public class AddOrderCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_ITEM + "Markers "
             + PREFIX_QUANTITY + "50 "
-            + PREFIX_UNITPRICE + "$0.60 "
+            + PREFIX_UNITPRICE + "0.60 "
             + PREFIX_DELIVERYDAY + "every Thursday";
     public static final String MESSAGE_SUCCESS = "Order added successfully";
     public static final String MESSAGE_NOT_FOUND = "No person found with phone number %1$s.";

@@ -38,7 +38,7 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
 
         // all parameters need to be present (check for it)
         if (!arePrefixesPresent(argMultimap, PREFIX_PHONE, PREFIX_ITEM, PREFIX_QUANTITY, PREFIX_UNITPRICE,
-                PREFIX_DELIVERYDAY)) {
+                PREFIX_DELIVERYDAY) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE));
         }
         // check got no dupes

@@ -18,7 +18,7 @@ public class DeleteOrderCommandParser implements Parser<DeleteOrderCommand> {
     public DeleteOrderCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PHONE, PREFIX_ORDERNUM);
-        if (!arePrefixesPresent(argMultimap, PREFIX_PHONE, PREFIX_ORDERNUM)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_PHONE, PREFIX_ORDERNUM) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteOrderCommand.MESSAGE_USAGE));
         }
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PHONE, PREFIX_ORDERNUM);

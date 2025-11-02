@@ -43,7 +43,9 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
 
         UpdateOrderDescriptor updateOrderDescriptor = new UpdateOrderDescriptor();
 
-        if (argMultimap.getValue(PREFIX_PHONE).isEmpty() || argMultimap.getValue(PREFIX_ORDERNUM).isEmpty()) {
+        if (argMultimap.getValue(PREFIX_PHONE).isEmpty()
+                || argMultimap.getValue(PREFIX_ORDERNUM).isEmpty()
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateOrderCommand.MESSAGE_USAGE));
         }
 

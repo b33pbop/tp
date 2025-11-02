@@ -57,7 +57,7 @@ public class UpdateOrderCommand extends Command {
         + PREFIX_ORDERNUM + "1 "
         + PREFIX_ITEM + "Pens "
         + PREFIX_QUANTITY + "100 "
-        + PREFIX_UNITPRICE + "$0.90 "
+        + PREFIX_UNITPRICE + "0.90 "
         + PREFIX_DELIVERYDAY + "every Tuesday";
 
     public final Phone supplierPhone;
