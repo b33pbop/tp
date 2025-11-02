@@ -94,6 +94,35 @@ public class UpdatePointsCommandTest {
     }
 
     @Test
+    public void execute_personNotFoundFiltered_throwsExtendedMessage() {
+        // Add one person
+        Customer newCustomerA = new CustomerBuilder()
+                .withName("Alice")
+                .withPhone("81234567")
+                .withTier(Tier.BRONZE)
+                .build();
+        Customer newCustomerB = new CustomerBuilder()
+                .withName("Blice")
+                .withPhone("91234567")
+                .withTier(Tier.BRONZE)
+                .build();
+        model.addPerson(newCustomerA);
+        model.addPerson(newCustomerB);
+
+        model.updateFilteredPersonList(person -> person.isSamePerson(newCustomerB));
+
+        UpdatePointsCommand cmd = new UpdatePointsCommand(new Phone("81234567"), 100);
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+
+        assertEquals(
+                String.format(UpdatePointsCommand.MESSAGE_PERSON_NOT_FOUND
+                        + UpdatePointsCommand.ERROR_EXTENSION, new Phone("81234567")),
+                ex.getMessage()
+        );
+    }
+
+    @Test
     public void execute_customerAtMaxPoints_throwsCommandException() throws Exception {
         // Arrange
         Customer customer = new CustomerBuilder()
@@ -120,6 +149,4 @@ public class UpdatePointsCommandTest {
                 thrown.getMessage()
         );
     }
-
-
 }
