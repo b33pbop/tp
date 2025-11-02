@@ -12,7 +12,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_UNITPRICE;
 import seedu.address.logic.commands.UpdateOrderCommand;
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.OrderIndex;
@@ -61,7 +60,7 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
         }
         if (argMultimap.getValue(PREFIX_DELIVERYDAY).isPresent()) {
             String deliveryDayRaw = argMultimap.getValue(PREFIX_DELIVERYDAY).get();
-            updateOrderDescriptor.updateDeliveryDay(new ItemDeliveryDay(deliveryDayRaw));
+            updateOrderDescriptor.updateDeliveryDay(ParserUtil.parseItemDeliveryDay(deliveryDayRaw));
         }
 
         Phone supplierPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
