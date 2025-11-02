@@ -36,6 +36,7 @@ public class UpdateOrderCommand extends Command {
     public static final String MESSAGE_UPDATE_SUCCESS = "Order has been updated successfully";
     public static final String MESSAGE_NO_CHANGE = "Values given are exactly the same, no update made.";
     public static final String MESSAGE_NOT_FOUND = "No person found with phone number %1$s.";
+    public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
     public static final String MESSAGE_NOT_SUPPLIER = "The person with phone number %1$s is not a supplier.";
     public static final String MESSAGE_OUT_OF_BOUNDS = "Index given is out of bounds of supplier's list of orders.";
     public static final String MESSAGE_DUPLICATE_ORDER = "Order with identical values already exists.";
@@ -81,7 +82,7 @@ public class UpdateOrderCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Person person = null;
-        ObservableList<Person> currentList = model.getAddressBook().getPersonList();
+        ObservableList<Person> currentList = model.getFilteredPersonList();
 
         if (currentList.isEmpty()) {
             throw new CommandException(MESSAGE_EMPTY_LIST);
@@ -94,6 +95,10 @@ public class UpdateOrderCommand extends Command {
             }
         }
 
+        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
+        if (person == null && fullList.size() != currentList.size()) {
+            throw new CommandException(String.format(MESSAGE_NOT_FOUND + ERROR_EXTENSION, supplierPhone));
+        }
         if (person == null) {
             throw new CommandException(String.format(MESSAGE_NOT_FOUND, supplierPhone));
         }

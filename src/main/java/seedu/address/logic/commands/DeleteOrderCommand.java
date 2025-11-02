@@ -26,6 +26,7 @@ public class DeleteOrderCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Order deleted successfully";
     public static final String MESSAGE_NOT_FOUND = "Entry with that phone number cannot be found.";
+    public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
     public static final String MESSAGE_INVALID_ORDER_INDEX = "Invalid order index for this supplier.";
 
@@ -46,12 +47,16 @@ public class DeleteOrderCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Person foundPerson = null;
-        ObservableList<Person> currentList = model.getAddressBook().getPersonList();
+        ObservableList<Person> currentList = model.getFilteredPersonList();
         for (int i = 0; i < currentList.size(); i++) {
             if (currentList.get(i).getPhone().equals(this.supplierPhone)) {
                 foundPerson = currentList.get(i);
                 break;
             }
+        }
+        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
+        if (foundPerson == null && fullList.size() != currentList.size()) {
+            throw new CommandException(MESSAGE_NOT_FOUND + ERROR_EXTENSION);
         }
         if (foundPerson == null) {
             throw new CommandException(MESSAGE_NOT_FOUND);

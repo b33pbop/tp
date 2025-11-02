@@ -34,6 +34,7 @@ public class UpdatePointsCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Added %2$d points for %1$s.";
     public static final String MESSAGE_NOT_A_CUSTOMER = "The person with phone number %1$s is not a customer.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "No person found with phone number %1$s.";
+    public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
     public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
 
     private final Phone phone;
@@ -65,6 +66,10 @@ public class UpdatePointsCommand extends Command {
                 .filter(p -> p.getPhone().equals(phone))
                 .findFirst();
 
+        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
+        if (matchedPerson.isEmpty() && fullList.size() != personList.size()) {
+            throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND + ERROR_EXTENSION, phone));
+        }
         if (matchedPerson.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, phone));
         }
