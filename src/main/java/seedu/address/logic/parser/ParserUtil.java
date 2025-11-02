@@ -132,7 +132,7 @@ public class ParserUtil {
         // Remove additional whitespace between parts of the item name
         String trimmedItemDeliveryDay = itemDeliveryDay.trim().replaceAll("\\s+", " ");
         if (!ItemDeliveryDay.isValidItemDeliveryDay(trimmedItemDeliveryDay)) {
-            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+            throw new ParseException(ItemDeliveryDay.MESSAGE_CONSTRAINTS);
         }
         return new ItemDeliveryDay(trimmedItemDeliveryDay);
     }

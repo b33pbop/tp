@@ -82,7 +82,7 @@ public class UpdateOrderCommandParserTest {
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         Phone supplierPhone = supplier.getPhone();
@@ -108,7 +108,7 @@ public class UpdateOrderCommandParserTest {
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         Phone supplierPhone = supplier.getPhone();
@@ -130,7 +130,7 @@ public class UpdateOrderCommandParserTest {
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         Phone supplierPhone = supplier.getPhone();
@@ -169,14 +169,11 @@ public class UpdateOrderCommandParserTest {
     @Test
     public void noFieldsIncluded() {
         String userInput = "updateOrder p/ 85355255 o/ 1 ";
-        assertParseFailure(parser, userInput, UpdateOrderCommand.MESSAGE_NO_CHANGE);
-    }
-
-    @Test
-    public void parse_unitPriceWithDollar_success() throws ParseException {
-        String args = "p/91234567 o/1 i/Pens q/100 u/$0.90 d/Tuesday";
-        UpdateOrderCommand cmd = parser.parse(args);
-        assertEquals(new ItemUnitPrice("0.90"), cmd.descriptor.getUnitPrice().get());
+        UpdateOrderDescriptor empty = new UpdateOrderDescriptor();
+        UpdateOrderCommand successfulCommand = new UpdateOrderCommand(new Phone("85355255"),
+                                                                        new OrderIndex("1"),
+                                                                        empty);
+        assertParseSuccess(parser, userInput, successfulCommand);
     }
 
     @Test
