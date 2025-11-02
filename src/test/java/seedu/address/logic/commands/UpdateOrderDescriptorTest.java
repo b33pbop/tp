@@ -25,7 +25,7 @@ public class UpdateOrderDescriptorTest {
     public void successfulUpdateOfParameters() {
         Order baseOrder = new Order(new ItemName("Pencils"),
                                     new ItemQuantity("10"),
-                                    new ItemUnitPrice("0.1"),
+                                    new ItemUnitPrice("0.10"),
                                     new ItemDeliveryDay("every Monday"));
 
         // if name different -> not equal
@@ -42,7 +42,7 @@ public class UpdateOrderDescriptorTest {
 
         // if unit price different -> no equal
         UpdateOrderDescriptor unitPriceTest = new UpdateOrderDescriptor();
-        unitPriceTest.updateUnitPrice(new ItemUnitPrice("0.5"));
+        unitPriceTest.updateUnitPrice(new ItemUnitPrice("0.50"));
         Order orderWithEditedUnitPrice = createEditedOrder(baseOrder, unitPriceTest);
         assertNotEquals(orderWithEditedUnitPrice, baseOrder);
 

@@ -27,6 +27,7 @@ import seedu.address.model.person.Supplier;
 public class AddOrderCommand extends Command {
     // Static variables
     public static final String COMMAND_WORD = "addOrder";
+    public static final String COMMAND_LOWER = "addorder";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a order to the supplier's order list.\n"
             + "Parameters: "
             + PREFIX_PHONE + "PHONE "

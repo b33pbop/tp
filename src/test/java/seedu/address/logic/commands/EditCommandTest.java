@@ -220,7 +220,7 @@ public class EditCommandTest {
                 new Address("Block 1"), new Category("Supplier"));
         Order order = new Order(new seedu.address.model.person.ItemName("Item"),
                 new seedu.address.model.person.ItemQuantity("2"),
-                new seedu.address.model.person.ItemUnitPrice("10.0"),
+                new seedu.address.model.person.ItemUnitPrice("10.00"),
                 new seedu.address.model.person.ItemDeliveryDay("Monday"));
         supplier.addOrder(order);
 

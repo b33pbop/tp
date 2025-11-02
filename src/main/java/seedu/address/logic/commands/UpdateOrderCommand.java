@@ -31,10 +31,11 @@ import seedu.address.model.person.Supplier;
 public class UpdateOrderCommand extends Command {
 
     public static final String COMMAND_WORD = "updateOrder";
+    public static final String COMMAND_LOWER = "updateorder";
 
     public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
     public static final String MESSAGE_UPDATE_SUCCESS = "Order has been updated successfully";
-    public static final String MESSAGE_NO_CHANGE = "Values given are exactly the same, no update made.";
+    public static final String MESSAGE_NO_CHANGE = "At least one of the optional fields must be provided";
     public static final String MESSAGE_NOT_FOUND = "No person found with phone number %1$s.";
     public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
     public static final String MESSAGE_NOT_SUPPLIER = "The person with phone number %1$s is not a supplier.";
@@ -115,6 +116,10 @@ public class UpdateOrderCommand extends Command {
         }
         if (!(orderIndex > 0 && orderIndex <= supplier.getSize())) {
             throw new CommandException(MESSAGE_OUT_OF_BOUNDS);
+        }
+
+        if (!this.descriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NO_CHANGE);
         }
 
         Order newOrder = createEditedOrder(supplier.getOrder(orderIndex), this.descriptor);

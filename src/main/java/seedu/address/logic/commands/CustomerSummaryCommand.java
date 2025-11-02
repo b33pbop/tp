@@ -17,6 +17,7 @@ import seedu.address.model.tier.Tier;
 public class CustomerSummaryCommand extends Command {
 
     public static final String COMMAND_WORD = "customerSummary";
+    public static final String COMMAND_LOWER = "customersummary";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a summary of customers.\n"
             + "Example: " + COMMAND_WORD;

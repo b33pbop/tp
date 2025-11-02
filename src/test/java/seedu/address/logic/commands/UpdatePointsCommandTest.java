@@ -121,4 +121,32 @@ public class UpdatePointsCommandTest {
                 ex.getMessage()
         );
     }
+  
+    @Test
+    public void execute_customerAtMaxPoints_throwsCommandException() throws Exception {
+        // Arrange
+        Customer customer = new CustomerBuilder()
+                .withName("Bob")
+                .withPhone("81234567")
+                .build();
+
+        // Fill customer points to MAX_POINTS
+        customer.addPointsFromSpending(Customer.MAX_POINTS);
+
+        model.addPerson(customer);
+
+        double extraSpending = 50.0; // Any positive number
+
+        UpdatePointsCommand command = new UpdatePointsCommand(customer.getPhone(), extraSpending);
+
+        // Act + Assert
+        CommandException thrown = assertThrows(CommandException.class, () ->
+                command.execute(model)
+        );
+
+        assertEquals(
+                String.format(UpdatePointsCommand.MESSAGE_MAX_POINTS, customer.getName()),
+                thrown.getMessage()
+        );
+    }
 }

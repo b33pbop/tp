@@ -87,6 +87,9 @@ e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also accepta
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
 e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
+* Commands are case-insensitive.<br>
+e.g. `list` is equivalent to `LIST`,`lISt`,`lIsT`, etc...
+
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
 </box>
@@ -249,12 +252,15 @@ Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 
 * Bill amount can be any positive number with at most 2 decimal points e.g. `50`, `50.15`, `50.1`
 * Customers are automatically assigned a tier based on their accumulated points.
-* The current thresholds are: 
+* The current thresholds are:
 - Member: 0.00 - 99.99 points
 - Bronze: 100.00 - 499.99 points
 - Silver: 500.00 - 999.99 points
 - Gold: 1000.00 - 2499.99 points
 - Platinum: 2500.00 points onwards.
+- There is a maximum cap at 100,000 points for each customer.
+
+*As per the industry standard, bill amounts are automatically truncated to whole numbers when converting to points.
 
 Examples:
 

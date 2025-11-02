@@ -51,18 +51,13 @@ public class JsonAdaptedOrderTest {
     }
 
     @Test
-    public void toModelType_negativeUnitPrice_returnsOrder() {
-        assertThrows(IllegalArgumentException.class, () -> new ItemUnitPrice(("-5.9")));
+    public void toModelType_negativeUnitPrice_failure() {
+        assertThrows(IllegalArgumentException.class, () -> new ItemUnitPrice(("-5.90")));
     }
 
     @Test
-    public void toModelType_zeroUnitPrice_returnsOrder() {
-        ItemUnitPrice zeroPrice = new ItemUnitPrice("0.0");
-        JsonAdaptedOrder order = new JsonAdaptedOrder(VALID_ITEM, VALID_QUANTITY,
-                zeroPrice, VALID_DELIVERY_DAY);
-        Order modelOrder = order.toModelType();
-
-        assertEquals(zeroPrice, modelOrder.getUnitPrice());
+    public void toModelType_zeroUnitPrice_failure() {
+        assertThrows(IllegalArgumentException.class, () -> new ItemUnitPrice(("0")));
     }
 
     @Test

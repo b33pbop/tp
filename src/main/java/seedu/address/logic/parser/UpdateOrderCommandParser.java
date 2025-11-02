@@ -12,7 +12,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_UNITPRICE;
 import seedu.address.logic.commands.UpdateOrderCommand;
 import seedu.address.logic.commands.UpdateOrderCommand.UpdateOrderDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
 import seedu.address.model.person.OrderIndex;
@@ -56,19 +55,12 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
             updateOrderDescriptor.updateQuantity(quantityRaw);
         }
         if (argMultimap.getValue(PREFIX_UNITPRICE).isPresent()) {
-            String unitPriceRaw = argMultimap.getValue(PREFIX_UNITPRICE).get().trim();
-            if (unitPriceRaw.startsWith("$")) {
-                unitPriceRaw = unitPriceRaw.substring(1);
-            }
-            updateOrderDescriptor.updateUnitPrice(new ItemUnitPrice(unitPriceRaw));
+            ItemUnitPrice unitPriceRaw = ParserUtil.parseItemUnitPrice(argMultimap.getValue(PREFIX_UNITPRICE).get());
+            updateOrderDescriptor.updateUnitPrice(unitPriceRaw);
         }
         if (argMultimap.getValue(PREFIX_DELIVERYDAY).isPresent()) {
             String deliveryDayRaw = argMultimap.getValue(PREFIX_DELIVERYDAY).get();
-            updateOrderDescriptor.updateDeliveryDay(new ItemDeliveryDay(deliveryDayRaw));
-        }
-
-        if (!updateOrderDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(UpdateOrderCommand.MESSAGE_NO_CHANGE);
+            updateOrderDescriptor.updateDeliveryDay(ParserUtil.parseItemDeliveryDay(deliveryDayRaw));
         }
 
         Phone supplierPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
