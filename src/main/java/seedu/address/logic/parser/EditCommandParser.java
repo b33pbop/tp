@@ -71,10 +71,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setCategory(ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get()));
         }
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
-        }
-
         return new EditCommand(index, editPersonDescriptor);
     }
 
