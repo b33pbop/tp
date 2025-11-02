@@ -34,7 +34,9 @@ public class CustomerBuilder extends PersonBuilder {
 
     @Override
     public Customer build() {
-        return new Customer(name, phone, email, address, category);
+        Customer customer = new Customer(name, phone, email, address, category);
+        customer.addPointsFromSpending(points); // Add this line
+        return customer;
     }
 
     @Override

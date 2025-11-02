@@ -258,6 +258,7 @@ Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 - Silver: 500.00 - 999.99 points
 - Gold: 1000.00 - 2499.99 points
 - Platinum: 2500.00 points onwards.
+- There is a maximum cap at 100,000 points for each customer.
 
 *As per the industry standard, bill amounts are automatically truncated to whole numbers when converting to points.
 

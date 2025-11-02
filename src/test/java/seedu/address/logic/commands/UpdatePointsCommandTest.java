@@ -92,4 +92,31 @@ public class UpdatePointsCommandTest {
         // different -> false
         assert !command1.equals(command2);
     }
+
+    @Test
+    public void execute_customerAtMaxPoints_throwsCommandException() throws Exception {
+        // Arrange
+        Customer maxedCustomer = new CustomerBuilder()
+                .withName("Bob")
+                .withPhone("81234567")
+                .withPoints(Customer.MAX_POINTS) // Customer already has max points
+                .build();
+
+        model.addPerson(maxedCustomer);
+
+        double amountSpent = 100.0; // Any positive spending
+
+        UpdatePointsCommand command = new UpdatePointsCommand(maxedCustomer.getPhone(), amountSpent);
+
+        // Act + Assert
+        CommandException thrown = assertThrows(CommandException.class, () ->
+                command.execute(model)
+        );
+
+        assertEquals(
+                String.format(UpdatePointsCommand.MESSAGE_MAX_POINTS, maxedCustomer.getName()),
+                thrown.getMessage()
+        );
+    }
+
 }
