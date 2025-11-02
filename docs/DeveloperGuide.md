@@ -319,26 +319,25 @@ Tech-savvy ghost kitchen managers who:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                                       |  So that I can…​                                                    |
-|----------|-----------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                      | see usage instructions                                | refer to instructions when I forget how to use the App                 |
-| `* * *`  | manager                                       | add a new contact                                     |                                                                        |
-| `* * *`  | manager                                       | delete a contact                                      | remove entries that I no longer need                                   |
-| `* * *`  | manager                                       | find a contact by name                                | locate details of persons without having to go through the entire list |
-| `* * `   | manager                                       | edit a contact                                        | update changed phone numbers, emails or addresses                      |
-| `* * `   | manager                                       | categorise a contact (Supplier, Staff, Customer)      | filter contacts by groups                                              |
-| `* `     | manager                                       | add orders for Suppliers                              | keep track of delivery from specific suppliers.                        |
-| `* `     | manager                                       | update orders for Suppliers                           | update changed quantity, unit price, etc                               |
-| `* `     | manager                                       | delete orders from specific suppliers                 | remove entries indicating completed or cancelled deliveries            |
-| `* `     | manager                                       | mark a staff contact as inactive (e.g., on leave)     | I don’t accidentally assign tasks to them.                             |
-| `*`      | manager                                       | record staff shifts with their contacts               | reach out to the right staff on duty                                   |
-| `* `     | manager                                       | attach notes to a contact                             | remember context like “delivers only on weekends”                      |
-| `*`      | manager                                       | search for staff by their shift timings               | See all at once the staff that should be on duty                       |
-| `*`      | manager with many persons in the address book | sort persons by name                                  | locate a person easily                                                 |
-| `*`      | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
-
-
-*{More to be added}*
+| Priority | As a …​                                       | I want to …​                                          | So that I can…​                                                        |
+|---------|-----------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
+| `* * *` | new user                                      | see usage instructions                                | refer to instructions when I forget how to use the App                 |
+| `* * *` | manager                                       | add a new contact                                     |                                                                        |
+| `* * *` | manager                                       | delete a contact                                      | remove entries that I no longer need                                   |
+| `* * *` | manager                                       | find a contact by name                                | locate details of persons without having to go through the entire list |
+| `* * *` | manager                                       | edit a contact                                        | update changed phone numbers, emails or addresses                      |
+| `* * *` | manager                                       | categorise a contact (Supplier, Staff, Customer)      | filter contacts by groups                                              |
+| `* * * ` | manager                                       | add orders for Suppliers                              | keep track of delivery from specific suppliers.                        |
+| `* * *` | manager                                       | update orders for Suppliers                           | update changed quantity, unit price, etc                               |
+| `* * `  | manager                                       | track customer spending                               | update their membership tier                                           |
+| `* * `  | manager                                       | update staff shift timing                             | track who is working that day                                          |
+| `* *`   | manager                                       | delete orders from specific suppliers                 | remove entries indicating completed or cancelled deliveries            |
+| `* *`   | manager                                       | mark a staff contact as inactive (e.g., on leave)     | I don’t accidentally assign tasks to them.                             |
+| `*`     | manager                                       | record staff shifts with their contacts               | reach out to the right staff on duty                                   |
+| `* `    | manager                                       | attach notes to a contact                             | remember context like “delivers only on weekends”                      |
+| `*`     | manager                                       | search for staff by their shift timings               | See all at once the staff that should be on duty                       |
+| `*`     | manager with many persons in the address book | sort persons by name                                  | locate a person easily                                                 |
+| `*`     | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
 
 ### Use cases
 
@@ -359,14 +358,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Required fields missing.
-    * 2a1. System indicates missing field
-    * 2a2. Use case resumes at step 2
+* 3a.Required fields missing.
+    * 3a1. System indicates missing field
+    * Use case resumes at step 2
 
-* 3a. Potential duplicate detected.
+* 3b. Potential duplicate detected.
 
-    * 3a1. System informs manager and offers to merge.
-    * 3a2. Use case resumes and step 2 or ends(if cancelled)
+    * 3b1. System informs manager of duplicate.
+    * Use case resumes at step 2 or ends(if cancelled)
 
 **U2. Search for a contact**
 
@@ -376,8 +375,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Manager initiates **Search Contact**
 2. System prompts for search keyword
-3. System displays list of matching contacts
-4. Manager selects a contact to view details
+3. Manager enters search keyword
+4. System displays list of matching contacts
+5. Manager selects a contact to view details
 
     Use case ends.
 
@@ -387,7 +387,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. System prompts for input.
     * Use case resumes at step 2.
 * 3a. No matches found
-    * 3a1. System informs Manager and offers to **Add new contact (U1)**
+    * 3a1. System informs Manager that no matches were found.
     * Use case ends.
 
 **U3. Adding Orders to Supplier**
@@ -442,7 +442,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Manager selects **View by category**
 2. System displays available categories
-3. Manager chooses a category (e.g Suppliers, Riders, Staff)
+3. Manager chooses a category (e.g. Supplier & Staff)
 4. System lists all contacts under category
 
    Use case ends.
@@ -450,10 +450,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 3a. No contacts in selected category
-    * 3a1. System shows "No contact found" message.
+    * 3a1. System informs manager that no contacts were found.
     * Use case resumes at step 3 or ends.
-* 4a. Too many contacts to display.
-    * 5a1. System requests further filter input.
+* 4a. Large number of contacts to display.
+    * 4a1. System displays contacts efficiently, allowing all results to be viewed without truncation.
     * Use case ends.
 
 
@@ -479,11 +479,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 18. Code should be documented to allow future developers to understand and maintain it.
 19. Error messages should be understandable by non-technical users.
 
-*{More to be added}*
-
 ### Glossary
 
 * **Manager**: Ghost kitchen manager that is using the application
+* **Customer**: Customers who have signed up for a membership for a loyalty program
 * **Fuzzy Search**: A search technique to find results approximately matching a query instead of an exact match
 * **GUI-Driven Systems**: Software systems that depend on visual elements like buttons and menus for user interaction
 * **Archiving**: The process of storing data in an organized manner for long-term retention
@@ -541,3 +540,11 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+## **Appendix: Effort**
+wip
+
+## **Appendix: Planned Enhancements**
+1. Adding a command to deduct and update number of leaves for a staff.
+2. Improving shift system to track shifts in the current month.
+3. Improving membership system to implement discounts for customers in tiers.

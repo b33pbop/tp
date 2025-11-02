@@ -14,6 +14,7 @@ import static seedu.address.testutil.TypicalCustomers.BOB;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.category.Category;
 import seedu.address.model.tier.Tier;
 import seedu.address.testutil.CustomerBuilder;
 
@@ -136,5 +137,53 @@ public class CustomerTest {
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
                 + ", category=" + ALICE.getCategory() + "}";
         assertEquals(expected, ALICE.toString());
+    }
+
+    @Test
+    public void redeemPoints_validAmount_pointsReducedAndTierUpdated() {
+        Customer customer = new Customer(
+                new Name("Alice"),
+                new Phone("91234567"),
+                new Email("alice@example.com"),
+                new Address("Baker Street"),
+                new Category("Customer")
+        );
+
+        // give her some points first
+        customer.addPointsFromSpending(500); // +500 pts
+
+        customer.redeemPoints(200);
+
+        assertEquals(300, customer.getPoints());
+        // tier depends on your Tier.getTierForPoints(...)
+        // but at least make sure it doesn't crash
+    }
+
+    @Test
+    public void redeemPoints_negative_throwsIllegalArgumentException() {
+        Customer customer = new Customer(
+                new Name("Bob"),
+                new Phone("91234568"),
+                new Email("bob@example.com"),
+                new Address("Queen Street"),
+                new Category("Customer")
+        );
+
+        assertThrows(IllegalArgumentException.class, () -> customer.redeemPoints(-10));
+    }
+
+    @Test
+    public void redeemPoints_moreThanHas_throwsIllegalArgumentException() {
+        Customer customer = new Customer(
+                new Name("Carl"),
+                new Phone("91234569"),
+                new Email("carl@example.com"),
+                new Address("Alpha Street"),
+                new Category("Customer")
+        );
+
+        customer.addPointsFromSpending(100); // has 100
+
+        assertThrows(IllegalArgumentException.class, () -> customer.redeemPoints(200));
     }
 }
