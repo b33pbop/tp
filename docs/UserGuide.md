@@ -6,6 +6,8 @@ pageNav: 3
 
 # GhostConnect User Guide
 
+Hey Ghost Kitchen Managers! 
+
 Welcome to **GhostConnect**, a desktop application designed for managing contacts **quickly and efficiently** for our target users: the **ghost kitchen managers**. 
 
 Ghost kitchen managers oversee the operations of a ghost kitchen, which produces meals exclusively for delivery and takeout, without a traditional space to dine in.
@@ -14,7 +16,11 @@ Keeping that in mind, this application aims to help for **tech-savvy ghost kitch
 
 GhostConnect combines the **speed and precision of a Command Line Interface (CLI)** with the **visual clarity of a Graphical User Interface (GUI)**, giving users the flexibility to work in the way that suits them best.
 
-GhostConnect is built with these needs in mind, providing both **powerful CLI commands for rapid actions** and a **GUI for visual organization and easy navigation**.
+With Ghost Connect, users will be able to add, edit, delete and categorise their contact entries into 3 categories: Customers, Suppliers and Staff. 
+Users will also have access to various category specific functions depending on the entry's category, which include the following:
+- Staff: Updating of Shifts
+- Customer: Updating of Points
+- Suppliers: Adding, Updating and Deleting of Orders
 
 Assumptions:
 - We assume that users are familiar with basic computing concepts such as **file management, shortcuts, and command-based operations**, and are comfortable using tools that **streamline repetitive tasks** and **handle multiple contacts simultaneously**. 
