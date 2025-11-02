@@ -28,7 +28,7 @@ public class ItemUnitPrice {
     public ItemUnitPrice(@JsonProperty("itemUnitPrice") String itemUnitPrice) {
         requireNonNull(itemUnitPrice);
         checkArgument(isValidItemUnitPrice(itemUnitPrice.trim()), MESSAGE_CONSTRAINTS);
-        this.itemUnitPrice = itemUnitPrice.contains(".") ? itemUnitPrice : itemUnitPrice + ".00";
+        this.itemUnitPrice = itemUnitPrice;
     }
 
     public static boolean isValidItemUnitPrice(String test) {
