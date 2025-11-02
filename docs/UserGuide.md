@@ -18,6 +18,7 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
     <summary> Table of Contents </summary>
 
 - [Quick Start](#quick-start)
+- [Parameters Reference](#parameters-reference)
 - [Features](#features)
   - [General Commands](#general-commands)
     - [Help](#accessing-the-help-page-help)
@@ -73,7 +74,34 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
 6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
+## Parameters
 
+Many commands make use of the same parameters with identical validation rules. Listed below are the parameter types
+used in GhostConnect.
+
+### Person General Parameters 
+Name 
+Phone Number
+Email 
+Address
+Category
+
+### Staff Specific Parameters
+Shift
+
+### Supplier Specific Parameters
+In GhostConnect, suppliers are 
+
+Order Index
+Item Name
+Item Quantity
+Item Unit Price
+Item Delivery Day
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------
 ## Features
 
 <box type="info" seamless>
