@@ -59,9 +59,14 @@ Staff *--> Leaves
 Person -[hidden]up--> I
 UniquePersonList -[hidden]up-> I
 
+
 Person <|- Supplier
-Supplier *--> ItemName
-Supplier "1" *--> "*"orders
+Supplier "1" *--> "*"Order
+
+Person <|- Customer
+Customer *--> "1" Tier
+Customer *--> Points
+
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address
