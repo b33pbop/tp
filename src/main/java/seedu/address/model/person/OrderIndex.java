@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.math.BigInteger;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class OrderIndex {
     public static final String MESSAGE_CONSTRAINTS =
-            "Only positive numerical values that are larger than zero are allowed.";
+            "Invalid Order Index, only positive integers lesser than 2,147,483,647 are allowed.";
     public static final String VALIDATION_REGEX = "^[1-9]\\d*$";
 
     public final String orderIndex;
@@ -30,7 +32,8 @@ public class OrderIndex {
     }
 
     public static boolean isValidOrderIndex(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.matches(VALIDATION_REGEX) &&
+                new BigInteger(test).compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) < 0;
     }
 
     @Override
