@@ -31,6 +31,7 @@ import seedu.address.model.person.Supplier;
 public class UpdateOrderCommand extends Command {
 
     public static final String COMMAND_WORD = "updateOrder";
+    public static final String COMMAND_LOWER = "updateorder";
 
     public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
     public static final String MESSAGE_UPDATE_SUCCESS = "Order has been updated successfully";
