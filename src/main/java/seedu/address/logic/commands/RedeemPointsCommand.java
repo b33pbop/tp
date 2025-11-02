@@ -13,6 +13,7 @@ import seedu.address.model.person.Phone;
 public class RedeemPointsCommand extends Command {
 
     public static final String COMMAND_WORD = "redeemPoints";
+    public static final String COMMAND_LOWER = "redeempoints";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Redeems points from a customer "
             + "identified by phone number. "
