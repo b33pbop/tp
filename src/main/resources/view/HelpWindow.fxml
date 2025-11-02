@@ -20,9 +20,9 @@
         <URL value="@HelpWindow.css" />
       </stylesheets>
 
-      <VBox>
+  <VBox>
         <children>
-          <ScrollPane fitToWidth="true" prefHeight="600.0" prefWidth="800.0">
+          <ScrollPane fitToWidth="true" prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
             <content>
               <Label fx:id="helpMessage" text="Label" wrapText="true" style="-fx-font-family: 'Courier New'; -fx-font-size: 12px;">
                 <padding>
