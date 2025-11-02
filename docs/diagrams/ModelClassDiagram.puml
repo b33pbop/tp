@@ -53,13 +53,13 @@ Person *--> Email
 Person *--> Address
 Person *--> Category
 
-Person -|> Staff
+Person <|- Staff
 Staff *--> Shift
 Staff *--> Leaves
 Person -[hidden]up--> I
 UniquePersonList -[hidden]up-> I
 
-Person -|> Supplier
+Person <|- Supplier
 Supplier *--> ItemName
 Supplier "1" *--> "*"orders
 
