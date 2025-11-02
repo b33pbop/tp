@@ -34,7 +34,7 @@ public class UpdateOrderCommand extends Command {
 
     public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
     public static final String MESSAGE_UPDATE_SUCCESS = "Order has been updated successfully";
-    public static final String MESSAGE_NO_CHANGE = "Values given are exactly the same, no update made.";
+    public static final String MESSAGE_NO_CHANGE = "At least one of the optional fields must be provided";
     public static final String MESSAGE_NOT_FOUND = "No person found with phone number %1$s.";
     public static final String MESSAGE_NOT_SUPPLIER = "The person with phone number %1$s is not a supplier.";
     public static final String MESSAGE_OUT_OF_BOUNDS = "Index given is out of bounds of supplier's list of orders.";
