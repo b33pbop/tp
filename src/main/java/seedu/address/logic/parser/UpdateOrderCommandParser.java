@@ -56,11 +56,8 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
             updateOrderDescriptor.updateQuantity(quantityRaw);
         }
         if (argMultimap.getValue(PREFIX_UNITPRICE).isPresent()) {
-            String unitPriceRaw = argMultimap.getValue(PREFIX_UNITPRICE).get().trim();
-            if (unitPriceRaw.startsWith("$")) {
-                unitPriceRaw = unitPriceRaw.substring(1);
-            }
-            updateOrderDescriptor.updateUnitPrice(new ItemUnitPrice(unitPriceRaw));
+            ItemUnitPrice unitPriceRaw = ParserUtil.parseItemUnitPrice(argMultimap.getValue(PREFIX_UNITPRICE).get());
+            updateOrderDescriptor.updateUnitPrice(unitPriceRaw);
         }
         if (argMultimap.getValue(PREFIX_DELIVERYDAY).isPresent()) {
             String deliveryDayRaw = argMultimap.getValue(PREFIX_DELIVERYDAY).get();
