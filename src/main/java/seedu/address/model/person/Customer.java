@@ -10,9 +10,9 @@ import seedu.address.model.tier.Tier;
  * Inherits from person and tracks the customer's points and membership tier.
  */
 public class Customer extends Person {
+    public static final int MAX_POINTS = 100000;
     private Tier tier;
     private int points;
-    public static final int MAX_POINTS = 100000;
 
     /**
      * Every field must be present and not null.
@@ -77,6 +77,11 @@ public class Customer extends Person {
         return super.toString();
     }
 
+    /**
+     * 1 point = $1, if exceeds MAX_POINTS will adjust points such that it does not overshoot.
+     * @param amount Bill Amount
+     * @return Number of points based of spending amount
+     */
     public int calculatePointsFromSpending(double amount) {
         if (points + (int) amount >= MAX_POINTS) {
             return MAX_POINTS - points;
@@ -89,7 +94,7 @@ public class Customer extends Person {
     }
 
     /**
-     * Spends the poitns to redeem a benefit
+     * Spends the points to redeem a benefit
      * @param pointsToRedeem number of points to be redeemed
      * @throws IllegalArgumentException
      */
