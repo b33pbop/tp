@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
@@ -44,6 +45,12 @@ public class UpdateOrderCommandParserTest {
         // missing order number
         String missingOrderNum = " p/ 91111111 i/ Testing";
         assertParseFailure(parser, UpdateOrderCommand.COMMAND_WORD + missingOrderNum, MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_withPreamble_failure() {
+        String validInput = " p/ 91111111 o/ 1 i/ Testing q/ 99 u/ 0.99 d/ every Monday";
+        assertThrows(ParseException.class, () -> parser.parse("abcabcabc" + validInput));
     }
 
     @Test

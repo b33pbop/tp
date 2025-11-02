@@ -22,6 +22,13 @@ public class RedeemPointsCommandParserTest {
     }
 
     @Test
+    public void parse_withPreamble_failure() {
+        String validInput = " p/ 91111111 pts/ 200";
+        assertThrows(ParseException.class, () -> parser.parse("abcabcabc" + validInput));
+    }
+
+
+    @Test
     public void parse_missingPhone_throwsParseException() {
         assertThrows(ParseException.class, () -> parser.parse(" pts/200"));
     }

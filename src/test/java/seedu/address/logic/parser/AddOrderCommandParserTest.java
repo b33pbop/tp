@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
@@ -37,6 +38,11 @@ public class AddOrderCommandParserTest {
                 expectedOrder.getDeliveryDay());
 
         assertParseSuccess(parser, expectedInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_withPreamble_failure() {
+        assertThrows(ParseException.class, () -> parser.parse("abcabcabc" + expectedInput));
     }
 
     @Test
