@@ -252,12 +252,15 @@ Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 
 * Bill amount can be any positive number with at most 2 decimal points e.g. `50`, `50.15`, `50.1`
 * Customers are automatically assigned a tier based on their accumulated points.
-* The current thresholds are: 
+* The current thresholds are:
 - Member: 0.00 - 99.99 points
 - Bronze: 100.00 - 499.99 points
 - Silver: 500.00 - 999.99 points
 - Gold: 1000.00 - 2499.99 points
 - Platinum: 2500.00 points onwards.
+- There is a maximum cap at 100,000 points for each customer.
+
+*As per the industry standard, bill amounts are automatically truncated to whole numbers when converting to points.
 
 Examples:
 

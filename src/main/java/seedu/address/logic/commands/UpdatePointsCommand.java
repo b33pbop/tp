@@ -36,6 +36,7 @@ public class UpdatePointsCommand extends Command {
     public static final String MESSAGE_NOT_A_CUSTOMER = "The person with phone number %1$s is not a customer.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "No person found with phone number %1$s.";
     public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
+    public static final String MESSAGE_MAX_POINTS = "%1$s has reached the maximum number of points!";
 
     private final Phone phone;
     private final double amount;
@@ -79,8 +80,11 @@ public class UpdatePointsCommand extends Command {
 
         // Update amount spent
         Customer customerToUpdate = (Customer) personToUpdate;
-        customerToUpdate.addPointsFromSpending(amount);
         int pointsAdded = customerToUpdate.calculatePointsFromSpending(amount);
+        if (customerToUpdate.getPoints() == Customer.MAX_POINTS) {
+            throw new CommandException(String.format(MESSAGE_MAX_POINTS, customerToUpdate.getName()));
+        }
+        customerToUpdate.addPointsFromSpending(amount);
 
         // Replace the old person with updated customer in the model
         model.setPerson(personToUpdate, customerToUpdate);
