@@ -77,7 +77,7 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void allFieldsIncluded() {
-        String userInput = UpdateOrderCommand.COMMAND_WORD + " p/ 85355255 o/ 1 i/ Updated q/ 1000 u/ 111.11 d/ Today";
+        String userInput = " p/ 85355255 o/ 1 i/ Updated q/ 1000 u/ 111.11 d/ Today";
 
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
@@ -103,7 +103,7 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void someFieldsIncluded() {
-        String userInput = "updateOrder p/ 85355255 o/ 1 q/ 1000 d/ Today";
+        String userInput = "p/ 85355255 o/ 1 q/ 1000 d/ Today";
 
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
@@ -126,7 +126,7 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void oneFieldIncluded() {
-        String userInput = "updateOrder p/ 85355255 o/ 1 ";
+        String userInput = "p/ 85355255 o/ 1 ";
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
@@ -168,7 +168,7 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void noFieldsIncluded() {
-        String userInput = "updateOrder p/ 85355255 o/ 1 ";
+        String userInput = "p/ 85355255 o/ 1 ";
         UpdateOrderDescriptor empty = new UpdateOrderDescriptor();
         UpdateOrderCommand successfulCommand = new UpdateOrderCommand(new Phone("85355255"),
                                                                         new OrderIndex("1"),
