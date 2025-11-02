@@ -34,10 +34,9 @@ public class ItemUnitPriceTest {
         assertFalse(ItemUnitPrice.isValidItemUnitPrice("peter*")); // contains non-alphanumeric characters
         assertFalse(ItemUnitPrice.isValidItemUnitPrice("0.99999")); // too many decimal places
         assertFalse(ItemUnitPrice.isValidItemUnitPrice("123.1")); // one decimal place
+        assertFalse(ItemUnitPrice.isValidItemUnitPrice("12345")); // numbers only
 
-
-        // valid name
-        assertTrue(ItemUnitPrice.isValidItemUnitPrice("12345")); // numbers only
+        // valid unit price
         assertTrue(ItemUnitPrice.isValidItemUnitPrice("0.99")); // two decimal places
     }
 
