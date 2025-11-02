@@ -151,7 +151,7 @@ public class JsonAdaptedPersonTest {
 
         // add an order
         supplier.addOrder(new Order(new ItemName("Laptop"), new ItemQuantity("10"),
-                new ItemUnitPrice("1000.0"), new ItemDeliveryDay("every Friday")));
+                new ItemUnitPrice("1000.00"), new ItemDeliveryDay("every Friday")));
 
         // convert to JsonAdaptedPerson
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
@@ -161,7 +161,7 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedOrder jsonOrder = adaptedPerson.getOrders().get(0);
         assertEquals(new ItemName("Laptop"), jsonOrder.getItem());
         assertEquals(new ItemQuantity("10"), jsonOrder.getQuantity());
-        assertEquals(new ItemUnitPrice("1000.0"), jsonOrder.getUnitPrice());
+        assertEquals(new ItemUnitPrice("1000.00"), jsonOrder.getUnitPrice());
         assertEquals(new ItemDeliveryDay("every Friday"), jsonOrder.getDeliveryDay());
     }
 
@@ -174,7 +174,7 @@ public class JsonAdaptedPersonTest {
                 new Category("Supplier"));
 
         supplier.addOrder(new Order(new ItemName("Mouse"), new ItemQuantity("5"),
-                new ItemUnitPrice("50.0"), new ItemDeliveryDay("every Friday")));
+                new ItemUnitPrice("50.00"), new ItemDeliveryDay("every Friday")));
 
         JsonAdaptedPerson adaptedPerson = new JsonAdaptedPerson(supplier);
         Person modelPerson = adaptedPerson.toModelType();
@@ -184,7 +184,7 @@ public class JsonAdaptedPersonTest {
         assertEquals(1, modelSupplier.getOrders().size());
         assertEquals(new ItemName("Mouse"), modelSupplier.getOrders().get(0).getItem());
         assertEquals(new ItemQuantity("5"), modelSupplier.getOrders().get(0).getQuantity());
-        assertEquals(new ItemUnitPrice("50.0"), modelSupplier.getOrders().get(0).getUnitPrice());
+        assertEquals(new ItemUnitPrice("50.00"), modelSupplier.getOrders().get(0).getUnitPrice());
         assertEquals(new ItemDeliveryDay("every Friday"), modelSupplier.getOrders().get(0).getDeliveryDay());
     }
 
