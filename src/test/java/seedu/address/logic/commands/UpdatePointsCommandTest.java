@@ -92,4 +92,61 @@ public class UpdatePointsCommandTest {
         // different -> false
         assert !command1.equals(command2);
     }
+
+    @Test
+    public void execute_personNotFoundFiltered_throwsExtendedMessage() {
+        // Add one person
+        Customer newCustomerA = new CustomerBuilder()
+                .withName("Alice")
+                .withPhone("81234567")
+                .withTier(Tier.BRONZE)
+                .build();
+        Customer newCustomerB = new CustomerBuilder()
+                .withName("Blice")
+                .withPhone("91234567")
+                .withTier(Tier.BRONZE)
+                .build();
+        model.addPerson(newCustomerA);
+        model.addPerson(newCustomerB);
+
+        model.updateFilteredPersonList(person -> person.isSamePerson(newCustomerB));
+
+        UpdatePointsCommand cmd = new UpdatePointsCommand(new Phone("81234567"), 100);
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+
+        assertEquals(
+                String.format(UpdatePointsCommand.MESSAGE_PERSON_NOT_FOUND
+                        + UpdatePointsCommand.ERROR_EXTENSION, new Phone("81234567")),
+                ex.getMessage()
+        );
+    }
+
+    @Test
+    public void execute_customerAtMaxPoints_throwsCommandException() throws Exception {
+        // Arrange
+        Customer customer = new CustomerBuilder()
+                .withName("Bob")
+                .withPhone("81234567")
+                .build();
+
+        // Fill customer points to MAX_POINTS
+        customer.addPointsFromSpending(Customer.MAX_POINTS);
+
+        model.addPerson(customer);
+
+        double extraSpending = 50.0; // Any positive number
+
+        UpdatePointsCommand command = new UpdatePointsCommand(customer.getPhone(), extraSpending);
+
+        // Act + Assert
+        CommandException thrown = assertThrows(CommandException.class, () ->
+                command.execute(model)
+        );
+
+        assertEquals(
+                String.format(UpdatePointsCommand.MESSAGE_MAX_POINTS, customer.getName()),
+                thrown.getMessage()
+        );
+    }
 }

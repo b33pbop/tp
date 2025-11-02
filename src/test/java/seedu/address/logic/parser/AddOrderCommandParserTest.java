@@ -93,13 +93,6 @@ public class AddOrderCommandParserTest {
     }
 
     @Test
-    public void parse_unitPriceWithDollar_success() throws ParseException {
-        String args = "p/85355255 i/Chicken q/99 u/$0.99 d/every Thursday";
-        AddOrderCommand cmd = parser.parse(args);
-        assertEquals(new ItemUnitPrice("0.99"), cmd.getOrderUnitPrice());
-    }
-
-    @Test
     public void parse_unitPriceWithoutDollar_success() throws ParseException {
         String args = "p/85355255 i/Chicken q/99 u/0.99 d/every Thursday";
         AddOrderCommand cmd = parser.parse(args);

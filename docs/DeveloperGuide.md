@@ -145,7 +145,8 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
-
+* To improve user experience, the parser normalises all command words to lower-case before dispatching them. This allows users to enter commands regardless of letter casing, which aims to improve user productivity.
+* The original command casing is preserved in error messages and feedback to maintain consistency and UI outputs. This enhancement required no changes to individual command classes and does not affect the command's parameters or execution logic.
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
@@ -306,13 +307,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Target user profile**:
 
 Tech-savvy ghost kitchen managers who:
-* oversee multiple delivery-only brands and suppliers
 * handle frequent staff turnover and changing supplier contacts
+* handles a customer loyalty program
 * need to quickly retrieve and update contacts
 * prefer typing over mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: Our app helps ghost kitchen managers efficiently manage their diverse contact ecosystem — suppliers, delivery riders, staff, and partner brands. By offering categorisation, relationship links, fuzzy search, tagging, and archiving, it streamlines contact management. Managers can locate, update, and organise contacts faster than with traditional GUI-driven systems, ensuring smoother operations and fewer mix-ups.
+**Value proposition**: Our app helps ghost kitchen managers efficiently manage their diverse contact ecosystem — suppliers, customers, and staff. By offering categorisation, staff shift management, supplier orders management and customer membership management. Managers can locate, update, and organise contacts faster than with traditional GUI-driven systems, ensuring smoother operations and fewer mix-ups.
 
 
 ### User stories

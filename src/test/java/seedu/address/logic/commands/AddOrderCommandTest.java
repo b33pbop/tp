@@ -170,4 +170,54 @@ public class AddOrderCommandTest {
         Exception exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(String.format(AddOrderCommand.MESSAGE_NOT_FOUND, newPhone), exception.getMessage());
     }
+
+    @Test
+    void execute_personNotFoundFilteredListNotFull_throwsExtendedMessage() throws Exception {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model.updateFilteredPersonList(person -> person.getName().fullName.startsWith("A"));
+
+        assertNotEquals(model.getAddressBook().getPersonList().size(),
+                model.getFilteredPersonList().size());
+
+        Phone missingPhone = new Phone("99999999");
+        Order order = new OrderBuilder().build();
+
+        AddOrderCommand cmd = new AddOrderCommand(
+                missingPhone,
+                order.getItem(),
+                order.getQuantity(),
+                order.getUnitPrice(),
+                order.getDeliveryDay()
+        );
+
+        String expectedMessage =
+                String.format(AddOrderCommand.MESSAGE_NOT_FOUND + AddOrderCommand.ERROR_EXTENSION,
+                        missingPhone);
+
+        assertCommandFailure(cmd, model, expectedMessage);
+    }
+
+    @Test
+    void execute_personNotFoundFilteredListIsFull_throwsNormalMessage() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        assertEquals(model.getAddressBook().getPersonList().size(),
+                model.getFilteredPersonList().size());
+
+        Phone missingPhone = new Phone("99999999");
+        Order order = new OrderBuilder().build();
+
+        AddOrderCommand cmd = new AddOrderCommand(
+                missingPhone,
+                order.getItem(),
+                order.getQuantity(),
+                order.getUnitPrice(),
+                order.getDeliveryDay()
+        );
+
+        String expectedMessage =
+                String.format(AddOrderCommand.MESSAGE_NOT_FOUND, missingPhone);
+
+        assertCommandFailure(cmd, model, expectedMessage);
+    }
 }
