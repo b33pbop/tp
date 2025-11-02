@@ -6,11 +6,19 @@ pageNav: 3
 
 # GhostConnect User Guide
 
-Welcome to **GhostConnect**, a desktop application designed for managing contacts **quickly and efficiently**. GhostConnect combines the **speed and precision of a Command Line Interface (CLI)** with the **visual clarity of a Graphical User Interface (GUI)**, giving users the flexibility to work in the way that suits them best.
+Welcome to **GhostConnect**, a desktop application designed for managing contacts **quickly and efficiently** for our target users: the **ghost kitchen managers**. 
 
-This guide is intended for **tech-savvy ghost kitchen managers** who oversee multiple aspects of their business, including **staff coordination, supplier management, and customer engagement through loyalty programs**. Our target audience values **efficiency, accuracy, and organization**, and seeks tools that allow them to manage complex information quickly without sacrificing clarity.
+Ghost kitchen managers oversee the operations of a ghost kitchen, which produces meals exclusively for delivery and takeout, without a traditional space to dine in.
 
-We assume that users are familiar with basic computing concepts such as **file management, shortcuts, and command-based operations**, and are comfortable using tools that **streamline repetitive tasks** and **handle multiple contacts simultaneously**. GhostConnect is built with these needs in mind, providing both **powerful CLI commands for rapid actions** and a **GUI for visual organization and easy navigation**.
+Keeping that in mind, this application aims to help for **tech-savvy ghost kitchen managers** who oversee multiple aspects of their business, including **staff coordination, supplier management, and customer engagement through loyalty programs**. Our target audience values **efficiency, accuracy, and organization**, and seeks tools that allow them to manage complex information quickly without sacrificing clarity.
+
+GhostConnect combines the **speed and precision of a Command Line Interface (CLI)** with the **visual clarity of a Graphical User Interface (GUI)**, giving users the flexibility to work in the way that suits them best.
+
+GhostConnect is built with these needs in mind, providing both **powerful CLI commands for rapid actions** and a **GUI for visual organization and easy navigation**.
+
+Assumptions:
+- We assume that users are familiar with basic computing concepts such as **file management, shortcuts, and command-based operations**, and are comfortable using tools that **streamline repetitive tasks** and **handle multiple contacts simultaneously**. 
+- We assume that all ghost kitchen managers using the application reside within Singapore and only have external contacts within Singapore as well. This implies that all contact entries into GhostConnect are to only include Singaporean numbers.
 
 By the end of this guide, users will be able to **navigate GhostConnect confidently**, leverage its **advanced features**, and integrate it seamlessly into their daily operations to manage staff, suppliers, and customer loyalty programs efficiently.
 
