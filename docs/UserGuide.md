@@ -9,8 +9,7 @@ pageNav: 3
 GhostConnect is a **desktop app for managing contacts, optimized for fast and efficient use through a Command Line Interface** (CLI) while retaining the convenience of a **Graphical User Interface (GUI)**.
 Designed for users who value speed and precision, GhostConnect lets you organize, search, and update your contacts seamlessly &ndash; faster than traditional GUI-based contact managers.
 
-<details>
-    <summary> Table of Contents </summary>
+## Table of Contents
 
 - [Quick Start](#quick-start)
 - [Features](#features)
@@ -36,8 +35,6 @@ Designed for users who value speed and precision, GhostConnect lets you organize
 - [FAQ](#faq)
 - [Known Issues](#known-issues)
 - [Command Summary](#command-summary)
-
-</details>
 
 <page-nav-print />
 
