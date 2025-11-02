@@ -29,6 +29,7 @@ public class DeleteOrderCommand extends Command {
     public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
     public static final String MESSAGE_INVALID_ORDER_INDEX = "Invalid order index for this supplier.";
+    public static final String MESSAGE_EMPTY_ORDER_LIST = "Invalid order index for this supplier.";
 
     private final Phone supplierPhone;
     private final int orderIndex;
@@ -65,6 +66,9 @@ public class DeleteOrderCommand extends Command {
             throw new CommandException(MESSAGE_NOT_SUPPLIER);
         }
         Supplier foundSupplier = (Supplier) foundPerson;
+        if (foundSupplier.getSize() == 0) {
+            throw new CommandException(MESSAGE_EMPTY_ORDER_LIST);
+        }
         if (orderIndex < 1 || orderIndex > foundSupplier.getOrders().size()) {
             throw new CommandException(MESSAGE_INVALID_ORDER_INDEX);
         }

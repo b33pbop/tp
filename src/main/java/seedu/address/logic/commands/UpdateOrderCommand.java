@@ -40,6 +40,7 @@ public class UpdateOrderCommand extends Command {
     public static final String MESSAGE_NOT_SUPPLIER = "The person with phone number %1$s is not a supplier.";
     public static final String MESSAGE_OUT_OF_BOUNDS = "Index given is out of bounds of supplier's list of orders.";
     public static final String MESSAGE_DUPLICATE_ORDER = "Order with identical values already exists.";
+    public static final String MESSAGE_EMPTY_ORDER_LIST = "Invalid order index for this supplier.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the details of the order identified "
         + "by the index number used in the supplier's order list. "
         + "Existing values will be overwritten by the input values.\n"
@@ -109,6 +110,9 @@ public class UpdateOrderCommand extends Command {
         Supplier supplier = (Supplier) person;
         int orderIndex = Integer.parseInt(this.orderIndex.toString());
 
+        if (supplier.getSize() == 0) {
+            throw new CommandException(MESSAGE_EMPTY_ORDER_LIST);
+        }
         if (!(orderIndex > 0 && orderIndex <= supplier.getSize())) {
             throw new CommandException(MESSAGE_OUT_OF_BOUNDS);
         }
