@@ -22,7 +22,7 @@ public class NameOrCategoryContainsKeywordsPredicate implements Predicate<Person
 
         return keywords.stream()
                 .map(String::toLowerCase)
-                .anyMatch(keyword -> nameLower.contains(keyword) || categoryLower.contains(keyword));
+                .anyMatch(keyword -> nameLower.contains(keyword) || categoryLower.equals(keyword));
     }
 
     @Override

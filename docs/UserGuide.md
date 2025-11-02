@@ -175,8 +175,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Both names and categories are searched.
 * Substrings will also be matched e.g. `Cho` will match `Nicholas`
+* However, searching of categories occurs only for full match of input.
+  e.g. `find Cust` will not return contacts of `Customer`, only `find Customer` will.  
 * Persons matching at least one keyword will be returned (i.e. `OR` search).  
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
@@ -184,9 +185,14 @@ Examples:
 
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`
-* `find cust` returns all persons with `Customer` category
-* `find colleagues family` returns all persons tagged with `colleagues` or `family`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find customer` returns all persons with `Customer` category
+* `find staff supplier` returns all persons with categories `staff` or `supplier`<br>
+  <table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/find1.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/find2.png" width="300" height="300"/></td>
+    </tr>
+  </table>
 
 #### **Deleting a Contact: `delete`**
 
