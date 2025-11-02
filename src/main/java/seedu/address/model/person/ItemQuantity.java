@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ItemQuantity {
     public static final String MESSAGE_CONSTRAINTS =
-            "Only positive numerical values that are larger than zero are allowed.";
+            "Invalid Item Quantity, only positive integers are allowed (No decimals)";
     public static final String VALIDATION_REGEX = "^[1-9]\\d*$";
 
     public final String itemQuantity;
