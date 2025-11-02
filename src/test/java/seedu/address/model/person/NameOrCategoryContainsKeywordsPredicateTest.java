@@ -124,11 +124,11 @@ public class NameOrCategoryContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_categoryContainsSubstring_returnsTrue() {
+    public void test_categoryContainsSubstring_returnsFalse() {
         NameOrCategoryContainsKeywordsPredicate predicate =
                 new NameOrCategoryContainsKeywordsPredicate(List.of("cust"));
         Person person = new PersonBuilder().withName("Nicholas Tan").withCategory("Customer").build();
-        assertTrue(predicate.test(person));
+        assertFalse(predicate.test(person));
     }
 
     @Test
