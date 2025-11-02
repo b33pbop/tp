@@ -53,6 +53,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_NO_CHANGE = "Values given are exactly the same, no update made.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -81,8 +82,17 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(EditCommand.MESSAGE_NOT_EDITED);
+        }
+
         if (!personToEdit.equals(editedPerson) && model.hasPersonExcluding(editedPerson, personToEdit)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+
+        // No-op edit: if all provided values resolve to the same person, avoid unnecessary write
+        if (personToEdit.equals(editedPerson)) {
+            return new CommandResult(MESSAGE_NO_CHANGE);
         }
 
         model.setPerson(personToEdit, editedPerson);

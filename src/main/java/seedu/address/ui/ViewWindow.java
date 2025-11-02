@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Customer;
@@ -184,8 +185,11 @@ public class ViewWindow extends UiPart<Stage> {
         customerPointsLabel.setStyle(labelStyle);
         customerTierLabel.setStyle(labelStyle);
 
-        // Standardize window size
-        Stage stage = (Stage) backgroundPane.getScene().getWindow();
+        // Ensure content won't shrink below its preferred height so scrolling remains available
+        backgroundPane.setMinHeight(Region.USE_PREF_SIZE);
+
+        // Standardize window size (use UiPart root Stage to avoid null scene timing issues)
+        Stage stage = getRoot();
         stage.setWidth(400);
         stage.setHeight(420);
     }
