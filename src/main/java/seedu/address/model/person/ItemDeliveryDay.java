@@ -3,6 +3,9 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -31,7 +34,7 @@ public class ItemDeliveryDay {
     public ItemDeliveryDay(@JsonProperty("itemDeliveryDay") String itemDeliveryDay) {
         requireNonNull(itemDeliveryDay);
         checkArgument(isValidItemDeliveryDay(itemDeliveryDay), MESSAGE_CONSTRAINTS);
-        this.itemDeliveryDay = itemDeliveryDay;
+        this.itemDeliveryDay = toLowerCase(itemDeliveryDay);
     }
 
     public static boolean isValidItemDeliveryDay(String test) {
@@ -56,5 +59,11 @@ public class ItemDeliveryDay {
 
         ItemDeliveryDay otherName = (ItemDeliveryDay) other;
         return this.itemDeliveryDay.equals(otherName.itemDeliveryDay);
+    }
+
+    private String toLowerCase(String input) {
+        return Arrays.stream(input.trim().split("\\s+"))
+                .map(String::toLowerCase)
+                .collect(Collectors.joining(" "));
     }
 }
