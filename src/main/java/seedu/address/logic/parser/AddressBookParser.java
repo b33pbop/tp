@@ -71,7 +71,7 @@ public class AddressBookParser {
             return new DeleteCommandParser().parse(arguments);
 
         case DeleteOrderCommand.COMMAND_LOWER:
-            return new seedu.address.logic.parser.DeleteOrderCommandParser().parse(arguments);
+            return new DeleteOrderCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
