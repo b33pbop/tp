@@ -64,10 +64,6 @@ public class UpdateOrderCommandParser implements Parser<UpdateOrderCommand> {
             updateOrderDescriptor.updateDeliveryDay(new ItemDeliveryDay(deliveryDayRaw));
         }
 
-        if (!updateOrderDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(UpdateOrderCommand.MESSAGE_NO_CHANGE);
-        }
-
         Phone supplierPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         OrderIndex orderNumber = ParserUtil.parseOrderIndex(argMultimap.getValue(PREFIX_ORDERNUM).get());
 

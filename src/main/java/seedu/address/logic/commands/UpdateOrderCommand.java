@@ -14,6 +14,7 @@ import java.util.Optional;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
@@ -106,6 +107,10 @@ public class UpdateOrderCommand extends Command {
 
         if (!(orderIndex > 0 && orderIndex <= supplier.getSize())) {
             throw new CommandException(MESSAGE_OUT_OF_BOUNDS);
+        }
+
+        if (!this.descriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NO_CHANGE);
         }
 
         Order newOrder = createEditedOrder(supplier.getOrder(orderIndex), this.descriptor);
