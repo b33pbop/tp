@@ -11,12 +11,18 @@ import static seedu.address.logic.commands.DeleteOrderCommand.MESSAGE_NOT_SUPPLI
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.category.Category;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -74,5 +80,35 @@ public class DeleteOrderCommandTest {
         assertTrue(cmd1.equals(cmd2)); // same values
         assertFalse(cmd1.equals(cmd3)); // different phone
         assertFalse(cmd1.equals("not a command")); // different type
+    }
+
+    @Test
+    public void execute_supplierNotFoundFiltered_throwsExtendedMessage() {
+        Model model = new ModelManager(new AddressBook(), new UserPrefs());
+        Supplier s = new Supplier(new Name("Bob"), new Phone("91234567"),
+                new Email("a@a.com"), new Address("Addr"), new Category("Supplier"));
+        model.addPerson(s);
+
+        model.updateFilteredPersonList(p -> false);
+
+        DeleteOrderCommand cmd = new DeleteOrderCommand(new Phone("99999999"), 1);
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+
+        assertEquals(MESSAGE_NOT_FOUND + DeleteOrderCommand.ERROR_EXTENSION, ex.getMessage());
+    }
+
+    @Test
+    public void execute_emptyOrderList_throwsEmptyOrderListMessage() {
+        Model model = new ModelManager();
+        Supplier s = new Supplier(new Name("Bob"), new Phone("91234567"),
+                new Email("a@a.com"), new Address("Addr"), new Category("Supplier"));
+        model.addPerson(s);
+
+        DeleteOrderCommand cmd = new DeleteOrderCommand(new Phone("91234567"), 1);
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+
+        assertEquals(DeleteOrderCommand.MESSAGE_EMPTY_ORDER_LIST, ex.getMessage());
     }
 }

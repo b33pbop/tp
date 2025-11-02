@@ -6,8 +6,13 @@ pageNav: 3
 
 # GhostConnect User Guide
 
-GhostConnect is a **desktop app for managing contacts, optimized for fast and efficient use through a Command Line Interface** (CLI) while retaining the convenience of a **Graphical User Interface (GUI)**.
-Designed for users who value speed and precision, GhostConnect lets you organize, search, and update your contacts seamlessly &ndash; faster than traditional GUI-based contact managers.
+Welcome to **GhostConnect**, a desktop application designed for managing contacts **quickly and efficiently**. GhostConnect combines the **speed and precision of a Command Line Interface (CLI)** with the **visual clarity of a Graphical User Interface (GUI)**, giving users the flexibility to work in the way that suits them best.
+
+This guide is intended for **tech-savvy ghost kitchen managers** who oversee multiple aspects of their business, including **staff coordination, supplier management, and customer engagement through loyalty programs**. Our target audience values **efficiency, accuracy, and organization**, and seeks tools that allow them to manage complex information quickly without sacrificing clarity.
+
+We assume that users are familiar with basic computing concepts such as **file management, shortcuts, and command-based operations**, and are comfortable using tools that **streamline repetitive tasks** and **handle multiple contacts simultaneously**. GhostConnect is built with these needs in mind, providing both **powerful CLI commands for rapid actions** and a **GUI for visual organization and easy navigation**.
+
+By the end of this guide, users will be able to **navigate GhostConnect confidently**, leverage its **advanced features**, and integrate it seamlessly into their daily operations to manage staff, suppliers, and customer loyalty programs efficiently.
 
 <details>
     <summary> Table of Contents </summary>
@@ -48,9 +53,9 @@ Designed for users who value speed and precision, GhostConnect lets you organize
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-2. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W12-2/tp/releases).
 
-3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for GhostConnect.
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ghostConnect.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -100,11 +105,18 @@ e.g. `list` is equivalent to `LIST`,`lISt`,`lIsT`, etc...
 
 #### **Accessing the Help Page: `help`**
 
-Shows a message explaining how to access the help page.
-
-![help message](images/helpMessage.png)
+Shows a pop up window which provides a detailed guide on the commands available.
 
 Format: `help`
+
+
+![help message](images/helpMessage.png)
+<box type="tip" seamless>
+
+**Tip:** Click on the button on the bottom to copy the User Guide URL into your clipboard and paste it into your browser to access the full User Guide online!
+
+</box>
+
 
 #### **Adding a Contact: `add`**
 
@@ -252,12 +264,15 @@ Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 
 * Bill amount can be any positive number with at most 2 decimal points e.g. `50`, `50.15`, `50.1`
 * Customers are automatically assigned a tier based on their accumulated points.
-* The current thresholds are: 
+* The current thresholds are:
 - Member: 0.00 - 99.99 points
 - Bronze: 100.00 - 499.99 points
 - Silver: 500.00 - 999.99 points
 - Gold: 1000.00 - 2499.99 points
 - Platinum: 2500.00 points onwards.
+- There is a maximum cap at 100,000 points for each customer.
+
+*As per the industry standard, bill amounts are automatically truncated to whole numbers when converting to points.
 
 Examples:
 
@@ -366,14 +381,10 @@ AddressBook data are saved automatically as a JSON file `[JAR file location]/dat
 <box type="warning" seamless>
 
 **Caution:**  
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, GhostConnect will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the GhostConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 
 </box>
-
-#### Archiving Data Files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
