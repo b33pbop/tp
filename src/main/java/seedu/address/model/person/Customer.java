@@ -12,6 +12,7 @@ import seedu.address.model.tier.Tier;
 public class Customer extends Person {
     private Tier tier;
     private int points;
+    public static final int MAX_POINTS = 100000;
 
     /**
      * Every field must be present and not null.
@@ -43,6 +44,11 @@ public class Customer extends Person {
         }
 
         int points = calculatePointsFromSpending(amountSpent);
+        if (points + this.points > MAX_POINTS) {
+            this.points = MAX_POINTS;
+            updateTier();
+            return;
+        }
         this.points += points;
         updateTier();
     }
@@ -72,6 +78,9 @@ public class Customer extends Person {
     }
 
     public int calculatePointsFromSpending(double amount) {
+        if (points + (int) amount >= MAX_POINTS) {
+            return MAX_POINTS - points;
+        }
         return (int) amount; // truncates decimal points
     }
 
