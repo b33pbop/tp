@@ -18,7 +18,7 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
     <summary> Table of Contents </summary>
 
 - [Quick Start](#quick-start)
-- [Parameters Reference](#parameters-reference)
+- [Parameters](#parameters)
 - [Features](#features)
   - [General Commands](#general-commands)
     - [Help](#accessing-the-help-page-help)
@@ -79,27 +79,35 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
 Many commands make use of the same parameters with identical validation rules. Listed below are the parameter types
 used in GhostConnect.
 
-### Person General Parameters 
-Name 
-Phone Number
-Email 
-Address
-Category
+### Person General Parameters
+INCLUDE DESCRIPTION
+
+| Parameter             | Validation Requirements       | Rationale                                |
+|:----------------------|:------------------------------|:-----------------------------------------|
+| **NAME**              | -                             |                                          |
+| **PHONE NUMBER**      | -                             |                                          |
+| **EMAIL**             | -                             |                                          |
+| **ADDRESS**           | -                             |                                          |
+| **CATEGORY**          | -                             |                                          |
 
 ### Staff Specific Parameters
-Shift
+INCLUDE DESCRIPTION
+
+| Parameter             | Validation Requirements       | Rationale                                |
+|:----------------------|:------------------------------|:-----------------------------------------|
+| **SHIFT**             | -                             |                                          |
 
 ### Supplier Specific Parameters
-In GhostConnect, suppliers are 
+In GhostConnect, suppliers are also persons but have an additional parameter, which stores a list of their Orders.
+The parameters listed below are fields that belong to an Order.
 
-Order Index
-Item Name
-Item Quantity
-Item Unit Price
-Item Delivery Day
-
-
-
+| Parameter             | Validation Requirements       | Rationale                                |
+|:----------------------|:------------------------------|:-----------------------------------------|
+| **ORDER INDEX**       | - xxx<br/> - xxx              |                                          |
+| **ITEM NAME**         | -                             |                                          |
+| **ITEM QUANTITY**     | -                             |                                          |
+| **ITEM UNIT PRICE**   | -                             |                                          |
+| **ITEM DELIVERY DAY** | -                             |                                          |
 
 --------------------------------------------------------------------------------------------------------------------
 ## Features
@@ -152,7 +160,16 @@ Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY`
 
-* Contact to be added cannot have the same name or phone number as existing contacts.
+| Parameter | Validation Rules                                                 | Error Message when invalid |
+|:----------|:-----------------------------------------------------------------|:---------------------------|
+| **NAME**  | Refer to [Person General Parameters](#person-general-parameters) | "Name should..."           |
+
+Outputs:
+- Success
+  - Output Message displayed: ""
+- Failure
+  - Duplicate Entry: ""
+
 
 <box type="tip" seamless>
 
@@ -161,7 +178,6 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY`
 </box>
 
 Examples:
-
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/Customer` <br>
 * `add n/Betsy Crowe e/betsycrowe@example.com a/Yishun p/68998899 c/Staff`<br>
 
