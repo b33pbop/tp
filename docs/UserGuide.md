@@ -131,19 +131,19 @@ The parameters listed below are fields that belong to an Order.
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  - e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
-* All fields are compulsory.<br>
-e.g. `n/NAME c/CATEGORY` can be used as `n/John Doe c/Customer` or as `n/John Doe c/Supplier`, but not `n/John Doe`.
+* Some fields are optional.<br>
+  - Optional fields for certain commands have been indicated using the `[]` brackets. Fields within the square brackets are optional unless otherwise stated in the feature description.
 
 * Parameters can be in any order.<br>
-e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
+  - e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+  - e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * Commands are case-insensitive.<br>
-e.g. `list` is equivalent to `LIST`,`lISt`,`lIsT`, etc...
+  - e.g. `list` is equivalent to `LIST`,`lISt`,`lIsT`, etc...
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
