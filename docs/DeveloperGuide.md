@@ -145,7 +145,8 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
-
+* To improve user experience, the parser normalises all command words to lower-case before dispatching them. This allows users to enter commands regardless of letter casing, which aims to improve user productivity.
+* The original command casing is preserved in error messages and feedback to maintain consistency and UI outputs. This enhancement required no changes to individual command classes and does not affect the command's parameters or execution logic.
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
@@ -358,14 +359,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Required fields missing.
-    * 2a1. System indicates missing field
-    * 2a2. Use case resumes at step 2
+* 3a.Required fields missing.
+    * 3a1. System indicates missing field
+    * Use case resumes at step 2
 
-* 3a. Potential duplicate detected.
+* 3b. Potential duplicate detected.
 
-    * 3a1. System informs manager and offers to merge.
-    * 3a2. Use case resumes and step 2 or ends(if cancelled)
+    * 3b1. System informs manager of duplicate.
+    * Use case resumes at step 2 or ends(if cancelled)
 
 **U2. Search for a contact**
 
@@ -375,8 +376,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Manager initiates **Search Contact**
 2. System prompts for search keyword
-3. System displays list of matching contacts
-4. Manager selects a contact to view details
+3. Manager enters search keyword
+4. System displays list of matching contacts
+5. Manager selects a contact to view details
 
     Use case ends.
 
@@ -386,7 +388,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. System prompts for input.
     * Use case resumes at step 2.
 * 3a. No matches found
-    * 3a1. System informs Manager and offers to **Add new contact (U1)**
+    * 3a1. System informs Manager that no matches were found.
     * Use case ends.
 
 **U3. Adding Orders to Supplier**
@@ -441,7 +443,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Manager selects **View by category**
 2. System displays available categories
-3. Manager chooses a category (e.g Suppliers, Riders, Staff)
+3. Manager chooses a category (e.g. Supplier & Staff)
 4. System lists all contacts under category
 
    Use case ends.
@@ -449,10 +451,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 3a. No contacts in selected category
-    * 3a1. System shows "No contact found" message.
+    * 3a1. System informs manager that no contacts were found.
     * Use case resumes at step 3 or ends.
-* 4a. Too many contacts to display.
-    * 5a1. System requests further filter input.
+* 4a. Large number of contacts to display.
+    * 4a1. System displays contacts efficiently, allowing all results to be viewed without truncation.
     * Use case ends.
 
 

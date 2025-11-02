@@ -87,6 +87,9 @@ e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also accepta
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
 e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
+* Commands are case-insensitive.<br>
+e.g. `list` is equivalent to `LIST`,`lISt`,`lIsT`, etc...
+
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
 </box>
@@ -175,8 +178,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Both names and categories are searched.
 * Substrings will also be matched e.g. `Cho` will match `Nicholas`
+* However, searching of categories occurs only for full match of input.
+  e.g. `find Cust` will not return contacts of `Customer`, only `find Customer` will.  
 * Persons matching at least one keyword will be returned (i.e. `OR` search).  
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
@@ -184,9 +188,14 @@ Examples:
 
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`
-* `find cust` returns all persons with `Customer` category
-* `find colleagues family` returns all persons tagged with `colleagues` or `family`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find customer` returns all persons with `Customer` category
+* `find staff supplier` returns all persons with categories `staff` or `supplier`<br>
+  <table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/find1.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/find2.png" width="300" height="300"/></td>
+    </tr>
+  </table>
 
 #### **Deleting a Contact: `delete`**
 
@@ -242,7 +251,13 @@ Award points for specified customer based of amount spent.
 Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 
 * Bill amount can be any positive number with at most 2 decimal points e.g. `50`, `50.15`, `50.1`
-* Customer Tier will update based on number of points accumulated.
+* Customers are automatically assigned a tier based on their accumulated points.
+* The current thresholds are: 
+- Member: 0.00 - 99.99 points
+- Bronze: 100.00 - 499.99 points
+- Silver: 500.00 - 999.99 points
+- Gold: 1000.00 - 2499.99 points
+- Platinum: 2500.00 points onwards.
 
 Examples:
 
@@ -256,11 +271,16 @@ Update shift for the specified staff.
 Format: `updateShift p/PHONE s/SHIFT`
 
 * Can only be performed on Staff.
-* Shift value is limited to only `AM` or `PM`.
+* Shift value is limited to only `AM` or `PM` (case-insensitive).
+  e.g. `s/am`, `s/Am`, and `s/PM` are all valid.
+* If the staff member's shift is already set to the specified value,
+the command will confirm the existing shift as a successful update.
+This is intentional, to provide consistent confirmation feedback even when
+no actual data change is required. 
 
 Examples:
 
-* `updateShift p/98765432 b/PM` updates shift to `PM` for `John Doe`<br>
+* `updateShift p/98765432 s/PM` updates shift to `PM` for `John Doe`<br>
   ![result for 'updateShift p/98765412 b/PM'](images/updateShiftResult.png)
 
 #### **Adding Order from a Supplier: `addOrder`**
