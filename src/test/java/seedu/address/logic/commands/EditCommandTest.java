@@ -81,8 +81,6 @@ public class EditCommandTest {
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
-        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
         String expectedMessage = String.format(EditCommand.MESSAGE_NOT_EDITED);
         assertCommandFailure(editCommand, model, expectedMessage);
     }
