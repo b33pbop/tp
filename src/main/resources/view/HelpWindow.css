@@ -1,25 +1,36 @@
+#root, .root {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    background-color: #2a2a2a; /* compatibility fallback */
+}
+
 #helpMessage {
     -fx-text-fill: white;
     -fx-background-color: derive(#1d1d1d, 20%);
+    background-color: #2a2a2a; /* compatibility fallback */
 }
 
 #copyButton {
     -fx-text-fill: white;
     -fx-background-color: dimgray;
+    background-color: dimgray;
 }
 
 #copyButton:hover {
     -fx-background-color: gray;
+    background-color: gray;
 }
 
 #copyButton:armed {
     -fx-background-color: darkgray;
+    background-color: darkgray;
 }
 
 .scroll-pane {
     -fx-background-color: derive(#1d1d1d, 20%);
+    background-color: #2a2a2a; /* compatibility fallback */
 }
 
 .scroll-pane .viewport {
     -fx-background-color: derive(#1d1d1d, 20%);
+    background-color: #2a2a2a; /* compatibility fallback */
 }
