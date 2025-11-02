@@ -205,7 +205,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com`  
+* `edit 1 p/91234567 e/johndoe@example.com`
   Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 
   <table>
@@ -215,7 +215,7 @@ Examples:
     </tr>
   </table>
 
-* `edit 2 n/Betsy Crower c/Customer`  
+* `edit 2 n/Betsy Crower c/Customer`
   Edits the name of the 2nd person to be `Betsy Crower` and category to `Customer`.
 
   <table>
@@ -236,8 +236,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Substrings will also be matched e.g. `Cho` will match `Nicholas`
 * However, searching of categories occurs only for full match of input.
-  e.g. `find Cust` will not return contacts of `Customer`, only `find Customer` will.  
-* Persons matching at least one keyword will be returned (i.e. `OR` search).  
+  e.g. `find Cust` will not return contacts of `Customer`, only `find Customer` will.
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
@@ -335,7 +335,7 @@ Format: `updateShift p/PHONE s/SHIFT`
 * If the staff member's shift is already set to the specified value,
 the command will confirm the existing shift as a successful update.
 This is intentional, to provide consistent confirmation feedback even when
-no actual data change is required. 
+no actual data change is required.
 
 Examples:
 
@@ -386,7 +386,7 @@ Example:
 
 * `updateOrder p/91234567 o/1 q/100`
 * The above command will edit the first order in John Doe's order list, such that the quantity is changed to `100`.
-  
+
 ![result for 'updateOrder p/91234567 o/1 q/100'](images/updateOrderResult.png)
 
 #### **Deleting Order from a Supplier: `deleteOrder`**
@@ -424,7 +424,7 @@ AddressBook data are saved automatically as a JSON file `[JAR file location]/dat
 
 <box type="warning" seamless>
 
-**Caution:**  
+**Caution:**
 If your changes to the data file makes its format invalid, GhostConnect will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the GhostConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 
