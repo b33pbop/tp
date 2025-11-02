@@ -248,7 +248,13 @@ Award points for specified customer based of amount spent.
 Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 
 * Bill amount can be any positive number with at most 2 decimal points e.g. `50`, `50.15`, `50.1`
-* Customer Tier will update based on number of points accumulated.
+* Customers are automatically assigned a tier based on their accumulated points.
+* The current thresholds are: 
+- Member: 0.00 - 99.99 points
+- Bronze: 100.00 - 499.99 points
+- Silver: 500.00 - 999.99 points
+- Gold: 1000.00 - 2499.99 points
+- Platinum: 2500.00 points onwards.
 
 Examples:
 
@@ -262,11 +268,16 @@ Update shift for the specified staff.
 Format: `updateShift p/PHONE s/SHIFT`
 
 * Can only be performed on Staff.
-* Shift value is limited to only `AM` or `PM`.
+* Shift value is limited to only `AM` or `PM` (case-insensitive).
+  e.g. `s/am`, `s/Am`, and `s/PM` are all valid.
+* If the staff member's shift is already set to the specified value,
+the command will confirm the existing shift as a successful update.
+This is intentional, to provide consistent confirmation feedback even when
+no actual data change is required. 
 
 Examples:
 
-* `updateShift p/98765432 b/PM` updates shift to `PM` for `John Doe`<br>
+* `updateShift p/98765432 s/PM` updates shift to `PM` for `John Doe`<br>
   ![result for 'updateShift p/98765412 b/PM'](images/updateShiftResult.png)
 
 #### **Adding Order from a Supplier: `addOrder`**

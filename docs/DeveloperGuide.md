@@ -358,14 +358,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Required fields missing.
-    * 2a1. System indicates missing field
-    * 2a2. Use case resumes at step 2
+* 3a.Required fields missing.
+    * 3a1. System indicates missing field
+    * Use case resumes at step 2
 
-* 3a. Potential duplicate detected.
+* 3b. Potential duplicate detected.
 
-    * 3a1. System informs manager and offers to merge.
-    * 3a2. Use case resumes and step 2 or ends(if cancelled)
+    * 3b1. System informs manager of duplicate.
+    * Use case resumes at step 2 or ends(if cancelled)
 
 **U2. Search for a contact**
 
@@ -375,8 +375,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Manager initiates **Search Contact**
 2. System prompts for search keyword
-3. System displays list of matching contacts
-4. Manager selects a contact to view details
+3. Manager enters search keyword
+4. System displays list of matching contacts
+5. Manager selects a contact to view details
 
     Use case ends.
 
@@ -386,7 +387,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. System prompts for input.
     * Use case resumes at step 2.
 * 3a. No matches found
-    * 3a1. System informs Manager and offers to **Add new contact (U1)**
+    * 3a1. System informs Manager that no matches were found.
     * Use case ends.
 
 **U3. Adding Orders to Supplier**
@@ -441,7 +442,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Manager selects **View by category**
 2. System displays available categories
-3. Manager chooses a category (e.g Suppliers, Riders, Staff)
+3. Manager chooses a category (e.g. Supplier & Staff)
 4. System lists all contacts under category
 
    Use case ends.
@@ -449,10 +450,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 3a. No contacts in selected category
-    * 3a1. System shows "No contact found" message.
+    * 3a1. System informs manager that no contacts were found.
     * Use case resumes at step 3 or ends.
-* 4a. Too many contacts to display.
-    * 5a1. System requests further filter input.
+* 4a. Large number of contacts to display.
+    * 4a1. System displays contacts efficiently, allowing all results to be viewed without truncation.
     * Use case ends.
 
 
