@@ -14,7 +14,6 @@ import java.util.Optional;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;

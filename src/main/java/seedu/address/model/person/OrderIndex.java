@@ -31,9 +31,14 @@ public class OrderIndex {
         this.orderIndex = orderIndex;
     }
 
+    /**
+     * Checks the input given for Order Index to confirm its validity
+     * @param test The string input given by the user
+     * @return A boolean value indicating whether it is a valid Order Index
+     */
     public static boolean isValidOrderIndex(String test) {
-        return test.matches(VALIDATION_REGEX) &&
-                new BigInteger(test).compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) < 0;
+        return test.matches(VALIDATION_REGEX)
+                && new BigInteger(test).compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) < 0;
     }
 
     @Override
