@@ -121,7 +121,7 @@ public class UpdatePointsCommandTest {
                 ex.getMessage()
         );
     }
-  
+
     @Test
     public void execute_customerAtMaxPoints_throwsCommandException() throws Exception {
         // Arrange
