@@ -194,9 +194,9 @@ public class CustomerTest {
                 .withName("Charlie")
                 .withPhone("81234567")
                 .withTier(Tier.GOLD)
-                .withPoints(Customer.MAX_POINTS - 10) // almost maxed out
                 .build();
 
+        customer.addPointsFromSpending(Customer.MAX_POINTS - 10);
         double bigSpending = 50.0; // should add >10 points and push over max
 
         // Act
@@ -214,8 +214,8 @@ public class CustomerTest {
                 .withName("Eve")
                 .withPhone("91234567")
                 .withTier(Tier.SILVER)
-                .withPoints(Customer.MAX_POINTS - 5) // only 5 points left to max
                 .build();
+        customer.addPointsFromSpending(Customer.MAX_POINTS - 5);
 
         double bigSpending = 100.0; // would normally add 100 points, exceeding MAX_POINTS
 
