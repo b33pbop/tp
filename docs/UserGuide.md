@@ -254,8 +254,8 @@ Examples:
 
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Edit1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Edit2.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/edit1.png" width="500" height="500"/></td>
+      <td><strong>After</strong><br><img src="images/edit2.png" width="500" height="500"/></td>
     </tr>
   </table>
 
@@ -264,8 +264,8 @@ Examples:
 
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Edit3.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Edit4.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/edit3.png" width="500" height="500"/></td>
+      <td><strong>After</strong><br><img src="images/edit4.png" width="500" height="500"/></td>
     </tr>
   </table>
 
@@ -292,8 +292,8 @@ Examples:
 * `find staff supplier` returns all persons with categories `staff` or `supplier`<br>
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/find1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/find2.png" width="300" height="300"/></td>
+      <td><strong>Before</strong><br><img src="images/find1.png" width="500"/></td>
+      <td><strong>After</strong><br><img src="images/find2.png" width="500" height="500"/></td>
     </tr>
   </table>
 
@@ -341,17 +341,18 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Delete1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Delete2.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/Delete1.png" width="500"/></td>
+      <td><strong>After</strong><br><img src="images/Delete2.png" width="500"/></td>
     </tr>
   </table>
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Delete3.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Delete4.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/Delete3.png" width="500"/></td>
+      <td><strong>After</strong><br><img src="images/Delete4.png" width="500"/></td>
     </tr>
   </table>
+
 
 #### **Clearing all Contacts: `clear`**
 
@@ -364,6 +365,7 @@ Format: `clear`
 Exits the program.
 
 Format: `exit`
+</box>
 
 ### Category Specific Commands
 
@@ -519,6 +521,32 @@ Example:
 
 * `deleteOrder p/91234567 o/1`
 * The above command will delete the first order in John Doe's order list
+
+### **Redeeming points for Customer: `reducePoints`**
+
+Redeems a specified number of points from a customer's account.
+
+Format: `reducePoints p/PHONE pts/POINTS_TO_REDUCE`
+
+* Can only be performed on Customers.
+* The number of points to redeem must be a **positive integer** and not exceed the customer's current balance.
+* If the specified customer does not exist, or is not a Customer, an error message will be displayed.
+* This command can be used to correct an erroneous addition of points (due to a mistaken updatePoints entry).
+* If the customer's points is reduced below a membership tier threshold, the customer's tier is updated automatically. 
+
+Example: 
+
+* Assuming that the Customer `John Cena` has the phone number `91234567`
+* Assuming that `John Cena` currently has 1000 points and is Tier `Gold`
+* `reducePoints p/912345667 pts/500`
+* The above command will remove 500 points from John Cena and update him to `Silver` tier. 
+
+<table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/redeem1.png" width="2000" height="700"/></td>
+      <td><strong>After</strong><br><img src="images/redeem2.png" width="2000" height="700"/></td>
+    </tr>
+  </table>
 
 
 
