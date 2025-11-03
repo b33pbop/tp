@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.logic.commands.RedeemPointsCommand.MESSAGE_NOT_ENOUGH_POINTS;
 import static seedu.address.logic.commands.RedeemPointsCommand.MESSAGE_NOT_FOUND;
-import static seedu.address.logic.commands.RedeemPointsCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import org.junit.jupiter.api.BeforeEach;
