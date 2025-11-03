@@ -1,10 +1,10 @@
 ---
 layout: default.md
-title: "Developer Guide"
+title: "GhostConnect Developer Guide"
 pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# GhostConnect Developer Guide
 
 ## Table of Contents
 
@@ -339,7 +339,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `GhostConnect` and the **Actor** is the `user`, unless specified otherwise)
 
 **U1. Add a new contact**
 
