@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -35,6 +37,8 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private ViewWindow viewWindow;
+    // Track all opened View windows so we can close them on exit
+    private final List<ViewWindow> openViewWindows = new ArrayList<>();
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -63,11 +67,13 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
-
         setAccelerators();
 
         helpWindow = new HelpWindow();
         viewWindow = new ViewWindow();
+
+        // Ensure closing the main window closes all auxiliary windows
+        primaryStage.setOnCloseRequest(event -> handleExit());
     }
 
     public Stage getPrimaryStage() {
@@ -75,7 +81,12 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        // Guard against early invocation before FXML injection in certain environments
+        if (helpMenuItem != null) {
+            setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        } else {
+            logger.warning("helpMenuItem is null; skipping accelerator setup");
+        }
     }
 
     /**
@@ -83,6 +94,9 @@ public class MainWindow extends UiPart<Stage> {
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
+        if (menuItem == null) {
+            return;
+        }
         menuItem.setAccelerator(keyCombination);
 
         /*
@@ -161,7 +175,15 @@ public class MainWindow extends UiPart<Stage> {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
+        // Close auxiliary windows first
         helpWindow.hide();
+        // Close all open view windows
+        for (ViewWindow vw : new ArrayList<>(openViewWindows)) {
+            if (vw != null && vw.isShowing()) {
+                vw.hide();
+            }
+        }
+        openViewWindows.clear();
         primaryStage.hide();
     }
 
@@ -187,6 +209,12 @@ public class MainWindow extends UiPart<Stage> {
             if (commandResult.isShowPerson()) {
                 // Allow multiple view windows (post-it style)
                 ViewWindow newViewWindow = new ViewWindow();
+                // Make the view window owned by the primary stage
+                newViewWindow.getRoot().initOwner(primaryStage);
+                // Track and clean up on close
+                openViewWindows.add(newViewWindow);
+                newViewWindow.getRoot().setOnHidden(e -> openViewWindows.remove(newViewWindow));
+
                 newViewWindow.setPerson(commandResult.getPersonToShow());
                 newViewWindow.show();
             }
