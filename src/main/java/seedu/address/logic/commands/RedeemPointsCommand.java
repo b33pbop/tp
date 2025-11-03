@@ -25,9 +25,9 @@ public class RedeemPointsCommand extends Command {
     public static final String MESSAGE_NOT_CUSTOMER =
             "The person with phone number %s is not a customer.";
     public static final String MESSAGE_SUCCESS =
-            "Redeemed %d points from %s. Remaining: %d. Tier: %s.";
+            "Deducted %d points from %s. Remaining: %d. Tier: %s.";
     public static final String MESSAGE_NOT_ENOUGH_POINTS =
-            "%s does not have enough points to redeem %d (current: %d).";
+            "%s does not have enough points to deduct %d (current: %d).";
 
     private final Phone phone;
     private final int pointsToRedeem;
