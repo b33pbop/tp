@@ -448,6 +448,43 @@ Example:
 * `deleteOrder p/91234567 o/1`
 * The above command will delete the first order in John Doe's order list
 
+### **Redeeming points for Customer: `reducePoints`**
+
+Redeems a specified number of points from a customer's account.
+
+Format: `reducePoints p/PHONE pts/POINTS_TO_REDUCE`
+
+* Can only be performed on Customers.
+* The number of points to redeem must be a **positive integer** and not exceed the customer's current balance.
+* If the specified customer does not exist, or is not a Customer, an error message will be displayed.
+* This command can be used to correct an erroneous addition of points (due to a mistaken updatePoints entry).
+* If the customer's points is reduced below a membership tier threshold, the customer's tier is updated automatically. 
+
+Example: 
+
+* Assuming that the Customer `John Cena` has the phone number `91234567`
+* Assuming that `John Cena` currently has 1000 points and is Tier `Gold`
+* `reducePoints p/912345667 pts/500`
+* The above command will remove 500 points from John Cena and update him to `Silver` tier. 
+
+<table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/redeem1.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/redeem2.png" width="300"/></td>
+    </tr>
+  </table>
+
+
+### **View summary of Customers: `customerSummary`**
+
+Views the number of customers at each tier, along with the total amount of points across all customers. 
+
+Format: `customerSummary`
+
+* Shows the number of customers grouped by membership tier along with total number of points across all customers.
+* Provides managers with concise summary of customer distribution without listing individual entries.
+* Can be used after updates to verify that point or tier changes are reflected correctly. 
+
 </box>
 
 ### Miscellaneous
@@ -508,19 +545,21 @@ Furthermore, certain edits can cause the GhostConnect to behave in unexpected wa
 
 ## Command summary
 
-| Action            | Command Type | Format, Examples                                                                                                                                      |
-|-------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Help**          | General      | `help`                                                                                                                                                |
-| **Add**           | General      | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer` |
-| **List**          | General      | `list`                                                                                                                                                |
-| **Edit**          | General      | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                               |
-| **Find**          | General      | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                            |
-| **View**          | General      | `view p/PHONE`<br> e.g., `view p/91234567`                                                                                                            |
-| **Delete**        | General      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                   |
-| **Clear**         | General      | `clear`                                                                                                                                               |
-| **Exit**          | General      | `exit`                                                                                                                                                |
-| **Update Points** | Customer     | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                       |
-| **Update Shift**  | Staff        | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                   |
-| **Add Order**     | Supplier     | `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`<br> e.g. `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`            |
-| **Update Order**  | Supplier     | `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`<br> e.g. `updateOrder p/91234567 o/1 i/Fish`           |
-| **Delete Order**  | Supplier     | `deleteOrder p/PHONE o/ORDER_INDEX`<br> e.g. `deleteOrder p/91234567 o/1`                                                                             |
+| Action               | Command Type  | Format, Examples                                                                                                                                      |
+|----------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**             | General       | `help`                                                                                                                                                |
+| **Add**              | General       | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer` |
+| **List**             | General       | `list`                                                                                                                                                |
+| **Edit**             | General       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                               |
+| **Find**             | General       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                            |
+| **View**             | General       | `view p/PHONE`<br> e.g., `view p/91234567`                                                                                                            |
+| **Delete**           | General       | `delete INDEX`<br> e.g., `delete 3`                                                                                                                   |
+| **Clear**            | General       | `clear`                                                                                                                                               |
+| **Exit**             | General       | `exit`                                                                                                                                                |
+| **Update Points**    | Customer      | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                       |
+| **Update Shift**     | Staff         | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                   |
+| **Add Order**        | Supplier      | `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`<br> e.g. `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`            |
+| **Update Order**     | Supplier      | `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`<br> e.g. `updateOrder p/91234567 o/1 i/Fish`           |
+| **Delete Order**     | Supplier      | `deleteOrder p/PHONE o/ORDER_INDEX`<br> e.g. `deleteOrder p/91234567 o/1`                                                                             |
+| **Reduce Points**    | Customer      | `reducePoints p/PHONE pts/POINTS_TO_REDUCE` <br> e.g. `reducePoints p/91234567 pts/500`                                                               |
+| **Customer Summary** | General       | `customerSummary`                                                                                                                                     |        
