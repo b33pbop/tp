@@ -338,10 +338,6 @@ Aspect: Identifier used for targeting
 * Current choice: `p/PHONE` targets supplier regardless of filtered list.
 * Alternative: Use list index or a unique ID.
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
