@@ -330,7 +330,7 @@ Format: `clear`
 Exits the program.
 
 Format: `exit`
-
+</box>
 
 ### Category Specific Commands
 
