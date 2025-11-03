@@ -144,6 +144,9 @@ The parameters listed below are fields that belong to an Order.
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   - e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
+* On the other hand, other commands that take in parameters will throw an error if extra parameters / preamble is given.
+  - e.g. if the command specifies `delete abc 1`, an error will be thrown.
+
 * Commands are case-insensitive.<br>
   - e.g. `list` is equivalent to `LIST`,`lISt`,`lIsT`, etc...
 
@@ -398,7 +401,6 @@ Outputs:
 - Success
     - Output message displayed: "Order added successfully"
 - Failure
-    - Missing Parameters / Preamble detected: "Invalid command format! {addOrderSyntax}"
     - No Person in AddressBook: "Empty contact list: No contacts available to update!"
     - Person not in list shown in UI: "No person found with phone number {userInput}. Try running 'list' before using the command again. "
     - Person not in AddressBook: "No person found with phone number {userInput}."
@@ -438,7 +440,6 @@ Outputs:
 - Success
     - Output message displayed: "Order has been updated successfully"
 - Failure
-    - Missing Parameters / Preamble detected: "Invalid command format! {updateOrderSyntax}"
     - No Person in AddressBook: "Empty contact list: No contacts available to update!"
     - Person not in list shown in UI: "No person found with phone number {userInput}. Try running 'list' before using the command again. "
     - Person not in AddressBook: "No person found with phone number {userInput}."
@@ -483,7 +484,6 @@ Outputs:
 - Success
     - Output message displayed: "Order deleted successfully"
 - Failure
-    - Missing Parameters / Preamble detected: "Invalid command format! {deleteOrderSyntax}"
     - Person not in list shown in UI: "Entry with that phone number cannot be found. Try running 'list' before using the command again. "
     - Person not in AddressBook: "Entry with that phone number cannot be found."
     - Person found is not a Supplier: "The person with phone number {userInput} is not a supplier."
