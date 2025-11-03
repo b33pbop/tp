@@ -25,6 +25,7 @@ Users will also have access to various category specific functions depending on 
 Assumptions:
 - We assume that users are familiar with basic computing concepts such as **file management, shortcuts, and command-based operations**, and are comfortable using tools that **streamline repetitive tasks** and **handle multiple contacts simultaneously**. 
 - We assume that all ghost kitchen managers using the application reside within Singapore and only have external contacts within Singapore as well. This implies that all contact entries into GhostConnect are to only include Singaporean numbers.
+- We assume that orders under Suppliers in GhostConnect will be made with Singaporean currency and that ordered items are countable and do not need suffixes to determine quantity (e.g. kg).
 
 By the end of this guide, users will be able to **navigate GhostConnect confidently**, leverage its **advanced features**, and integrate it seamlessly into their daily operations to manage staff, suppliers, and customer loyalty programs efficiently.
 
@@ -58,6 +59,8 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
 - [FAQ](#faq)
 - [Known Issues](#known-issues)
 - [Command Summary](#command-summary)
+
+</details>
 
 <page-nav-print />
 
@@ -95,39 +98,41 @@ used in GhostConnect.
 
 
 ### Person General Parameters
-In GhostConnect, all contacts share a common set of basic parameters regardless of their category. These parameters form the foundation of each contact record and are used across all contact types (Customer, Staff, and Supplier).
+Below are the core parameters that will be required when creating an entry for any Person.
 
-| Parameter             | Validation Requirements                                                                                                                                                                                                                                 | Rationale                                                                                                                             |
+| Parameter             | Validation Requirements                                                                                                                                                                                                                                 | Remarks                                                                                                                          |
 |:----------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------|
-| **NAME**              | -                                                                                                                                                                                                                                                       | **Readability**: Ensures names are readable and properly stored in the system                                                         |
+| **NAME**              | - Only alphanumeric characters and one pair of brackets at the end allowed<br/>                                                                                                                                                                         | **Readability**: Ensures names are readable and properly stored in the system                                                         |
 | **PHONE NUMBER**      | - 8 Digits long<br/> - Starts with either 6, 8 or  9                                                                                                                                                                                                    | **Singaporean Audience**: GhostConnect caters to the Singaporean market and thus phone numbers have to be a valid Singaporean number. |
 | **EMAIL**             | - **Local part** (before '@'): contains letters, digits or `+_.-` only<br/>- No **consecutive** special characters<br/> - Cannot **start/end** with special character<br/> - **Domain** (after '@): valid labels separated by `.`, last label ≥ 2 chars | **Data Integrity**: Ensures emails are correctly formatted to prevent errors and maintain compatibility with systems.                 |
 | **ADDRESS**           | - Only letters, digits or `',-#` and spaces allowed<br/>- Length between 2 and 100 characters                                                                                                                                                           | **Address Validation**: Ensures addresses are valid, readable, and concise.                                                           |
 | **CATEGORY**          | - Can only belong to 1 of the three categories: Customer, Staff or Supplier                                                                                                                                                                             | **Category Relevance**: Ensures contacts are correctly classified for operational use.                                                |
 
+In GhostConnect, all contacts share a common set of basic parameters regardless of their category. These parameters form the foundation of each contact record and are used across all contact types (Customer, Staff, and Supplier).
+
 ### Staff Specific Parameters
 Staff contacts have an additional parameter specific to employee management for shift scheduling. This helps ghost kitchen managers efficiently organize their workforce.
 
-| Parameter             | Validation Requirements       | Rationale                                |
-|:----------------------|:------------------------------|:-----------------------------------------|
-| **SHIFT**             | - Can only be either AM or PM |                                          |
+| Parameter             | Validation Requirements       | Remarks                        |
+|:----------------------|:------------------------------|:-------------------------------|
+| **SHIFT**             | - Can only be either AM or PM |                                |
 
 ### Supplier Specific Parameters
 In GhostConnect, suppliers are a subset of persons but with additional parameters, which stores a list of their Orders.
 The parameters listed below are fields that belong to an Order.
 
-| Parameter             | Validation Requirements       | Rationale                                |
-|:----------------------|:------------------------------|:-----------------------------------------|
-| **ORDER INDEX**       | - xxx<br/> - xxx              |                                          |
-| **ITEM NAME**         | -                             |                                          |
-| **ITEM QUANTITY**     | -                             |                                          |
-| **ITEM UNIT PRICE**   | -                             |                                          |
-| **ITEM DELIVERY DAY** | -                             |                                          |
+| Parameter             | Validation Requirements                                                                             | Remarks                                                                                                                           |
+|:----------------------|:----------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------|
+| **ORDER INDEX**       | - Can only be positive integer values (Higher than 0)<br/> - Value must be lower than 2,147,483,647 | GhostConnect implements this to ensure valid index values and prevent overflow.                                                   |
+| **ITEM NAME**         | - Only alphanumeric characters and spaces are allowed.                                              | No further restrictions put in place to give users flexibility in describing Item Name                                            |
+| **ITEM QUANTITY**     | - Only positive integer values are allowed.                                                         | Restrictions set to allow numbers only with the assumption that ordered items are countable and can be denoted with numbers alone |
+| **ITEM UNIT PRICE**   | - Only positive numerical values with strictly 2 decimal places are allowed.                        | Strictly requires 2 decimal places to ensure that value given is following Singaporean currency.                                  |
+| **ITEM DELIVERY DAY** | - Only alphanumeric characters and spaces are allowed.                                              | No further restrictions put in place to give users flexibility in describing Item Delivery Day                                    |                                                                                 |
 
 ### Customer Specific Parameters
 In GhostConnect, customers are a subset of persons but with additional parameters, which tracks a Customer's membership progress.
 
-| Parameter             | Validation Requirements | Rationale                                                                                        |
+| Parameter             | Validation Requirements | Remarks                                                                                        |
 |:----------------------|:------------------------|:-------------------------------------------------------------------------------------------------|
 | **BILL AMOUNT**       | - Cannot be negative    | **Prevent invalid input**: Ensures the bill amount is realistic and prevents calculation errors. |
 
@@ -149,6 +154,9 @@ In GhostConnect, customers are a subset of persons but with additional parameter
     <br/>
 * Extraneous parameters for **commands without arguments** will be ignored.
   - Example: `help 123` will be interpreted as `help`.<br>
+    <br/>
+* On the other hand, other commands that take in parameters will throw an error if extra parameters / preamble is given.
+    - Example: if the command specifies `delete abc 1`, an error will be thrown.
     <br/>
 * Commands are **case-insensitive**.
   - Example: `list`, `LIST`, or `LiSt` are all valid.<br>
@@ -182,14 +190,13 @@ Based on the category you give the contact, they unlock [different commands](#ca
 
 Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY`
 
-| Parameter        | Validation Rules (Refer to [Person General Parameters](#person-general-parameters) for more details!) | Error Message when invalid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-|:-----------------|:------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **NAME**         | Refer to [Person General Parameters](#person-general-parameters)                                      | "Name should..."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| **PHONE NUMBER** | Singaporean Numbers Only                                                                              | "Phone numbers must only have 8 digits and start with 6, 8 or 9."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| **EMAIL**        | Follows the structure of example@email.com                                                            | "Emails should be of the format local-part@domain and adhere to the following constraints:<br/>1. The LOCAL-PART (before '@') must: only contain LETTERS, DIGITS, and these SPECIAL CHARACTERS: +_.-; have at most one SPECIAL CHARACTER between LETTERS/DIGITS (no consecutive special characters); not start or end with any SPECIAL CHARACTERS.<br/>2. The DOMAIN (after '@') must: be made up of DOMAIN LABELS separated by periods; end with a DOMAIN LABEL that is at least 2 LETTERS/DIGITS long; have each DOMAIN LABEL start and end with a LETTER/DIGIT; contain only LETTERS/DIGITS within each label, with optional HYPHENS allowed between LETTERS/DIGITS." |
-| **ADDRESS**      | Only letters, digits or `',-#` and spaces allowed<br/>Length between 2 and 100 characters             | "Invalid characters found - only letters, numbers, apostrophes, commas, hyphens, hashes and spaces are allowed." <br/>"Length of Address does not match criteria - Address must be between 2 - 100 characters."                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| **CATEGORY**     | Either Customer, Staff or Supplier                                                                    | "Unknown Category (Customer \| Supplier \| Staff)"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-
+| Parameter        | Error Message when invalid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|:-----------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **NAME**         | "Name should..."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **PHONE NUMBER** | "Phone numbers must only have 8 digits and start with 6, 8 or 9."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **EMAIL**        | "Emails should be of the format local-part@domain and adhere to the following constraints:<br/>1. The LOCAL-PART (before '@') must: only contain LETTERS, DIGITS, and these SPECIAL CHARACTERS: +_.-; have at most one SPECIAL CHARACTER between LETTERS/DIGITS (no consecutive special characters); not start or end with any SPECIAL CHARACTERS.<br/>2. The DOMAIN (after '@') must: be made up of DOMAIN LABELS separated by periods; end with a DOMAIN LABEL that is at least 2 LETTERS/DIGITS long; have each DOMAIN LABEL start and end with a LETTER/DIGIT; contain only LETTERS/DIGITS within each label, with optional HYPHENS allowed between LETTERS/DIGITS." |
+| **ADDRESS**      | "Invalid characters found - only letters, numbers, apostrophes, commas, hyphens, hashes and spaces are allowed." <br/>"Length of Address does not match criteria - Address must be between 2 - 100 characters."                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| **CATEGORY**     | "Unknown Category (Customer \| Supplier \| Staff)"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
 
 **If all the rules above were followed you will see either of these 2 messages**:
@@ -367,6 +374,7 @@ Exits the program.
 Format: `exit`
 </box>
 
+
 ### Category Specific Commands
 
 > **Note:** All commands below identify the contact through their `PHONE` number
@@ -454,41 +462,80 @@ Examples:
 * `updateShift p/98765432 s/PM` updates shift to `PM` for `John Doe`<br>
   ![result for 'updateShift p/98765412 b/PM'](images/updateShiftResult.png)
 
-#### **Adding Order from a Supplier: `addOrder`**
+#### **Adding Order from a Supplier: `addorder`**
 
-Adds an Order to the specified Supplier's list of orders.
+Adds an Order to the specified Supplier's list of orders. Supplier is specified based on the Phone Number given.
 
-Format: `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`
+Format: `addorder p/PHONE_NUMBER i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`
 
-* `ITEM_NAME` and `DELIVERY_DAY` can only be filled with alphanumeric characters.
-* `QUANTITY` can only be positive numerical values that are above 0.
-* `UNIT PRICE` can only be positive numerical values, that are up to 2 decimal places.
-* Duplicate orders will not be added into the supplier's list of orders.
+| Parameter             | Error Message when invalid                                                                                 |
+|:----------------------|:-----------------------------------------------------------------------------------------------------------|
+| **PHONE NUMBER**      | "Phone numbers must have 8 digits and start with 6, 8 or 9."                                               |
+| **ITEM NAME**         | "Names should only contain alphanumeric characters and spaces, and it should not be blank"                 |
+| **ITEM QUANTITY**     | "Item Quantity should not be blank and only positive integers are allowed (No decimals)"                   |                            |
+| **ITEM UNIT PRICE**   | "Unit Price cannot be blank and only positive numerical values with strictly 2 decimal places are allowed" |
+| **ITEM DELIVERY DAY** | "Delivery day should only contain alphanumeric characters and spaces, and it should not be blank"          |
+
+
+Outputs:
+- Success
+    - Output message displayed: "Order added successfully"
+- Failure
+    - No Person in AddressBook: "Empty contact list: No contacts available to update!"
+    - Person not in list shown in UI: "No person found with phone number {userInput}. Try running 'list' before using the command again. "
+    - Person not in AddressBook: "No person found with phone number {userInput}."
+    - Person found is not a Supplier: "The person with phone number {userInput} is not a supplier."
+    - Duplicate Order: "Order already exists in the list."
+
+<box type="info" seamless>
+
+**Info:** Item Name will be set at TitleCase and Delivery Day will be set to LowerCase
+
+</box>
 
 Examples:
 
 * Assuming that the Supplier `John Doe` has the phone number `91234567`
-* `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`
+* `addorder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`
 * The above command creates an order in John Doe's order list.
-* The order indicates an order of 20 Chicken, at the unit price of $5.60, to be delivered every Tuesday.
 ![result for 'addOrder p/91234567 i/Chicken q/20 u/9.80 d/every Tuesday'](images/addOrderResult.png)
 
-#### **Updating Order from a Supplier: `updateOrder`**
+#### **Updating Order from a Supplier: `updateorder`**
 
-Updates a specified order in a Supplier's order list.
+Updates a specified order in a Supplier's order list. Supplier is specified by the Phone Number given. Order is specified by the Order Index given.
 
 Format: `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`
 
-* Edits the order found in the specified Supplier's order list.
-* Order is specified through the `ORDER_INDEX`.
-* At least one of the optional fields must be provided.
-* `ITEM_NAME` and `DELIVERY_DAY` can only be filled with alphanumeric characters.
-* `QUANTITY` can only be positive numerical values that are above 0.
-* `UNIT PRICE` can only be positive numerical values, that are up to 2 decimal places.
-* In the event of duplicate orders upon updating, the command will not be executed.
+| Parameter             | Error Message when invalid                                                                                  |
+|:----------------------|:------------------------------------------------------------------------------------------------------------|
+| **PHONE NUMBER**      | "Phone numbers must have 8 digits and start with 6, 8 or 9."                                                |
+| **ORDER INDEX**       | "Invalid Order Index, only positive integers lesser than 2,147,483,647 are allowed."                        |
+| **ITEM NAME**         | "Names should only contain alphanumeric characters and spaces, and it should not be blank"                  |
+| **ITEM QUANTITY**     | "Item Quantity should not be blank and only positive integers are allowed (No decimals)"                    |                            |
+| **ITEM UNIT PRICE**   | "Unit Price cannot be blank and only positive numerical values with strictly 2 decimal places are allowed"  |
+| **ITEM DELIVERY DAY** | "Delivery day should only contain alphanumeric characters and spaces, and it should not be blank"           |
+
+
+Outputs:
+- Success
+    - Output message displayed: "Order has been updated successfully"
+- Failure
+    - No Person in AddressBook: "Empty contact list: No contacts available to update!"
+    - Person not in list shown in UI: "No person found with phone number {userInput}. Try running 'list' before using the command again. "
+    - Person not in AddressBook: "No person found with phone number {userInput}."
+    - Person found is not a Supplier: "The person with phone number {userInput} is not a supplier."
+    - Empty Order list for Supplier: "Supplier currently has no orders."
+    - Order Index given is out of bounds: "Index given is out of bounds of supplier's list of orders."
+    - No changes indicated in command: "At least one of the optional fields must be provided"
+    - Duplicate Order: "Order with identical values already exists."
+
+<box type="info" seamless>
+
+**Info:** Item Name will be set at TitleCase and Delivery Day will be set to LowerCase
+
+</box>
 
 Example:
-
 * Assuming that the Supplier `John Doe` has the phone number `91234567`
 * Assuming that the below order is added into John Doe's order list, and it is the only order in the list:
     * Item Name - Chicken
@@ -496,19 +543,33 @@ Example:
     * Unit Price - 9.80
     * Delivery Day - every Tuesday
 
-* `updateOrder p/91234567 o/1 q/100`
+* `updateorder p/91234567 o/1 q/100`
 * The above command will edit the first order in John Doe's order list, such that the quantity is changed to `100`.
 
-![result for 'updateOrder p/91234567 o/1 q/100'](images/updateOrderResult.png)
+![result for 'updateorder p/91234567 o/1 q/100'](images/updateOrderResult.png)
 
-#### **Deleting Order from a Supplier: `deleteOrder`**
+#### **Deleting Order from a Supplier: `deleteorder`**
 
 Deletes a specified order in a Supplier's order list.
 
-Format: `deleteOrder p/PHONE o/ORDER_INDEX`
+Format: `deleteorder p/PHONE o/ORDER_INDEX`
 
-* Deletes the order found in the specified Supplier's order list.
-* Order is specified through the `ORDER_INDEX`.
+| Parameter             | Error Message when invalid                                                                                  |
+|:----------------------|:------------------------------------------------------------------------------------------------------------|
+| **PHONE NUMBER**      | "Phone numbers must have 8 digits and start with 6, 8 or 9."                                                |
+| **ORDER INDEX**       | "Invalid Order Index, only positive integers lesser than 2,147,483,647 are allowed."                        |
+
+
+Outputs:
+- Success
+    - Output message displayed: "Order deleted successfully"
+- Failure
+    - Person not in list shown in UI: "Entry with that phone number cannot be found. Try running 'list' before using the command again. "
+    - Person not in AddressBook: "Entry with that phone number cannot be found."
+    - Person found is not a Supplier: "The person with phone number {userInput} is not a supplier."
+    - Empty Order list for Supplier: "Supplier currently has no orders."
+    - Invalid Order Index given: "Invalid order index for this supplier."
+    - Duplicate Order: "Order with identical values already exists."
 
 Example:
 

@@ -34,8 +34,8 @@ public class SupplierTest {
                 new ItemDeliveryDay("every Wednesday"));
         test.addOrder(test1);
         test.addOrder(test2);
-        String expected = "1. 5 of Computer (at $100.00 each) to be delivered every tuesday"
-              + '\n' + "2. 10 of Computer (at $120.00 each) to be delivered every wednesday";
+        String expected = "1. Item: Computer || Quantity: 5 || Unit Price: $100.00 || Delivery Day: every tuesday"
+              + '\n' + "2. Item: Computer || Quantity: 10 || Unit Price: $120.00 || Delivery Day: every wednesday";
         assertEquals(expected, test.listOrders());
     }
 
