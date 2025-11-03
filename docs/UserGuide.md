@@ -219,8 +219,8 @@ Examples:
 
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Edit1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Edit2.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/edit1.png" width="500" height="500"/></td>
+      <td><strong>After</strong><br><img src="images/edit2.png" width="500" height="500"/></td>
     </tr>
   </table>
 
@@ -229,8 +229,8 @@ Examples:
 
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Edit3.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Edit4.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/edit3.png" width="500" height="500"/></td>
+      <td><strong>After</strong><br><img src="images/edit4.png" width="500" height="500"/></td>
     </tr>
   </table>
 
@@ -257,8 +257,8 @@ Examples:
 * `find staff supplier` returns all persons with categories `staff` or `supplier`<br>
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/find1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/find2.png" width="300" height="300"/></td>
+      <td><strong>Before</strong><br><img src="images/find1.png" width="500"/></td>
+      <td><strong>After</strong><br><img src="images/find2.png" width="500" height="500"/></td>
     </tr>
   </table>
 
@@ -306,15 +306,15 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Delete1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Delete2.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/Delete1.png" width="500"/></td>
+      <td><strong>After</strong><br><img src="images/Delete2.png" width="500"/></td>
     </tr>
   </table>
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Delete3.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Delete4.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/Delete3.png" width="500"/></td>
+      <td><strong>After</strong><br><img src="images/Delete4.png" width="500"/></td>
     </tr>
   </table>
 
@@ -469,8 +469,8 @@ Example:
 
 <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/redeem1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/redeem2.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/redeem1.png" width="2000" height="700"/></td>
+      <td><strong>After</strong><br><img src="images/redeem2.png" width="2000" height="700"/></td>
     </tr>
   </table>
 
