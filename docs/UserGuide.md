@@ -461,14 +461,14 @@ Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 
 <box type="definition">
 
-Redeems a specified number of points from a customer's account.
+Reduces a specified number of points from a customer's account.
 
 </box>
 
 Format: `reducePoints p/PHONE pts/POINTS_TO_REDUCE`
 
 * Can only be performed on Customers.
-* The number of points to redeem must be a **positive integer** and not exceed the customer's current balance.
+* The number of points to deduct must be a **positive integer** and not exceed the customer's current balance.
 * If the specified customer does not exist, or is not a Customer, an error message will be displayed.
 * This command can be used to correct an erroneous addition of points (due to a mistaken updatePoints entry).
 * If the customer's points is reduced below a membership tier threshold, the customer's tier is updated automatically.
@@ -482,8 +482,8 @@ Format: `reducePoints p/PHONE pts/POINTS_TO_REDUCE`
 
 <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/redeem1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/redeem2.png" width="300"/></td>
+      <td><strong>Before</strong><br><img src="images/reduce1.png" width="500"/></td>
+      <td><strong>After</strong><br><img src="images/reduce2.png" width="500"/></td>
     </tr>
   </table>
 
@@ -658,31 +658,6 @@ Example:
 * `deleteOrder p/91234567 o/1`
 * The above command will delete the first order in John Doe's order list
 
-### **Redeeming points for Customer: `reducePoints`**
-
-Redeems a specified number of points from a customer's account.
-
-Format: `reducePoints p/PHONE pts/POINTS_TO_REDUCE`
-
-* Can only be performed on Customers.
-* The number of points to redeem must be a **positive integer** and not exceed the customer's current balance.
-* If the specified customer does not exist, or is not a Customer, an error message will be displayed.
-* This command can be used to correct an erroneous addition of points (due to a mistaken updatePoints entry).
-* If the customer's points is reduced below a membership tier threshold, the customer's tier is updated automatically. 
-
-Example: 
-
-* Assuming that the Customer `John Cena` has the phone number `91234567`
-* Assuming that `John Cena` currently has 1000 points and is Tier `Gold`
-* `reducePoints p/912345667 pts/500`
-* The above command will remove 500 points from John Cena and update him to `Silver` tier. 
-
-<table>
-    <tr>
-      <td><strong>Before</strong><br><img src="images/redeem1.png" width="2000" height="700"/></td>
-      <td><strong>After</strong><br><img src="images/redeem2.png" width="2000" height="700"/></td>
-    </tr>
-  </table>
 
 
 ### Miscellaneous
