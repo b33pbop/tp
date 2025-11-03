@@ -632,58 +632,222 @@ Use case ends.
 * **Archiving**: The process of storing data in an organized manner for long-term retention
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Appendix: Instructions for Manual Testing**
 
 Given below are instructions to test the app manually.
 
 <box type="info" seamless>
 
-**Note:** These instructions only provide a starting point for testers to work on;
+**Note:** These instructions only provide a starting point for testers to work on;  
 testers are expected to do more *exploratory* testing.
 
 </box>
 
-### Launch and shutdown
+---
 
-1. Initial launch
+### Launch and Shutdown
 
-   1. Download the jar file and copy into an empty folder
+1. **Initial launch**
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1. Download the `.jar` file and place it in an empty folder.
+    2. Double-click the `.jar` file.  
+       **Expected:** The GUI appears with a set of sample contacts (customers, suppliers, staff). The window size may not be optimum.
 
-1. Saving window preferences
+2. **Saving window preferences**
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    2. Re-launch the app by double-clicking the `.jar` file.  
+       **Expected:** The most recent window size and location are retained.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+---
 
-1. _{ more test cases …​ }_
+### Adding a Contact
 
-### Deleting a person
+1. **Add a new customer**
 
-1. Deleting a person while all persons are being shown
+    1. Prerequisites: None.
+    2. Test case:
+       ```
+       add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer
+       ```  
+       **Expected:** A new contact named *James Ho* is added to the list. Status message confirms addition.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+2. **Invalid add commands to try:**  
+   `add n/James` (missing fields),  
+   `add p/98765432` (missing name), etc.  
+   **Expected:** Error message shown in the result display area indicating invalid command format.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+---
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+### Editing a Contact
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+1. **Edit an existing contact**
 
-1. _{ more test cases …​ }_
+    1. Prerequisites: At least one contact listed using the `list` command.
+    2. Test case:
+       ```
+       edit 1 n/James Lee e/jameslee@example.com
+       ```  
+       **Expected:** Assuming no other contact uses the same name or number, contact at index 1 is updated with the new details. Status message confirms successful edit.
 
-### Saving data
+2. **Invalid edit commands to try:**  
+   `edit`, `edit 0`, `edit n` (where *n* is larger than the list size).  
+   **Expected:** Error message displayed. No contact updated.
 
-1. Dealing with missing/corrupted data files
+---
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+### Finding and Viewing Contacts
 
-1. _{ more test cases …​ }_
+1. **Finding contacts by name**
+
+    1. Prerequisites: Several contacts with different names exist.
+    2. Test case:
+       ```
+       find James Jake
+       ```  
+       **Expected:** Only contacts with names containing “James” or “Jake” are listed. Status message confirms success.
+
+2. **Viewing a contact by phone**
+    1. Prerequisites: Contact with the phone number exists.
+    2. Test case:
+  ```
+  view p/98765432
+  ```  
+  **Expected:** Displays a pop up with detailed information for the contact with that phone number. Status message confirms success.
+
+---
+
+### Deleting a Contact
+
+1. **Deleting a contact while all contacts are shown**
+
+    1. Prerequisites: Multiple contacts in the list (`list` command used).
+    2. Test case:
+       ```
+       delete 1
+       ```  
+       **Expected:** The first contact is deleted. Status message shows details of the deleted contact and success.
+
+    3. Test case:
+       ```
+       delete 0
+       ```  
+       **Expected:** No contact deleted. Error message shown. 
+   
+    4. Other incorrect delete commands to try:  
+       `delete`, `delete n` (where *n* exceeds list size).  
+       **Expected:** Similar error behavior as above.
+
+---
+
+### Customer Management
+
+1. **Updating customer loyalty points**
+
+    1. Prerequisites: A contact with category `Customer` and valid phone number.
+    2. Test case:
+       ```
+       updatePoints p/98765432 b/100.00
+       ```  
+       **Expected:** The customer’s loyalty points increase based on the truncated bill amount, unless amount causes customer to exceed maximum points of **100,000**. Customer tier is updated according to the number of points. Status message confirms update.
+
+    3. Invalid test case:  
+       `updatePoints p/123456 b/-50`  
+       **Expected:** Error message displayed for invalid bill amount.
+
+2. **Reducing customer loyalty points**
+    1. Prerequisites: A contact with category `Customer` and valid phone number.
+    2. Test case:
+        ```
+        reducePoints p/98765432 pts/500
+        ```  
+        **Expected:** Customer’s loyalty points are reduced and tier is updated accordingly. Unless reduce by amount exceeds maximum points of **100,000**. Status message confirms reduction.
+
+    3. Invalid test case:  
+        `reducePoints p/98765432 pts/-10`  
+        **Expected:** Error message displayed.
+
+3. **Viewing customer summary**
+    1. Prerequisites: A contact with category `Customer` and valid phone number.
+    2. Test case:
+        ```
+        customerSummary
+        ```  
+        **Expected:** Displays a summary of total number of customers in each tier and total points across all customers. Error message displayed if no customers in contact list.
+
+---
+
+### Staff Management
+
+1. **Updating staff shift**
+
+    1. Prerequisites: A contact with category `Staff` with valid phone number.
+    2. Test case:
+       ```
+       updateShift p/91234567 s/PM
+       ```  
+       **Expected:** Staff’s shift is updated. Status message confirms successful update.
+
+    3. Invalid test case:  
+       `updateShift p/91234567 s/Midnight`  
+       **Expected:** Error message displayed (invalid shift value).
+
+---
+
+### Supplier Management
+
+1. **Adding a supplier order**
+
+    1. Prerequisites: A contact with category `Supplier` with valid phone number.
+    2. Test case:
+       ```
+       addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday
+       ```  
+       **Expected:** A new order is added to the supplier. Order details are shown in the person card for the contact. Status message confirms successful update.
+
+2. **Updating a supplier order**
+
+    1. Prerequisites: A `Supplier`with an order with valid phone number.
+    2. Test case:
+       ```
+       updateOrder p/91234567 o/1 i/Fish
+       ```  
+       **Expected:** The specified order is updated successfully in the supplier's record, unless the edit does not actually change anything in the order. Status message confirms successful update.
+
+3. **Deleting a supplier order**
+
+    1. Prerequisites: A `Supplier` with an order with valid phone number.
+    2. Test case:
+       ```
+       deleteOrder p/91234567 o/1
+       ```  
+       **Expected:** The specified order is deleted from the supplier’s record. Status message confirms successful delete.
+
+---
+
+### Saving Data
+
+1. **Handling missing/corrupted data files**
+
+    1. Simulate by deleting or modifying the `data/ghostconnect.json` file.  
+       **Expected:** Application starts with an empty contact list or default sample data.  
+       **Error message** should be displayed in the result area, indicating corrupted or unreadable data file.
+
+---
+
+### Exiting the Application
+
+1. **Exit command**
+
+    1. Test case:
+       ```
+       exit
+       ```  
+       **Expected:** Application closes cleanly, including any pop-up windows. The latest data and window preferences are saved automatically. 
+
+---
+
+*End of Appendix.*
 
 ## **Appendix: Effort**
 wip
