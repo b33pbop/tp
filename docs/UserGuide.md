@@ -52,7 +52,7 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
     - [Updating Order from a Supplier](#updating-order-from-a-supplier-updateorder)
     - [Deleting Order from a Supplier](#deleting-order-from-a-supplier-deleteorder)
   - [Miscellaneous](#miscellaneous)
-    - [Saving the Date](#saving-the-data)
+    - [Saving the Data](#saving-the-data)
     - [Editing the Data File](#editing-the-data-file)
 - [FAQ](#faq)
 - [Known Issues](#known-issues)
