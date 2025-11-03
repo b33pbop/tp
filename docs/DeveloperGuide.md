@@ -36,10 +36,10 @@ pageNav: 3
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+
 This project is based on [SE-EDU AddressBook Level 3](https://github.com/se-edu/addressbook-level3).
 Parts of the code and documentation were adapted from it.
-Fuzzy search functionality was inspired by the [Levenshtein Distance algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance).
+
 
 
 --------------------------------------------------------------------------------------------------------------------
