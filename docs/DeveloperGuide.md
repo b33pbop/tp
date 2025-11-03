@@ -735,7 +735,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Customer**: Customers who have signed up for a membership for a loyalty program
 * **Fuzzy Search**: A search technique to find results approximately matching a query instead of an exact match
 * **GUI-Driven Systems**: Software systems that depend on visual elements like buttons and menus for user interaction
-* **Archiving**: The process of storing data in an organized manner for long-term retention
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for Manual Testing**
