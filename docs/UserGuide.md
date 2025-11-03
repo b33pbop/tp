@@ -60,8 +60,6 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
 - [Known Issues](#known-issues)
 - [Command Summary](#command-summary)
 
-</details>
-
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
