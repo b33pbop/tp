@@ -816,7 +816,7 @@ testers are expected to do more *exploratory* testing.
 
 3. **Deleting a supplier order**
 
-    1. Prerequisites: A `Supplier` with an order.
+    1. Prerequisites: A `Supplier` with an order with valid phone number.
     2. Test case:
        ```
        deleteOrder p/91234567 o/1
