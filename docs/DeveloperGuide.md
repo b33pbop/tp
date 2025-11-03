@@ -584,22 +584,8 @@ Use case ends.
 *     3a1. System informs the manager that the specified contact is not a valid customer
 Use case resumes at step 1 or ends
 * 4a. Amount to be reduced exceeds customer's current points
-*     4a1. System informs manager that insufficient points are available. 
+*     4a1. System informs manager that insufficient points are available.
 Use case resumes at step 2 or ends.
-
-**U15. View Customer Summary**
-**Actor: Manager**
-**MSS**
-1. Manager executes **customerSummary**
-2. System retrieves all customers from address book
-3. System groups customer by their membership tier.
-4. System displays the number of customers in each tier. 
-Use case ends.
-
-**Extensions**
-* 2a. No customers exist in the address book.
-*     2a1. System informs the manager that there are no customers to summarise.
-Use case ends. 
 
 ### Non-Functional Requirements
 
@@ -638,8 +624,7 @@ Given below are instructions to test the app manually.
 
 <box type="info" seamless>
 
-**Note:** These instructions only provide a starting point for testers to work on;  
-testers are expected to do more *exploratory* testing.
+**Note:** These instructions only provide a starting point for testers to work on;testers are expected to do more *exploratory* testing.
 
 </box>
 
@@ -767,14 +752,6 @@ testers are expected to do more *exploratory* testing.
         `reducePoints p/98765432 pts/-10`  
         **Expected:** Error message displayed.
 
-3. **Viewing customer summary**
-    1. Prerequisites: A contact with category `Customer` and valid phone number.
-    2. Test case:
-        ```
-        customerSummary
-        ```  
-        **Expected:** Displays a summary of total number of customers in each tier and total points across all customers. Error message displayed if no customers in contact list.
-
 ---
 
 ### Staff Management
@@ -847,8 +824,6 @@ testers are expected to do more *exploratory* testing.
 
 ---
 
-*End of Appendix.*
-
 ## **Appendix: Effort**
 wip
 
@@ -887,3 +862,5 @@ wip
 
 
 10. **Implement data validation on JSON file edits to prevent corruption**: Currently, if users manually edit the `addressbook.json` file and introduce invalid data (e.g., negative points, invalid shift values, duplicate phone numbers), the application either crashes or silently discards all data, resulting in data loss. We plan to implement comprehensive JSON validation on startup that: (1) identifies specific validation errors with line numbers and field names, (2) displays a detailed error report to the user, (3) offers to load the file in "safe mode" with invalid entries marked for review rather than discarding everything, (4) provides a backup recovery option. Example message: "Warning: 3 contacts have invalid data (Contact 5: negative points value, Contact 8: invalid email format). Load in safe mode to review and fix issues?"
+
+*End of Appendix.*
