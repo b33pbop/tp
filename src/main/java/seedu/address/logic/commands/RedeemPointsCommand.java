@@ -12,10 +12,10 @@ import seedu.address.model.person.Phone;
  */
 public class RedeemPointsCommand extends Command {
 
-    public static final String COMMAND_WORD = "redeemPoints";
-    public static final String COMMAND_LOWER = "redeempoints";
+    public static final String COMMAND_WORD = "reducePoints";
+    public static final String COMMAND_LOWER = "reducepoints";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Redeems points from a customer "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Reduces points from a customer "
             + "identified by phone number. "
             + "Parameters: p/PHONE pts/POINTS\n"
             + "Example: " + COMMAND_WORD + " p/98765432 pts/500";
