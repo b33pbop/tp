@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import java.util.Optional;
 
+import javafx.collections.ObservableList;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -21,6 +22,7 @@ public class ViewCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Views a person's details by phone number.\n"
         + "Parameters: " + PREFIX_PHONE + "PHONE\n"
         + "Example: " + COMMAND_WORD + " " + PREFIX_PHONE + "91234567";
+    public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
 
     private final Phone targetPhone;
 
@@ -38,9 +40,15 @@ public class ViewCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Optional<Person> match = model.getAddressBook().getPersonList().stream()
+        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
+
+        Optional<Person> match = model.getFilteredPersonList().stream()
                 .filter(p -> p.getPhone().equals(targetPhone))
                 .findFirst();
+
+        if(!match.isPresent() && fullList.size() != model.getFilteredPersonList().size()) {
+            throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND + ERROR_EXTENSION, targetPhone));
+        }
 
         if (!match.isPresent()) {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, targetPhone));
