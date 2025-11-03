@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.logic.commands.RedeemPointsCommand.ERROR_EXTENSION;
 import static seedu.address.logic.commands.RedeemPointsCommand.MESSAGE_NOT_ENOUGH_POINTS;
 import static seedu.address.logic.commands.RedeemPointsCommand.MESSAGE_NOT_FOUND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -12,6 +13,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.Customer;
 import seedu.address.model.person.Phone;
+import seedu.address.model.tier.Tier;
 import seedu.address.testutil.CustomerBuilder;
 
 public class RedeemPointsCommandTest {
@@ -37,7 +39,7 @@ public class RedeemPointsCommandTest {
     }
 
     @Test
-    public void validParameter_success() {
+    public void notEnoughPoints_failure() {
         Customer validCustomer = new CustomerBuilder().build();
         model.addPerson(validCustomer);
         Phone phone = validCustomer.getPhone();
@@ -47,6 +49,28 @@ public class RedeemPointsCommandTest {
 
         assertEquals(new CommandResult(String.format(MESSAGE_NOT_ENOUGH_POINTS,
                         validCustomer.getName().fullName, requiredPoints, validCustomer.getPoints())),
+                command.execute(model));
+    }
+
+    @Test
+    public void personNotFoundFiltered_failure() {
+        Customer firstCustomer = new CustomerBuilder()
+                .withName("Alice")
+                .withPhone("81234567")
+                .withTier(Tier.BRONZE)
+                .build();
+        Customer secondCustomer = new CustomerBuilder()
+                .withName("Blice")
+                .withPhone("91234567")
+                .withTier(Tier.BRONZE)
+                .build();
+        model.addPerson(firstCustomer);
+        model.addPerson(secondCustomer);
+
+        model.updateFilteredPersonList(person -> person.isSamePerson(secondCustomer));
+
+        RedeemPointsCommand command = new RedeemPointsCommand(firstCustomer.getPhone(),  100);
+        assertEquals(new CommandResult(String.format(MESSAGE_NOT_FOUND + ERROR_EXTENSION, firstCustomer.getPhone())),
                 command.execute(model));
     }
 

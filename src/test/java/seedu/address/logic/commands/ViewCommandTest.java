@@ -1,19 +1,28 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_PERSON_NOT_FOUND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.RedeemPointsCommand.ERROR_EXTENSION;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Phone;
+import seedu.address.model.tier.Tier;
+import seedu.address.testutil.CustomerBuilder;
+
 /**
  * Contains integration tests (interaction with the Model) for {@code ViewCommand}.
  */
@@ -78,6 +87,34 @@ public class ViewCommandTest {
 
         assertCommandFailure(viewCommand, model,
             String.format(MESSAGE_PERSON_NOT_FOUND, nonExistentPhone));
+    }
+
+    @Test
+    public void personNotFoundFiltered_failure() {
+        Customer firstCustomer = new CustomerBuilder()
+                .withName("Alice")
+                .withPhone("81234567")
+                .withTier(Tier.BRONZE)
+                .build();
+        Customer secondCustomer = new CustomerBuilder()
+                .withName("Blice")
+                .withPhone("91234567")
+                .withTier(Tier.BRONZE)
+                .build();
+        model.addPerson(firstCustomer);
+        model.addPerson(secondCustomer);
+
+        model.updateFilteredPersonList(person -> person.isSamePerson(secondCustomer));
+
+        ViewCommand command = new ViewCommand(firstCustomer.getPhone());
+
+        CommandException thrown = assertThrows(CommandException.class,
+                () -> command.execute(model));
+
+        assertEquals(
+                String.format(String.format(Messages.MESSAGE_PERSON_NOT_FOUND + ERROR_EXTENSION,
+                                firstCustomer.getPhone())),
+                thrown.getMessage());
     }
 }
 
