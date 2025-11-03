@@ -69,7 +69,7 @@ public class RedeemPointsCommandTest {
 
         model.updateFilteredPersonList(person -> person.isSamePerson(secondCustomer));
 
-        RedeemPointsCommand command = new RedeemPointsCommand(firstCustomer.getPhone(),  100);
+        RedeemPointsCommand command = new RedeemPointsCommand(firstCustomer.getPhone(), 100);
         assertEquals(new CommandResult(String.format(MESSAGE_NOT_FOUND + ERROR_EXTENSION, firstCustomer.getPhone())),
                 command.execute(model));
     }

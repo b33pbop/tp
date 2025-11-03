@@ -108,8 +108,7 @@ public class ViewCommandTest {
 
         ViewCommand command = new ViewCommand(firstCustomer.getPhone());
 
-        CommandException thrown = assertThrows(CommandException.class,
-                () -> command.execute(model));
+        CommandException thrown = assertThrows(CommandException.class, () -> command.execute(model));
 
         assertEquals(
                 String.format(String.format(Messages.MESSAGE_PERSON_NOT_FOUND + ERROR_EXTENSION,
