@@ -46,7 +46,7 @@ public class ViewCommand extends Command {
                 .filter(p -> p.getPhone().equals(targetPhone))
                 .findFirst();
 
-        if(!match.isPresent() && fullList.size() != model.getFilteredPersonList().size()) {
+        if (!match.isPresent() && fullList.size() != model.getFilteredPersonList().size()) {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND + ERROR_EXTENSION, targetPhone));
         }
 
