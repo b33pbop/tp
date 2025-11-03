@@ -318,6 +318,7 @@ Examples:
     </tr>
   </table>
 
+
 #### **Clearing all Contacts: `clear`**
 
 Clears all entries from the address book.
@@ -330,7 +331,6 @@ Exits the program.
 
 Format: `exit`
 
-</box>
 
 ### Category Specific Commands
 
