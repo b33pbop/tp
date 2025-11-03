@@ -84,9 +84,10 @@ public class AddOrderCommand extends Command {
         // finds person tagged to phone number
         Person foundPerson = null;
         requireNonNull(model);
+        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
         ObservableList<Person> currentList = model.getFilteredPersonList();
 
-        if (currentList.isEmpty()) {
+        if (fullList.isEmpty()) {
             throw new CommandException(MESSAGE_EMPTY_LIST);
         }
 
@@ -97,8 +98,6 @@ public class AddOrderCommand extends Command {
             }
         }
 
-        // checks if it's a supplier and if it is a supplier
-        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
         if (foundPerson == null && fullList.size() != currentList.size()) {
             throw new CommandException(String.format(MESSAGE_NOT_FOUND + ERROR_EXTENSION, supplierPhone));
         }

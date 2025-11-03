@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import javafx.collections.ObservableList;
 import seedu.address.model.Model;
 import seedu.address.model.person.Customer;
 import seedu.address.model.person.Person;
@@ -25,9 +26,11 @@ public class RedeemPointsCommand extends Command {
     public static final String MESSAGE_NOT_CUSTOMER =
             "The person with phone number %s is not a customer.";
     public static final String MESSAGE_SUCCESS =
-            "Redeemed %d points from %s. Remaining: %d. Tier: %s.";
+            "Deducted %d points from %s. Remaining: %d. Tier: %s.";
     public static final String MESSAGE_NOT_ENOUGH_POINTS =
-            "%s does not have enough points to redeem %d (current: %d).";
+            "%s does not have enough points to deduct %d (current: %d).";
+    public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
+
 
     private final Phone phone;
     private final int pointsToRedeem;
@@ -46,10 +49,16 @@ public class RedeemPointsCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
+        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
+
         Person target = model.getFilteredPersonList().stream()
                 .filter(p -> p.getPhone().equals(phone))
                 .findFirst()
                 .orElse(null);
+
+        if (target == null && fullList.size() != model.getFilteredPersonList().size()) {
+            return new CommandResult(String.format(MESSAGE_NOT_FOUND + ERROR_EXTENSION, phone));
+        }
 
         if (target == null) {
             return new CommandResult(String.format(MESSAGE_NOT_FOUND, phone.value));
