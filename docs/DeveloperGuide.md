@@ -584,7 +584,7 @@ Use case ends.
 *     3a1. System informs the manager that the specified contact is not a valid customer
 Use case resumes at step 1 or ends
 * 4a. Amount to be reduced exceeds customer's current points
-*     4a1. System informs manager that insufficient points are available. 
+*     4a1. System informs manager that insufficient points are available.
 Use case resumes at step 2 or ends.
 
 ### Non-Functional Requirements
@@ -624,8 +624,7 @@ Given below are instructions to test the app manually.
 
 <box type="info" seamless>
 
-**Note:** These instructions only provide a starting point for testers to work on;  
-testers are expected to do more *exploratory* testing.
+**Note:** These instructions only provide a starting point for testers to work on;testers are expected to do more *exploratory* testing.
 
 </box>
 
