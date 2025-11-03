@@ -77,7 +77,7 @@ public class Name {
         if (input.matches(".*\\([^)]*\\)$")) { // has (...) at the end
             int idx = input.lastIndexOf('(');
             namePart = input.substring(0, idx).trim();
-            tagPart = " " + input.substring(idx); // include parentheses
+            tagPart = " " + input.substring(idx).toLowerCase(); // include parentheses
         }
 
         String formattedName = Arrays.stream(namePart.split("\\s+"))
