@@ -6,17 +6,32 @@ pageNav: 3
 
 # GhostConnect User Guide
 
-Welcome to **GhostConnect**, a desktop application designed for managing contacts **quickly and efficiently**. GhostConnect combines the **speed and precision of a Command Line Interface (CLI)** with the **visual clarity of a Graphical User Interface (GUI)**, giving users the flexibility to work in the way that suits them best.
+Hey Ghost Kitchen Managers! 
 
-This guide is intended for **tech-savvy ghost kitchen managers** who oversee multiple aspects of their business, including **staff coordination, supplier management, and customer engagement through loyalty programs**. Our target audience values **efficiency, accuracy, and organization**, and seeks tools that allow them to manage complex information quickly without sacrificing clarity.
+Welcome to **GhostConnect**, a desktop application designed for managing contacts **quickly and efficiently** for our target users: the **ghost kitchen managers**. 
 
-We assume that users are familiar with basic computing concepts such as **file management, shortcuts, and command-based operations**, and are comfortable using tools that **streamline repetitive tasks** and **handle multiple contacts simultaneously**. GhostConnect is built with these needs in mind, providing both **powerful CLI commands for rapid actions** and a **GUI for visual organization and easy navigation**.
+Ghost kitchen managers oversee the operations of a ghost kitchen, which produces meals exclusively for delivery and takeout, without a traditional space to dine in.
+
+Keeping that in mind, this application aims to help for **tech-savvy ghost kitchen managers** who oversee multiple aspects of their business, including **staff coordination, supplier management, and customer engagement through loyalty programs**. Our target audience values **efficiency, accuracy, and organization**, and seeks tools that allow them to manage complex information quickly without sacrificing clarity.
+
+GhostConnect combines the **speed and precision of a Command Line Interface (CLI)** with the **visual clarity of a Graphical User Interface (GUI)**, giving users the flexibility to work in the way that suits them best.
+
+With Ghost Connect, users will be able to add, edit, delete and categorise their contact entries into 3 categories: Customers, Suppliers and Staff. 
+Users will also have access to various category specific functions depending on the entry's category, which include the following:
+- Staff: Updating of Shifts
+- Customer: Updating of Points
+- Suppliers: Adding, Updating and Deleting of Orders
+
+Assumptions:
+- We assume that users are familiar with basic computing concepts such as **file management, shortcuts, and command-based operations**, and are comfortable using tools that **streamline repetitive tasks** and **handle multiple contacts simultaneously**. 
+- We assume that all ghost kitchen managers using the application reside within Singapore and only have external contacts within Singapore as well. This implies that all contact entries into GhostConnect are to only include Singaporean numbers.
 
 By the end of this guide, users will be able to **navigate GhostConnect confidently**, leverage its **advanced features**, and integrate it seamlessly into their daily operations to manage staff, suppliers, and customer loyalty programs efficiently.
 
 ## Table of Contents
 
 - [Quick Start](#quick-start)
+- [Parameters](#parameters)
 - [Features](#features)
   - [General Commands](#general-commands)
     - [Help](#accessing-the-help-page-help)
@@ -70,7 +85,42 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
 6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
+## Parameters
 
+Many commands make use of the same parameters with identical validation rules. Listed below are the parameter types
+used in GhostConnect.
+
+### Person General Parameters
+INCLUDE DESCRIPTION
+
+| Parameter             | Validation Requirements       | Rationale                                |
+|:----------------------|:------------------------------|:-----------------------------------------|
+| **NAME**              | -                             |                                          |
+| **PHONE NUMBER**      | -                             |                                          |
+| **EMAIL**             | -                             |                                          |
+| **ADDRESS**           | -                             |                                          |
+| **CATEGORY**          | -                             |                                          |
+
+### Staff Specific Parameters
+INCLUDE DESCRIPTION
+
+| Parameter             | Validation Requirements       | Rationale                                |
+|:----------------------|:------------------------------|:-----------------------------------------|
+| **SHIFT**             | -                             |                                          |
+
+### Supplier Specific Parameters
+In GhostConnect, suppliers are also persons but have an additional parameter, which stores a list of their Orders.
+The parameters listed below are fields that belong to an Order.
+
+| Parameter             | Validation Requirements       | Rationale                                |
+|:----------------------|:------------------------------|:-----------------------------------------|
+| **ORDER INDEX**       | - xxx<br/> - xxx              |                                          |
+| **ITEM NAME**         | -                             |                                          |
+| **ITEM QUANTITY**     | -                             |                                          |
+| **ITEM UNIT PRICE**   | -                             |                                          |
+| **ITEM DELIVERY DAY** | -                             |                                          |
+
+--------------------------------------------------------------------------------------------------------------------
 ## Features
 
 <box type="info" seamless>
@@ -78,19 +128,19 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  - e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
-* All fields are compulsory.<br>
-e.g. `n/NAME c/CATEGORY` can be used as `n/John Doe c/Customer` or as `n/John Doe c/Supplier`, but not `n/John Doe`.
+* Some fields are optional.<br>
+  - Optional fields for certain commands have been indicated using the `[]` brackets. Fields within the square brackets are optional unless otherwise stated in the feature description.
 
 * Parameters can be in any order.<br>
-e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
+  - e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+  - e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * Commands are case-insensitive.<br>
-e.g. `list` is equivalent to `LIST`,`lISt`,`lIsT`, etc...
+  - e.g. `list` is equivalent to `LIST`,`lISt`,`lIsT`, etc...
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
@@ -121,7 +171,16 @@ Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY`
 
-* Contact to be added cannot have the same name or phone number as existing contacts.
+| Parameter | Validation Rules                                                 | Error Message when invalid |
+|:----------|:-----------------------------------------------------------------|:---------------------------|
+| **NAME**  | Refer to [Person General Parameters](#person-general-parameters) | "Name should..."           |
+
+Outputs:
+- Success
+  - Output Message displayed: ""
+- Failure
+  - Duplicate Entry: ""
+
 
 <box type="tip" seamless>
 
@@ -130,7 +189,6 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY`
 </box>
 
 Examples:
-
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/Customer` <br>
 * `add n/Betsy Crowe e/betsycrowe@example.com a/Yishun p/68998899 c/Staff`<br>
 
@@ -158,7 +216,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com`  
+* `edit 1 p/91234567 e/johndoe@example.com`
   Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 
   <table>
@@ -168,7 +226,7 @@ Examples:
     </tr>
   </table>
 
-* `edit 2 n/Betsy Crower c/Customer`  
+* `edit 2 n/Betsy Crower c/Customer`
   Edits the name of the 2nd person to be `Betsy Crower` and category to `Customer`.
 
   <table>
@@ -189,8 +247,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Substrings will also be matched e.g. `Cho` will match `Nicholas`
 * However, searching of categories occurs only for full match of input.
-  e.g. `find Cust` will not return contacts of `Customer`, only `find Customer` will.  
-* Persons matching at least one keyword will be returned (i.e. `OR` search).  
+  e.g. `find Cust` will not return contacts of `Customer`, only `find Customer` will.
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
@@ -286,7 +344,7 @@ Format: `updateShift p/PHONE s/SHIFT`
 * If the staff member's shift is already set to the specified value,
 the command will confirm the existing shift as a successful update.
 This is intentional, to provide consistent confirmation feedback even when
-no actual data change is required. 
+no actual data change is required.
 
 Examples:
 
@@ -337,7 +395,7 @@ Example:
 
 * `updateOrder p/91234567 o/1 q/100`
 * The above command will edit the first order in John Doe's order list, such that the quantity is changed to `100`.
-  
+
 ![result for 'updateOrder p/91234567 o/1 q/100'](images/updateOrderResult.png)
 
 #### **Deleting Order from a Supplier: `deleteOrder`**
@@ -375,7 +433,7 @@ AddressBook data are saved automatically as a JSON file `[JAR file location]/dat
 
 <box type="warning" seamless>
 
-**Caution:**  
+**Caution:**
 If your changes to the data file makes its format invalid, GhostConnect will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the GhostConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 
