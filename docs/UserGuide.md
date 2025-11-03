@@ -430,21 +430,20 @@ _Details coming soon ..._
 
 ## Command summary
 
-| Action               | Command Type | Format, Examples                                                                                                                                     |
-|----------------------|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Help**             | General      | `help`                                                                                                                                               |
-| **Add**              | General      | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer`|
-| **List**             | General      | `list`                                                                                                                                               |
-| **Edit**             | General      | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                              |
-| **Find**             | General      | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                           |
-| **View**             | General      | `view p/PHONE`<br> e.g., `view p/91234567`                                                                                                           |
-| **Delete**           | General      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                  |
-| **Clear**            | General      | `clear`                                                                                                                                              |
-| **Exit**             | General      | `exit`                                                                                                                                               |
-| **Update Points**    | Customer     | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                      |
-| **Update Shift**     | Staff        | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                  |
-| **Add Order**        | Supplier     | `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`<br> e.g. `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`           |
-| **Update Order**     | Supplier     | `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`<br> e.g. `updateOrder p/91234567 o/1 i/Fish`          |
-| **Delete Order**     | Supplier     | `deleteOrder p/PHONE o/ORDER_INDEX`<br> e.g. `deleteOrder p/91234567 o/1`                                                                            |
-| **Reduce Points**    | Customer     | `reducePoints p/PHONE pts/POINTS_TO_REDUCE` <br> e.g. `reducePoints p/91234567 pts/500`                                                              |
-| **Customer Summary** | General      | `customerSummary`                                                                                                                                    |
+| Action            | Command Type | Format, Examples                                                                                                                                      |
+|-------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**          | General      | `help`                                                                                                                                                |
+| **Add**           | General      | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer` |
+| **List**          | General      | `list`                                                                                                                                                |
+| **Edit**          | General      | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                               |
+| **Find**          | General      | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                            |
+| **View**          | General      | `view p/PHONE`<br> e.g., `view p/91234567`                                                                                                            |
+| **Delete**        | General      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                   |
+| **Clear**         | General      | `clear`                                                                                                                                               |
+| **Exit**          | General      | `exit`                                                                                                                                                |
+| **Update Points** | Customer     | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                       |
+| **Update Shift**  | Staff        | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                   |
+| **Add Order**     | Supplier     | `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`<br> e.g. `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`            |
+| **Update Order**  | Supplier     | `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`<br> e.g. `updateOrder p/91234567 o/1 i/Fish`           |
+| **Reduce Points** | Customer     | `reducePoints p/PHONE pts/POINTS_TO_REDUCE` <br> e.g. `reducePoints p/91234567 pts/500`                                                               |
+| **View Summary**  | General      | `customerSummary`                                                                                                                                     |
