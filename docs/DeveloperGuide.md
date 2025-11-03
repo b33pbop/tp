@@ -1,13 +1,12 @@
 ---
 layout: default.md
-title: "Developer Guide"
+title: "GhostConnect Developer Guide"
 pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# GhostConnect Developer Guide
 
-<details>
-    <summary> Table of Contents </summary>
+## Table of Contents
 
 - [Acknowledgements](#acknowledgements)
 - [Setting up, getting started](#setting-up-getting-started)
@@ -30,8 +29,6 @@ pageNav: 3
   - [Launch and shutdown](#launch-and-shutdown)
   - [Deleting a person](#deleting-a-person)
   - [Saving data](#saving-data)
-
-</details>
 
 <page-nav-print />
 
@@ -342,7 +339,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `GhostConnect` and the **Actor** is the `user`, unless specified otherwise)
 
 **U1. Add a new contact**
 
