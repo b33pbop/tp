@@ -338,10 +338,6 @@ Aspect: Identifier used for targeting
 * Current choice: `p/PHONE` targets supplier regardless of filtered list.
 * Alternative: Use list index or a unique ID.
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -375,25 +371,24 @@ Tech-savvy ghost kitchen managers who:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                       | I want to …​                                          | So that I can…​                                                        |
-|---------|-----------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------|
-| `* * *` | new user                                      | see usage instructions                                | refer to instructions when I forget how to use the App                 |
-| `* * *` | manager                                       | add a new contact                                     |                                                                        |
-| `* * *` | manager                                       | delete a contact                                      | remove entries that I no longer need                                   |
-| `* * *` | manager                                       | find a contact by name                                | locate details of persons without having to go through the entire list |
-| `* * *` | manager                                       | edit a contact                                        | update changed phone numbers, emails or addresses                      |
-| `* * *` | manager                                       | categorise a contact (Supplier, Staff, Customer)      | filter contacts by groups                                              |
-| `* * * ` | manager                                       | add orders for Suppliers                              | keep track of delivery from specific suppliers.                        |
-| `* * *` | manager                                       | update orders for Suppliers                           | update changed quantity, unit price, etc                               |
-| `* * `  | manager                                       | track customer spending                               | update their membership tier                                           |
-| `* * `  | manager                                       | update staff shift timing                             | track who is working that day                                          |
-| `* *`   | manager                                       | delete orders from specific suppliers                 | remove entries indicating completed or cancelled deliveries            |
-| `* *`   | manager                                       | mark a staff contact as inactive (e.g., on leave)     | I don’t accidentally assign tasks to them.                             |
-| `*`     | manager                                       | record staff shifts with their contacts               | reach out to the right staff on duty                                   |
-| `* `    | manager                                       | attach notes to a contact                             | remember context like “delivers only on weekends”                      |
-| `*`     | manager                                       | search for staff by their shift timings               | See all at once the staff that should be on duty                       |
-| `*`     | manager with many persons in the address book | sort persons by name                                  | locate a person easily                                                 |
-| `*`     | manager                                       | view usage analytics (e.g., most contacted suppliers) | optimise operations with insights                                      |
+| Priority | As a …​                                  | I want to …​                                     | So that I can…​                                                                                                              |
+|----------|------------------------------------------|--------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `* * *`  | new user unfamiliar with the system      | see usage instructions                           | refer to instructions when I forget how to use the App.                                                                      |
+| `* * *`  | manager                                  | add a new contact                                | add entries to store contact details.                                                                                        |
+| `* * *`  | manager handling many Persons            | categorise a contact (Supplier, Staff, Customer) | perform specific actions depending on the contact's category.                                                                |
+| `* * *`  | manager                                  | view all contacts in the address book            | go through all entries with ease.                                                                                            |
+| `* * *`  | detail-oriented manager                  | edit a contact                                   | update changed phone numbers, emails or addresses.                                                                           |
+| `* * *`  | manager with many contacts               | find a contact by name                           | locate details of persons without having to go through the entire list.                                                      |
+| `* * *`  | manager with many contacts               | find a contact by category                       | locate details of all persons under a specific category without having to go through the entire list.                        |
+| `* * *`  | manager                                  | delete a contact                                 | remove entries that I no longer need.                                                                                        |
+| `* * *`  | proactive and meticulous manager         | clear all contacts in the address book           | have access to a clean copy of the address book.                                                                             |
+| `* *`    | manager processing customer transactions | add points for Customers                         | keep track of the points Customers have obtained.                                                                            |
+| `* *`    | manager processing customer transactions | reduce points for Customers                      | keep track of the points Customers have redeemed.                                                                            |
+| `* * `   | manager in charge of work schedule       | update shift timing for Staff                    | track who is working that day.                                                                                               |
+| `* * `   | manager handling inventory               | add orders for Suppliers                         | keep track of delivery from specific suppliers.                                                                              |
+| `* * `   | manager handling inventory               | update orders for Suppliers                      | update changed quantity, unit price, etc.                                                                                    |
+| `* *`    | manager handling inventory               | delete orders from Suppliers                     | remove entries indicating completed or cancelled deliveries.                                                                 |
+| `*`      | manager                                  | save the data given when application closes      | retain all contact details, ensuring no information is lost and work can be resumed seamlessly when application is reopened. |
 
 ### Use cases
 
@@ -950,7 +945,46 @@ Given below are instructions to test the app manually.
 ---
 
 ## **Appendix: Effort**
-wip
+Compared to the baseline AddressBook-Level 3 (AB3), this project is significantly more complex. While AB3 is a single-entity (Person) application with a flat structure, GhostConnect manages multiple interrelated entity types (e.g., Customer, Supplier, Staff). This introduced a higher order of complexity in areas such as:
+
+- Data Model: Designing a normalized and scalable relational schema.
+- Logic: Implementing features that require coordination and validation across different entities (e.g., cascading deletes, status updates).
+- UI: Presenting and navigating a more intricate data structure in a user-friendly way.
+
+We estimate the overall difficulty to be 2.5x to 3x that of the AB3 project.
+
+Challenges Faced
+
+- Planning System Design: Planning the system design required us to rationalize the choices we made and evaluating trade-offs made to ensure scalability, efficiency and alignment of expectations within the team.
+- Understanding the existing AB3 Code: Requiring understanding on the existing AB3 code requires careful analysis of its current structure and functionality and is challenging for users that do not have much experience in software engineering.
+- Testing: Writing test cases involves creating comprehensive scenarios and good understanding of the code written to validate both the expected and the edge-case behaviors.
+- Resolve Conflicts: Deconflicting entails merging divergent code changes while maintaining consistency and functionality.
+
+Effort Required
+- The development effort for each team member is estimated to be approximately 50 hours over the coding period.
+- This effort was distributed across:
+  - Design & Architecture (20%): Planning the entity relationships, command structure, and UI layout.
+  - Core Implementation (50%): Coding the new entities, commands, and the primary logic.
+  - Testing (20%): Writing and maintaining JUnit tests, fixing bugs, and performing user acceptance testing.
+  - Documentation (10%): Writing the User Guide and Developer Guide and ensuring information written is consistent.
+
+Achievements
+- Despite the challenges, the project successfully delivered a robust and feature-rich application that surpasses the AB3 baseline. 
+- Key achievements include:
+  - A fully functional multi-entity management system with CRUD operations for all entities.
+  - Advanced features such as search/filter across multiple fields and inter-entity linking.
+  - Comprehensive test coverage ensuring reliability and ease of future maintenance.
+
+Reused Components (Effort Saved: ~15%)
+- A significant portion of development effort was saved by building upon and adapting the existing AB3 codebase and libraries.
+- Components include:
+  - AB3 Architecture & Boilerplate: The entire application architecture (e.g., Logic, Model, Storage, Ui component structure, command parsing pattern) was reused from AB3. This saved an immense amount of initial setup and boilerplate coding effort.
+  - JavaFX Libraries: The UI leverages the JavaFX framework, reusing core components for tables, lists, and text fields. Our effort was focused on customizing and composing these components (TableView, ListView) rather than building them from scratch.
+  - Third-Party Libraries:
+    - Jackson Library: JSON serialization/deserialization for the storage layer was implemented using the Jackson library. Our work to adapt Jackson to our specific data model is contained primarily in the JsonAdaptedPerson, JsonAdaptedCategory, etc. classes.
+    - JUnit: The testing framework was entirely reused, allowing us to focus on writing test cases instead of building a testing infrastructure.
+
+This strategic reuse allowed the team to focus innovation on the project's unique and complex features rather than reinventing foundational elements.
 
 ## **Appendix: Planned Enhancements**
 1. **Standardize all commands to use INDEX instead of PHONE for contact identification**: Currently, commands like `view`, `updatePoints`, `updateShift`, `addOrder`, `updateOrder`, and `deleteOrder` use phone numbers to identify contacts, while `edit` and `delete` use INDEX. This inconsistency can confuse users. We plan to update all category-specific commands to accept INDEX as the primary identifier (e.g., `updatePoints INDEX b/BILL_AMOUNT` instead of `updatePoints p/PHONE b/BILL_AMOUNT`). This will provide a uniform command structure across the application and allow users to work directly with the displayed list indices. The phone parameter will be deprecated in favor of INDEX for all commands.
