@@ -177,38 +177,48 @@ Format: `help`
 
 #### **Adding a Contact: `add`**
 
-Adds a person to the address book.<br/>
+Adds a person to the address book.
+
 Based on the category you give the contact, they unlock [different commands](#category-specific-commands)!
 
 Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY`
 
-| Parameter        | Validation Rules (Refer to [Person General Parameters](#person-general-parameters) for more details!) | Error Message when invalid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-|:-----------------|:------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **NAME**         | Refer to [Person General Parameters](#person-general-parameters)                                      | "Name should..."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| **PHONE NUMBER** | Singaporean Numbers Only                                                                              | "Phone numbers must only have 8 digits and start with 6, 8 or 9."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| **EMAIL**        | Follows the structure of example@email.com                                                            | "Emails should be of the format local-part@domain and adhere to the following constraints:<br/>1. The LOCAL-PART (before '@') must: only contain LETTERS, DIGITS, and these SPECIAL CHARACTERS: +_.-; have at most one SPECIAL CHARACTER between LETTERS/DIGITS (no consecutive special characters); not start or end with any SPECIAL CHARACTERS.<br/>2. The DOMAIN (after '@') must: be made up of DOMAIN LABELS separated by periods; end with a DOMAIN LABEL that is at least 2 LETTERS/DIGITS long; have each DOMAIN LABEL start and end with a LETTER/DIGIT; contain only LETTERS/DIGITS within each label, with optional HYPHENS allowed between LETTERS/DIGITS." |
-| **ADDRESS**      | Only letters, digits or `',-#` and spaces allowed<br/>Length between 2 and 100 characters             | "Invalid characters found - only letters, numbers, apostrophes, commas, hyphens, hashes and spaces are allowed." <br/>"Length of Address does not match criteria - Address must be between 2 - 100 characters."                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| **CATEGORY**     | Either Customer, Staff or Supplier                                                                    | "Unknown Category (Customer \| Supplier \| Staff)"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+Hey! We understand the table [above](#person-general-parameters) may look scary which is why we have **error messages** for each field to guide your experience in the app:
 
+| Parameter        | Error Message when invalid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|:-----------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **NAME**         | Names should only contain alphanumeric characters and spaces, and it should not be blank.<br/> Only one pair of brackets are allowed to indicate tags.<br/> The opening bracket must be closed.<br/> No characters after the brackets are allowed.                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **PHONE NUMBER** | Phone numbers must only have 8 digits and start with 6, 8 or 9.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **EMAIL**        | Emails should be of the format local-part@domain and adhere to the following constraints:<br/>1. The LOCAL-PART (before '@') must: only contain LETTERS, DIGITS, and these SPECIAL CHARACTERS: +_.-; have at most one SPECIAL CHARACTER between LETTERS/DIGITS (no consecutive special characters); not start or end with any SPECIAL CHARACTERS.<br/>2. The DOMAIN (after '@') must: be made up of DOMAIN LABELS separated by periods; end with a DOMAIN LABEL that is at least 2 LETTERS/DIGITS long; have each DOMAIN LABEL start and end with a LETTER/DIGIT; contain only LETTERS/DIGITS within each label, with optional HYPHENS allowed between LETTERS/DIGITS. |
+| **ADDRESS**      | Invalid characters found - only letters, numbers, apostrophes, commas, hyphens, hashes and spaces are allowed." <br/>"Length of Address does not match criteria - Address must be between 2 - 100 characters.                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| **CATEGORY**     | Unknown Category (Customer \| Supplier \| Staff)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
-
-**If all the rules above were followed you will see either of these 2 messages**:
+**If all the rules [above](#person-general-parameters) were followed you will see either of these 2 messages**:
 
 - :white_check_mark:Success (yay!)
   - "New person added: NAME; Phone: PHONE; Email: EMAIL; Address: ADDRESS; Category: CATEGORY"
 - :x:Failure (oh no!)
   - Duplicate Entry: "A contact with the name or number already exists in the book."
 
+<box type="info">
+
+**Duplicate Check**
+
+Even if every field is valid, GhostConnect will prevent you from adding:
+- a contact with a **name** that already exists, or
+- a contact with a **phone number** that already exists.
+
+This feature help prevent unnecessary clutter in your contact list!
+
+</box>
+
 <box type="tip">
 
-**Forgot the command format or made a prefix typo?**
+**Need to add a contact with the same name?**
 
-Fret not! GhostConnect will let you know and provide you with the command format:
+This is why we allow a **pair of brackets** at the end of the name to tag each contact!
 
-Invalid command format!<br/>
-add: Adds a person to the address book.<br/>
-Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY<br/>
-Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 c/Customer<br/>
+E.g. Tom (Soon Seng Food Industry) & Tom (Lim Kian Seng Food Supplier) will not set off duplicate rules :smiley:
 
 </box>
 
@@ -243,9 +253,16 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* Input values for name/phone must not be the same as the name/phone of other existing contacts.
-* When editing a contact’s category, any fields specific to the previous category will be replaced with those of the new category.
+* Existing values will be replaced by the input values.
+* Name and Phone duplicate check still holds when editing contacts.
+
+<box type="important">
+
+**Data Override**
+
+When you change a contact’s **category**, GhostConnect will **automatically** clear fields from the **old category** and apply the fields for the new one.
+
+</box>
 
 Examples:
 
@@ -394,7 +411,7 @@ Examples:
 * `updatePoints p/98765432 b/100000.00` adds `100000 points` for `John Doe`<br>
   ![result for 'updatePoints p/98765432 b/100000.00'](images/updatePointsResult.png)
 
-### **Reducing points for Customer: `reducePoints`**
+#### **Reducing points for Customer: `reducePoints`**
 
 Redeems a specified number of points from a customer's account.
 
@@ -421,7 +438,7 @@ Example:
   </table>
 
 
-### **View summary of Customers: `customerSummary`**
+#### **View summary of Customers: `customerSummary`**
 
 Views the number of customers at each tier, along with the total amount of points across all customers.
 
@@ -519,7 +536,6 @@ Example:
 
 * `deleteOrder p/91234567 o/1`
 * The above command will delete the first order in John Doe's order list
-
 
 
 ### Miscellaneous

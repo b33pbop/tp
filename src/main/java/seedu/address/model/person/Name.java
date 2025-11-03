@@ -13,8 +13,9 @@ import java.util.stream.Collectors;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank. Only one pair of"
-                    + "brackets are also allowed to indicate tags. No characters after the brackets are allowed.";
+            "Names should only contain alphanumeric characters and spaces, and it should not be blank.\n"
+                    + "Only one pair of brackets are allowed to indicate tags.\nThe opening bracket must be closed.\n"
+                    + "No characters after the brackets are allowed.";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -69,8 +70,20 @@ public class Name {
     }
 
     private String toTitleCase(String input) {
-        return Arrays.stream(input.trim().split("\\s+"))
+        input = input.trim();
+        String namePart = input;
+        String tagPart = "";
+
+        if (input.matches(".*\\([^)]*\\)$")) { // has (...) at the end
+            int idx = input.lastIndexOf('(');
+            namePart = input.substring(0, idx).trim();
+            tagPart = " " + input.substring(idx); // include parentheses
+        }
+
+        String formattedName = Arrays.stream(namePart.split("\\s+"))
                 .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
                 .collect(Collectors.joining(" "));
+
+        return formattedName + tagPart;
     }
 }
