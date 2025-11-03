@@ -1,6 +1,6 @@
 ---
 layout: default.md
-title: "User Guide"
+title: "GhostConnect User Guide"
 pageNav: 3
 ---
 
@@ -90,23 +90,24 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
 Many commands make use of the same parameters with identical validation rules. Listed below are the parameter types
 used in GhostConnect.
 
+
 ### Person General Parameters
 INCLUDE DESCRIPTION
 
-| Parameter             | Validation Requirements       | Rationale                                |
-|:----------------------|:------------------------------|:-----------------------------------------|
-| **NAME**              | -                             |                                          |
-| **PHONE NUMBER**      | -                             |                                          |
-| **EMAIL**             | -                             |                                          |
-| **ADDRESS**           | -                             |                                          |
-| **CATEGORY**          | -                             |                                          |
+| Parameter             | Validation Requirements                                                     | Rationale                                                                                                   |
+|:----------------------|:----------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------|
+| **NAME**              | -                                                                           |                                                                                                             |
+| **PHONE NUMBER**      | - 8 Digits long<br/> - Starts with either 6, 8 or  9                        | GhostConnect caters to the Singaporean market and thus phone numbers have to be a valid Singaporean number. |
+| **EMAIL**             | -                                                                           |                                                                                                             |
+| **ADDRESS**           | -                                                                           |                                                                                                             |
+| **CATEGORY**          | - Can only belong to 1 of the three categories: Customer, Staff or Supplier | These are the 3 main groups of contacts relevant to ghost kitchen managers.                                 |
 
 ### Staff Specific Parameters
 INCLUDE DESCRIPTION
 
 | Parameter             | Validation Requirements       | Rationale                                |
 |:----------------------|:------------------------------|:-----------------------------------------|
-| **SHIFT**             | -                             |                                          |
+| **SHIFT**             | - Can only be either AM or PM |                                          |
 
 ### Supplier Specific Parameters
 In GhostConnect, suppliers are also persons but have an additional parameter, which stores a list of their Orders.
@@ -181,12 +182,6 @@ Outputs:
 - Failure
   - Duplicate Entry: ""
 
-
-<box type="tip" seamless>
-
-**Tip:** A person can only belong to one of these 3 categories: `Customer` / `Supplier` / `Staff`.
-
-</box>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/Customer` <br>
@@ -263,6 +258,35 @@ Examples:
       <td><strong>After</strong><br><img src="images/find2.png" width="300" height="300"/></td>
     </tr>
   </table>
+
+#### **Viewing additional info for a contact: `view`**
+Opens a popup window with all the information regarding the contact.
+
+Format: `view p/PHONE`
+
+* Views the contact with the specified `PHONE` number.
+* The phone number must match an existing contact in the address book.
+* Multiple view windows can be opened simultaneously for different contacts.
+* The view window displays contact information with color-coded backgrounds based on category:
+  - Customer: `Blue` background
+  - Staff: `Pink` background
+  - Supplier: `Green` background
+* The window shows all contact details including category-specific information:
+  - Customer: Points and tier information
+  - Staff: Shift and remaining leaves
+  - Supplier: List of orders
+* You can scroll through the content if there are many details (e.g., a supplier with many orders).
+
+Examples:
+
+* `view p/98765432` opens a view window showing details for the contact with phone number `98765432`
+* `view p/91234567` opens another view window for a different contact
+
+![result for above commands](images/ViewResult.png)
+
+<div markdown="span" class="alert alert-info">Note:
+The view window is a separate popup that displays comprehensive contact information in a color-coded format. You can open multiple view windows at once to compare different contacts side-by-side.
+</div>
 
 #### **Deleting a Contact: `delete`**
 
@@ -419,6 +443,43 @@ Example:
 * `deleteOrder p/91234567 o/1`
 * The above command will delete the first order in John Doe's order list
 
+### **Redeeming points for Customer: `reducePoints`**
+
+Redeems a specified number of points from a customer's account.
+
+Format: `reducePoints p/PHONE pts/POINTS_TO_REDUCE`
+
+* Can only be performed on Customers.
+* The number of points to redeem must be a **positive integer** and not exceed the customer's current balance.
+* If the specified customer does not exist, or is not a Customer, an error message will be displayed.
+* This command can be used to correct an erroneous addition of points (due to a mistaken updatePoints entry).
+* If the customer's points is reduced below a membership tier threshold, the customer's tier is updated automatically. 
+
+Example: 
+
+* Assuming that the Customer `John Cena` has the phone number `91234567`
+* Assuming that `John Cena` currently has 1000 points and is Tier `Gold`
+* `reducePoints p/912345667 pts/500`
+* The above command will remove 500 points from John Cena and update him to `Silver` tier. 
+
+<table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/redeem1.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/redeem2.png" width="300"/></td>
+    </tr>
+  </table>
+
+
+### **View summary of Customers: `customerSummary`**
+
+Views the number of customers at each tier, along with the total amount of points across all customers. 
+
+Format: `customerSummary`
+
+* Shows the number of customers grouped by membership tier along with total number of points across all customers.
+* Provides managers with concise summary of customer distribution without listing individual entries.
+* Can be used after updates to verify that point or tier changes are reflected correctly. 
+
 </box>
 
 ### Miscellaneous
@@ -443,8 +504,30 @@ Furthermore, certain edits can cause the GhostConnect to behave in unexpected wa
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**Q**: How do I transfer my contacts to a new Computer?
+<br>
+**A**:
+1. Install `GhostConnect` on your new computer.
+2. Locate the `addressBook.json` file on your old computer and replace the existing `addressBook.json` file in your new computer.
+   1. The `addressBook.json` file can be located in `[JAR file location]/data/`.
+3. Restart `GhostConnect` on your new Computer. All your contacts should appear.
+
+**Q**: What happens if `GhostConnect` crashes? Will I lose all my contacts?
+<br>
+**A**: Your data is safe! Your data is automatically saved after every change, simply restart `GhostConnect` and all your contacts should appear.
+
+**Q**: I accidentally deleted a client contact. Can I recover it?
+<br>
+**A**: Unfortunately, deleted contacts **cannot be recovered** at the moment. We recommend **regularly backing up your contact data** to prevent accidental loss. Future updates may include a recovery or undo feature.
+
+**Q**: Is GhostConnect available on mobile devices?
+<br>
+**A**: Currently, GhostConnect is optimized for **desktop use only** (Windows, macOS, Linux). This allows for better keyboard interaction and ensures smooth performance for large contact databases.
+
+**Q**: Why use a CLI when a GUI is available?
+<br>
+**A**: The **CLI** allows users to perform actions **much faster** once they are familiar with the commands—such as adding, editing, or searching for contacts in seconds. However, the **GUI** remains available for users who prefer visual interaction or are still learning the commands. The hybrid design ensures the best of both worlds.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -457,19 +540,21 @@ Furthermore, certain edits can cause the GhostConnect to behave in unexpected wa
 
 ## Command summary
 
-| Action            | Command Type | Format, Examples                                                                                                                                      |
-|-------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Help**          | General      | `help`                                                                                                                                                |
-| **Add**           | General      | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer` |
-| **List**          | General      | `list`                                                                                                                                                |
-| **Edit**          | General      | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                               |
-| **Find**          | General      | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                            |
-| **View**          | General      | `view p/PHONE`<br> e.g., `view p/91234567`                                                                                                            |
-| **Delete**        | General      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                   |
-| **Clear**         | General      | `clear`                                                                                                                                               |
-| **Exit**          | General      | `exit`                                                                                                                                                |
-| **Update Points** | Customer     | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                       |
-| **Update Shift**  | Staff        | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                   |
-| **Add Order**     | Supplier     | `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`<br> e.g. `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`            |
-| **Update Order**  | Supplier     | `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`<br> e.g. `updateOrder p/91234567 o/1 i/Fish`           |
-| **Delete Order**  | Supplier     | `deleteOrder p/PHONE o/ORDER_INDEX`<br> e.g. `deleteOrder p/91234567 o/1`                                                                             |
+| Action               | Command Type  | Format, Examples                                                                                                                                      |
+|----------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**             | General       | `help`                                                                                                                                                |
+| **Add**              | General       | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer` |
+| **List**             | General       | `list`                                                                                                                                                |
+| **Edit**             | General       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                               |
+| **Find**             | General       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                            |
+| **View**             | General       | `view p/PHONE`<br> e.g., `view p/91234567`                                                                                                            |
+| **Delete**           | General       | `delete INDEX`<br> e.g., `delete 3`                                                                                                                   |
+| **Clear**            | General       | `clear`                                                                                                                                               |
+| **Exit**             | General       | `exit`                                                                                                                                                |
+| **Update Points**    | Customer      | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                       |
+| **Update Shift**     | Staff         | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                   |
+| **Add Order**        | Supplier      | `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`<br> e.g. `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`            |
+| **Update Order**     | Supplier      | `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`<br> e.g. `updateOrder p/91234567 o/1 i/Fish`           |
+| **Delete Order**     | Supplier      | `deleteOrder p/PHONE o/ORDER_INDEX`<br> e.g. `deleteOrder p/91234567 o/1`                                                                             |
+| **Reduce Points**    | Customer      | `reducePoints p/PHONE pts/POINTS_TO_REDUCE` <br> e.g. `reducePoints p/91234567 pts/500`                                                               |
+| **Customer Summary** | General       | `customerSummary`                                                                                                                                     |        

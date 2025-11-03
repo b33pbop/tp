@@ -11,12 +11,6 @@ public class CustomerSummaryCommandParser implements Parser<CustomerSummaryComma
 
     @Override
     public CustomerSummaryCommand parse(String args) throws ParseException {
-        String trimmed = args.trim();
-        if (!trimmed.isEmpty()) {
-            throw new ParseException(
-                    String.format("This command does not take arguments. Usage: %s",
-                            CustomerSummaryCommand.MESSAGE_USAGE));
-        }
         return new CustomerSummaryCommand();
     }
 }
