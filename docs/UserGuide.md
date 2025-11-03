@@ -351,6 +351,47 @@ Example:
 * `deleteOrder p/91234567 o/1`
 * The above command will delete the first order in John Doe's order list
 
+### **Redeeming points for Customer: `redeemPoints`**
+
+Redeems a specified number of points from a customer's account.
+
+Format: `redeemPoints p/PHONE pts/POINTS_TO_REDEEM`
+
+* Can only be performed on Customers.
+* The number of points to redeem must be a **positive integer** and not exceed the customer's current balance.
+* If the specified customer does not exist, or is not a Customer, an error message will be displayed.
+* This command can be used to correct an erroneous addition of points (due to a mistaken updatePoints entry).
+* If the customer's points is reduced below a membership tier threshold, the customer's tier is updated automatically. 
+
+Example: 
+
+* Assuming that the Customer `John Cena` has the phone number `91234567`
+* Assuming that `John Cena` currently has 1000 points and is Tier `Gold`
+* `redeemPoints p/912345667 pts/500`
+* The above command will remove 500 points from John Cena and update him to `Silver` tier. 
+
+<table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/redeem1.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/redeem2.png" width="300"/></td>
+    </tr>
+  </table>
+
+Note: 
+The current version of the `redeemPoints` command is limited to reducing customer points for administrative corrects (e.g. if points were added erroneously).
+The name `redeemPoints` has been chosen intentionally to allow for future integration of a full customer reward redemption system, without requiring major refactoring. 
+
+
+### **View summary of Customers: `customerSummary`**
+
+Views the number of customers at each tier, along with the total amount of points across all customers. 
+
+Format: `customerSummary`
+
+* Shows the number of customers grouped by membership tier along with total number of points across all customers.
+* Provides managers with concise summary of customer distribution without listing individual entries.
+* Can be used after updates to verify that point or tier changes are reflected correctly. 
+
 </box>
 
 ### Miscellaneous
