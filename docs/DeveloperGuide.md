@@ -36,10 +36,10 @@ pageNav: 3
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+
 This project is based on [SE-EDU AddressBook Level 3](https://github.com/se-edu/addressbook-level3).
 Parts of the code and documentation were adapted from it.
-Fuzzy search functionality was inspired by the [Levenshtein Distance algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance).
+
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -392,7 +392,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `GhostConnect` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `GhostConnect` and the **Actor** is the `Manager`, unless specified otherwise)
 
 **U1. Add a new contact**
 
@@ -735,7 +735,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Customer**: Customers who have signed up for a membership for a loyalty program
 * **Fuzzy Search**: A search technique to find results approximately matching a query instead of an exact match
 * **GUI-Driven Systems**: Software systems that depend on visual elements like buttons and menus for user interaction
-* **Archiving**: The process of storing data in an organized manner for long-term retention
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for Manual Testing**

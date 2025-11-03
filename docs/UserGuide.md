@@ -309,7 +309,7 @@ John recently changed his contact number and email!
     </tr>
   </table>
 
-You realized there was a typo for Betsy's name!
+You realized there was a typo for Betsy's name and Betsy is supposed to be customer not a supplier!
 
 * `edit 2 n/Betsy Crower c/Customer`
   Edits the name of the 2nd person to be `Betsy Crower` and category to `Customer`.
