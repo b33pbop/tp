@@ -27,6 +27,7 @@ import seedu.address.model.person.Supplier;
 public class AddOrderCommand extends Command {
     // Static variables
     public static final String COMMAND_WORD = "addOrder";
+    public static final String COMMAND_LOWER = "addorder";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a order to the supplier's order list.\n"
             + "Parameters: "
             + PREFIX_PHONE + "PHONE "
@@ -38,10 +39,11 @@ public class AddOrderCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_ITEM + "Markers "
             + PREFIX_QUANTITY + "50 "
-            + PREFIX_UNITPRICE + "$0.60 "
+            + PREFIX_UNITPRICE + "0.60 "
             + PREFIX_DELIVERYDAY + "every Thursday";
     public static final String MESSAGE_SUCCESS = "Order added successfully";
     public static final String MESSAGE_NOT_FOUND = "No person found with phone number %1$s.";
+    public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
     public static final String MESSAGE_NOT_SUPPLIER = "The person with phone number %1$s is not a supplier.";
     public static final String MESSAGE_DUPLICATE_ORDER = "Order already exists in the list.";
     public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
@@ -96,6 +98,10 @@ public class AddOrderCommand extends Command {
         }
 
         // checks if it's a supplier and if it is a supplier
+        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
+        if (foundPerson == null && fullList.size() != currentList.size()) {
+            throw new CommandException(String.format(MESSAGE_NOT_FOUND + ERROR_EXTENSION, supplierPhone));
+        }
         if (foundPerson == null) {
             throw new CommandException(String.format(MESSAGE_NOT_FOUND, supplierPhone));
         }

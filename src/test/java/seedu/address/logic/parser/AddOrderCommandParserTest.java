@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
@@ -24,7 +25,7 @@ import seedu.address.testutil.SupplierBuilder;
 public class AddOrderCommandParserTest {
     private AddOrderCommandParser parser = new AddOrderCommandParser();
     private Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
-    private String expectedInput = " p/ 85355255 i/ Chicken q/ 99 u/ 0.99 d/ every Thursday";
+    private String expectedInput = " p/ 85355255 i/ Chicken q/ 99 u/ 0.99 d/ every thursday";
 
 
     @Test
@@ -36,30 +37,35 @@ public class AddOrderCommandParserTest {
                 expectedOrder.getUnitPrice(),
                 expectedOrder.getDeliveryDay());
 
-        assertParseSuccess(parser, AddOrderCommand.COMMAND_WORD + expectedInput, expectedCommand);
+        assertParseSuccess(parser, expectedInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_withPreamble_failure() {
+        assertThrows(ParseException.class, () -> parser.parse("abcabcabc" + expectedInput));
     }
 
     @Test
     public void repeatedFieldsPresent_failure() {
 
         // multiple phone numbers
-        assertParseFailure(parser, AddOrderCommand.COMMAND_WORD + expectedInput + " p/ 91111111",
+        assertParseFailure(parser, expectedInput + " p/ 91111111",
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
         // multiple items
-        assertParseFailure(parser, AddOrderCommand.COMMAND_WORD + expectedInput + " i/ Another item",
+        assertParseFailure(parser, expectedInput + " i/ Another item",
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ITEM));
 
         // multiple quantity
-        assertParseFailure(parser, AddOrderCommand.COMMAND_WORD + expectedInput + " q/ 10000",
+        assertParseFailure(parser, expectedInput + " q/ 10000",
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_QUANTITY));
 
         // multiple unit price
-        assertParseFailure(parser, AddOrderCommand.COMMAND_WORD + expectedInput + " u/ 1.17",
+        assertParseFailure(parser, expectedInput + " u/ 1.17",
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_UNITPRICE));
 
         // multiple delivery day
-        assertParseFailure(parser, AddOrderCommand.COMMAND_WORD + expectedInput + " d/ every Saturday",
+        assertParseFailure(parser, expectedInput + " d/ every Saturday",
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_DELIVERYDAY));
     }
 
@@ -90,13 +96,6 @@ public class AddOrderCommandParserTest {
         // all prefixes missing
         String missingAll = " 85355255 Chicken 99 0.99 every Thursday";
         assertParseFailure(parser, AddOrderCommand.COMMAND_WORD + missingAll, expectedErrorMessage);
-    }
-
-    @Test
-    public void parse_unitPriceWithDollar_success() throws ParseException {
-        String args = "p/85355255 i/Chicken q/99 u/$0.99 d/every Thursday";
-        AddOrderCommand cmd = parser.parse(args);
-        assertEquals(new ItemUnitPrice("0.99"), cmd.getOrderUnitPrice());
     }
 
     @Test

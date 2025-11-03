@@ -186,4 +186,44 @@ public class CustomerTest {
 
         assertThrows(IllegalArgumentException.class, () -> customer.redeemPoints(200));
     }
+
+    @Test
+    public void addPointsFromSpending_pointsExceedMaxPoints_pointsCappedAtMax() {
+        // Arrange
+        Customer customer = new CustomerBuilder()
+                .withName("Charlie")
+                .withPhone("81234567")
+                .withTier(Tier.GOLD)
+                .build();
+
+        customer.addPointsFromSpending(Customer.MAX_POINTS - 10);
+        double bigSpending = 50.0; // should add >10 points and push over max
+
+        // Act
+        customer.addPointsFromSpending(bigSpending);
+
+        // Assert
+        assertEquals(Customer.MAX_POINTS, customer.getPoints(),
+                "Points should be capped at MAX_POINTS when exceeded");
+    }
+
+    @Test
+    public void calculatePointsFromSpending_exceedsMaxPoints_returnsOnlyRemainingPoints() {
+        // Arrange
+        Customer customer = new CustomerBuilder()
+                .withName("Eve")
+                .withPhone("91234567")
+                .withTier(Tier.SILVER)
+                .build();
+        customer.addPointsFromSpending(Customer.MAX_POINTS - 5);
+
+        double bigSpending = 100.0; // would normally add 100 points, exceeding MAX_POINTS
+
+        // Act
+        int calculatedPoints = customer.calculatePointsFromSpending(bigSpending);
+
+        // Assert
+        assertEquals(5, calculatedPoints,
+                "Should return only the remaining points before hitting MAX_POINTS");
+    }
 }

@@ -14,8 +14,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ItemUnitPrice {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Only positive numerical values, up to 2 decimal places are allowed.";
-    public static final String VALIDATION_REGEX = "^\\d+(\\.\\d{1,2})?$";
+            "Unit Price cannot be blank and only positive numerical values with strictly 2 decimal places are allowed";
+    public static final String VALIDATION_REGEX = "^(?:0\\.(0[1-9]|[1-9]\\d)|[1-9]\\d*(?:\\.00|\\.\\d{2}))$";
 
     public final String itemUnitPrice;
 

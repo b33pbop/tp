@@ -20,7 +20,8 @@ public class RedeemPointsCommandParser implements Parser<RedeemPointsCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_PHONE, PREFIX_POINTS);
 
         if (!argMultimap.getValue(PREFIX_PHONE).isPresent()
-                || !argMultimap.getValue(PREFIX_POINTS).isPresent()) {
+                || !argMultimap.getValue(PREFIX_POINTS).isPresent()
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     RedeemPointsCommand.MESSAGE_USAGE));
         }

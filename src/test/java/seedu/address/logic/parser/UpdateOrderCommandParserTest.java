@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
@@ -47,6 +48,12 @@ public class UpdateOrderCommandParserTest {
     }
 
     @Test
+    public void parse_withPreamble_failure() {
+        String validInput = " p/ 91111111 o/ 1 i/ Testing q/ 99 u/ 0.99 d/ every Monday";
+        assertThrows(ParseException.class, () -> parser.parse("abcabcabc" + validInput));
+    }
+
+    @Test
     public void duplicateFields_failure() {
         String validInput = " p/ 91111111 o/ 1 i/ Testing q/ 99 u/ 0.99 d/ every Monday";
 
@@ -77,12 +84,12 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void allFieldsIncluded() {
-        String userInput = UpdateOrderCommand.COMMAND_WORD + " p/ 85355255 o/ 1 i/ Updated q/ 1000 u/ 111.11 d/ Today";
+        String userInput = " p/ 85355255 o/ 1 i/ Updated q/ 1000 u/ 111.11 d/ Today";
 
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         Phone supplierPhone = supplier.getPhone();
@@ -103,12 +110,12 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void someFieldsIncluded() {
-        String userInput = "updateOrder p/ 85355255 o/ 1 q/ 1000 d/ Today";
+        String userInput = "p/ 85355255 o/ 1 q/ 1000 d/ Today";
 
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         Phone supplierPhone = supplier.getPhone();
@@ -126,11 +133,11 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void oneFieldIncluded() {
-        String userInput = "updateOrder p/ 85355255 o/ 1 ";
+        String userInput = "p/ 85355255 o/ 1 ";
         Supplier supplier = new SupplierBuilder().withCategory("Supplier").build();
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         Phone supplierPhone = supplier.getPhone();
@@ -168,15 +175,12 @@ public class UpdateOrderCommandParserTest {
 
     @Test
     public void noFieldsIncluded() {
-        String userInput = "updateOrder p/ 85355255 o/ 1 ";
-        assertParseFailure(parser, userInput, UpdateOrderCommand.MESSAGE_NO_CHANGE);
-    }
-
-    @Test
-    public void parse_unitPriceWithDollar_success() throws ParseException {
-        String args = "p/91234567 o/1 i/Pens q/100 u/$0.90 d/Tuesday";
-        UpdateOrderCommand cmd = parser.parse(args);
-        assertEquals(new ItemUnitPrice("0.90"), cmd.descriptor.getUnitPrice().get());
+        String userInput = "p/ 85355255 o/ 1 ";
+        UpdateOrderDescriptor empty = new UpdateOrderDescriptor();
+        UpdateOrderCommand successfulCommand = new UpdateOrderCommand(new Phone("85355255"),
+                                                                        new OrderIndex("1"),
+                                                                        empty);
+        assertParseSuccess(parser, userInput, successfulCommand);
     }
 
     @Test

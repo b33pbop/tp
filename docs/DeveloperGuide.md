@@ -1,13 +1,12 @@
 ---
 layout: default.md
-title: "Developer Guide"
+title: "GhostConnect Developer Guide"
 pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# GhostConnect Developer Guide
 
-<details>
-    <summary> Table of Contents </summary>
+## Table of Contents
 
 - [Acknowledgements](#acknowledgements)
 - [Setting up, getting started](#setting-up-getting-started)
@@ -30,8 +29,6 @@ pageNav: 3
   - [Launch and shutdown](#launch-and-shutdown)
   - [Deleting a person](#deleting-a-person)
   - [Saving data](#saving-data)
-
-</details>
 
 <page-nav-print />
 
@@ -145,7 +142,8 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
-
+* To improve user experience, the parser normalises all command words to lower-case before dispatching them. This allows users to enter commands regardless of letter casing, which aims to improve user productivity.
+* The original command casing is preserved in error messages and feedback to maintain consistency and UI outputs. This enhancement required no changes to individual command classes and does not affect the command's parameters or execution logic.
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
@@ -306,13 +304,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Target user profile**:
 
 Tech-savvy ghost kitchen managers who:
-* oversee multiple delivery-only brands and suppliers
 * handle frequent staff turnover and changing supplier contacts
+* handles a customer loyalty program
 * need to quickly retrieve and update contacts
 * prefer typing over mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: Our app helps ghost kitchen managers efficiently manage their diverse contact ecosystem — suppliers, delivery riders, staff, and partner brands. By offering categorisation, relationship links, fuzzy search, tagging, and archiving, it streamlines contact management. Managers can locate, update, and organise contacts faster than with traditional GUI-driven systems, ensuring smoother operations and fewer mix-ups.
+**Value proposition**: Our app helps ghost kitchen managers efficiently manage their diverse contact ecosystem — suppliers, customers, and staff. By offering categorisation, staff shift management, supplier orders management and customer membership management. Managers can locate, update, and organise contacts faster than with traditional GUI-driven systems, ensuring smoother operations and fewer mix-ups.
 
 
 ### User stories
@@ -341,7 +339,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `GhostConnect` and the **Actor** is the `user`, unless specified otherwise)
 
 **U1. Add a new contact**
 
@@ -456,6 +454,152 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 4a1. System displays contacts efficiently, allowing all results to be viewed without truncation.
     * Use case ends.
 
+**U6. Edit an existing contact**
+
+**Actor: Manager**
+
+**MSS**
+
+1. Manager selects contact to be edited.
+2. Manager initiates **edit contact** and inputs details
+3. System validates inputs and updates corresponding fields of contact.
+4. System displays success message.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. Contact does not exist in address book.
+    * 3a1. System informs manager that contact cannot be found.
+
+  Use case resumes at step 2 or ends.
+* 3b. Input is invalid.
+    * 3b1. System informs manager that input is invalid.
+
+  Use case resumes at step 2 or ends.
+
+**U7. List all contacts**
+
+**Actor: Manager**
+
+**MSS**
+
+1. Manager executes list
+2. System display all contacts in address book.
+   Use case ends
+
+**Extensions**
+None
+
+**U8. Delete a contact**
+**Actor: Manager**
+**MSS**
+
+1. Manager chooses contact to be deleted.
+2. Manager executes **delete** command and inputs details.
+3. System validates inputs and removes the specified contact.
+4. System displays the confirmation message.
+   Use case ends.
+   **Extensions**
+* 1a. Chosen contact does not exist.
+*     1a1. System informs manager that chosen contact is invalid.
+Use case resumes at step 1 or ends.
+
+**U9. Clear all contacts**
+**Actor: Manager**
+**MSS**
+1. Manager executes clear
+2. System removes all contacts.
+3. System displays confirmation message.
+   Use case ends.
+
+**Extensions**
+None
+
+**U10. Exit the application**
+**Actor: Manager**
+**MSS**
+1. Manager executes exit.
+2. System saves all data and terminates.
+   Use case ends.
+
+**U11. Update Customer Points**
+**Actor: Manager**
+**MSS**
+1. Manager chooses customer to add points.
+2. Manager executes **updatePoints** and inputs details
+3. System validates inputs, locates the customer and adds corresponding points.
+
+**Extension**
+* 1a. Contact is not a customer
+*     1a1. System informs manager that chosen contact is not customer.
+Use case resumes at step 1 or ends.
+
+**U12. Update Staff Shift**
+**Actor: Manager**
+**MSS**
+1. Manager chooses staff to update shift.
+2. Manager executes **updateShift** and enters input.
+3. System validates inputs, locates the staff and updates their shift.
+4. System displays confirmation message.
+   Use case ends.
+
+**Extensions**
+* 3a. Contact chosen is not a staff
+*     3a1. System informs manager that chosen contact is not staff
+Use case continues at step 1 or ends
+*3a. Shift value is invalid
+*     3a1. System informs manager that shift value is invalid
+Use case continues at step 2 or ends.
+
+**U13. Delete an order**
+**Actor: Manager**
+**MSS**
+
+1. Manager chooses supplier and the specified order from that supplier.
+2. Manager executes **deleteOrder** and inputs details
+3. System validates inputs, deletes the specified order from that supplier
+4. System displays a confirmation message.
+   Use case ends.
+
+**Extensions**
+* 3a. Contact chosen is not a supplier
+*     3a1. System informs manager that chosen contact is not a supplier.
+Use case continues at step 1 or ends.
+* 3b. Order chosen does not exist.
+*     3b1. System informs manager that chosen order does not exist.
+Use case continues at step 1 or ends.
+
+**U14. Reduce Customer Points**
+**Actor: Manager**
+**MSS**
+1. Manager selects a customer to reduce points from.
+2. Manager executes **reducePoints** and inputs details
+3. System validates the inputs and locates the specified customer.
+4. System deducts the specified number of points from the customer's total.
+Use case ends.
+
+**Extensions**
+* 3a. Contact not found or not a customer
+*     3a1. System informs the manager that the specified contact is not a valid customer
+Use case resumes at step 1 or ends
+* 4a. Amount to be reduced exceeds customer's current points
+*     4a1. System informs manager that insufficient points are available. 
+Use case resumes at step 2 or ends.
+
+**U15. View Customer Summary**
+**Actor: Manager**
+**MSS**
+1. Manager executes **customerSummary**
+2. System retrieves all customers from address book
+3. System groups customer by their membership tier.
+4. System displays the number of customers in each tier. 
+Use case ends.
+
+**Extensions**
+* 2a. No customers exist in the address book.
+*     2a1. System informs the manager that there are no customers to summarise.
+Use case ends. 
 
 ### Non-Functional Requirements
 

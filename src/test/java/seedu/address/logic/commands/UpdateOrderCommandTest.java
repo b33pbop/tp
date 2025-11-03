@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalSuppliers.BOB;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,10 +16,14 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.category.Category;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.ItemDeliveryDay;
 import seedu.address.model.person.ItemName;
 import seedu.address.model.person.ItemQuantity;
 import seedu.address.model.person.ItemUnitPrice;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
 import seedu.address.model.person.OrderIndex;
 import seedu.address.model.person.Person;
@@ -37,7 +42,7 @@ public class UpdateOrderCommandTest {
     public void updateOrderWithNoChanges() throws CommandException {
         Order baseOrder = new Order(new ItemName("Pencils"),
                                     new ItemQuantity("40"),
-                                    new ItemUnitPrice("0.5"),
+                                    new ItemUnitPrice("0.50"),
                                     new ItemDeliveryDay("every Friday"));
 
         UpdateOrderDescriptor emptyDescriptor = new UpdateOrderDescriptor();
@@ -50,7 +55,7 @@ public class UpdateOrderCommandTest {
                                                                         new OrderIndex("1"),
                                                                         emptyDescriptor);
 
-        String expectedMessage = UpdateOrderCommand.MESSAGE_DUPLICATE_ORDER;
+        String expectedMessage = UpdateOrderCommand.MESSAGE_NO_CHANGE;
         assertCommandFailure(updateOrderCommand, model, expectedMessage);
     }
 
@@ -58,7 +63,7 @@ public class UpdateOrderCommandTest {
     public void updateOrderWithSomeChanges() throws CommandException {
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         AddCommand addCommand = new AddCommand(supplier);
@@ -66,7 +71,7 @@ public class UpdateOrderCommandTest {
 
         Order finalOrder = new Order(new ItemName("Changed item"),
                 new ItemQuantity("100"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         Supplier finalSupplier = new SupplierBuilder().withCategory("Supplier").build();
         finalSupplier.addOrder(finalOrder);
@@ -89,7 +94,7 @@ public class UpdateOrderCommandTest {
     public void updateOrderWithAllChanges() throws CommandException {
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         AddCommand addCommand = new AddCommand(supplier);
@@ -97,7 +102,7 @@ public class UpdateOrderCommandTest {
 
         Order finalOrder = new Order(new ItemName("Changed item"),
                 new ItemQuantity("100"),
-                new ItemUnitPrice("5.5"),
+                new ItemUnitPrice("5.50"),
                 new ItemDeliveryDay("Changed Day"));
         Supplier finalSupplier = new SupplierBuilder().withCategory("Supplier").build();
         finalSupplier.addOrder(finalOrder);
@@ -105,7 +110,7 @@ public class UpdateOrderCommandTest {
         UpdateOrderDescriptor changedAll = new UpdateOrderDescriptor();
         changedAll.updateItem(new ItemName("Changed item"));
         changedAll.updateQuantity(new ItemQuantity("100"));
-        changedAll.updateUnitPrice(new ItemUnitPrice("5.5"));
+        changedAll.updateUnitPrice(new ItemUnitPrice("5.50"));
         changedAll.updateDeliveryDay(new ItemDeliveryDay("Changed Day"));
 
         Phone supplierPhone = supplier.getPhone();
@@ -150,7 +155,7 @@ public class UpdateOrderCommandTest {
     public void orderIndexOutOfBounds() throws CommandException {
         Order baseOrder = new Order(new ItemName("Pencils"),
                 new ItemQuantity("40"),
-                new ItemUnitPrice("0.5"),
+                new ItemUnitPrice("0.50"),
                 new ItemDeliveryDay("every Friday"));
         supplier.addOrder(baseOrder);
         AddCommand addCommand = new AddCommand(supplier);
@@ -223,4 +228,74 @@ public class UpdateOrderCommandTest {
         assertEquals(String.format(UpdateOrderCommand.MESSAGE_NOT_FOUND, phone), exception.getMessage());
     }
 
+    @Test
+    void execute_supplierNotFoundFilteredListNotFull_throwsExtendedMessage() {
+        model = new ModelManager(new AddressBook(), new UserPrefs());
+
+        Supplier supplierAlice = new Supplier(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(),
+                ALICE.getAddress(), ALICE.getCategory());
+        Supplier supplierBob = new Supplier(BOB.getName(), BOB.getPhone(), BOB.getEmail(),
+                BOB.getAddress(), BOB.getCategory());
+        model.addPerson(supplierAlice);
+        model.addPerson(supplierBob);
+        model.updateFilteredPersonList(p -> p.isSamePerson(supplierBob));
+
+        assertNotEquals(
+                model.getAddressBook().getPersonList().size(),
+                model.getFilteredPersonList().size(),
+                "Filtered list must be smaller"
+        );
+
+        Phone missingPhone = ALICE.getPhone();
+        UpdateOrderDescriptor descriptor = new UpdateOrderDescriptor();
+        UpdateOrderCommand command =
+                new UpdateOrderCommand(missingPhone, new OrderIndex("1"), descriptor);
+
+        String expectedMessage = String.format(
+                UpdateOrderCommand.MESSAGE_NOT_FOUND + UpdateOrderCommand.ERROR_EXTENSION,
+                missingPhone
+        );
+
+        assertCommandFailure(command, model, expectedMessage);
+    }
+
+    @Test
+    void execute_personNotFoundFilteredListFull_throwsNormalMessage() {
+        model = new ModelManager(new AddressBook(), new UserPrefs());
+        // Add one person (ALICE)
+        Supplier aliceCopy = new Supplier(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(),
+                ALICE.getAddress(), ALICE.getCategory());
+        model.addPerson(aliceCopy);
+
+        // Ensure no filter applied (filtered list == full list)
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        assertEquals(model.getAddressBook().getPersonList().size(),
+                model.getFilteredPersonList().size(),
+                "Filtered list must equal full list");
+
+        Phone missingPhone = new Phone("99998888");
+        UpdateOrderDescriptor descriptor = new UpdateOrderDescriptor();
+        UpdateOrderCommand command =
+                new UpdateOrderCommand(missingPhone, new OrderIndex("1"), descriptor);
+
+        String expectedMessage =
+                String.format(UpdateOrderCommand.MESSAGE_NOT_FOUND, missingPhone);
+
+        assertCommandFailure(command, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_emptyOrderList_throwsEmptyOrderListMessage() {
+        Model model = new ModelManager();
+        Supplier s = new Supplier(new Name("Bob"), new Phone("91234567"),
+                new Email("a@a.com"), new Address("Addr"), new Category("Supplier"));
+        model.addPerson(s);
+
+        UpdateOrderDescriptor descriptor = new UpdateOrderDescriptor();
+        UpdateOrderCommand cmd = new UpdateOrderCommand(new Phone("91234567"), new OrderIndex("1"), descriptor);
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+
+        assertEquals(DeleteOrderCommand.MESSAGE_EMPTY_ORDER_LIST, ex.getMessage());
+    }
 }

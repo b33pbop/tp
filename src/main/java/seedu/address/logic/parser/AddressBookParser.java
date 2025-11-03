@@ -14,6 +14,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CustomerSummaryCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteOrderCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -50,7 +51,7 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
 
         // Note to developers: Change the log level in config.json to enable lower level (i.e., FINE, FINER and lower)
@@ -69,8 +70,8 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
-        case seedu.address.logic.commands.DeleteOrderCommand.COMMAND_WORD:
-            return new seedu.address.logic.parser.DeleteOrderCommandParser().parse(arguments);
+        case DeleteOrderCommand.COMMAND_LOWER:
+            return new DeleteOrderCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -87,25 +88,25 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
-        case UpdateOrderCommand.COMMAND_WORD:
+        case UpdateOrderCommand.COMMAND_LOWER:
             return new UpdateOrderCommandParser().parse(arguments);
 
-        case AddOrderCommand.COMMAND_WORD:
+        case AddOrderCommand.COMMAND_LOWER:
             return new AddOrderCommandParser().parse(arguments);
 
-        case UpdateShiftCommand.COMMAND_WORD:
+        case UpdateShiftCommand.COMMAND_LOWER:
             return new UpdateShiftCommandParser().parse(arguments);
 
-        case UpdatePointsCommand.COMMAND_WORD:
+        case UpdatePointsCommand.COMMAND_LOWER:
             return new UpdatePointsCommandParser().parse(arguments);
 
         case ViewCommand.COMMAND_WORD:
             return new ViewCommandParser().parse(arguments);
 
-        case RedeemPointsCommand.COMMAND_WORD:
+        case RedeemPointsCommand.COMMAND_LOWER:
             return new RedeemPointsCommandParser().parse(arguments);
 
-        case CustomerSummaryCommand.COMMAND_WORD:
+        case CustomerSummaryCommand.COMMAND_LOWER:
             return new CustomerSummaryCommandParser().parse(arguments);
 
         default:

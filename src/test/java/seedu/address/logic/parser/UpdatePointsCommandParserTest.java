@@ -71,5 +71,10 @@ public class UpdatePointsCommandParserTest {
         assertParseFailure(parser,
                 "p/81234567 b/-50",
                 UpdatePointsCommandParser.MESSAGE_INVALID_AMOUNT);
+
+        //Above Max valye
+        assertParseFailure(parser,
+                "p/81234567 b/1000000",
+                UpdatePointsCommandParser.MESSAGE_INVALID_AMOUNT);
     }
 }

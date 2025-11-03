@@ -69,7 +69,7 @@ Person *--> Email
 Person *--> Address
 Person *--> Category
 
-Person -|> Staff
+Person <|- Staff
 Staff *--> Shift
 Person -[hidden]up--> I
 UniquePersonList -[hidden]up-> I
@@ -83,6 +83,7 @@ Order *--> ItemDeliveryDay
 
 Person -|> Customer
 Customer *--> Tier
+
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address

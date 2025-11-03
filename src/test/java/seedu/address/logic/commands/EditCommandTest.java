@@ -10,7 +10,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccessAddressBookOnly;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -82,14 +81,8 @@ public class EditCommandTest {
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
-        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        String expectedMessage = EditCommand.MESSAGE_NO_CHANGE;
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updateFilteredPersonList(p -> true);
-
-        assertCommandSuccessAddressBookOnly(editCommand, model, expectedMessage, expectedModel);
+        String expectedMessage = String.format(EditCommand.MESSAGE_NOT_EDITED);
+        assertCommandFailure(editCommand, model, expectedMessage);
     }
 
     @Test
@@ -220,7 +213,7 @@ public class EditCommandTest {
                 new Address("Block 1"), new Category("Supplier"));
         Order order = new Order(new seedu.address.model.person.ItemName("Item"),
                 new seedu.address.model.person.ItemQuantity("2"),
-                new seedu.address.model.person.ItemUnitPrice("10.0"),
+                new seedu.address.model.person.ItemUnitPrice("10.00"),
                 new seedu.address.model.person.ItemDeliveryDay("Monday"));
         supplier.addOrder(order);
 

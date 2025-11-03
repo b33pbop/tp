@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import seedu.address.logic.commands.UpdatePointsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Phone;
 
 /**
@@ -16,7 +17,7 @@ import seedu.address.model.person.Phone;
 public class UpdatePointsCommandParser implements Parser<UpdatePointsCommand> {
 
     public static final String MESSAGE_INVALID_AMOUNT =
-            "Amount must be a positive number with at most 2 decimal places.";
+            "Amount must be a positive number with at most 2 decimal places.\nAmount cannot exceed $100,000.";
     private static final String DECIMAL_REGEX = "^\\d+(\\.\\d{1,2})?$"; // up to 2 decimal places
 
 
@@ -58,7 +59,7 @@ public class UpdatePointsCommandParser implements Parser<UpdatePointsCommand> {
             throw new ParseException(MESSAGE_INVALID_AMOUNT);
         }
 
-        if (amount <= 0) {
+        if (amount <= 0 || amount > Customer.MAX_POINTS) {
             throw new ParseException(MESSAGE_INVALID_AMOUNT);
         }
 

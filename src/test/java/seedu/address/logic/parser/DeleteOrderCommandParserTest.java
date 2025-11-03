@@ -19,6 +19,11 @@ public class DeleteOrderCommandParserTest {
     }
 
     @Test
+    public void parse_withPreamble_failure() {
+        assertThrows(ParseException.class, () -> parser.parse("abcabcabc o/ 1"));
+    }
+
+    @Test
     public void parse_missingPhone_throwsParseException() {
         assertThrows(ParseException.class, () -> parser.parse(" o/1"));
     }

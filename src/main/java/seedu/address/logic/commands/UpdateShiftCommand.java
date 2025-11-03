@@ -22,6 +22,7 @@ import seedu.address.model.person.Staff;
 public class UpdateShiftCommand extends Command {
 
     public static final String COMMAND_WORD = "updateShift";
+    public static final String COMMAND_LOWER = "updateshift";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates the shift of a staff member identified by their phone number.\n"
@@ -35,6 +36,7 @@ public class UpdateShiftCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Updated shift for %1$s to %2$s.";
     public static final String MESSAGE_NOT_A_STAFF = "The person with phone number %1$s is not a staff member.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "No person found with phone number %1$s.";
+    public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
     public static final String MESSAGE_EMPTY_LIST = "Empty contact list: No contacts available to update!";
 
     private final Phone phone;
@@ -67,6 +69,10 @@ public class UpdateShiftCommand extends Command {
                 .filter(p -> p.getPhone().equals(phone))
                 .findFirst();
 
+        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
+        if (matchedPerson.isEmpty() && fullList.size() != personList.size()) {
+            throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND + ERROR_EXTENSION, phone));
+        }
         if (matchedPerson.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, phone));
         }
