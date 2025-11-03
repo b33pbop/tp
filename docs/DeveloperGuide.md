@@ -705,7 +705,7 @@ testers are expected to do more *exploratory* testing.
        ```
        find James Jake
        ```  
-       **Expected:** Only contacts with names containing “James” or “Jake” are listed.
+       **Expected:** Only contacts with names containing “James” or “Jake” are listed. Status message confirms success.
 
 2. **Viewing a contact by phone**
     1. Prerequisites: Contact with the phone number exists.
@@ -713,7 +713,7 @@ testers are expected to do more *exploratory* testing.
   ```
   view p/98765432
   ```  
-  **Expected:** Displays a pop up with detailed information for the contact with that phone number.
+  **Expected:** Displays a pop up with detailed information for the contact with that phone number. Status message confirms success.
 
 ---
 
@@ -726,7 +726,7 @@ testers are expected to do more *exploratory* testing.
        ```
        delete 1
        ```  
-       **Expected:** The first contact is deleted. Status message shows details of the deleted contact.
+       **Expected:** The first contact is deleted. Status message shows details of the deleted contact and success.
 
     3. Test case:
        ```
@@ -756,24 +756,24 @@ testers are expected to do more *exploratory* testing.
        **Expected:** Error message displayed for invalid bill amount.
 
 2. **Reducing customer loyalty points**
+    1. Prerequisites: A contact with category `Customer` and valid phone number.
+    2. Test case:
+        ```
+        reducePoints p/98765432 pts/500
+        ```  
+        **Expected:** Customer’s loyalty points are reduced and tier is updated accordingly. Unless reduce by amount exceeds maximum points of **100,000**. Status message confirms reduction.
 
-    1. Test case:
-       ```
-       reducePoints p/98765432 pts/500
-       ```  
-       **Expected:** Customer’s loyalty points are reduced and tier is updated accordingly. Unless reduce by amount exceeds maximum points of **100,000**. Status message confirms reduction.
-
-    2. Invalid test case:  
-       `reducePoints p/98765432 pts/-10`  
-       **Expected:** Error message displayed.
+    3. Invalid test case:  
+        `reducePoints p/98765432 pts/-10`  
+        **Expected:** Error message displayed.
 
 3. **Viewing customer summary**
-
-    1. Test case:
-       ```
-       customerSummary
-       ```  
-       **Expected:** Displays a summary of total number of customers in each tier and total points across all customers.
+    1. Prerequisites: A contact with category `Customer` and valid phone number.
+    2. Test case:
+        ```
+        customerSummary
+        ```  
+        **Expected:** Displays a summary of total number of customers in each tier and total points across all customers. Error message displayed if no customers in contact list.
 
 ---
 
@@ -781,7 +781,7 @@ testers are expected to do more *exploratory* testing.
 
 1. **Updating staff shift**
 
-    1. Prerequisites: A contact with category `Staff`.
+    1. Prerequisites: A contact with category `Staff` with valid phone number.
     2. Test case:
        ```
        updateShift p/91234567 s/PM
@@ -798,21 +798,21 @@ testers are expected to do more *exploratory* testing.
 
 1. **Adding a supplier order**
 
-    1. Prerequisites: A contact with category `Supplier`.
+    1. Prerequisites: A contact with category `Supplier` with valid phone number.
     2. Test case:
        ```
        addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday
        ```  
-       **Expected:** A new order is added to the supplier. Order details are shown in the person card for the contact.
+       **Expected:** A new order is added to the supplier. Order details are shown in the person card for the contact. Status message confirms successful update.
 
 2. **Updating a supplier order**
 
-    1. Prerequisites: A `Supplier`with an order.
+    1. Prerequisites: A `Supplier`with an order with valid phone number.
     2. Test case:
        ```
        updateOrder p/91234567 o/1 i/Fish
        ```  
-       **Expected:** The specified order is updated successfully in the supplier's record.
+       **Expected:** The specified order is updated successfully in the supplier's record, unless the edit does not actually change anything in the order. Status message confirms successful update.
 
 3. **Deleting a supplier order**
 
@@ -821,7 +821,7 @@ testers are expected to do more *exploratory* testing.
        ```
        deleteOrder p/91234567 o/1
        ```  
-       **Expected:** The specified order is deleted from the supplier’s record.
+       **Expected:** The specified order is deleted from the supplier’s record. Status message confirms successful delete.
 
 ---
 
