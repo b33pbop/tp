@@ -4,6 +4,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.RedeemPointsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Customer;
 import seedu.address.model.person.Phone;
 
 /**
@@ -27,17 +28,18 @@ public class RedeemPointsCommandParser implements Parser<RedeemPointsCommand> {
         }
 
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        String ptsStr = argMultimap.getValue(PREFIX_POINTS).get();
+        String ptsStr = argMultimap.getValue(PREFIX_POINTS).get().trim();
 
         int pts;
         try {
             pts = Integer.parseInt(ptsStr);
         } catch (NumberFormatException e) {
-            throw new ParseException("Points to redeem must be an integer.");
+            throw new ParseException("Points to redeem must be an integer.\nAmount cannot exceed $100,000.");
         }
 
-        if (pts <= 0) {
-            throw new ParseException("Points to redeem must be positive.");
+        if (pts <= 0 || pts > Customer.MAX_POINTS) {
+            throw new ParseException("Points to redeem must be between 1 and "
+                    + Customer.MAX_POINTS + ".");
         }
 
         return new RedeemPointsCommand(phone, pts);

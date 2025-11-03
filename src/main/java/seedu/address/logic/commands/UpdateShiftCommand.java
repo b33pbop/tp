@@ -58,9 +58,10 @@ public class UpdateShiftCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
         ObservableList<Person> personList = model.getFilteredPersonList();
 
-        if (personList.isEmpty()) {
+        if (fullList.isEmpty()) {
             throw new CommandException(MESSAGE_EMPTY_LIST);
         }
 
@@ -69,7 +70,6 @@ public class UpdateShiftCommand extends Command {
                 .filter(p -> p.getPhone().equals(phone))
                 .findFirst();
 
-        ObservableList<Person> fullList = model.getAddressBook().getPersonList();
         if (matchedPerson.isEmpty() && fullList.size() != personList.size()) {
             throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND + ERROR_EXTENSION, phone));
         }

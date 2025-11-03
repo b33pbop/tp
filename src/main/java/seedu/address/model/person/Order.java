@@ -42,8 +42,8 @@ public class Order {
 
     @Override
     public String toString() {
-        return String.format("%s of %s (at $%s each) to be delivered %s",
-                getQuantity(), getItem(), getUnitPrice(), getDeliveryDay());
+        return String.format("Item: %s || Quantity: %s || Unit Price: $%s || Delivery Day: %s",
+                getItem(), getQuantity(), getUnitPrice(), getDeliveryDay());
     }
 
     @Override

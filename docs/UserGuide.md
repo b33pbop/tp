@@ -18,13 +18,14 @@ GhostConnect combines the **speed and precision of a Command Line Interface (CLI
 
 With Ghost Connect, users will be able to add, edit, delete and categorise their contact entries into 3 categories: Customers, Suppliers and Staff. 
 Users will also have access to various category specific functions depending on the entry's category, which include the following:
-- Staff: Updating of Shifts
-- Customer: Updating of Points
-- Suppliers: Adding, Updating and Deleting of Orders
+- **Staff**: Updating of Shifts
+- **Customer**: Updating of Points
+- **Suppliers**: Adding, Updating and Deleting of Orders
 
 Assumptions:
 - We assume that users are familiar with basic computing concepts such as **file management, shortcuts, and command-based operations**, and are comfortable using tools that **streamline repetitive tasks** and **handle multiple contacts simultaneously**. 
 - We assume that all ghost kitchen managers using the application reside within Singapore and only have external contacts within Singapore as well. This implies that all contact entries into GhostConnect are to only include Singaporean numbers.
+- We assume that orders under Suppliers in GhostConnect will be made with Singaporean currency and that ordered items are countable and do not need suffixes to determine quantity (e.g. kg).
 
 By the end of this guide, users will be able to **navigate GhostConnect confidently**, leverage its **advanced features**, and integrate it seamlessly into their daily operations to manage staff, suppliers, and customer loyalty programs efficiently.
 
@@ -46,7 +47,6 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
   - [Category Specific Commands](#category-specific-commands)
     - [Adding Points to a Customer](#adding-points-to-a-customer-updatepoints)
     - [Reducing Points for a Customer](#reducing-points-for-customer-reducepoints)
-    - [Summary of Customers](#view-summary-of-customers-customersummary)
     - [Changing Shift of a Staff](#changing-shift-of-a-staff-updateshift)
     - [Adding Order from a Supplier](#adding-order-from-a-supplier-addorder)
     - [Updating Order from a Supplier](#updating-order-from-a-supplier-updateorder)
@@ -54,7 +54,6 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
   - [Miscellaneous](#miscellaneous)
     - [Saving the Date](#saving-the-data)
     - [Editing the Data File](#editing-the-data-file)
-    - [Archiving Data Files](#archiving-data-files-coming-in-v20)
 - [FAQ](#faq)
 - [Known Issues](#known-issues)
 - [Command Summary](#command-summary)
@@ -73,7 +72,8 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
 3. Copy the file to the folder you want to use as the _home folder_ for GhostConnect.
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ghostConnect.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br/>
+
    ![Ui](images/Ui.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -95,41 +95,43 @@ used in GhostConnect.
 
 
 ### Person General Parameters
-In GhostConnect, all contacts share a common set of basic parameters regardless of their category. These parameters form the foundation of each contact record and are used across all contact types (Customer, Staff, and Supplier).
+Below are the core parameters that will be required when creating an entry for any Person.
 
-| Parameter             | Validation Requirements                                                                                                                                                                                                                                 | Rationale                                                                                                                             |
-|:----------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------|
-| **NAME**              | -                                                                                                                                                                                                                                                       | **Readability**: Ensures names are readable and properly stored in the system                                                         |
-| **PHONE NUMBER**      | - 8 Digits long<br/> - Starts with either 6, 8 or  9                                                                                                                                                                                                    | **Singaporean Audience**: GhostConnect caters to the Singaporean market and thus phone numbers have to be a valid Singaporean number. |
-| **EMAIL**             | - **Local part** (before '@'): contains letters, digits or `+_.-` only<br/>- No **consecutive** special characters<br/> - Cannot **start/end** with special character<br/> - **Domain** (after '@): valid labels separated by `.`, last label ≥ 2 chars | **Data Integrity**: Ensures emails are correctly formatted to prevent errors and maintain compatibility with systems.                 |
-| **ADDRESS**           | - Only letters, digits or `',-#` and spaces allowed<br/>- Length between 2 and 100 characters                                                                                                                                                           | **Address Validation**: Ensures addresses are valid, readable, and concise.                                                           |
-| **CATEGORY**          | - Can only belong to 1 of the three categories: Customer, Staff or Supplier                                                                                                                                                                             | **Category Relevance**: Ensures contacts are correctly classified for operational use.                                                |
+| Parameter             | Validation Requirements                                                                                                                                                                                                                       | Remarks                                                                                                                          |
+|:----------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------|
+| **NAME**              | Only alphanumeric characters and one pair of brackets at the end allowed<br/>                                                                                                                                                                 | **Readability**: Ensures names are readable and properly stored in the system                                                         |
+| **PHONE NUMBER**      | 8 Digits long<br/> - Starts with either 6, 8 or  9                                                                                                                                                                                            | **Singaporean Audience**: GhostConnect caters to the Singaporean market and thus phone numbers have to be a valid Singaporean number. |
+| **EMAIL**             | **Local part** (before '@'): contains letters, digits or `+_.-` only<br/>No **consecutive** special characters<br/>Cannot **start/end** with special character<br/>**Domain** (after '@): valid labels separated by `.`, last label ≥ 2 chars | **Data Integrity**: Ensures emails are correctly formatted to prevent errors and maintain compatibility with systems.                 |
+| **ADDRESS**           | Only letters, digits or `',-#` and spaces allowed<br/>- Length between 2 and 100 characters                                                                                                                                                   | **Address Validation**: Ensures addresses are valid, readable, and concise.                                                           |
+| **CATEGORY**          | Can only belong to 1 of the three categories: Customer, Staff or Supplier                                                                                                                                                                     | **Category Relevance**: Ensures contacts are correctly classified for operational use.                                                |
+
+In GhostConnect, all contacts share a common set of basic parameters regardless of their category. These parameters form the foundation of each contact record and are used across all contact types (Customer, Staff, and Supplier).
 
 ### Staff Specific Parameters
 Staff contacts have an additional parameter specific to employee management for shift scheduling. This helps ghost kitchen managers efficiently organize their workforce.
 
-| Parameter             | Validation Requirements       | Rationale                                |
-|:----------------------|:------------------------------|:-----------------------------------------|
-| **SHIFT**             | - Can only be either AM or PM |                                          |
+| Parameter             | Validation Requirements     | Remarks                                                                                                                                            |
+|:----------------------|:----------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
+| **SHIFT**             | Can only be either AM or PM | **Data Simplicity & Consistency**: Managers can immediately understand Staff shifts without interpreting exact hours through a standardized system |
 
 ### Supplier Specific Parameters
 In GhostConnect, suppliers are a subset of persons but with additional parameters, which stores a list of their Orders.
 The parameters listed below are fields that belong to an Order.
 
-| Parameter             | Validation Requirements       | Rationale                                |
-|:----------------------|:------------------------------|:-----------------------------------------|
-| **ORDER INDEX**       | - xxx<br/> - xxx              |                                          |
-| **ITEM NAME**         | -                             |                                          |
-| **ITEM QUANTITY**     | -                             |                                          |
-| **ITEM UNIT PRICE**   | -                             |                                          |
-| **ITEM DELIVERY DAY** | -                             |                                          |
+| Parameter             | Validation Requirements                                                                           | Remarks                                                                                                                                                       |
+|:----------------------|:--------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **ORDER INDEX**       | Can only be positive integer values (Higher than 0)<br/> - Value must be lower than 2,147,483,647 | **Data Validity**: GhostConnect implements this to ensure valid index values and prevent overflow.                                                            |
+| **ITEM NAME**         | Only alphanumeric characters and spaces are allowed.                                              | **Flexibility**: No further restrictions put in place to give users flexibility in describing Item Name                                                       |
+| **ITEM QUANTITY**     | Only positive integer values are allowed.                                                         | **Standardize Data Input**: Restrictions set to allow numbers only with the assumption that ordered items are countable and can be denoted with numbers alone |
+| **ITEM UNIT PRICE**   | Only positive numerical values with strictly 2 decimal places are allowed.                        | **Fitting the context**: Strictly requires 2 decimal places to ensure that value given is following Singaporean currency.                                     |
+| **ITEM DELIVERY DAY** | Only alphanumeric characters and spaces are allowed.                                              | **Flexibility**: No further restrictions put in place to give users flexibility in describing Item Delivery Day                                               |                                                                                 |
 
 ### Customer Specific Parameters
 In GhostConnect, customers are a subset of persons but with additional parameters, which tracks a Customer's membership progress.
 
-| Parameter             | Validation Requirements | Rationale                                                                                        |
+| Parameter             | Validation Requirements | Remarks                                                                                        |
 |:----------------------|:------------------------|:-------------------------------------------------------------------------------------------------|
-| **BILL AMOUNT**       | - Cannot be negative    | **Prevent invalid input**: Ensures the bill amount is realistic and prevents calculation errors. |
+| **BILL AMOUNT**       | Cannot be negative      | **Prevent invalid input**: Ensures the bill amount is realistic and prevents calculation errors. |
 
 --------------------------------------------------------------------------------------------------------------------
 ## Features
@@ -150,6 +152,9 @@ In GhostConnect, customers are a subset of persons but with additional parameter
 * Extraneous parameters for **commands without arguments** will be ignored.
   - Example: `help 123` will be interpreted as `help`.<br>
     <br/>
+* On the other hand, other commands that take in parameters will throw an error if extra parameters / preamble is given.
+    - Example: if the command specifies `delete abc 1`, an error will be thrown.
+    <br/>
 * Commands are **case-insensitive**.
   - Example: `list`, `LIST`, or `LiSt` are all valid.<br>
     <br/>
@@ -162,7 +167,11 @@ In GhostConnect, customers are a subset of persons but with additional parameter
 
 #### **Accessing the Help Page: `help`**
 
+<box type="definition">
+
 Shows a pop-up window which provides a detailed guide on the commands available.
+
+</box>
 
 Format: `help`
 
@@ -177,38 +186,53 @@ Format: `help`
 
 #### **Adding a Contact: `add`**
 
-Adds a person to the address book.<br/>
+<box type="definition">
+
+Adds a person to the address book.
+
+</box>
+
 Based on the category you give the contact, they unlock [different commands](#category-specific-commands)!
 
 Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY`
 
-| Parameter        | Validation Rules (Refer to [Person General Parameters](#person-general-parameters) for more details!) | Error Message when invalid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-|:-----------------|:------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **NAME**         | Refer to [Person General Parameters](#person-general-parameters)                                      | "Name should..."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| **PHONE NUMBER** | Singaporean Numbers Only                                                                              | "Phone numbers must only have 8 digits and start with 6, 8 or 9."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| **EMAIL**        | Follows the structure of example@email.com                                                            | "Emails should be of the format local-part@domain and adhere to the following constraints:<br/>1. The LOCAL-PART (before '@') must: only contain LETTERS, DIGITS, and these SPECIAL CHARACTERS: +_.-; have at most one SPECIAL CHARACTER between LETTERS/DIGITS (no consecutive special characters); not start or end with any SPECIAL CHARACTERS.<br/>2. The DOMAIN (after '@') must: be made up of DOMAIN LABELS separated by periods; end with a DOMAIN LABEL that is at least 2 LETTERS/DIGITS long; have each DOMAIN LABEL start and end with a LETTER/DIGIT; contain only LETTERS/DIGITS within each label, with optional HYPHENS allowed between LETTERS/DIGITS." |
-| **ADDRESS**      | Only letters, digits or `',-#` and spaces allowed<br/>Length between 2 and 100 characters             | "Invalid characters found - only letters, numbers, apostrophes, commas, hyphens, hashes and spaces are allowed." <br/>"Length of Address does not match criteria - Address must be between 2 - 100 characters."                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| **CATEGORY**     | Either Customer, Staff or Supplier                                                                    | "Unknown Category (Customer \| Supplier \| Staff)"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+Hey! We understand the table [above](#person-general-parameters) may look scary which is why we have **error messages** for each field to guide your experience in the app:
 
+| Parameter        | Invalid Example      | Error Message when invalid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|:-----------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **NAME**         | John (Food) Doe      | Names should only contain alphanumeric characters and spaces, and it should not be blank.<br/> Only one pair of brackets are allowed to indicate tags.<br/> The opening bracket must be closed.<br/> No characters after the brackets are allowed.                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **PHONE NUMBER** | 999                  | Phone numbers must only have 8 digits and start with 6, 8 or 9.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **EMAIL**        | bad+=_.@example      | Emails should be of the format local-part@domain and adhere to the following constraints:<br/>1. The LOCAL-PART (before '@') must: only contain LETTERS, DIGITS, and these SPECIAL CHARACTERS: +_.-; have at most one SPECIAL CHARACTER between LETTERS/DIGITS (no consecutive special characters); not start or end with any SPECIAL CHARACTERS.<br/>2. The DOMAIN (after '@') must: be made up of DOMAIN LABELS separated by periods; end with a DOMAIN LABEL that is at least 2 LETTERS/DIGITS long; have each DOMAIN LABEL start and end with a LETTER/DIGIT; contain only LETTERS/DIGITS within each label, with optional HYPHENS allowed between LETTERS/DIGITS. |
+| **ADDRESS**      | Yishun==             | Invalid characters found - only letters, numbers, apostrophes, commas, hyphens, hashes and spaces are allowed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **ADDRESS**      | A                    | Length of Address does not match criteria - Address must be between 2 - 100 characters.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **CATEGORY**     | Friend               | Unknown Category (Customer \| Supplier \| Staff)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
-
-**If all the rules above were followed you will see either of these 2 messages**:
+**If all the rules [above](#person-general-parameters) were followed you will see either of these 2 messages**:
 
 - :white_check_mark:Success (yay!)
   - "New person added: NAME; Phone: PHONE; Email: EMAIL; Address: ADDRESS; Category: CATEGORY"
 - :x:Failure (oh no!)
   - Duplicate Entry: "A contact with the name or number already exists in the book."
 
+<box type="info">
+
+**Duplicate Check**
+
+Even if every field is valid, GhostConnect will prevent you from adding:
+- a contact with a **name** that already exists, or
+- a contact with a **phone number** that already exists.
+
+This feature help prevent unnecessary clutter in your contact list!
+
+</box>
+
 <box type="tip">
 
-**Forgot the command format or made a prefix typo?**
+**Need to add a contact with the same name?**
 
-Fret not! GhostConnect will let you know and provide you with the command format:
+This is why we allow a **pair of brackets** at the end of the name to tag each contact!
 
-Invalid command format!<br/>
-add: Adds a person to the address book.<br/>
-Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY<br/>
-Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 c/Customer<br/>
+E.g. Tom (Soon Seng Food Industry) & Tom (Lim Kian Seng Food Supplier) will not set off duplicate rules :smiley:
 
 </box>
 
@@ -221,7 +245,11 @@ A new **Customer**, **John Doe** signed up for membership, and you hired a new *
 
 #### **Listing all Contacts: `list`**
 
+<box type="definition">
+
 Shows a list of all persons in the address book.
+
+</box>
 
 Format: `list`
 
@@ -237,54 +265,81 @@ You can use this command to bring back your full contact list after filtering wi
 
 #### **Editing a Contact: `edit`**
 
+<box type="definition">
+
 Edits an existing person in the address book.
+
+</box>
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* Input values for name/phone must not be the same as the name/phone of other existing contacts.
-* When editing a contact’s category, any fields specific to the previous category will be replaced with those of the new category.
+| Parameter       | Invalid Example      | Error Message when invalid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|:----------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **NAME**        | John (Food) Doe      | Names should only contain alphanumeric characters and spaces, and it should not be blank.<br/> Only one pair of brackets are allowed to indicate tags.<br/> The opening bracket must be closed.<br/> No characters after the brackets are allowed.                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **PHONE**       | 999                  | Phone numbers must only have 8 digits and start with 6, 8 or 9.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **EMAIL**       | bad+=_.@example      | Emails should be of the format local-part@domain and adhere to the following constraints:<br/>1. The LOCAL-PART (before '@') must: only contain LETTERS, DIGITS, and these SPECIAL CHARACTERS: +_.-; have at most one SPECIAL CHARACTER between LETTERS/DIGITS (no consecutive special characters); not start or end with any SPECIAL CHARACTERS.<br/>2. The DOMAIN (after '@') must: be made up of DOMAIN LABELS separated by periods; end with a DOMAIN LABEL that is at least 2 LETTERS/DIGITS long; have each DOMAIN LABEL start and end with a LETTER/DIGIT; contain only LETTERS/DIGITS within each label, with optional HYPHENS allowed between LETTERS/DIGITS. |
+| **ADDRESS**     | Yishun==             | Invalid characters found - only letters, numbers, apostrophes, commas, hyphens, hashes and spaces are allowed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **ADDRESS**     | A                    | Length of Address does not match criteria - Address must be between 2 - 100 characters.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **CATEGORY**    | Friend               | Unknown Category (Customer \| Supplier \| Staff)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
-Examples:
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* **At least one** of the optional fields must be provided.
+* Existing values will be **replaced** by the input values.
+* **Name and Phone duplicate** check still holds when editing contacts.
+
+<box type="important">
+
+**Data Override**
+
+When you change a contact’s **category**, GhostConnect will **automatically** clear fields from the **old category** and apply the fields for the new one.
+
+</box>
+
+**Examples:**
+
+John recently changed his contact number and email!
 
 * `edit 1 p/91234567 e/johndoe@example.com`
   Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Edit1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Edit2.png" width="300"/></td>
+      <td><strong>Before:</strong><br><img src="images/edit1.png" width="500" height="500"/></td>
+      <td><strong>After:</strong><br><img src="images/edit2.png" width="500" height="500"/></td>
     </tr>
   </table>
 
+You realized there was a typo for Betsy's name!
+
 * `edit 2 n/Betsy Crower c/Customer`
   Edits the name of the 2nd person to be `Betsy Crower` and category to `Customer`.
+  <br/>
 
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Edit3.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Edit4.png" width="300"/></td>
+      <td><strong>Before:</strong><br/><img src="images/edit3.png" width="500" height="500"/></td>
+      <td><strong>After:</strong><br/><img src="images/edit4.png" width="500" height="500"/></td>
     </tr>
   </table>
 
 
 #### **Locating Contacts by Name or Category: `find`**
 
-Finds persons whose names or category contain any of the given keywords.
+<box type="definition">
+
+Finds persons whose **names** or **category** contain any of the given keywords.
+
+</box>
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g. `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Substrings will also be matched e.g. `Cho` will match `Nicholas`
-* However, searching of categories occurs only for full match of input.
-  e.g. `find Cust` will not return contacts of `Customer`, only `find Customer` will.
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* **Case-insensitive** — `hans` matches `Hans`.
+* **Keyword order doesn’t matter** — `Hans Bo` matches `Bo Hans`.
+* **Partial matches for names** — `Cho` matches `Nicholas`.
+* **Exact matches for categories** — `find Cust` ❌ does NOT match `Customer`; use find Customer ✅.
+* **OR-based search** — at least one keyword must match.
 
-Examples:
+**Examples:**
 
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`
@@ -292,31 +347,51 @@ Examples:
 * `find staff supplier` returns all persons with categories `staff` or `supplier`<br>
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/find1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/find2.png" width="300" height="300"/></td>
+      <td><strong>Before:</strong><br><img src="images/find1.png" width="500"/></td>
+      <td><strong>After:</strong><br><img src="images/find2.png" width="500" height="500"/></td>
     </tr>
   </table>
 
 #### **Viewing additional info for a contact: `view`**
-Opens a popup window with all the information regarding the contact.
+
+<box type="definition">
+
+Opens a separate popup window showing all available details for the selected contact.
+
+</box>
 
 Format: `view p/PHONE`
 
-* Views the contact with the specified `PHONE` number.
-* The phone number must match an existing contact in the address book.
-* Multiple view windows can be opened simultaneously for different contacts.
-* The view window displays contact information with color-coded backgrounds based on category:
-  - Customer: `Blue` background
-  - Staff: `Pink` background
-  - Supplier: `Green` background
-* The window shows all contact details including category-specific information:
-  - Customer: Points and tier information
-  - Staff: Shift and remaining leaves
-  - Supplier: List of orders
-* You can scroll through the content if there are many details (e.g., a supplier with many orders).
+| Parameter        | Invalid Example                               | Error Message when invalid                                                                           |
+|:-----------------|:----------------------------------------------|:-----------------------------------------------------------------------------------------------------|
+| **PHONE NUMBER** | Full contact list is empty                    | No person found with phone number [PHONE NUMBER]. Try running 'list' before using the command again. |
+| **PHONE NUMBER** | Phone number not in the full contact list     | No person found with phone number [PHONE NUMBER].                                                    |
+| **PHONE NUMBER** | Phone number not in the filtered contact list | No person found with phone number [PHONE NUMBER]. Try running 'list' before using the command again. |
+| **PHONE NUMBER** | Phone number not in the filtered contact list | No person found with phone number [PHONE NUMBER]. Try running 'list' before using the command again. |
 
-Examples:
+* The phone number entered must **exactly match** an existing contact.
+* You can open **multiple** view windows at the same time — useful for comparing contacts.
+* Each view window shows contact details with a category-specific background color:
+  * **Customer**: Blue
+  * **Staff**: Pink
+  * **Supplier**: Green
+<br/>
+* The view window displays **all stored fields** for that contact, including category-specific data:
+  - **Customer**: Points and membership tier
+  - **Staff**: Shift information and remaining leave count
+  - **Supplier**: Full list of orders (scrollable)
 
+<box type="tip">  
+
+**Just made a big order with your supplier?**
+
+You can scroll through the content if there are many details (e.g., a supplier with many orders).
+
+</box>
+
+**Examples:**
+
+Hmm, what was John's email? Oh right let me use `view` to check!
 * `view p/98765432` opens a view window showing details for the contact with phone number `98765432`
 * `view p/91234567` opens another view window for a different contact
 
@@ -328,85 +403,158 @@ The view window is a separate popup that displays comprehensive contact informat
 
 #### **Deleting a Contact: `delete`**
 
+<box type="definition">
+
 Deletes the specified person from the address book.
+
+</box>
 
 Format: `delete INDEX`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the **displayed person list**.
-* The index **must be a positive integer** 1, 2, 3, …​
+| Parameter | Error Message when invalid                                       |
+|:----------|:-----------------------------------------------------------------|
+| **INDEX** | Please select valid index from 1 to (SIZE OF YOUR CONTACT LIST)! |
 
-Examples:
+* Deletes the contact at the specified `INDEX`.
+* `INDEX` refers to the index number shown in the **currently displayed contact list**.
+* `INDEX` **must be a positive integer** 1, 2, 3, …​
+
+<box type="important"> 
+
+**This action is permanent**!
+
+Deleted contacts **cannot** be recovered. 
+
+</box>
+
+**Examples:**
 
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
+
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Delete1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Delete2.png" width="300"/></td>
+      <td><strong>Before:</strong><br><img src="images/Delete1.png" width="500"/></td>
+      <td><strong>After:</strong><br><img src="images/Delete2.png" width="500"/></td>
     </tr>
   </table>
+<br/>
+
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
   <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/Delete3.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/Delete4.png" width="300"/></td>
+      <td><strong>Before:</strong><br><img src="images/Delete3.png" width="500"/></td>
+      <td><strong>After:</strong><br><img src="images/Delete4.png" width="500"/></td>
     </tr>
   </table>
+
 
 #### **Clearing all Contacts: `clear`**
 
+<box type="definition">
+
 Clears all entries from the address book.
+
+</box>
 
 Format: `clear`
 
 #### **Exiting the Program: `exit`**
 
-Exits the program.
+<box type="definition">
+
+Exits the program and closes the GhostConnect window.
+
+</box>
 
 Format: `exit`
+</box>
 
 ### Category Specific Commands
 
-> **Note:** All commands below identify the contact through their `PHONE` number
+<box type="info" light>
 
-<box type="info" seamless>
+From here onwards, all commands below uses `PHONE` to identify the contact.
+
+</box>
+
+For the `PHONE` parameter, the error messages follows the table below:
+
+| Parameter  | Invalid Example                               | Error Message when invalid                                                                           |
+|:-----------|:----------------------------------------------|:-----------------------------------------------------------------------------------------------------|
+| **PHONE**  | Full contact list is empty                    | No person found with phone number [PHONE NUMBER]. Try running 'list' before using the command again. |
+| **PHONE**  | Phone number not in the full contact list     | No person found with phone number [PHONE NUMBER].                                                    |
+| **PHONE**  | Phone number not in the filtered contact list | No person found with phone number [PHONE NUMBER]. Try running 'list' before using the command again. |
+| **PHONE**  | Phone number not in the filtered contact list | No person found with phone number [PHONE NUMBER]. Try running 'list' before using the command again. |
 
 #### **Adding Points to a Customer: `updatePoints`**
 
+<box type="definition">
+
 Award points for specified customer based of amount spent.
+
+</box>
 
 Format: `updatePoints p/PHONE b/BILL_AMOUNT`
 
-* Bill amount can be any positive number with at most 2 decimal points e.g. `50`, `50.15`, `50.1`
-* Customers are automatically assigned a tier based on their accumulated points.
-* The current thresholds are:
-- Member: 0.00 - 99.99 points
-- Bronze: 100.00 - 499.99 points
-- Silver: 500.00 - 999.99 points
-- Gold: 1000.00 - 2499.99 points
-- Platinum: 2500.00 points onwards.
-- There is a maximum cap at 100,000 points for each customer.
+* Bill amount can be any **positive number** with at most 2 decimal points<br/>
+  e.g. `50`, `50.15`, `50.1`
 
-*As per the industry standard, bill amounts are automatically truncated to whole numbers when converting to points.
+* Customers are **automatically assigned a tier** based on their accumulated points.
 
-Examples:
+<box type="info" light>
 
-* `updatePoints p/98765432 b/100000.00` adds `100000 points` for `John Doe`<br>
-  ![result for 'updatePoints p/98765432 b/100000.00'](images/updatePointsResult.png)
+**Current thresholds**:
 
-### **Reducing points for Customer: `reducePoints`**
+* **Member**: 0.00 - 99.99 points
+* **Bronze**: 100.00 - 499.99 points
+* **Silver**: 500.00 - 999.99 points
+* **Gold**: 1000.00 - 2499.99 points
+* **Platinum**: 2500.00 points onwards. 
 
-Redeems a specified number of points from a customer's account.
+Each customer can accumulate up to a **maximum of 100,000 points.**
+
+</box>
+
+> _As per the industry standard, bill amounts are automatically truncated to whole numbers when converting to points._
+
+**Examples:**
+
+OMG! John just made a $1000000 order!
+
+* `updatePoints p/98765432 b/100000.00` adds `100000 points` for `John Doe`<br/>
+
+![result for 'updatePoints p/98765432 b/100000.00'](images/updatePointsResult.png)
+
+#### **Reducing points for Customer: `reducePoints`**
+
+<box type="definition">
+
+Reduces a specified number of points from a customer's account.
+
+</box>
 
 Format: `reducePoints p/PHONE pts/POINTS_TO_REDUCE`
 
-* Can only be performed on Customers.
-* The number of points to redeem must be a **positive integer** and not exceed the customer's current balance.
-* If the specified customer does not exist, or is not a Customer, an error message will be displayed.
-* This command can be used to correct an erroneous addition of points (due to a mistaken updatePoints entry).
-* If the customer's points is reduced below a membership tier threshold, the customer's tier is updated automatically.
+| Parameter            | Invalid Example               | Error Message when invalid                                                                            |
+|:---------------------|:------------------------------|:------------------------------------------------------------------------------------------------------|
+| **POINTS_TO_REDUCE** | Insufficient points to redeem | John Doe does not have enough points to redeem 500 (current: 0).                                      |
+| **POINTS_TO_REDUCE** | Input is negative             | Points to redeem must be positive.                                                                    |
+| **POINTS_TO_REDUCE** | Input is not a integer        | Points to redeem must be an integer.                                                                  |
 
-Example:
+* `POINTS_TO_REDUCE` must be a **positive integer** and **cannot exceed** the customer’s current points.
+* If the specified customer does not exist, or is not a Customer, an error message will be displayed.
+* If the reduction causes the customer’s points to **fall below a tier threshold**, their **tier is automatically updated.**
+
+<box type="tip">
+
+**Accidentally keyed in an extra 0 when updating points?**
+
+Use `reducePoints` to correct the mistakes!
+
+</box>
+
+**Examples:**
 
 * Assuming that the Customer `John Cena` has the phone number `91234567`
 * Assuming that `John Cena` currently has 1000 points and is Tier `Gold`
@@ -415,112 +563,184 @@ Example:
 
 <table>
     <tr>
-      <td><strong>Before</strong><br><img src="images/redeem1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/redeem2.png" width="300"/></td>
+      <td><strong>Before:</strong><br><img src="images/reduce1.png" width="500"/></td>
+      <td><strong>After:</strong><br><img src="images/reduce2.png" width="500"/></td>
     </tr>
-  </table>
-
-
-### **View summary of Customers: `customerSummary`**
-
-Views the number of customers at each tier, along with the total amount of points across all customers.
-
-Format: `customerSummary`
-
-* Shows the number of customers grouped by membership tier along with total number of points across all customers.
-* Provides managers with concise summary of customer distribution without listing individual entries.
-* Can be used after updates to verify that point or tier changes are reflected correctly.
-
-</box>
+</table>
+<br/>
 
 #### **Changing Shift of a Staff: `updateShift`**
 
+<box type="definition">
+
 Update shift for the specified staff.
+
+</box>
 
 Format: `updateShift p/PHONE s/SHIFT`
 
+| Parameter | Invalid Example | Error Message when invalid                                 |
+|:----------|:----------------|:-----------------------------------------------------------|
+| **PHONE** | 999             | Phone numbers must have 8 digits and start with 6, 8 or 9. |
+| **SHIFT** | Today           | Shift must be either 'AM' or 'PM' (case-insensitive).      |
+
 * Can only be performed on Staff.
-* Shift value is limited to only `AM` or `PM` (case-insensitive).
-  e.g. `s/am`, `s/Am`, and `s/PM` are all valid.
-* If the staff member's shift is already set to the specified value,
-the command will confirm the existing shift as a successful update.
-This is intentional, to provide consistent confirmation feedback even when
-no actual data change is required.
 
-Examples:
+<box type="info">
 
-* `updateShift p/98765432 s/PM` updates shift to `PM` for `John Doe`<br>
-  ![result for 'updateShift p/98765412 b/PM'](images/updateShiftResult.png)
+If `updateShift p/98765432 s/AM` is called on a Staff that already has an `AM` shift, you will see the same success message!
 
-#### **Adding Order from a Supplier: `addOrder`**
+This is **intentional**, to provide consistent confirmation feedback even when no actual data change is required.
 
-Adds an Order to the specified Supplier's list of orders.
+</box>
+
+**Examples:**
+
+* `updateShift p/98765432 s/PM` updates shift to `PM` for `John Doe`<br/>
+
+![result for 'updateShift p/98765412 b/PM'](images/updateShiftResult.png)
+
+#### **Adding Order from a Supplier: `addorder`**
+
+<box type="definition">
+
+Adds an Order to the specified Supplier's list of orders. Supplier is specified based on the Phone Number given.
+
+</box>
 
 Format: `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`
 
-* `ITEM_NAME` and `DELIVERY_DAY` can only be filled with alphanumeric characters.
-* `QUANTITY` can only be positive numerical values that are above 0.
-* `UNIT PRICE` can only be positive numerical values, that are up to 2 decimal places.
-* Duplicate orders will not be added into the supplier's list of orders.
+| Parameter             | Invalid Example | Error Message when invalid                                                                               |
+|:----------------------|:----------------|:---------------------------------------------------------------------------------------------------------|
+| **PHONE**             | 999             | Phone numbers must have 8 digits and start with 6, 8 or 9.                                               |
+| **ORDER INDEX**       | one             | Invalid Order Index, only positive integers lesser than 2,147,483,647 are allowed.                       |
+| **ITEM NAME**         | +++             | Names should only contain alphanumeric characters and spaces, and it should not be blank                 |
+| **ITEM QUANTITY**     | -10             | Item Quantity should not be blank and only positive integers are allowed (No decimals)                   |                            
+| **ITEM UNIT PRICE**   | 10.123          | Unit Price cannot be blank and only positive numerical values with strictly 2 decimal places are allowed |
+| **ITEM DELIVERY DAY** | today++         | Delivery day should only contain alphanumeric characters and spaces, and it should not be blank          |
 
-Examples:
+
+Outputs:
+- :white_check_mark:Success (yay!)
+    - Output message displayed: "Order added successfully"
+- :x:Failure (oh no!)
+    - **Empty Address Book**: "Empty contact list: No contacts available to update!"
+    - **Person not in list shown in UI**: "No person found with phone number {userInput}. Try running 'list' before using the command again. "
+    - **Person not in AddressBook**: "No person found with phone number {userInput}."
+    - **Person found is not a Supplier**: "The person with phone number {userInput} is not a supplier."
+    - **Duplicate Order**: "Order already exists in the list."
+
+<box type="info" seamless>
+
+**Info:** Item Name will be set at TitleCase and Delivery Day will be set to LowerCase
+
+</box>
+
+**Examples:**
 
 * Assuming that the Supplier `John Doe` has the phone number `91234567`
-* `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`
+* `addorder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`
 * The above command creates an order in John Doe's order list.
-* The order indicates an order of 20 Chicken, at the unit price of $5.60, to be delivered every Tuesday.
+
 ![result for 'addOrder p/91234567 i/Chicken q/20 u/9.80 d/every Tuesday'](images/addOrderResult.png)
 
-#### **Updating Order from a Supplier: `updateOrder`**
+#### **Updating Order from a Supplier: `updateorder`**
 
-Updates a specified order in a Supplier's order list.
+<box type="definition">
+
+Updates a specified order in a Supplier's order list. Supplier is specified by the Phone Number given. Order is specified by the Order Index given.
+
+</box>
 
 Format: `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`
 
-* Edits the order found in the specified Supplier's order list.
-* Order is specified through the `ORDER_INDEX`.
-* At least one of the optional fields must be provided.
-* `ITEM_NAME` and `DELIVERY_DAY` can only be filled with alphanumeric characters.
-* `QUANTITY` can only be positive numerical values that are above 0.
-* `UNIT PRICE` can only be positive numerical values, that are up to 2 decimal places.
-* In the event of duplicate orders upon updating, the command will not be executed.
+| Parameter             | Invalid Example | Error Message when invalid                                                                               |
+|:----------------------|:----------------|:---------------------------------------------------------------------------------------------------------|
+| **PHONE**             | 999             | Phone numbers must have 8 digits and start with 6, 8 or 9.                                               |
+| **ORDER INDEX**       | one             | Invalid Order Index, only positive integers lesser than 2,147,483,647 are allowed.                       |
+| **ITEM NAME**         | +++             | Names should only contain alphanumeric characters and spaces, and it should not be blank                 |
+| **ITEM QUANTITY**     | -10             | Item Quantity should not be blank and only positive integers are allowed (No decimals)                   |                            
+| **ITEM UNIT PRICE**   | 10.123          | Unit Price cannot be blank and only positive numerical values with strictly 2 decimal places are allowed |
+| **ITEM DELIVERY DAY** | today++         | Delivery day should only contain alphanumeric characters and spaces, and it should not be blank          |
 
-Example:
 
-* Assuming that the Supplier `John Doe` has the phone number `91234567`
-* Assuming that the below order is added into John Doe's order list, and it is the only order in the list:
-    * Item Name - Chicken
-    * Quantity - 20
-    * Unit Price - 9.80
-    * Delivery Day - every Tuesday
+Outputs:
+- :white_check_mark:Success (yay!)
+    - Output message displayed: "Order has been updated successfully"
+- :x:Contact List Failure (oh no!)
+    - **Empty Address Book**: "Empty contact list: No contacts available to update!"
+    - **Person not in list shown in UI**: "No person found with phone number {userInput}. Try running 'list' before using the command again. "
+    - **Person not in AddressBook**: "No person found with phone number {userInput}."
+    - **Person found is not a Supplier**: "The person with phone number {userInput} is not a supplier."
+- :x:Order List Failure (oh no!)
+    - **Empty Order list for Supplier**: "Supplier currently has no orders."
+    - **Order Index given is out of bounds**: "Index given is out of bounds of supplier's list of orders."
+    - **No changes indicated in command**: "At least one of the optional fields must be provided"
+    - **Duplicate Order**: "Order with identical values already exists."
 
-* `updateOrder p/91234567 o/1 q/100`
+<box type="info" seamless>
+
+**Info:** Item Name will be set at TitleCase and Delivery Day will be set to LowerCase
+
+</box>
+
+**Example:**<br/>
+You recently added a Supplier `John Doe` with the phone number `91234567`
+
+After closing the deal you added a single order to the order list:<br/>
+1. [x] Item Name - Chicken
+2. [x] Quantity - 20
+3. [x] Unit Price - 9.80
+4. [x] Delivery Day - every Tuesday
+
+You realize a mistake in the order quantity and decided to update it: 
+
+* `updateorder p/91234567 o/1 q/100`
 * The above command will edit the first order in John Doe's order list, such that the quantity is changed to `100`.
 
-![result for 'updateOrder p/91234567 o/1 q/100'](images/updateOrderResult.png)
+![result for 'updateorder p/91234567 o/1 q/100'](images/updateOrderResult.png)
 
-#### **Deleting Order from a Supplier: `deleteOrder`**
+#### **Deleting Order from a Supplier: `deleteorder`**
+
+<box type="definition">
 
 Deletes a specified order in a Supplier's order list.
 
+</box>
+
 Format: `deleteOrder p/PHONE o/ORDER_INDEX`
 
-* Deletes the order found in the specified Supplier's order list.
-* Order is specified through the `ORDER_INDEX`.
-
-Example:
-
-* Assuming that the Supplier `John Doe` has the phone number `91234567`
-* Assuming that the below order is added into John Doe's order list, and it is the only order in the list:
-    * Item Name - Chicken
-    * Quantity - 20
-    * Unit Price - 5.60
-    * Delivery Day - every Tuesday
-
-* `deleteOrder p/91234567 o/1`
-* The above command will delete the first order in John Doe's order list
+| Parameter             | Invalid Example | Error Message when invalid                                                         |
+|:----------------------|:----------------|:-----------------------------------------------------------------------------------|
+| **PHONE**             | 999             | Phone numbers must have 8 digits and start with 6, 8 or 9.                         |
+| **ORDER INDEX**       | one             | Invalid Order Index, only positive integers lesser than 2,147,483,647 are allowed. |
 
 
+Outputs:
+- :white_check_mark:Success (yay!)
+    - Output message displayed: "Order deleted successfully"
+- :x:Contact List Failure (oh no!)
+    - **Person not in list shown in UI**: "Entry with that phone number cannot be found. Try running 'list' before using the command again. "
+    - **Person not in AddressBook**: "Entry with that phone number cannot be found."
+    - **Person found is not a Supplier**: "The person with phone number {userInput} is not a supplier."
+- :x:Order List Failure (oh no!)
+    - **Empty Order list for Supplier**: "Supplier currently has no orders."
+    - **Invalid Order Index given**: "Invalid order index for this supplier."
+    - **Duplicate Order**: "Order with identical values already exists."
+
+**Example:**<br/>
+You recently added a Supplier `Jane Doe` with the phone number `97654321`
+
+After closing the deal you added a single order to the order list:<br/>
+1. [x] Item Name - Chicken
+2. [x] Quantity - 20
+3. [x] Unit Price - 5.60
+4. [x] Delivery Day - every Tuesday
+
+After weeks of deliveries, Jane decides she no longer want to supply you Chicken:cry::
+
+* `deleteOrder p/97654321 o/1`
+* The above command will delete the first order in Jane Doe's order list
 
 ### Miscellaneous
 
@@ -578,21 +798,20 @@ Furthermore, certain edits can cause the GhostConnect to behave in unexpected wa
 
 ## Command summary
 
-| Action               | Command Type  | Format, Examples                                                                                                                                      |
-|----------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Help**             | General       | `help`                                                                                                                                                |
-| **Add**              | General       | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/Customer` |
-| **List**             | General       | `list`                                                                                                                                                |
-| **Edit**             | General       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                               |
-| **Find**             | General       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                            |
-| **View**             | General       | `view p/PHONE`<br> e.g., `view p/91234567`                                                                                                            |
-| **Delete**           | General       | `delete INDEX`<br> e.g., `delete 3`                                                                                                                   |
-| **Clear**            | General       | `clear`                                                                                                                                               |
-| **Exit**             | General       | `exit`                                                                                                                                                |
-| **Update Points**    | Customer      | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                       |
-| **Reduce Points**    | Customer      | `reducePoints p/PHONE pts/POINTS_TO_REDUCE` <br> e.g. `reducePoints p/91234567 pts/500`                                                               |
-| **Customer Summary** | General       | `customerSummary`                                                                                                                                     |        
-| **Update Shift**     | Staff         | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                   |
-| **Add Order**        | Supplier      | `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`<br> e.g. `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`            |
-| **Update Order**     | Supplier      | `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`<br> e.g. `updateOrder p/91234567 o/1 i/Fish`           |
-| **Delete Order**     | Supplier      | `deleteOrder p/PHONE o/ORDER_INDEX`<br> e.g. `deleteOrder p/91234567 o/1`                                                                             |
+| Action               | Command Type  | Format, Examples                                                                                                                                     |
+|----------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**             | General       | `help`                                                                                                                                               |
+| **Add**              | General       | `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY` <br> e.g., `add n/James Ho p/98765432 e/jamesho@example.com a/123, Clementi Rd, 123465 c/Customer` |
+| **List**             | General       | `list`                                                                                                                                               |
+| **Edit**             | General       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                              |
+| **Find**             | General       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                           |
+| **View**             | General       | `view p/PHONE`<br> e.g., `view p/91234567`                                                                                                           |
+| **Delete**           | General       | `delete INDEX`<br> e.g., `delete 3`                                                                                                                  |
+| **Clear**            | General       | `clear`                                                                                                                                              |
+| **Exit**             | General       | `exit`                                                                                                                                               |
+| **Update Points**    | Customer      | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                      |
+| **Reduce Points**    | Customer      | `reducePoints p/PHONE pts/POINTS_TO_REDUCE` <br> e.g. `reducePoints p/91234567 pts/500`                                                              | 
+| **Update Shift**     | Staff         | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                  |
+| **Add Order**        | Supplier      | `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`<br> e.g. `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`           |
+| **Update Order**     | Supplier      | `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`<br> e.g. `updateOrder p/91234567 o/1 i/Fish`          |
+| **Delete Order**     | Supplier      | `deleteOrder p/PHONE o/ORDER_INDEX`<br> e.g. `deleteOrder p/91234567 o/1`                                                                            |

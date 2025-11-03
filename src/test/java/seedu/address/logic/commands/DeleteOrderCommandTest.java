@@ -63,7 +63,7 @@ public class DeleteOrderCommandTest {
             new seedu.address.model.person.Address("address"),
             new seedu.address.model.category.Category("Supplier")
         );
-        supplier.getOrders().add(new Order(new ItemName("Pens"), new ItemQuantity("100"),
+        supplier.addOrder(new Order(new ItemName("Pens"), new ItemQuantity("100"),
                 new ItemUnitPrice("0.90"), new ItemDeliveryDay("Tuesday")));
         model.addPerson(supplier);
         DeleteOrderCommand cmd = new DeleteOrderCommand(new Phone("91234567"), 2); // Only 1 order
