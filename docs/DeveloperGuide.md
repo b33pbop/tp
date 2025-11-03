@@ -853,6 +853,37 @@ testers are expected to do more *exploratory* testing.
 wip
 
 ## **Appendix: Planned Enhancements**
-1. Adding a command to deduct and update number of leaves for a staff.
-2. Improving shift system to track shifts in the current month.
-3. Improving membership system to implement discounts for customers in tiers.
+1. **Standardize all commands to use INDEX instead of PHONE for contact identification**: Currently, commands like `view`, `updatePoints`, `updateShift`, `addOrder`, `updateOrder`, and `deleteOrder` use phone numbers to identify contacts, while `edit` and `delete` use INDEX. This inconsistency can confuse users. We plan to update all category-specific commands to accept INDEX as the primary identifier (e.g., `updatePoints INDEX b/BILL_AMOUNT` instead of `updatePoints p/PHONE b/BILL_AMOUNT`). This will provide a uniform command structure across the application and allow users to work directly with the displayed list indices. The phone parameter will be deprecated in favor of INDEX for all commands.
+
+
+2. **Allow all commands to access the full contact list regardless of active filters**: Currently, when users apply a `find` filter to display a subset of contacts, commands like `delete` and `edit` only operate on the filtered list indices. This can lead to confusion when users expect to operate on the full list. We plan to implement a dual-index system where commands can optionally accept a `/all` flag to operate on the full list (e.g., `delete /all 5` to delete the 5th contact in the full list even when viewing filtered results). Alternatively, we will add a command like `deleteById PHONE` to unambiguously target contacts by their unique identifier regardless of current filter state.
+
+
+3. **Update UI to display real-time shift information using LocalDateTime**: The current system displays staff shift as simply "AM" or "PM" without date context. We plan to enhance the UI to use Java's LocalDateTime API to show which staff members are currently on shift today, and highlight upcoming shifts for the next 7 days. The main display will show a visual indicator (e.g., green dot) next to staff currently on duty based on the current system time and their assigned shift. For suppliers, we will similarly highlight orders scheduled for delivery today using LocalDateTime comparison, making it easier for managers to prioritize urgent deliveries at a glance.
+
+
+4. **Improve phone number validation to support international formats**: Currently, phone validation only accepts numeric digits with a minimum length of 3, which doesn't account for international formats with country codes, extensions, or special formatting (e.g., +65-1234-5678, (123) 456-7890). We plan to enhance the phone number validation regex to accept common international formats including country code prefixes (+ symbol), hyphens, spaces, and parentheses, while still maintaining uniqueness validation. Example valid formats will include: `+65 9123 4567`, `+1 (123) 456-7890`, `123-456-7890`.
+
+
+5. **Support special characters in names for internationalization**: The current name validation regex `^[A-Za-z0-9 ]+(\\([A-Za-z0-9 ]+\\))?$` does not support names with special characters common in many cultures (e.g., O'Brien, José, François, 李明). We plan to expand the regex to include common name characters such as apostrophes, hyphens, accented letters, and common Unicode characters used in names worldwide: `^[\\p{L}\\p{N} '\\-]+(\\([\\p{L}\\p{N} '\\-]+\\))?$`. This will allow managers to add contacts with culturally diverse names without workarounds.
+
+
+6. **Standardize numeric input handling (bill amounts, unit price, quantities)**: Current numeric validations across `updatePoints` (bill amount), and Supplier orders (`u/UNIT_PRICE`, `q/QUANTITY`) are slightly inconsistent (e.g., acceptance of `50.1` vs strict 2 d.p., scientific notation handling, large values). We plan to unify rules across all commands:
+    - Accept only non-negative numbers; `q/QUANTITY` must be a positive integer (`>= 1`).
+    - Accept up to 2 decimal places for monetary fields (`b/BILL_AMOUNT`, `u/UNIT_PRICE`); auto-round inputs with >2 d.p. to 2 d.p. using bankers' rounding.
+    - Reject scientific notation (e.g., `1e3`), negative values, and values exceeding sane upper bounds (e.g., `b <= 1,000,000.00`, `u <= 100,000.00`).
+    - Display normalized values in feedback (e.g., `5` -> `5.00`) and store them normalized in JSON to ensure consistency.
+    - Provide precise error messages, e.g., "UNIT_PRICE must be a positive number with up to 2 decimal places (max 100,000.00)."
+      This makes numeric handling predictable and prevents subtle data inconsistencies across features.
+
+
+7. **Enhance error messages to specify exact validation failures**: Current error messages like "Invalid command format!" are too generic. For example, when adding a contact with an invalid email, the user sees a general format error rather than specifically "Email format is invalid: example.com (missing @ symbol)". We plan to implement field-specific error messages that identify exactly which parameter failed validation and why. Example: "Invalid phone number: abc123 (phone numbers must contain only digits)", "Invalid address: X (address must be between 2-100 characters)".
+
+
+8. **Implement undo functionality for accidental data modifications**: Currently, there is no way to recover from accidental deletions or edits except by manually re-entering data or restoring from the JSON file. We plan to implement an `undo` command that reverses the last data-modifying operation (add, edit, delete, updatePoints, etc.). The system will maintain a history stack of up to 10 previous states. Users can execute `undo` to revert changes and `redo` to reapply them. This will appear as: "Undone: Deleted contact John Doe" with the contact restored to the list.
+
+
+9. **Add batch operations for efficiency with large contact lists**: Currently, users must execute commands one at a time, which is inefficient when performing similar operations on multiple contacts (e.g., deleting multiple outdated suppliers). We plan to add batch command support where users can specify multiple indices: `delete 1,3,5-7` to delete contacts 1, 3, 5, 6, and 7 in one operation. Similarly, `updatePoints 1,2,3 b/100.00` would update points for multiple customers simultaneously. The system will display: "Updated 3 contacts: John Doe, Jane Smith, Bob Lee" to confirm the batch operation.
+
+
+10. **Implement data validation on JSON file edits to prevent corruption**: Currently, if users manually edit the `addressbook.json` file and introduce invalid data (e.g., negative points, invalid shift values, duplicate phone numbers), the application either crashes or silently discards all data, resulting in data loss. We plan to implement comprehensive JSON validation on startup that: (1) identifies specific validation errors with line numbers and field names, (2) displays a detailed error report to the user, (3) offers to load the file in "safe mode" with invalid entries marked for review rather than discarding everything, (4) provides a backup recovery option. Example message: "Warning: 3 contacts have invalid data (Contact 5: negative points value, Contact 8: invalid email format). Load in safe mode to review and fix issues?"
