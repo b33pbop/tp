@@ -28,8 +28,7 @@ Assumptions:
 
 By the end of this guide, users will be able to **navigate GhostConnect confidently**, leverage its **advanced features**, and integrate it seamlessly into their daily operations to manage staff, suppliers, and customer loyalty programs efficiently.
 
-<details>
-    <summary style="font-size: 32px;"> Table of Contents </summary>
+## Table of Contents
 
 - [Quick Start](#quick-start)
 - [Parameters](#parameters)
@@ -55,11 +54,10 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
   - [Miscellaneous](#miscellaneous)
     - [Saving the Date](#saving-the-data)
     - [Editing the Data File](#editing-the-data-file)
+    - [Archiving Data Files](#archiving-data-files-coming-in-v20)
 - [FAQ](#faq)
 - [Known Issues](#known-issues)
 - [Command Summary](#command-summary)
-
-</details>
 
 <page-nav-print />
 
@@ -99,13 +97,13 @@ used in GhostConnect.
 ### Person General Parameters
 In GhostConnect, all contacts share a common set of basic parameters regardless of their category. These parameters form the foundation of each contact record and are used across all contact types (Customer, Staff, and Supplier).
 
-| Parameter             | Validation Requirements                                                     | Rationale                                                                                                   |
-|:----------------------|:----------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------|
-| **NAME**              | -                                                                           | Ensures names are readable and properly stored in the system                                                                                                            |
-| **PHONE NUMBER**      | - 8 Digits long<br/> - Starts with either 6, 8 or  9                        | GhostConnect caters to the Singaporean market and thus phone numbers have to be a valid Singaporean number. |
-| **EMAIL**             | -                                                                           |                                                                                                             |
-| **ADDRESS**           | -                                                                           |                                                                                                             |
-| **CATEGORY**          | - Can only belong to 1 of the three categories: Customer, Staff or Supplier | These are the 3 main groups of contacts relevant to ghost kitchen managers.                                 |
+| Parameter             | Validation Requirements                                                                                                                                                                                                                                 | Rationale                                                                                                                             |
+|:----------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------|
+| **NAME**              | -                                                                                                                                                                                                                                                       | **Readability**: Ensures names are readable and properly stored in the system                                                         |
+| **PHONE NUMBER**      | - 8 Digits long<br/> - Starts with either 6, 8 or  9                                                                                                                                                                                                    | **Singaporean Audience**: GhostConnect caters to the Singaporean market and thus phone numbers have to be a valid Singaporean number. |
+| **EMAIL**             | - **Local part** (before '@'): contains letters, digits or `+_.-` only<br/>- No **consecutive** special characters<br/> - Cannot **start/end** with special character<br/> - **Domain** (after '@): valid labels separated by `.`, last label ≥ 2 chars | **Data Integrity**: Ensures emails are correctly formatted to prevent errors and maintain compatibility with systems.                 |
+| **ADDRESS**           | - Only letters, digits or `',-#` and spaces allowed<br/>- Length between 2 and 100 characters                                                                                                                                                           | **Address Validation**: Ensures addresses are valid, readable, and concise.                                                           |
+| **CATEGORY**          | - Can only belong to 1 of the three categories: Customer, Staff or Supplier                                                                                                                                                                             | **Category Relevance**: Ensures contacts are correctly classified for operational use.                                                |
 
 ### Staff Specific Parameters
 Staff contacts have an additional parameter specific to employee management for shift scheduling. This helps ghost kitchen managers efficiently organize their workforce.
@@ -115,7 +113,7 @@ Staff contacts have an additional parameter specific to employee management for 
 | **SHIFT**             | - Can only be either AM or PM |                                          |
 
 ### Supplier Specific Parameters
-In GhostConnect, suppliers are also persons but have an additional parameter, which stores a list of their Orders.
+In GhostConnect, suppliers are a subset of persons but with additional parameters, which stores a list of their Orders.
 The parameters listed below are fields that belong to an Order.
 
 | Parameter             | Validation Requirements       | Rationale                                |
@@ -126,44 +124,50 @@ The parameters listed below are fields that belong to an Order.
 | **ITEM UNIT PRICE**   | -                             |                                          |
 | **ITEM DELIVERY DAY** | -                             |                                          |
 
+### Customer Specific Parameters
+In GhostConnect, customers are a subset of persons but with additional parameters, which tracks a Customer's membership progress.
+
+| Parameter             | Validation Requirements | Rationale                                                                                        |
+|:----------------------|:------------------------|:-------------------------------------------------------------------------------------------------|
+| **BILL AMOUNT**       | - Cannot be negative    | **Prevent invalid input**: Ensures the bill amount is realistic and prevents calculation errors. |
+
 --------------------------------------------------------------------------------------------------------------------
 ## Features
 
 <box type="info" seamless>
 
-**Notes about the command format:**<br>
+**Notes on Command Format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  - e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-
-* Some fields are optional.<br>
-  - Optional fields for certain commands have been indicated using the `[]` brackets. Fields within the square brackets are optional unless otherwise stated in the feature description.
-
-* Parameters can be in any order.<br>
-  - e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
-
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  - e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-
-* Commands are case-insensitive.<br>
-  - e.g. `list` is equivalent to `LIST`,`lISt`,`lIsT`, etc...
-
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+* Parameters in `UPPER_CASE` are supplied by the user.
+  - Example: `add n/NAME` → `add n/John Doe`.<br>
+    <br/>
+* Some fields are **optional** and shown in `[]` brackets.
+  - Example: `[p/PHONE]` is optional unless otherwise stated.<br>
+    <br/>
+* Parameters can be entered in **any order**.
+  - Example: `n/NAME p/PHONE` is equivalent to `p/PHONE n/NAME`.<br>
+    <br/>
+* Extraneous parameters for **commands without arguments** will be ignored.
+  - Example: `help 123` will be interpreted as `help`.<br>
+    <br/>
+* Commands are **case-insensitive**.
+  - Example: `list`, `LIST`, or `LiSt` are all valid.<br>
+    <br/>
+* For **PDF users**: be careful when copying multi-line commands, as spaces at line breaks may be omitted.
 
 </box>
 
-### General Commands
 
-<box type="info" seamless>
+### General Commands
 
 #### **Accessing the Help Page: `help`**
 
-Shows a pop up window which provides a detailed guide on the commands available.
+Shows a pop-up window which provides a detailed guide on the commands available.
 
 Format: `help`
 
-
 ![help message](images/helpMessage.png)
+
 <box type="tip" seamless>
 
 **Tip:** Click on the button on the bottom to copy the User Guide URL into your clipboard and paste it into your browser to access the full User Guide online!
@@ -173,24 +177,45 @@ Format: `help`
 
 #### **Adding a Contact: `add`**
 
-Adds a person to the address book.
+Adds a person to the address book.<br/>
+Based on the category you give the contact, they unlock [different commands](#category-specific-commands)!
 
 Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY`
 
-| Parameter | Validation Rules                                                 | Error Message when invalid |
-|:----------|:-----------------------------------------------------------------|:---------------------------|
-| **NAME**  | Refer to [Person General Parameters](#person-general-parameters) | "Name should..."           |
-
-Outputs:
-- Success
-  - Output Message displayed: ""
-- Failure
-  - Duplicate Entry: ""
+| Parameter        | Validation Rules (Refer to [Person General Parameters](#person-general-parameters) for more details!) | Error Message when invalid                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|:-----------------|:------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **NAME**         | Refer to [Person General Parameters](#person-general-parameters)                                      | "Name should..."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **PHONE NUMBER** | Singaporean Numbers Only                                                                              | "Phone numbers must only have 8 digits and start with 6, 8 or 9."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **EMAIL**        | Follows the structure of example@email.com                                                            | "Emails should be of the format local-part@domain and adhere to the following constraints:<br/>1. The LOCAL-PART (before '@') must: only contain LETTERS, DIGITS, and these SPECIAL CHARACTERS: +_.-; have at most one SPECIAL CHARACTER between LETTERS/DIGITS (no consecutive special characters); not start or end with any SPECIAL CHARACTERS.<br/>2. The DOMAIN (after '@') must: be made up of DOMAIN LABELS separated by periods; end with a DOMAIN LABEL that is at least 2 LETTERS/DIGITS long; have each DOMAIN LABEL start and end with a LETTER/DIGIT; contain only LETTERS/DIGITS within each label, with optional HYPHENS allowed between LETTERS/DIGITS." |
+| **ADDRESS**      | Only letters, digits or `',-#` and spaces allowed<br/>Length between 2 and 100 characters             | "Invalid characters found - only letters, numbers, apostrophes, commas, hyphens, hashes and spaces are allowed." <br/>"Length of Address does not match criteria - Address must be between 2 - 100 characters."                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| **CATEGORY**     | Either Customer, Staff or Supplier                                                                    | "Unknown Category (Customer \| Supplier \| Staff)"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
 
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/Customer` <br>
-* `add n/Betsy Crowe e/betsycrowe@example.com a/Yishun p/68998899 c/Staff`<br>
+
+**If all the rules above were followed you will see either of these 2 messages**:
+
+- :white_check_mark:Success (yay!)
+  - "New person added: NAME; Phone: PHONE; Email: EMAIL; Address: ADDRESS; Category: CATEGORY"
+- :x:Failure (oh no!)
+  - Duplicate Entry: "A contact with the name or number already exists in the book."
+
+<box type="tip">
+
+**Forgot the command format or made a prefix typo?**
+
+Fret not! GhostConnect will let you know and provide you with the command format:
+
+Invalid command format!<br/>
+add: Adds a person to the address book.<br/>
+Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY<br/>
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 c/Customer<br/>
+
+</box>
+
+**Example**:<br/>
+A new **Customer**, **John Doe** signed up for membership, and you hired a new **Staff**, **Betsy Crowe**!
+1. `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/Customer` <br>
+2. `add n/Betsy Crowe e/betsycrowe@example.com a/Yishun p/68998899 c/Staff`<br>
 
 ![result for above commands](images/addResult.png)
 
@@ -201,6 +226,14 @@ Shows a list of all persons in the address book.
 Format: `list`
 
 ![result for 'list'](images/listResult.png)
+
+<box type="tip">
+
+**When does this come in handy?**
+
+You can use this command to bring back your full contact list after filtering with the [find command](#locating-contacts-by-name-or-category-find)!
+
+</box>
 
 #### **Editing a Contact: `edit`**
 
@@ -331,8 +364,6 @@ Format: `clear`
 Exits the program.
 
 Format: `exit`
-
-
 
 ### Category Specific Commands
 
@@ -500,13 +531,11 @@ AddressBook data are saved in the hard disk automatically after any command that
 #### Editing the Data File
 
 AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
-
 <box type="warning" seamless>
 
 **Caution:**
 If your changes to the data file makes its format invalid, GhostConnect will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the GhostConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-
 </box>
 
 --------------------------------------------------------------------------------------------------------------------

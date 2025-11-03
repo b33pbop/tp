@@ -6,8 +6,7 @@ pageNav: 3
 
 # AB-3 Developer Guide
 
-<details>
-    <summary> Table of Contents </summary>
+## Table of Contents
 
 - [Acknowledgements](#acknowledgements)
 - [Setting up, getting started](#setting-up-getting-started)
@@ -30,8 +29,6 @@ pageNav: 3
   - [Launch and shutdown](#launch-and-shutdown)
   - [Deleting a person](#deleting-a-person)
   - [Saving data](#saving-data)
-
-</details>
 
 <page-nav-print />
 
