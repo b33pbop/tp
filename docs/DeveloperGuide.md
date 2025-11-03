@@ -573,11 +573,11 @@ Use case continues at step 1 or ends.
 *     3b1. System informs manager that chosen order does not exist.
 Use case continues at step 1 or ends.
 
-**U14. Redeem Customer Points**
+**U14. Reduce Customer Points**
 **Actor: Manager**
 **MSS**
-1. Manager selects a customer to redeem points from.
-2. Manager executes **redeemPoints** and inputs details
+1. Manager selects a customer to reduce points from.
+2. Manager executes **reducePoints** and inputs details
 3. System validates the inputs and locates the specified customer.
 4. System deducts the specified number of points from the customer's total.
 Use case ends.
@@ -586,7 +586,7 @@ Use case ends.
 * 3a. Contact not found or not a customer
 *     3a1. System informs the manager that the specified contact is not a valid customer
 Use case resumes at step 1 or ends
-* 4a. Amount to be redeemed exceeds customer's current points
+* 4a. Amount to be reduced exceeds customer's current points
 *     4a1. System informs manager that insufficient points are available. 
 Use case resumes at step 2 or ends.
 
