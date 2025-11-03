@@ -14,8 +14,7 @@ We assume that users are familiar with basic computing concepts such as **file m
 
 By the end of this guide, users will be able to **navigate GhostConnect confidently**, leverage its **advanced features**, and integrate it seamlessly into their daily operations to manage staff, suppliers, and customer loyalty programs efficiently.
 
-<details>
-    <summary> Table of Contents </summary>
+## Table of Contents
 
 - [Quick Start](#quick-start)
 - [Features](#features)
@@ -41,8 +40,6 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
 - [FAQ](#faq)
 - [Known Issues](#known-issues)
 - [Command Summary](#command-summary)
-
-</details>
 
 <page-nav-print />
 
@@ -247,8 +244,6 @@ Format: `clear`
 Exits the program.
 
 Format: `exit`
-
-</box>
 
 ### Category Specific Commands
 
