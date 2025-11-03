@@ -30,7 +30,7 @@ public class DeleteOrderCommand extends Command {
     public static final String ERROR_EXTENSION = " Try running 'list' before using the command again.";
     public static final String MESSAGE_NOT_SUPPLIER = "Person found is not a supplier, please try again";
     public static final String MESSAGE_INVALID_ORDER_INDEX = "Invalid order index for this supplier.";
-    public static final String MESSAGE_EMPTY_ORDER_LIST = "Invalid order index for this supplier.";
+    public static final String MESSAGE_EMPTY_ORDER_LIST = "Supplier currently has no orders.";
 
     private final Phone supplierPhone;
     private final int orderIndex;
