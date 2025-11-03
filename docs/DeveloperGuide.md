@@ -187,98 +187,156 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+### Implementation overview
 
-#### Proposed Implementation
+Most features follow the same end-to-end flow through the system:
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+1. Parse: The `Logic` layer receives raw input and delegates to `AddressBookParser`, which selects an `XYZCommandParser` to validate tokens and build an `XYZCommand`.
+2. Execute: `LogicManager` executes the constructed `Command`. The command may read or mutate data via the `Model` interface.
+3. Persist: Mutating commands call into `Model` which in turn persists changes through `Storage#saveAddressBook()`.
+4. Respond: The command returns a `CommandResult` that encapsulates feedback text and UI flags (e.g., `showHelp`, `showPerson`, `exit`).
+5. Update UI: The UI reacts to the `CommandResult` by updating panels and, when a flag is set, toggling windows (e.g., Help or View windows).
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+Error handling and validation happen at parse-time (missing/invalid parameters) and at execute-time (not-found targets, category mismatches, duplicates). Clear messages are returned to users without throwing unhandled exceptions into the UI.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+### View Feature
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+The `view` command displays a read-only details window for a specific contact identified by phone number. It does not modify data or trigger storage writes.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+1. User input parsing: `ViewCommandParser#parse()` tokenizes the input into an `ArgumentMultimap` and extracts `p/PHONE`.
+2. Target resolution: `ViewCommand#execute()` reads `Model#getFilteredPersonList()` and locates the matching `Person` by phone.
+3. UI signal: `ViewCommand` returns a `CommandResult` with a flag (e.g., `showPerson=true`) and the resolved `Person` reference.
+4. UI handling: `LogicManager` returns the `CommandResult` to the UI, which opens the View window and renders the selected contact.
+5. Result: A `CommandResult` message is shown; no storage calls are performed.
 
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
+The sequence diagram below shows how the view operation works:
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+<puml src="diagrams/ViewSequenceDiagram.puml" width="700" />
 
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
+#### Example usage scenario
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 1. The user executes `view p/91234567`. The `Logic` component parses the phone and creates a `ViewCommand`.
 
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
+Step 2. The command resolves the `Person` from the filtered list by phone number.
 
-<box type="info" seamless>
+Step 3. `ViewCommand` returns a `CommandResult` with `showPerson=true` and the selected `Person`.
 
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+Step 4. The UI opens a View window owned by the main stage. The window renders category-specific fields (e.g., orders for suppliers).
 
-</box>
+Step 5. Closing the main window or executing `exit` closes all open View windows.
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+#### Design considerations
 
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
+Aspect: How to identify the person to view
 
+* Current choice: `p/PHONE` for unambiguous lookups across filtered lists.
+    * Pros: Works independently of filtered index; stable identifier for direct commands.
+    * Cons: Mixed identifier strategy vs commands that use index.
+* Alternative: Use list index (e.g., `view INDEX`).
+    * Pros: Consistent with `delete`/`edit`.
+    * Cons: Index ambiguity under filters; requires additional flags (e.g., `/all`).
 
-<box type="info" seamless>
+Aspect: Window lifecycle
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
+* Current choice: Child windows are owned by the primary stage and tracked; `exit` and main-stage close will close all child windows.
+* Alternative: Detached windows without ownership; requires explicit user management and risks orphan windows.
 
-</box>
+### Add Feature (Customer, Staff, Supplier)
 
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
+The `add` command creates a new contact. The parser determines the category (`c/Customer`, `c/Staff`, or `c/Supplier`) and the command constructs the corresponding subtype before saving via the `Model`.
 
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
+Steps common to all categories:
 
-<box type="info" seamless>
+1. User input parsing: `AddCommandParser#parse()` tokenizes and validates fields, including the `c/CATEGORY` discriminator.
+2. Person creation: `AddCommand#execute()` calls a factory (or inline constructor selection) to build the appropriate subtype (`Customer`, `Staff`, or `Supplier`).
+3. Model update: `Model#addPerson(person)` persists the new contact into the in-memory list.
+4. Storage: `Storage#saveAddressBook()` is invoked by the Model layer to write the updated state.
+5. Result: A `CommandResult` confirms creation and echoes the new contact.
 
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+Below are the sequence diagrams per category:
 
-</box>
+#### Add Customer
 
-Similarly, how an undo operation goes through the `Model` component is shown below:
+<puml src="diagrams/AddCustomerSequenceDiagram.puml" width="700" />
 
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
+#### Add Staff
 
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+<puml src="diagrams/AddStaffSequenceDiagram.puml" width="700" />
 
-<box type="info" seamless>
+#### Add Supplier
 
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+<puml src="diagrams/AddSupplierSequenceDiagram.puml" width="700" />
 
-</box>
+#### Example usage scenario
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 1. The user executes `add n/James Ho p/98765432 e/james@example.com a/123 c/Supplier`.
 
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
+Step 2. `AddCommandParser` parses fields and recognizes `c/Supplier`.
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 3. `AddCommand` constructs a `Supplier` instance and calls `Model#addPerson`.
 
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
+Step 4. `Model` saves via `Storage#saveAddressBook()`.
 
-The following activity diagram summarizes what happens when a user executes a new command:
+Step 5. A success `CommandResult` is returned and the UI list updates.
 
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
+#### Design considerations
 
-#### Design considerations:
+Aspect: Single `add` command vs category-specific commands
 
-**Aspect: How undo & redo executes:**
+* Current choice: Single `add` with `c/CATEGORY` discriminator.
+    * Pros: Smaller command surface; consistent UX.
+    * Cons: Parser complexity for category-specific validations.
+* Alternative: `addCustomer`, `addStaff`, `addSupplier` commands.
+    * Pros: Simpler parsers; clearer errors per category.
+    * Cons: More commands to learn; duplication across implementations.
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+Aspect: Duplicate detection
 
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+* Current choice: Detect duplicates by identity fields (e.g., same phone). Rejects insertion if duplicate exists.
+* Alternative: Allow duplicates and warn; defer deduplication to a later merge step.
 
-_{more aspects and alternatives to be added}_
+### Add Order Feature (Supplier)
+
+The `addOrder` command appends a new `Order` entry to a Supplier identified by phone number.
+
+1. User input parsing: `AddOrderCommandParser#parse()` tokenizes `p/PHONE`, `i/ITEM_NAME`, `q/QUANTITY`, `u/UNIT_PRICE`, and optional `d/DELIVERY_DAY`.
+2. Target resolution: `AddOrderCommand#execute()` locates the Supplier in `Model#getFilteredPersonList()` by phone; validates that the person is a `Supplier`.
+3. Order creation: Builds a domain `Order` (and value objects) from the parsed parameters.
+4. Model update: Creates an updated `Supplier` with the new order appended and calls `Model#setPerson(original, updated)`.
+5. Storage: Persists via `Storage#saveAddressBook()`.
+6. Result: Returns a `CommandResult` indicating the order was added.
+
+The sequence diagram below shows how adding an order works:
+
+<puml src="diagrams/AddOrderSequenceDiagram.puml" width="700" />
+
+#### Example usage scenario
+
+Step 1. The user executes `addOrder p/91234567 i/chicken q/20 u/5.60 d/every Tuesday`.
+
+Step 2. The parser validates quantity and unit price, and resolves the supplier by phone.
+
+Step 3. The command constructs an `Order` and updates the supplier via `Model#setPerson`.
+
+Step 4. The model persists to storage and returns a success `CommandResult`.
+
+#### Design considerations
+
+Aspect: Supplier immutability and updates
+
+* Current choice: Treat `Supplier` as immutable. Create an updated copy with appended orders and replace via `Model#setPerson`.
+    * Pros: Clear change semantics; easier undo/redo in future.
+    * Cons: Requires object copying; potential overhead for large order lists.
+
+Aspect: Duplicate order rules
+
+* Current choice: Prevent exact-duplicate orders (all fields equal) for the same supplier.
+* Alternative: Allow duplicates but aggregate in UI; increases complexity for summaries.
+
+Aspect: Identifier used for targeting
+
+* Current choice: `p/PHONE` targets supplier regardless of filtered list.
+* Alternative: Use list index or a unique ID.
 
 ### \[Proposed\] Data archiving
 
@@ -345,25 +403,29 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Actor: Manager**
 
+**Preconditions**
+
+* Application is running.
+* Category is one of: `Customer`, `Staff`, `Supplier`.
+* No existing contact with the same phone number.
+
 **MSS**
 
-1. Manager selects **Add Contact**
-2. System prompts for contact details
-3. Manager provides details and confirms.
-4. System records the contact
-
-    Use case ends.
+1. Manager executes `add n/NAME p/PHONE e/EMAIL a/ADDRESS c/CATEGORY`.
+2. System validates the fields and category.
+3. System creates the contact and saves it to storage.
+4. System displays a success message with the added contact. 
+5. Use case ends.
 
 **Extensions**
 
-* 3a.Required fields missing.
-    * 3a1. System indicates missing field
-    * Use case resumes at step 2
+* 1a. Required fields missing or invalid.
+    * 1a1. System indicates the exact invalid/missing field(s).
+    * Use case ends.
 
-* 3b. Potential duplicate detected.
-
-    * 3b1. System informs manager of duplicate.
-    * Use case resumes at step 2 or ends(if cancelled)
+* 2a. Potential duplicate detected (e.g., same phone).
+    * 2a1. System informs manager of the duplicate; contact is not added.
+    * Use case ends.
 
 **U2. Search for a contact**
 
@@ -371,235 +433,284 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. Manager initiates **Search Contact**
-2. System prompts for search keyword
-3. Manager enters search keyword
-4. System displays list of matching contacts
-5. Manager selects a contact to view details
-
-    Use case ends.
+1. Manager executes `find KEYWORD [MORE_KEYWORDS]`.
+2. System displays the list of matching contacts.
+3. Manager optionally executes `view p/PHONE` to view a contact’s details. 
+4. Use case ends.
 
 **Extensions**
 
-* 2a. No keyword provided
-    * 2a1. System prompts for input.
-    * Use case resumes at step 2.
-* 3a. No matches found
-    * 3a1. System informs Manager that no matches were found.
+* 1a. No keyword provided.
+    * 1a1. System indicates the correct command usage.
+    * Use case ends.
+* 2a. No matches found.
+    * 2a1. System informs the Manager that no matches were found.
     * Use case ends.
 
-**U3. Adding Orders to Supplier**
+**U3. Adding an order to a Supplier**
 
 **Actor: Manager**
 
-**MSS**
+**Preconditions**
 
-1. Manager selects contact.
-2. Manager initiates **Add Order**.
-3. Manager keys in order details, such as Item Name, Quantity, Unit Price and Delivery Day.
-4. System adds order into the specified supplier's list of orders.
-
-   Use case ends.
-
-**Extensions**
-
-* 1a. Target contact found is not a Supplier
-    * 1a1. System informs manager that contact found is not a Supplier.
-    * Use case ends.
-* 3a. Order with identical values already exists
-    * 3a1. System informs manager of the duplicate order, duplicate order is not created.
-    * Use case ends.
-
-**U4. Updating Order for Supplier**
-
-**Actor: Manager**
+* Target contact exists and is a `Supplier`.
 
 **MSS**
 
-1. Manager selects contact and order to be updated.
-2. Manager initiates **Update Order**
-3. Manager keys in the information to be updated for the order, such as Item Quantity, Item Name, etc
-4. System updates the corresponding order in the specified supplier's order list.
-
-   Use case ends.
+1. Manager executes `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE [d/DELIVERY_DAY]`.
+2. System validates inputs and resolves the contact by phone.
+3. System appends the new order to the supplier and saves to storage.
+4. System displays a success message. 
+5. Use case ends.
 
 **Extensions**
 
-* 1a. Target contact not found
-    * 1a1. System informs manager that no contact with the matching phone number was found.
+* 2a. Target contact not found.
+    * 2a1. System informs the manager that no contact with the matching phone number was found.
     * Use case ends.
-* 3a. Order with identical values already exists
-    * 3a1. System informs manager of the duplicate order, duplicate order is not created.
+* 2b. Target contact is not a Supplier.
+    * 2b1. System informs the manager that the contact is not a Supplier.
+    * Use case ends.
+* 2c. Invalid quantity or unit price format.
+    * 2c1. System indicates the exact invalid field with constraints.
+    * Use case ends.
+* 3a. An identical order already exists for that supplier.
+    * 3a1. System informs the manager; duplicate order is not created.
     * Use case ends.
 
-**U5. View contacts by category**
+**U4. Updating an order for a Supplier**
 
 **Actor: Manager**
 
+**Preconditions**
+
+* Target contact exists and is a `Supplier`.
+* The specified order index exists for that supplier.
+
 **MSS**
 
-1. Manager selects **View by category**
-2. System displays available categories
-3. Manager chooses a category (e.g. Supplier & Staff)
-4. System lists all contacts under category
-
-   Use case ends.
+1. Manager executes `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`.
+2. System validates inputs, resolves the supplier by phone, and checks that the order index exists.
+3. System updates the order, saves to storage, and returns a success message. 
+4. Use case ends.
 
 **Extensions**
 
-* 3a. No contacts in selected category
-    * 3a1. System informs manager that no contacts were found.
-    * Use case resumes at step 3 or ends.
-* 4a. Large number of contacts to display.
-    * 4a1. System displays contacts efficiently, allowing all results to be viewed without truncation.
+* 2a. Target contact not found.
+    * 2a1. System informs the manager that no contact with the matching phone number was found.
+    * Use case ends.
+* 2b. Contact is not a Supplier.
+    * 2b1. System informs the manager accordingly.
+    * Use case ends.
+* 2c. Order index out of range.
+    * 2c1. System informs the manager that the specified order cannot be found.
+    * Use case ends.
+* 2d. No fields to update are specified.
+    * 2d1. System indicates the correct command usage and constraints.
+    * Use case ends.
+* 3a. The updated order would duplicate an existing order.
+    * 3a1. System informs the manager; update is not applied.
     * Use case ends.
 
-**U6. Edit an existing contact**
+**U5. View contact details**
 
 **Actor: Manager**
 
+**Preconditions**
+
+* Target contact exists.
+
 **MSS**
 
-1. Manager selects contact to be edited.
-2. Manager initiates **edit contact** and inputs details
-3. System validates inputs and updates corresponding fields of contact.
-4. System displays success message.
-
-   Use case ends.
+1. Manager executes `view p/PHONE`.
+2. System resolves the contact by phone and returns a result indicating the UI should open the View window.
+3. UI opens the View window showing the contact’s details. 
+4. Use case ends.
 
 **Extensions**
 
-* 3a. Contact does not exist in address book.
-    * 3a1. System informs manager that contact cannot be found.
+* 1a. Contact not found.
+    * 1a1. System informs the manager that the contact cannot be found.
+    * Use case ends.
 
-  Use case resumes at step 2 or ends.
-* 3b. Input is invalid.
-    * 3b1. System informs manager that input is invalid.
 
-  Use case resumes at step 2 or ends.
-
-**U7. List all contacts**
+**U6. Update staff shift**
 
 **Actor: Manager**
 
+**Preconditions**
+
+* Target contact exists and is a `Staff` member.
+
 **MSS**
 
-1. Manager executes list
-2. System display all contacts in address book.
-   Use case ends
+1. Manager executes `updateShift p/PHONE s/SHIFT` (e.g., `s/AM` or `s/PM`).
+2. System validates the shift and resolves the staff by phone.
+3. System updates the staff shift, saves to storage, and returns a success message. 
+4. Use case ends.
 
 **Extensions**
-None
 
-**U8. Delete a contact**
+* 2a. Contact not found.
+    * 2a1. System informs the manager that the contact cannot be found.
+    * Use case ends.
+* 2b. Contact is not `Staff`.
+    * 2b1. System informs the manager accordingly.
+    * Use case ends.
+* 2c. Invalid shift value.
+    * 2c1. System indicates allowed values and correct usage.
+    * Use case ends.
+
+
+**U7. Update customer points**
+
 **Actor: Manager**
+
+**Preconditions**
+
+* Target contact exists and is a `Customer`.
+
 **MSS**
 
-1. Manager chooses contact to be deleted.
-2. Manager executes **delete** command and inputs details.
-3. System validates inputs and removes the specified contact.
-4. System displays the confirmation message.
-   Use case ends.
-   **Extensions**
-* 1a. Chosen contact does not exist.
-*     1a1. System informs manager that chosen contact is invalid.
-Use case resumes at step 1 or ends.
-
-**U9. Clear all contacts**
-**Actor: Manager**
-**MSS**
-1. Manager executes clear
-2. System removes all contacts.
-3. System displays confirmation message.
-   Use case ends.
+1. Manager executes `updatePoints p/PHONE b/BILL_AMOUNT`.
+2. System validates the bill amount and resolves the customer by phone.
+3. System updates the customer’s points (and tier if applicable), saves to storage, and returns a success message. 
+4. Use case ends.
 
 **Extensions**
-None
 
-**U10. Exit the application**
+* 2a. Contact not found.
+    * 2a1. System informs the manager that the contact cannot be found.
+    * Use case ends.
+* 2b. Contact is not `Customer`.
+    * 2b1. System informs the manager accordingly.
+    * Use case ends.
+* 2c. Invalid bill amount.
+    * 2c1. System indicates constraints (e.g., non-negative, 2 d.p.).
+    * Use case ends.
+
+
+**U8. Delete an order from a Supplier**
+
 **Actor: Manager**
-**MSS**
-1. Manager executes exit.
-2. System saves all data and terminates.
-   Use case ends.
 
-**U11. Update Customer Points**
-**Actor: Manager**
-**MSS**
-1. Manager chooses customer to add points.
-2. Manager executes **updatePoints** and inputs details
-3. System validates inputs, locates the customer and adds corresponding points.
+**Preconditions**
 
-**Extension**
-* 1a. Contact is not a customer
-*     1a1. System informs manager that chosen contact is not customer.
-Use case resumes at step 1 or ends.
+* Target contact exists and is a `Supplier`.
+* The specified order index exists for that supplier.
 
-**U12. Update Staff Shift**
-**Actor: Manager**
 **MSS**
-1. Manager chooses staff to update shift.
-2. Manager executes **updateShift** and enters input.
-3. System validates inputs, locates the staff and updates their shift.
-4. System displays confirmation message.
-   Use case ends.
+
+1. Manager executes `deleteOrder p/PHONE o/ORDER_INDEX`.
+2. System validates inputs, removes the order, saves to storage, and returns a success message. 
+3. Use case ends.
 
 **Extensions**
-* 3a. Contact chosen is not a staff
-*     3a1. System informs manager that chosen contact is not staff
-Use case continues at step 1 or ends
-*3a. Shift value is invalid
-*     3a1. System informs manager that shift value is invalid
-Use case continues at step 2 or ends.
 
-**U13. Delete an order**
+* 1a. Contact not found.
+    * 1a1. System informs the manager that the contact cannot be found.
+    * Use case ends.
+* 1b. Contact is not `Supplier`.
+    * 1b1. System informs the manager accordingly.
+    * Use case ends.
+* 1c. Order index out of range.
+    * 1c1. System informs the manager that the order cannot be found.
+    * Use case ends.
+
+
+**U9. Edit a contact**
+
 **Actor: Manager**
+
+**Preconditions**
+
+* The specified index exists in the currently displayed list.
+
 **MSS**
 
-1. Manager chooses supplier and the specified order from that supplier.
-2. Manager executes **deleteOrder** and inputs details
-3. System validates inputs, deletes the specified order from that supplier
-4. System displays a confirmation message.
-   Use case ends.
+1. Manager executes `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CATEGORY]`.
+2. System validates the fields and applies the updates.
+3. System saves to storage and displays a success message. 
+4. Use case ends.
 
 **Extensions**
-* 3a. Contact chosen is not a supplier
-*     3a1. System informs manager that chosen contact is not a supplier.
-Use case continues at step 1 or ends.
-* 3b. Order chosen does not exist.
-*     3b1. System informs manager that chosen order does not exist.
-Use case continues at step 1 or ends.
 
-**U14. Reduce Customer Points**
+* 1a. Index out of range.
+    * 1a1. System informs the manager that the index is invalid.
+    * Use case ends.
+* 1b. No fields provided to update.
+    * 1b1. System indicates correct usage and constraints.
+    * Use case ends.
+* 2a. Updated phone duplicates an existing contact.
+    * 2a1. System informs the manager; edit is not applied.
+    * Use case ends.
+
+
+**U10. Delete a contact**
+
 **Actor: Manager**
+
+**Preconditions**
+
+* The specified index exists in the currently displayed list.
+
 **MSS**
-1. Manager selects a customer to reduce points from.
-2. Manager executes **reducePoints** and inputs details
-3. System validates the inputs and locates the specified customer.
-4. System deducts the specified number of points from the customer's total.
-Use case ends.
+
+1. Manager executes `delete INDEX`.
+2. System removes the contact, saves to storage, and displays a success message. 
+3. Use case ends.
 
 **Extensions**
-* 3a. Contact not found or not a customer
-*     3a1. System informs the manager that the specified contact is not a valid customer
-Use case resumes at step 1 or ends
-* 4a. Amount to be reduced exceeds customer's current points
-*     4a1. System informs manager that insufficient points are available. 
-Use case resumes at step 2 or ends.
 
-**U15. View Customer Summary**
+* 1a. Index out of range.
+    * 1a1. System informs the manager that the index is invalid.
+    * Use case ends.
+
+
+**U11. List contacts**
+
 **Actor: Manager**
+
 **MSS**
-1. Manager executes **customerSummary**
-2. System retrieves all customers from address book
-3. System groups customer by their membership tier.
-4. System displays the number of customers in each tier. 
-Use case ends.
+
+1. Manager executes `list`.
+2. System displays all contacts. 
+3. Use case ends.
+
+**U12. Clear all contacts**
+
+**Actor: Manager**
+
+**MSS**
+
+1. Manager executes `clear`.
+2. System deletes all contacts, saves to storage, and displays a success message. 
+3. Use case ends.
+
+**U13. Show help**
+
+**Actor: Manager**
+
+**MSS**
+
+1. Manager executes `help`.
+2. System opens the Help window and displays the command summary and examples. 
+3. Use case ends.
+
+**U14. Exit the application**
+
+**Actor: Manager**
+
+**MSS**
+
+1. Manager executes `exit`.
+2. System closes the Help and View windows, then closes the main window and terminates. 
+3. Use case ends.
 
 **Extensions**
-* 2a. No customers exist in the address book.
-*     2a1. System informs the manager that there are no customers to summarise.
-Use case ends. 
+* 2a. No customers exist in the address book. 
+* 2a1. System informs the manager that there are no customers to summarise. 
+* Use case ends. 
 
 ### Non-Functional Requirements
 
