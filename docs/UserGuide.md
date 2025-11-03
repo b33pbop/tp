@@ -29,7 +29,7 @@ Assumptions:
 By the end of this guide, users will be able to **navigate GhostConnect confidently**, leverage its **advanced features**, and integrate it seamlessly into their daily operations to manage staff, suppliers, and customer loyalty programs efficiently.
 
 <details>
-    <summary> Table of Contents </summary>
+    <summary style="font-size: 32px;"> Table of Contents </summary>
 
 - [Quick Start](#quick-start)
 - [Parameters](#parameters)
@@ -40,11 +40,14 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
     - [Listing all Contacts](#listing-all-contacts-list)
     - [Editing a Contact](#editing-a-contact-edit)
     - [Locating Contacts by Name or Category](#locating-contacts-by-name-or-category-find)
+    - [Viewing additional info for a Contact](#viewing-additional-info-for-a-contact-view)
     - [Deleting a Contact](#deleting-a-contact-delete)
     - [Clearing all Contacts](#clearing-all-contacts-clear)
     - [Exiting the Program](#exiting-the-program-exit)
   - [Category Specific Commands](#category-specific-commands)
     - [Adding Points to a Customer](#adding-points-to-a-customer-updatepoints)
+    - [Reducing Points for a Customer](#reducing-points-for-customer-reducepoints)
+    - [Summary of Customers](#view-summary-of-customers-customersummary)
     - [Changing Shift of a Staff](#changing-shift-of-a-staff-updateshift)
     - [Adding Order from a Supplier](#adding-order-from-a-supplier-addorder)
     - [Updating Order from a Supplier](#updating-order-from-a-supplier-updateorder)
@@ -52,7 +55,6 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
   - [Miscellaneous](#miscellaneous)
     - [Saving the Date](#saving-the-data)
     - [Editing the Data File](#editing-the-data-file)
-    - [Archiving Data Files](#archiving-data-files-coming-in-v20)
 - [FAQ](#faq)
 - [Known Issues](#known-issues)
 - [Command Summary](#command-summary)
@@ -95,18 +97,18 @@ used in GhostConnect.
 
 
 ### Person General Parameters
-INCLUDE DESCRIPTION
+In GhostConnect, all contacts share a common set of basic parameters regardless of their category. These parameters form the foundation of each contact record and are used across all contact types (Customer, Staff, and Supplier).
 
 | Parameter             | Validation Requirements                                                     | Rationale                                                                                                   |
 |:----------------------|:----------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------|
-| **NAME**              | -                                                                           |                                                                                                             |
+| **NAME**              | -                                                                           | Ensures names are readable and properly stored in the system                                                                                                            |
 | **PHONE NUMBER**      | - 8 Digits long<br/> - Starts with either 6, 8 or  9                        | GhostConnect caters to the Singaporean market and thus phone numbers have to be a valid Singaporean number. |
 | **EMAIL**             | -                                                                           |                                                                                                             |
 | **ADDRESS**           | -                                                                           |                                                                                                             |
 | **CATEGORY**          | - Can only belong to 1 of the three categories: Customer, Staff or Supplier | These are the 3 main groups of contacts relevant to ghost kitchen managers.                                 |
 
 ### Staff Specific Parameters
-INCLUDE DESCRIPTION
+Staff contacts have an additional parameter specific to employee management for shift scheduling. This helps ghost kitchen managers efficiently organize their workforce.
 
 | Parameter             | Validation Requirements       | Rationale                                |
 |:----------------------|:------------------------------|:-----------------------------------------|
@@ -298,7 +300,7 @@ Deletes the specified person from the address book.
 Format: `delete INDEX`
 
 * Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* The index refers to the index number shown in the **displayed person list**.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
@@ -330,7 +332,7 @@ Exits the program.
 
 Format: `exit`
 
-</box>
+
 
 ### Category Specific Commands
 
@@ -360,6 +362,45 @@ Examples:
 
 * `updatePoints p/98765432 b/100000.00` adds `100000 points` for `John Doe`<br>
   ![result for 'updatePoints p/98765432 b/100000.00'](images/updatePointsResult.png)
+
+### **Reducing points for Customer: `reducePoints`**
+
+Redeems a specified number of points from a customer's account.
+
+Format: `reducePoints p/PHONE pts/POINTS_TO_REDUCE`
+
+* Can only be performed on Customers.
+* The number of points to redeem must be a **positive integer** and not exceed the customer's current balance.
+* If the specified customer does not exist, or is not a Customer, an error message will be displayed.
+* This command can be used to correct an erroneous addition of points (due to a mistaken updatePoints entry).
+* If the customer's points is reduced below a membership tier threshold, the customer's tier is updated automatically.
+
+Example:
+
+* Assuming that the Customer `John Cena` has the phone number `91234567`
+* Assuming that `John Cena` currently has 1000 points and is Tier `Gold`
+* `reducePoints p/912345667 pts/500`
+* The above command will remove 500 points from John Cena and update him to `Silver` tier.
+
+<table>
+    <tr>
+      <td><strong>Before</strong><br><img src="images/redeem1.png" width="300"/></td>
+      <td><strong>After</strong><br><img src="images/redeem2.png" width="300"/></td>
+    </tr>
+  </table>
+
+
+### **View summary of Customers: `customerSummary`**
+
+Views the number of customers at each tier, along with the total amount of points across all customers.
+
+Format: `customerSummary`
+
+* Shows the number of customers grouped by membership tier along with total number of points across all customers.
+* Provides managers with concise summary of customer distribution without listing individual entries.
+* Can be used after updates to verify that point or tier changes are reflected correctly.
+
+</box>
 
 #### **Changing Shift of a Staff: `updateShift`**
 
@@ -448,44 +489,7 @@ Example:
 * `deleteOrder p/91234567 o/1`
 * The above command will delete the first order in John Doe's order list
 
-### **Redeeming points for Customer: `reducePoints`**
 
-Redeems a specified number of points from a customer's account.
-
-Format: `reducePoints p/PHONE pts/POINTS_TO_REDUCE`
-
-* Can only be performed on Customers.
-* The number of points to redeem must be a **positive integer** and not exceed the customer's current balance.
-* If the specified customer does not exist, or is not a Customer, an error message will be displayed.
-* This command can be used to correct an erroneous addition of points (due to a mistaken updatePoints entry).
-* If the customer's points is reduced below a membership tier threshold, the customer's tier is updated automatically. 
-
-Example: 
-
-* Assuming that the Customer `John Cena` has the phone number `91234567`
-* Assuming that `John Cena` currently has 1000 points and is Tier `Gold`
-* `reducePoints p/912345667 pts/500`
-* The above command will remove 500 points from John Cena and update him to `Silver` tier. 
-
-<table>
-    <tr>
-      <td><strong>Before</strong><br><img src="images/redeem1.png" width="300"/></td>
-      <td><strong>After</strong><br><img src="images/redeem2.png" width="300"/></td>
-    </tr>
-  </table>
-
-
-### **View summary of Customers: `customerSummary`**
-
-Views the number of customers at each tier, along with the total amount of points across all customers. 
-
-Format: `customerSummary`
-
-* Shows the number of customers grouped by membership tier along with total number of points across all customers.
-* Provides managers with concise summary of customer distribution without listing individual entries.
-* Can be used after updates to verify that point or tier changes are reflected correctly. 
-
-</box>
 
 ### Miscellaneous
 
@@ -557,9 +561,9 @@ Furthermore, certain edits can cause the GhostConnect to behave in unexpected wa
 | **Clear**            | General       | `clear`                                                                                                                                               |
 | **Exit**             | General       | `exit`                                                                                                                                                |
 | **Update Points**    | Customer      | `updatePoints p/PHONE b/BILL_AMOUNT`<br> e.g `updatePoints p/98765432 b/100.00`                                                                       |
+| **Reduce Points**    | Customer      | `reducePoints p/PHONE pts/POINTS_TO_REDUCE` <br> e.g. `reducePoints p/91234567 pts/500`                                                               |
+| **Customer Summary** | General       | `customerSummary`                                                                                                                                     |        
 | **Update Shift**     | Staff         | `updateShift p/PHONE s/SHIFT`<br> e.g `updateShift p/98765432 b/PM`                                                                                   |
 | **Add Order**        | Supplier      | `addOrder p/PHONE i/ITEM_NAME q/QUANTITY u/UNIT_PRICE d/DELIVERY_DAY`<br> e.g. `addOrder p/91234567 i/Chicken q/20 u/5.60 d/every Tuesday`            |
 | **Update Order**     | Supplier      | `updateOrder p/PHONE o/ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [u/UNIT_PRICE] [d/DELIVERY_DAY]`<br> e.g. `updateOrder p/91234567 o/1 i/Fish`           |
 | **Delete Order**     | Supplier      | `deleteOrder p/PHONE o/ORDER_INDEX`<br> e.g. `deleteOrder p/91234567 o/1`                                                                             |
-| **Reduce Points**    | Customer      | `reducePoints p/PHONE pts/POINTS_TO_REDUCE` <br> e.g. `reducePoints p/91234567 pts/500`                                                               |
-| **Customer Summary** | General       | `customerSummary`                                                                                                                                     |        
