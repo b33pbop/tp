@@ -159,7 +159,7 @@ The `Model` component,
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+**Note:** An alternative (arguably, a more OOP) model is given below. In the current implementation, each `Person` is assigned to a specific subclass(`Customer`, `Staff` or `Supplier`) upon creation, based on their category. This approach improves type safety and enables behaviour unique to each category, at the cost of minor duplication in category data.<br>
 
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 
@@ -995,7 +995,7 @@ This strategic reuse allowed the team to focus innovation on the project's uniqu
 3. **Update UI to display real-time shift information using LocalDateTime**: The current system displays staff shift as simply "AM" or "PM" without date context. We plan to enhance the UI to use Java's LocalDateTime API to show which staff members are currently on shift today, and highlight upcoming shifts for the next 7 days. The main display will show a visual indicator (e.g., green dot) next to staff currently on duty based on the current system time and their assigned shift. For suppliers, we will similarly highlight orders scheduled for delivery today using LocalDateTime comparison, making it easier for managers to prioritize urgent deliveries at a glance.
 
 
-4. **Improve phone number validation to support international formats**: Currently, phone validation only accepts numeric digits with a minimum length of 3, which doesn't account for international formats with country codes, extensions, or special formatting (e.g., +65-1234-5678, (123) 456-7890). We plan to enhance the phone number validation regex to accept common international formats including country code prefixes (+ symbol), hyphens, spaces, and parentheses, while still maintaining uniqueness validation. Example valid formats will include: `+65 9123 4567`, `+1 (123) 456-7890`, `123-456-7890`.
+4. **Improve phone number validation to support international formats**: Currently, phone validation only accepts numeric digits with a length of 8, which doesn't account for international formats with country codes, extensions, or special formatting (e.g., +65-1234-5678, (123) 456-7890). We plan to enhance the phone number validation regex to accept common international formats including country code prefixes (+ symbol), hyphens, spaces, and parentheses, while still maintaining uniqueness validation. Example valid formats will include: `+65 9123 4567`, `+1 (123) 456-7890`, `123-456-7890`.
 
 
 5. **Support special characters in names for internationalization**: The current name validation regex `^[A-Za-z0-9 ]+(\\([A-Za-z0-9 ]+\\))?$` does not support names with special characters common in many cultures (e.g., O'Brien, José, François, 李明). We plan to expand the regex to include common name characters such as apostrophes, hyphens, accented letters, and common Unicode characters used in names worldwide: `^[\\p{L}\\p{N} '\\-]+(\\([\\p{L}\\p{N} '\\-]+\\))?$`. This will allow managers to add contacts with culturally diverse names without workarounds.
