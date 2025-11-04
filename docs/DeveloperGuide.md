@@ -159,7 +159,7 @@ The `Model` component,
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+**Note:** An alternative (arguably, a more OOP) model is given below. In the current implementation, each `Person` is assigned to a specific subclass(`Customer`, `Staff` or `Supplier`) upon creation, based on their category. This approach improves type safety and enables behaviour unique to each category, at the cost of minor duplication in category data.<br>
 
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 
@@ -702,10 +702,40 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. System closes the Help and View windows, then closes the main window and terminates. 
 3. Use case ends.
 
+**U15. Reduce Customer Points**
+
+**Actor: Manager**
+
+**MSS**
+1. Manager selects a customer to reduce points from.
+2. Manager executes **reducePoints** and inputs details
+3. System validates the inputs and locates the specified customer.
+4. System deducts the specified number of points from the customer's total.
+   Use case ends.
+
 **Extensions**
-* 2a. No customers exist in the address book. 
-* 2a1. System informs the manager that there are no customers to summarise. 
-* Use case ends. 
+* 3a. Contact not found or not a customer
+*     3a1. System informs the manager that the specified contact is not a valid customer
+Use case resumes at step 1 or ends
+* 4a. Amount to be reduced exceeds customer's current points
+*     4a1. System informs manager that insufficient points are available. 
+Use case resumes at step 2 or ends.
+
+**U16. View Customer Summary**
+
+**Actor: Manager**
+
+**MSS**
+1. Manager executes **customerSummary**
+2. System retrieves all customers from address book
+3. System groups customer by their membership tier.
+4. System displays the number of customers in each tier.
+   Use case ends.
+
+**Extensions**
+* 2a. No customers exist in the address book.
+*     2a1. System informs the manager that there are no customers to summarise.
+Use case ends.
 
 ### Non-Functional Requirements
 
@@ -995,7 +1025,7 @@ This strategic reuse allowed the team to focus innovation on the project's uniqu
 3. **Update UI to display real-time shift information using LocalDateTime**: The current system displays staff shift as simply "AM" or "PM" without date context. We plan to enhance the UI to use Java's LocalDateTime API to show which staff members are currently on shift today, and highlight upcoming shifts for the next 7 days. The main display will show a visual indicator (e.g., green dot) next to staff currently on duty based on the current system time and their assigned shift. For suppliers, we will similarly highlight orders scheduled for delivery today using LocalDateTime comparison, making it easier for managers to prioritize urgent deliveries at a glance.
 
 
-4. **Improve phone number validation to support international formats**: Currently, phone validation only accepts numeric digits with a minimum length of 3, which doesn't account for international formats with country codes, extensions, or special formatting (e.g., +65-1234-5678, (123) 456-7890). We plan to enhance the phone number validation regex to accept common international formats including country code prefixes (+ symbol), hyphens, spaces, and parentheses, while still maintaining uniqueness validation. Example valid formats will include: `+65 9123 4567`, `+1 (123) 456-7890`, `123-456-7890`.
+4. **Improve phone number validation to support international formats**: Currently, phone validation only accepts numeric digits with a length of 8, which doesn't account for international formats with country codes, extensions, or special formatting (e.g., +65-1234-5678, (123) 456-7890). We plan to enhance the phone number validation regex to accept common international formats including country code prefixes (+ symbol), hyphens, spaces, and parentheses, while still maintaining uniqueness validation. Example valid formats will include: `+65 9123 4567`, `+1 (123) 456-7890`, `123-456-7890`.
 
 
 5. **Support special characters in names for internationalization**: The current name validation regex `^[A-Za-z0-9 ]+(\\([A-Za-z0-9 ]+\\))?$` does not support names with special characters common in many cultures (e.g., O'Brien, José, François, 李明). We plan to expand the regex to include common name characters such as apostrophes, hyphens, accented letters, and common Unicode characters used in names worldwide: `^[\\p{L}\\p{N} '\\-]+(\\([\\p{L}\\p{N} '\\-]+\\))?$`. This will allow managers to add contacts with culturally diverse names without workarounds.
