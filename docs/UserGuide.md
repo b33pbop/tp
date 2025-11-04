@@ -52,7 +52,7 @@ By the end of this guide, users will be able to **navigate GhostConnect confiden
     - [Updating Order from a Supplier](#updating-order-from-a-supplier-updateorder)
     - [Deleting Order from a Supplier](#deleting-order-from-a-supplier-deleteorder)
   - [Miscellaneous](#miscellaneous)
-    - [Saving the Date](#saving-the-data)
+    - [Saving the Data](#saving-the-data)
     - [Editing the Data File](#editing-the-data-file)
 - [FAQ](#faq)
 - [Known Issues](#known-issues)
@@ -304,8 +304,8 @@ John recently changed his contact number and email!
 
   <table>
     <tr>
-      <td><strong>Before:</strong><br><img src="images/edit1.png" width="500" height="500"/></td>
-      <td><strong>After:</strong><br><img src="images/edit2.png" width="500" height="500"/></td>
+      <td><strong>Before:</strong><br><img src="images/edit1.png" width="450" height="450"/></td>
+      <td><strong>After:</strong><br><img src="images/edit2.png" width="450" height="450"/></td>
     </tr>
   </table>
 
@@ -317,8 +317,8 @@ You realized there was a typo for Betsy's name and Betsy is supposed to be custo
 
   <table>
     <tr>
-      <td><strong>Before:</strong><br/><img src="images/edit3.png" width="500" height="500"/></td>
-      <td><strong>After:</strong><br/><img src="images/edit4.png" width="500" height="500"/></td>
+      <td><strong>Before:</strong><br/><img src="images/edit3.png" width="450" height="450"/></td>
+      <td><strong>After:</strong><br/><img src="images/edit4.png" width="450" height="450"/></td>
     </tr>
   </table>
 
@@ -347,8 +347,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * `find staff supplier` returns all persons with categories `staff` or `supplier`<br>
   <table>
     <tr>
-      <td><strong>Before:</strong><br><img src="images/find1.png" width="500"/></td>
-      <td><strong>After:</strong><br><img src="images/find2.png" width="500" height="500"/></td>
+      <td><strong>Before:</strong><br><img src="images/find1.png" width="450"/></td>
+      <td><strong>After:</strong><br><img src="images/find2.png" width="450" height="450"/></td>
     </tr>
   </table>
 
@@ -433,8 +433,8 @@ Deleted contacts **cannot** be recovered.
 
   <table>
     <tr>
-      <td><strong>Before:</strong><br><img src="images/Delete1.png" width="500"/></td>
-      <td><strong>After:</strong><br><img src="images/Delete2.png" width="500"/></td>
+      <td><strong>Before:</strong><br><img src="images/Delete1.png" width="450"/></td>
+      <td><strong>After:</strong><br><img src="images/Delete2.png" width="450"/></td>
     </tr>
   </table>
 <br/>
@@ -443,8 +443,8 @@ Deleted contacts **cannot** be recovered.
 
   <table>
     <tr>
-      <td><strong>Before:</strong><br><img src="images/Delete3.png" width="500"/></td>
-      <td><strong>After:</strong><br><img src="images/Delete4.png" width="500"/></td>
+      <td><strong>Before:</strong><br><img src="images/Delete3.png" width="450"/></td>
+      <td><strong>After:</strong><br><img src="images/Delete4.png" width="450"/></td>
     </tr>
   </table>
 
@@ -563,8 +563,8 @@ Use `reducePoints` to correct the mistakes!
 
 <table>
     <tr>
-      <td><strong>Before:</strong><br><img src="images/reduce1.png" width="500"/></td>
-      <td><strong>After:</strong><br><img src="images/reduce2.png" width="500"/></td>
+      <td><strong>Before:</strong><br><img src="images/reduce1.png" width="450"/></td>
+      <td><strong>After:</strong><br><img src="images/reduce2.png" width="450"/></td>
     </tr>
 </table>
 <br/>
