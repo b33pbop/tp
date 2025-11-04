@@ -702,10 +702,40 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. System closes the Help and View windows, then closes the main window and terminates. 
 3. Use case ends.
 
+**U15. Reduce Customer Points**
+
+**Actor: Manager**
+
+**MSS**
+1. Manager selects a customer to reduce points from.
+2. Manager executes **reducePoints** and inputs details
+3. System validates the inputs and locates the specified customer.
+4. System deducts the specified number of points from the customer's total.
+   Use case ends.
+
 **Extensions**
-* 2a. No customers exist in the address book. 
-* 2a1. System informs the manager that there are no customers to summarise. 
-* Use case ends. 
+* 3a. Contact not found or not a customer
+*     3a1. System informs the manager that the specified contact is not a valid customer
+Use case resumes at step 1 or ends
+* 4a. Amount to be reduced exceeds customer's current points
+*     4a1. System informs manager that insufficient points are available. 
+Use case resumes at step 2 or ends.
+
+**U16. View Customer Summary**
+
+**Actor: Manager**
+
+**MSS**
+1. Manager executes **customerSummary**
+2. System retrieves all customers from address book
+3. System groups customer by their membership tier.
+4. System displays the number of customers in each tier.
+   Use case ends.
+
+**Extensions**
+* 2a. No customers exist in the address book.
+*     2a1. System informs the manager that there are no customers to summarise.
+Use case ends.
 
 ### Non-Functional Requirements
 
